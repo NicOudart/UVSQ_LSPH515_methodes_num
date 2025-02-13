@@ -1,0 +1,13 @@
+site_name: "UVSQ_LSPH515_methodes_num"
+site_url: "https://nicoudart.github.io/UVSQ_LSPH515_methodes_num"
+site_author: "Nicolas OUDART"
+
+theme:
+  name: readthedocs
+nav:
+  - Introduction: index.md
+  - I. Représentation des nombres: Chap1_Representation_des_nombres.md
+  - II. Recherche de racines: Chap2_Recherche_de_racines.md
+  - III. Interpolation polynomiale: Chap3_Interpolation_polynomiale.md
+  - IV. Intégration numérique: Chap4_Integration_numerique.md
+  - V. Systèmes linéaires: Chap5_Systemes_lineaires.md
