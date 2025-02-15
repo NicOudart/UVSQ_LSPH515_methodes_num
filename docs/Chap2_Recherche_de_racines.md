@@ -164,11 +164,11 @@ def dichotomie(f,a,b,n_max,e):
 	#tant qu'une des conditions d'arrêt n'est pas atteinte :
 	while (n<n_max)and(abs(a_n-b_n)>e)and(abs(r_n)>e):
 	
-		#Si la racine est dans ]a_n,x_n[ :
+		#Si la racine est dans ]a_n,x_n[ alors on remplace b_n par x_n:
 		if (f(a_n)*f(x_n))<0:
 			b_n = x_n
 		
-		#Si la racine est dans ]x_n,b_n[ :
+		#Si la racine est dans ]x_n,b_n[ alors on remplace a_n par x_n:
 		if (f(x_n)*f(b_n))<0:
 			a_n = x_n
 		
