@@ -131,11 +131,21 @@ Soit $f$ une fonction continue de $[a,b]$ dans $\mathbb{R}$.
 On suppose que $f$ admet une unique racine dans $]a,b[$ et que $f(a)f(b)<0$.
 
 Voici l'algorithme sous la forme d'une fonction Python.
-Elle prend en entrée $f$, $a$ et $b$ :
+Elle prend en entrée :
+
+* `f` la fonction dont on cherche les racines.
+
+* `a` et `b` les bornes de l'intervalle de recherche.
+
+* `n_max` le nombre maximum d'itérations.
+
+* `e` la précision désirée.
+
+On notera `x_n`, `a_n` et `b_n` les variables correspondant à l'estimation de la racine, la borne inférieure et la borne supérieure de l'intervalle de recherche à l'itération `n`.
 
 ~~~
-def dichotomie(f,a0,b0):
-	#Initialisation 
+def dichotomie(f,a,b,n_max,e):
+	#Initialisation de x_n
 ~~~
 
 ### Convergence
