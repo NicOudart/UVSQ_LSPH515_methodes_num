@@ -31,6 +31,8 @@ Le principe est le suivant :
 
 * Construire une suite qui converge vers chaque racine.
 
+**Ce chapitre présentera un panel de méthodes numériques de recherche de racines**, que nous appliquerons à un même exemple pour illustration.
+
 ### Existence et localisation des racines
 
 Que l'approche soit analytique ou numérique, la 1ère étape consiste généralement à localiser les solution de l'équation.
@@ -118,6 +120,38 @@ La convergence des méthodes itératives de recherche de racines dépend en gén
 
 De manière générale, les méthodes localement convergentes on un ordre de convergence plus grand que les méthodes globalement convergentes.
 
+### Exemple de problème
+
+Au cours de ce chapitre, nous appliquerons les différentes méthodes numériques de recherche de racines à un même exemple : **l'estimation de $\sqrt{2}$**.
+
+$\sqrt{2}$ est un nombre irrationel, dont l'approximation est un problème depuis l'antiquité, notamment parce qu'il correspond à l'hypothénuse d'un carré de côté 1.
+
+Par définition, $\sqrt{2}$ et $-\sqrt{2}$ sont les solutions de l'équation $x^2 = 2$.
+
+Résoudre cette équation revient à résoudre $x^2 - 2 = 0$.
+
+Pour calculer une approximation de $\sqrt{2}$, on peut donc chercher les racines de la fonction **$f(x) = x^2 - 2$** de $\mathbb{R}$ dans $\mathbb{R}$.
+
+La voici sous la forme d'une fonction Python :
+
+~~~
+def f(x):
+
+	return (x**2)-2
+~~~
+
+Cette fonction est continue et dérivable sur $\mathbb{R}$, et sa dérivée est $f'(x) = 2x$. On peut en déduire ses variations :
+
+**TODO: tableau de variations**
+
+* Théorème de la bijection : $f$ est continue et strictement monotone sur $I=[1,2]$, donc $f$ induit une bijection de $I$ dans $f(I)$.
+
+* Théorème des valeurs intermédiaires : $f(1)=-1$ et $f(2)=2$, d'où $f(1)f(2)<0$.
+
+Donc, il existe une seule racine de $f$ dans $]1,2[$, et nous savons que cette racine est $\sqrt{2}$.
+
+C'est pourquoi dans la suite de ce chapitre, nous chercherons la racine de $f$ se trouvant sur l'intervalle $]1,2[$.
+
 ---
 
 ## Méthode de la dichotomie
@@ -183,11 +217,13 @@ def dichotomie(f,a,b,n_max,e):
 	return x_n,r_n
 ~~~
 
+### Exemple
+
+**TODO Gif**
+
 ### Convergence
 
 ### Précision
-
-### Exemple
 
 ---
 
