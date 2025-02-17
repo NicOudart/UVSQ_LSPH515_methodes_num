@@ -94,7 +94,7 @@ La performance de ces méthodes est évaluée par leur **vitesse de convergence*
 La convergence est d'autant plus rapide que la valeur de $p$ est grande.
 $K$ est le **facteur de convergence** de la suite.
 
-Voici comment on qualifie la convergence en fonction de $$p$$ et $$K$$ :
+Voici comment on qualifie la convergence en fonction de $p$ et $K$ :
 
 |Valeur de $p$|Valeur de $K$|Convergence                     |
 |:------------|:-----------:|-------------------------------:|
@@ -225,7 +225,7 @@ La longueur de l'intervalle de recherche est divisée par 2 à chaque itération
 
 $I_n = \mid b_n-a_n \mid = \frac{\mid b-a \mid}{2^n}$
 
-Donc, l'erreur absolue à l'itération $n \geq 0$, $e_n=x_n-\alpha$
+Donc, l'erreur absolue à l'itération $n \geq 0$, $e_n=x_n-c$
 
 $\mid e_n \mid \leq \frac{I_n}{2} = \frac{\mid b-a \mid}{2^{n+1}}$
 
@@ -264,7 +264,50 @@ Combien d'itérations sont nécessaires pour obtenir cette précision ? Retrouve
 
 ---
 
+## Avant-propos : les méthodes linéarisées
+
+Les méthodes qui seront présentées dans la suite de ce chapitre sont des **méthodes linéarisées**.
+Ce type de méthodes s'appuit sur le dévloppement de Taylor de $f$ autour de sa racine $c$ :
+
+$f(c) = 0 = f(x') + (c-x')f'(\xi)$ où $\xi \in [x',c]$ et $f(x') \neq 0$
+
+D'où $c = x' - \frac{f(x')}{f'(\xi)}$
+
+Donc, si on connait $\xi$, on peut déterminer $c$ à partir de $x'$.
+
+D'un point de vue géométrique, la racine $c$ est à l'intersection entre la droite passant par le point $(x',f'(x'))$ et de pente $f'(\xi)$ et donc d'équation :
+
+$y = f'(\xi) x + f(x') - f'(\xi) x'$
+
+Et l'axe $(Ox)$ donc d'équation $y = 0$.
+
+![Illustration des méthodes linéarisées](img/Chap2_methodes_linearisees.png)
+
+D'où la méthode itérative suivante :
+
+$f(x_n) + (x_{n+1} - x_n) q_n = 0$
+
+ou encore l'**équation de récurrence** :
+
+$x_{n+1} = x_n - \frac{f(x_n)}{q_n}$
+
+où $q_n$ est une approximation de $f'(\xi)$.
+
+L'idée des méthodes linéarisées est donc :
+
+* D'approcher une fonction non-linéaire par une droite.
+
+* Déterminer à chaque itération $x_{n+1}$ comme l'intersection entre l'axe $(Ox)$ et la droite de pente $q_n$ passant par le point $(x_n,f(x_n))$.
+
+Les méthodes linéarisées (méthode de la sécante, méthode de la fausse position, méthode de Newton, etc.) se différentient par **le choix de $q_n$**.
+
+---
+
 ## Méthode de la sécante
+
+### Algorithme
+
+### Exemple
 
 ---
 
