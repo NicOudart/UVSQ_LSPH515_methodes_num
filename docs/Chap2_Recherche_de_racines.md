@@ -132,6 +132,8 @@ Résoudre cette équation revient à résoudre $x^2 - 2 = 0$.
 
 Pour calculer une approximation de $\sqrt{2}$, on peut donc chercher les racines de la fonction **$f(x) = x^2 - 2$** de $\mathbb{R}$ dans $\mathbb{R}$.
 
+![Graphique de f](img/Chap2_exemple_fonction.png)
+
 La voici sous la forme d'une fonction Python :
 
 ~~~
@@ -142,7 +144,7 @@ def f(x):
 
 Cette fonction est continue et dérivable sur $\mathbb{R}$, et sa dérivée est $f'(x) = 2x$. On peut en déduire ses variations :
 
-**TODO: tableau de variations**
+![Tableau de variations de f](img/Chap2_exemple_tab_var.png)
 
 * Théorème de la bijection : $f$ est continue et strictement monotone sur $I=[1,2]$, donc $f$ induit une bijection de $I$ dans $f(I)$.
 
@@ -158,7 +160,7 @@ C'est pourquoi dans la suite de ce chapitre, nous chercherons la racine de $f$ s
 
 ### Algorithme
 
-La méthode de la **dichotomie* est inspirée du théorème des valeurs intermédiaires.
+La méthode de la **dichotomie** est inspirée du théorème des valeurs intermédiaires.
 Elle est aussi connue sous le nom de **"méthode de la bissection"**.
 
 Soit $f$ une fonction continue de $[a,b]$ dans $\mathbb{R}$.
@@ -217,13 +219,20 @@ def dichotomie(f,a,b,n_max,e):
 	return x_n,r_n
 ~~~
 
-### Exemple
-
-**TODO Gif**
-
 ### Convergence
 
 ### Précision
+
+### Exemple
+
+Voici les 4 premières itérations de la méthode de la dichotomie appliquée à notre problème exemple :
+
+![Exemple d'application de la dichotomie](img/Chap2_exemple_dichotomie.gif)
+
+**Exercice :**
+
+En adaptant la fonction Python donnée précédemment pour la méthode de la dichotomie, estimez la valeur de $\sqrt{2}$ avec une précision de $10^{-6}$.
+Combien d'itérations sont nécessaires pour obtenir cette précision ?
 
 ---
 
