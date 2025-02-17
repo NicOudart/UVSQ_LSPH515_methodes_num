@@ -221,7 +221,35 @@ def dichotomie(f,a,b,n_max,e):
 
 ### Convergence
 
+La longueur de l'intervalle de recherche est divisée par 2 à chaque itération :
+
+$I_n = \mid b_n-a_n \mid = \frac{\mid b-a \mid}{2^n}$
+
+Donc, l'erreur absolue à l'itération $n \geq 0$, $e_n=x_n-\alpha$
+
+$\mid e_n \mid \leq \frac{I_n}{2} = \frac{\mid b-a \mid}{2^{n+1}}$
+
+Ce qui entraine : $\lim\limits_{n \to \infty} \mid e_n \mid = 0$
+et $\frac{\mid e_{n+1} \mid}{\mid e_n \mid} \leq \frac{1}{2}$
+
+La méthode de la dichotomie est donc **globalement convergente** : elle converge quelque soit le point de départ.
+(Si la $f$ a plusieurs racines dans $[a,b]$, la racine trouvée dépendra de l'intervalle).
+
+Sa convergence est **linéaire**, donc elle est relativement **lente**.
+C'est pourquoi on utilise souvent cette méthode juste pour initialiser une méthode plus rapide.
+
 ### Précision
+
+En fonction de la précision souhaitée $\varepsilon$, on peut calculer le nombre d'itérations $m$ pour approcher la racine.
+
+On cherche $m \in \mathbb{N}$ tel que :
+$\mid e_{m-1} \mid \leq \frac{\mid b-a \mid}{2^m} \leq \varepsilon$
+
+Donc tel que :
+$2^m \geq \frac{\mid b-a \mid}{\varepsilon}$
+
+Soit : 
+$m \geq log_2{\frac{\mid b-a \mid}{\varepsilon}} = \frac{ln{\frac{\mid b-a \mid}{\varepsilon}}}{ln(2)} \approx 1.4427 ln{\frac{\mid b-a \mid}{\varepsilon}}$
 
 ### Exemple
 
@@ -232,7 +260,7 @@ Voici les 4 premières itérations de la méthode de la dichotomie appliquée à
 **Exercice :**
 
 En adaptant la fonction Python donnée précédemment pour la méthode de la dichotomie, estimez la valeur de $\sqrt{2}$ avec une précision de $10^{-6}$.
-Combien d'itérations sont nécessaires pour obtenir cette précision ?
+Combien d'itérations sont nécessaires pour obtenir cette précision ? Retrouvez-vous bien le nombre d'itérations théorique ?
 
 ---
 
