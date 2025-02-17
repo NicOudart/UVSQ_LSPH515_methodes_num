@@ -208,7 +208,7 @@ def dichotomie(f,a,b,n_max,e):
 		if (f(x_n)*f(b_n))<0:
 			a_n = x_n
 		
-		#Incrémenter le nombre d'itérations
+		#Incrémenter le nombre d'itérations :
 		n+=1
 		
 		#Mettre à jour l'estimation de la racine et le résidu :
@@ -281,7 +281,7 @@ $y = f'(\xi) x + f(x') - f'(\xi) x'$
 
 Et l'axe $(Ox)$ donc d'équation $y = 0$.
 
-![Illustration des méthodes linéarisées](img/Chap2_methodes_linearisees.png)
+![Illustration des méthodes linéarisées](img/Chap2_methodes_linearisees.png){width="350"}
 
 D'où la méthode itérative suivante :
 
@@ -307,7 +307,82 @@ Les méthodes linéarisées (méthode de la sécante, méthode de la fausse posi
 
 ### Algorithme
 
+La **méthode de la sécante** est une méthode linéarisée pour laquelle :
+
+$q_n = \frac{f(x_n)-f(x_{n-1})}{x_n-x_{n-1}}$
+
+Cette suite correspond à la droite passant par les points $(x_n,f(x_n))$ et $(x_{n-1},f(x_{n-1}))$.
+
+Soit $f$ une fonction continue de $[a,b]$ dans $\mathbb{R}$.
+On suppose que $f$ admet une unique racine dans $]a,b[$ et que $f(a)f(b)<0$.
+
+Voici l'algorithme sous la forme d'une fonction Python.
+
+Elle prend en entrée :
+
+* `f` la fonction dont on cherche les racines.
+
+* `a` et `b` les bornes de l'intervalle de recherche.
+
+* `n_max` le nombre maximum d'itérations.
+
+* `e` la précision désirée.
+
+On notera les variables à l'itération `n` : 
+
+* `x_n` l'estimation de la racine.
+
+* `a_n` et `b_n` les bornes de l'intervalle de recherche.
+
+* `r_n` le résidu.
+
+~~~
+def secante(f,a,b,n_max,e):
+
+	#Initialisation des variables :
+	n = 1 #Nombre d'itérations
+	x_n = a #Estimation de la racin à l'itération n
+	x_n_old = b #Estimation de la racin à l'itération n-1
+	r_n = f(x_n) #Résidu
+	
+	#Itérations de l'algorithme de la sécante
+	#tant qu'une des conditions d'arrêt n'est pas atteinte :
+	while (n<n_max)and(abs(x_n-x_n_old)>e)and(abs(r_n)>e):
+	
+		#Calculer la pente : 
+		q_n = (f(x_n)-f(x_n_old))/(x_n-x_n_old)
+		
+		#Mettre à jour l'estimation de la racine :
+		x_n_old = x_n #Iteration n
+		x_n = x_n - f(x_n)/q_n #Iteration n+1
+		
+		#Incrémenter le nombre d'itérations :
+		n+=1
+		
+		#Mettre à jour le résidu :
+		r_n = f(x_n)
+		
+	#Renvoyer l'estimation de la racine et le résidu :
+	return x_n,r_n
+~~~
+
+### Convergence
+
+La méthode de la sécante est **convergente localement**.
+
+Si les données initiales sont assez proches de la racine $c$, et que $f'(c) \neq 0$, alors on peut démontrer qu'elle converge avec un ordre $p = \frac{1+\sqrt(5)}{2}$.
+Cette valeur est connue sous le nom de "nombre d'or".
+
 ### Exemple
+
+Voici les 4 premières itérations de la méthode de la sécante appliquée à notre problème exemple :
+
+
+
+**Exercice :**
+
+En adaptant la fonction Python donnée précédemment pour la méthode de la sécante, estimez la valeur de $\sqrt{2}$ avec une précision de $10^{-6}$.
+Combien d'itérations sont nécessaires pour obtenir cette précision ? Comparez cette valeur à celle obtenue pour la méthode de la dichotomie.
 
 ---
 
