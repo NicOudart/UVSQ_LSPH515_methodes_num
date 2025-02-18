@@ -569,7 +569,29 @@ En pratique, on utilise souvent la méthode de la dichotomie pour trouver un poi
 
 Reste un incovénient, la méthode de Newton nécessite le calcul de dérivées, et est donc plus coûteuse en calcul.
 
+La méthode de Newton est **sûrement convergente** dans le cas d'une fonction $f$ strictement monotone et ne présentant pas de points d'inflexion dans l'intervalle $[a,b]$ (i.e. $f"(x)$ ne change pas de signe donc $f$ a une concavité constante) si le point de départ $x_0$ est tel que :
+
+**$f(x_0)f"(x_0)>0$**
+
+Pour choisir un point de départ $x_0$ qui ne risque pas de faire diverger la méthode de Newton, il faut donc s'assurer de respecter cette condition.
+
+![Illustration de la convergence de Newton](img/Chap2_newton_convergence.png)
+
 ### Exemple
+
+Voici les 4 premières itérations de la méthode de Newton appliquée à notre problème exemple.
+Le point de départ de la recherche choisi est de 2.5 pour des raisons de lisibilité :
+
+![Exemple d'application de Newton](img/Chap2_exemple_newton.gif)
+
+On note que le choix de point de départ est correct, car $f$ est à concavité constante positive ($f"(x)=2>0$) et $f(x_0)=4.25>0$, ce qui signifie que $f(x_0)f"(x_0)>0$ est bien respectée.
+
+**Exercice :**
+
+En adaptant la fonction Python donnée précédemment pour la méthode de Newton, avec un point de départ de votre choix, estimez la valeur de $\sqrt{2}$ avec une précision de $10^{-6}$.
+Combien d'itérations sont nécessaires pour obtenir cette précision ? Comparez cette valeur à celle obtenue pour les méthodes précédentes. Quelle est la méthode linéarisée la plus rapide ?
+
+NB: La méthode de Newton appliquée au cas de l'estimation de $\sqrt(2)$ est un cas particulier de la célèbre méthode d'Héron d'Alexandrie.
 
 ---
 
