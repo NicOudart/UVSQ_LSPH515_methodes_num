@@ -152,7 +152,7 @@ Cette fonction est continue et dérivable sur $\mathbb{R}$, et sa dérivée est 
 
 Donc, il existe une seule racine de $f$ dans $]1,2[$, et nous savons que cette racine est $\sqrt{2}$.
 
-C'est pourquoi dans la suite de ce chapitre, nous chercherons la racine de $f$ se trouvant sur l'intervalle $]1,2[$.
+C'est pourquoi dans la suite de ce chapitre, sauf indication contraire, nous chercherons la racine de $f$ se trouvant sur l'intervalle $]1,2[$.
 
 ---
 
@@ -253,13 +253,13 @@ $m \geq log_2{\frac{\mid b-a \mid}{\varepsilon}} = \frac{ln{\frac{\mid b-a \mid}
 
 ### Exemple
 
-Voici les 4 premières itérations de la méthode de la dichotomie appliquée à notre problème exemple :
+Voici les 4 premières itérations de la méthode de la dichotomie appliquée à notre problème exemple, pour un intervalle initial $[1,2]$ :
 
 ![Exemple d'application de la dichotomie](img/Chap2_exemple_dichotomie.gif)
 
 **Exercice :**
 
-En adaptant la fonction Python donnée précédemment pour la méthode de la dichotomie, estimez la valeur de $\sqrt{2}$ avec une précision de $10^{-6}$.
+En adaptant la fonction Python donnée précédemment pour la méthode de la dichotomie, avec un intervalle initial $[1,2]$, estimez la valeur de $\sqrt{2}$ avec une précision de $10^{-6}$.
 Combien d'itérations sont nécessaires pour obtenir cette précision ? Retrouvez-vous bien le nombre d'itérations théorique ?
 
 ---
@@ -349,7 +349,7 @@ def secante(f,a,b,n_max,e):
 	#tant qu'une des conditions d'arrêt n'est pas atteinte :
 	while (n<n_max)and(abs(x_n-x_n_old)>e)and(abs(r_n)>e):
 	
-		#Calculer la pente : 
+		#Calculer la pente de la droite : 
 		q_n = (f(x_n)-f(x_n_old))/(x_n-x_n_old)
 		
 		#Mettre à jour l'estimation de la racine :
@@ -375,18 +375,90 @@ Cette valeur est connue sous le nom de "nombre d'or".
 
 ### Exemple
 
-Voici les 4 premières itérations de la méthode de la sécante appliquée à notre problème exemple :
+Voici les 5 premières itérations de la méthode de la sécante appliquée à notre problème exemple.
+L'intervalle initial est ici de [0,2] pour des raisons de lisibilité :
 
-
+![Exemple d'application de la sécante](img/Chap2_exemple_secante.gif)
 
 **Exercice :**
 
-En adaptant la fonction Python donnée précédemment pour la méthode de la sécante, estimez la valeur de $\sqrt{2}$ avec une précision de $10^{-6}$.
+En adaptant la fonction Python donnée précédemment pour la méthode de la sécante, avec un intervalle initial $[1,2]$, estimez la valeur de $\sqrt{2}$ avec une précision de $10^{-6}$.
 Combien d'itérations sont nécessaires pour obtenir cette précision ? Comparez cette valeur à celle obtenue pour la méthode de la dichotomie.
 
 ---
 
 ## Méthode de la fausse position
+
+### Algorithme
+
+La **méthode de la fausse position** est une méthode linéarisée pour laquelle :
+
+$q_n = \frac{f(x_n)-f(x_n')}{x_n-x_n'}$
+
+Cette suite correspond à la droite passant par les points $(x_n,f(x_n))$ et $(x_n',f(x_n'))$, où $n'$ est le plus grand indice inférieur à $n$ tel que $f(x_n)f(x_n')<0$.
+
+Il s'agit d'un mélange entre la méthode de la dichotomie et la méthode de la sécante.
+On l'appelle aussi **méthode de regula falsi** ou **méthode de Lagrange**.
+
+Soit $f$ une fonction continue de $[a,b]$ dans $\mathbb{R}$.
+On suppose que $f$ admet une unique racine dans $]a,b[$ et que $f(a)f(b)<0$.
+
+Voici l'algorithme sous la forme d'une fonction Python.
+
+Elle prend en entrée :
+
+* `f` la fonction dont on cherche les racines.
+
+* `a` et `b` les bornes de l'intervalle de recherche.
+
+* `n_max` le nombre maximum d'itérations.
+
+* `e` la précision désirée.
+
+On notera les variables à l'itération `n` : 
+
+* `x_n` l'estimation de la racine.
+
+* `a_n` et `b_n` les bornes de l'intervalle de recherche.
+
+* `r_n` le résidu.
+
+~~~
+def fausse_position(f,a,b,n_max,e):
+
+	#Initialisation des variables :
+	n = 0 #Nombre d'itérations
+	a_n = a #Borne inférieure de l'intervalle de recherche
+	b_n = b #Borne supérieure de l'intervalle de recherche
+	q_n = (f(b_n)-f(a_n))/(b_n-a_n) #Initialiser la pente de la droite
+	x_n = a_n-f(a_n)/q_n #Estimation de la racine
+	r_n = f(x_n) #Résidu
+	
+	#Itérations de l'algorithme de la fausse-position
+	#tant qu'une des conditions d'arrêt n'est pas atteinte :
+	while (n<n_max)and(abs(a_n-b_n)>e)and(abs(r_n)>e):
+	
+		#Si la racine est dans ]a_n,x_n[ alors on remplace b_n par x_n:
+		if (f(a_n)*f(x_n))<0:
+			b_n = x_n
+		
+		#Si la racine est dans ]x_n,b_n[ alors on remplace a_n par x_n:
+		if (f(x_n)*f(b_n))<0:
+			a_n = x_n
+	
+		#Incrémenter le nombre d'itérations :
+		n+=1
+		
+		#Calcul de la nouvelle pente de la droite :
+		q_n = (f(b_n)-f(a_n))/(b_n-a_n)
+	
+		#Mettre à jour l'estimation de la racine et le résidu :
+		x_n = x_n-f(x_n)/q_n
+		r_n = f(x_n)
+	
+	#Renvoyer l'estimation de la racine et le résidu :
+	return x_n,r_n
+~~~
 
 ---
 
