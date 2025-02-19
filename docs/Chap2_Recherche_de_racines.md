@@ -125,6 +125,7 @@ De manière générale, les méthodes localement convergentes on un ordre de con
 Au cours de ce chapitre, nous appliquerons les différentes méthodes numériques de recherche de racines à un même exemple : **l'estimation de $\sqrt{2}$**.
 
 $\sqrt{2}$ est un nombre irrationel, dont l'approximation est un problème depuis l'antiquité, notamment parce qu'il correspond à l'hypothénuse d'un carré de côté 1.
+Une valeur approchée de $\sqrt{2}$ à $10^-9$ près est : 1.414213562.
 
 Par définition, $\sqrt{2}$ et $-\sqrt{2}$ sont les solutions de l'équation $x^2 = 2$.
 
@@ -729,12 +730,39 @@ Considérons à nouveau notre problème d'approximation de $\sqrt{2}$ par la rec
 
 Nous proposons d'essayer les fonctions d'itération suivantes :
 
-|$g_1(x)=\frac{2}{x}$    |$g_2(x)=2x-\frac{2}{x}$  |$g_3(x)=\frac{x}{2}+\frac{1}{x}    |
+|$g_1(x)=\frac{2}{x}$    |$g_2(x)=2x-\frac{2}{x}$  |$g_3(x)=\frac{x}{2}+\frac{1}{x}$   |
 |:-----------------------|:-----------------------:|----------------------------------:|
 |$g_1'(x)=-\frac{2}{x^2}$|$g_2'(x)=2+\frac{2}{x^2}$|$g_3'(x)=\frac{1}{2}-\frac{1}{x^2}$|
 |$g_1'(c)=-1$            |$g_2'(c)=3$              |$g_3'(c)=0$                        |
 
-On s'attend donc à ce que $g_1$ et $g_2$ divergent, et à ce que $g_3$ converge.
+On s'attend donc à ce que $g_1$ et $g_2$ divergent, et à ce que $g_3$ converge. 
+Vérifions avec un point de départ de 2 pour les 3 fonctions.
+
+Voici les 4 premières itérations pour $g_1(x)=\frac{2}{x}$ :
+
+![Exemple d'application du point fixe à g1](img/Chap2_exemple_point_fixe_1.gif)
+
+La valeur de $x_n$ oscille entre 1 et 2 sans jamais s'arrêter. La suite ne converge donc pas.
+
+Voici les 4 premières itérations pour $g_2(x)=2x-\frac{2}{x}$  :
+
+![Exemple d'application du point fixe à g2](img/Chap2_exemple_point_fixe_2.gif)
+
+On observe que $x_n$ diverge en escalier.
+
+Voici les 4 premières itérations pour $g_3(x)=\frac{x}{2}+\frac{1}{x}$  :
+
+![Exemple d'application du point fixe à g3](img/Chap2_exemple_point_fixe_3.gif)
+
+Cette fois-ci, $x_n$ converge rapidement vers $\sqrt{2}$.
+
+On retrouve donc bien les résultats attendus.
+
+**Exercice :**
+
+En adaptant la fonction Python donnée précédemment pour la méthode du point fixe, avec le même point de départ que vous avez choisi pour la méthode de Newton, estimez la valeur de $\sqrt{2}$ avec une précision de $10^{-6}$.
+Combien d'itérations sont nécessaires pour obtenir cette précision ? Comparez cette valeur à celle obtenue pour la méthode de Newton.
+Expliquez pourquoi ces résultats sont identiques.
 
 ## Vitesse de convergence des méthodes
 
