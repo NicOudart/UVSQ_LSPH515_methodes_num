@@ -596,3 +596,18 @@ NB: La méthode de Newton appliquée au cas de l'estimation de $\sqrt(2)$ est un
 ---
 
 ## Méthode du point fixe
+
+### Définitions
+
+|Idée|
+|:-|
+|Transformer l'équation $f(x)=0$ en une équation équivalente $g(x)=x$ où $g$ est une fonction auxiliaire bien choisie.|
+|La racine $c$ est alors un **point fixe** de $g$ et approcher les zéros de $f$ revient à approcher les points fixes de $g$.|
+
+Cette transformation est **toujours possible** mais **pas unique**.
+
+![Illustration du point fixe](img/Chap2_point_fixe.png)
+
+### Convergence
+
+### Exemple
