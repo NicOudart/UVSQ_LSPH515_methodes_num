@@ -495,7 +495,8 @@ $q_n = f'(x_n)$
 Cette suite correspond à la pente de la tangente à la fonction $f$ en $x_n$.
 
 On l'appelle aussi la **méthode de Newton-Raphson**.
-Cette méthode nécessite l'évaluation de $f$ et de sa dérivée $f'$ :
+Cette méthode nécessite l'évaluation de $f$ et de sa dérivée $f'$.
+Dans le cas de notre problème exemple, on définira :
 
 ~~~
 def f_derivee(x):
@@ -512,6 +513,8 @@ Voici l'algorithme sous la forme d'une fonction Python.
 Elle prend en entrée :
 
 * `f` la fonction dont on cherche les racines.
+
+* `f_derivee` la dérivée de la fonction dont on cherche les racines.
 
 * `x_0` point de départ de la recherche.
 
@@ -622,6 +625,70 @@ L'itération est dite **de point fixe**, et la fonction $g$ est la **fonction d'
 
 Par exemple, dans notre problème de l'approximation de $\sqrt{2}$, résoudre $x^2-2=0$ revient à trouver le point fixe de $g(x)=x-\frac{f(x)}{f'(x)}=\frac{x+\frac{2}{x}}{2}$.
 
+### Algorithme
+
+Soit $f$ une fonction continue de $[a,b]$ dans $\mathbb{R}$.
+On suppose que $f$ admet une unique racine dans $]a,b[$ et que $f(a)f(b)<0$.
+On choisi d'initialiser la méthode avec $x_0 \in [a,b]$.
+
+Cette méthode nécessite la sélection d'une fonction d'itération de point fixe $g$.
+Dans le cas de notre problème exemple, on pourra choisir :
+
+~~~
+def g(x):
+
+	return x/2+1/x
+~~~
+
+Voici l'algorithme sous la forme d'une fonction Python.
+
+Elle prend en entrée :
+
+* `f` la fonction dont on cherche les racines.
+
+* `g` la fonction d'itération choisie.
+
+* `x_0` point de départ de la recherche.
+
+* `n_max` le nombre maximum d'itérations.
+
+* `e` la précision désirée.
+
+On notera les variables à l'itération `n` : 
+
+* `x_n` l'estimation de la racine à l'itération n.
+
+* `x_n_old` l'estimation de la racine à l'itération n-1.
+
+* `r_n` le résidu.
+
+~~~
+def point_fixe(f,g,x_0,n_max,e):
+
+	#Initialisation des variables :
+    n = 0 #Nombre d'itérations
+    x_n_old = x_0 #Estimation de la racine à l'itération n-1
+    x_n = g(x_n_old) #Estimation de la racine à l'itération n
+    r_n = f(x_n) #Résidu
+	
+	#Itérations de l'algorithme du point fixe
+	#tant qu'une des conditions d'arrêt n'est pas atteinte :
+    while (n<n_max)and(abs(x_n-x_n_old)>e)and(abs(r_n)>e):
+	
+		#Mettre à jour l'estimation de la racine :
+        x_n_old = x_n #Itération n
+        x_n = g(x_n) #Iteration n+1
+		
+		#Incrémenter le nombre d'itérations :
+        n+=1
+		
+		#Mettre à jour le résidu :
+        r_n = f(x_n)
+
+	#Renvoyer l'estimation de la racine et le résidu :
+    return x_n,r_n
+~~~
+
 ### Convergence
 
 |Théorème de la convergence globale des itérations de point fixe|
@@ -657,3 +724,34 @@ D'où l'utilité d'une étude de convergence locale :
 ![Illustration de la convergence du point fixe](img/Chap2_point_fixe_convergence.png)
 
 ### Exemple
+
+Considérons à nouveau notre problème d'approximation de $\sqrt{2}$ par la recherche des racines de $f(x)=x^2-2$.
+
+Nous proposons d'essayer les fonctions d'itération suivantes :
+
+|$g_1(x)=\frac{2}{x}$    |$g_2(x)=2x-\frac{2}{x}$  |$g_3(x)=\frac{x}{2}+\frac{1}{x}    |
+|:-----------------------|:-----------------------:|----------------------------------:|
+|$g_1'(x)=-\frac{2}{x^2}$|$g_2'(x)=2+\frac{2}{x^2}$|$g_3'(x)=\frac{1}{2}-\frac{1}{x^2}$|
+|$g_1'(c)=-1$            |$g_2'(c)=3$              |$g_3'(c)=0$                        |
+
+On s'attend donc à ce que $g_1$ et $g_2$ divergent, et à ce que $g_3$ converge.
+
+## Vitesse de convergence des méthodes
+
+### Méthode de la dichotomie
+
+On rappelle que la méthode de la dichotomie converge de manière **linéaire**.
+
+### Méthodes de point fixe
+
+### Méthode de la sécante
+
+### Méthode de Newton
+
+## Conclusions
+
+* La méthode de la **dichotomie** est **simple mais lente** car elle ne prend pas en compte le comportement de $f$. Elle est néanmoins utile pour **initialiser des méthodes plus rapides**.
+
+* La méthode de **Newton** est **convergente d'ordre au moins 2** mais nécessite le **calcul de dérivées** et un **bon choix d'initialisation**.
+
+* Les méthodes **d'itérations de point fixe** convergent sous des conditions portant sur la **fonction d'itération** $g$ et sa dérivée $g'$. Leur convergence est généralement **linéaire**, mais devient **quadratique** quand $g(c)=0$.
