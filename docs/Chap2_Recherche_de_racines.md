@@ -591,7 +591,7 @@ On note que le choix de point de départ est correct, car $f$ est à concavité 
 En adaptant la fonction Python donnée précédemment pour la méthode de Newton, avec un point de départ de votre choix, estimez la valeur de $\sqrt{2}$ avec une précision de $10^{-6}$.
 Combien d'itérations sont nécessaires pour obtenir cette précision ? Comparez cette valeur à celle obtenue pour les méthodes précédentes. Quelle est la méthode linéarisée la plus rapide ?
 
-NB: La méthode de Newton appliquée au cas de l'estimation de $\sqrt(2)$ est un cas particulier de la célèbre méthode d'Héron d'Alexandrie.
+NB: La méthode de Newton appliquée au cas de l'estimation de $\sqrt{2}$ est un cas particulier de la célèbre méthode d'Héron d'Alexandrie.
 
 ---
 
@@ -620,20 +620,40 @@ L'itération est dite **de point fixe**, et la fonction $g$ est la **fonction d'
 
 **Les méthodes linéarisées sont des méthodes de point fixe** : on obtient $x_{n+1}$ à partir de $x_n$ en évaluant toujours la même expression $x_{n+1}=g(x_n)$.
 
-Par exemple, dans notre problème de l'approximation de $\sqrt(2)$, résoudre $x^2-2=0$ revient à trouver le point fixe de $g(x)=x-\frac{f(x)}{f'(x)}=\frac{x+\frac{2}{x}}{2}$.
+Par exemple, dans notre problème de l'approximation de $\sqrt{2}$, résoudre $x^2-2=0$ revient à trouver le point fixe de $g(x)=x-\frac{f(x)}{f'(x)}=\frac{x+\frac{2}{x}}{2}$.
 
 ### Convergence
 
-|Théomère de la convergence globale des itérations de point fixe|
+|Théorème de la convergence globale des itérations de point fixe|
 |:-|
 |Soit $g$ une fonction continue de $[a,b]$ dans $\mathbb{R}$.|
 |**1. Hypothèse d'inclusion (ou de stabilité) :**|
 |Si $\forall x \in [a,b]$, $g(x) \in [a,b]$ alors $g$ admet un point fixe dans $[a,b]$.|
 |**2. Hypothèse de contraction stricte :**|
-|Si de plus, \exists $0<K<1$ tel que $\mid g(x)-g(y) \mid$ \leq K \mid x-y \mid \forall x,y \in [a,b]$|
+|Si de plus, $\exists K \in ]0,1[$ tel que $\mid g(x)-g(y) \mid \leq K \mid x-y \mid \forall x,y \in [a,b]$|
 |(on dit que $g$ est **strictement contractante**)|
 |alors $g$ admet un point fixe **unique** noté $c$ dans $[a,b]$|
 |et la suite $x_{n+1}=g(x_n)$ converge vers $c$ **pour toute valeur de départ $x_0$ dans $[a,b]$**.|
 |On appelle alors $c$ un **point attracteur**.|
+
+Une règle pratique pour vérifier **l'hypothèse de contraction** :
+Soit $g$ une fonction dérivable sur $[a,b]$, si $g'(x)$ vérifie $max_{[a,b]} \mid g'(x) \mid =k<1$ alors $g$ est strictement contractante sur $[a,b]$. 
+
+|Théorème|
+|:-|
+|Soit $g$ une fonction continue et dérivable de $[a,b]$ dans $\mathbb{R}$.|
+|Si $\forall x\in [a,b]$, $\mid g'(x) \mid >1$ alors la suite **diverge** si $x_0 \neq c$.|
+
+En pratique, il est souvent difficile de montrer la convergence globale.
+D'où l'utilité d'une étude de convergence locale :
+
+|Théorème de la convergence locale des itérations de point fixe|
+|:-|
+|Soit $c$ un point fixe d'une fonction $g$ dérivable au voisinage de $c$.|
+|Si $\mid g'(c) \mid < 1$ alors il existe $\delta >0$ tel que la suite $x_{n+1}=g(x_n)$ converge vers $c$ pour tout $x_0$ tel que $\mid x_0-c \mid < \delta$.|
+|Si $\mid g'(a) \mid > 1$ la convergence est impossible.|
+|Si $\mid g'(a) \mid = 1$ on peut avoir convergence ou divergence.|
+
+![Illustration de la convergence du point fixe](img/Chap2_point_fixe_convergence.png)
 
 ### Exemple
