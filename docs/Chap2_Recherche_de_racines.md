@@ -608,6 +608,32 @@ Cette transformation est **toujours possible** mais **pas unique**.
 
 ![Illustration du point fixe](img/Chap2_point_fixe.png)
 
+Dans la pratique, la méthode du point fixe consiste à transformer le problème $f(x)=0$ où $f:[a,b] \rightarrow \mathbb{R}$ en un problème équivalent $x=g(x)$, en passant par un **schéma itératif** $x_{n+1}=g(x_n)$ où $g$ est une fonction bien choisie.
+L'itération est dite **de point fixe**, et la fonction $g$ est la **fonction d'itération** associée.
+
+|Théorème du point fixe|
+|:-|
+|Soit $g$ une fonction continue et $(x_n)$ une suite générée par l'itération de point fixe $x_{n+1}=g(x_n)$.|
+|Si $\lim\limits_{n \to \infty} x_n = c$ alors par continuité de $g$ :|
+|$\lim\limits_{n \to \infty} g(x_n) = g(c) = c$|
+|Donc $c$ est un point fixe de $g$.|
+
+**Les méthodes linéarisées sont des méthodes de point fixe** : on obtient $x_{n+1}$ à partir de $x_n$ en évaluant toujours la même expression $x_{n+1}=g(x_n)$.
+
+Par exemple, dans notre problème de l'approximation de $\sqrt(2)$, résoudre $x^2-2=0$ revient à trouver le point fixe de $g(x)=x-\frac{f(x)}{f'(x)}=\frac{x+\frac{2}{x}}{2}$.
+
 ### Convergence
+
+|Théomère de la convergence globale des itérations de point fixe|
+|:-|
+|Soit $g$ une fonction continue de $[a,b]$ dans $\mathbb{R}$.|
+|**1. Hypothèse d'inclusion (ou de stabilité) :**|
+|Si $\forall x \in [a,b]$, $g(x) \in [a,b]$ alors $g$ admet un point fixe dans $[a,b]$.|
+|**2. Hypothèse de contraction stricte :**|
+|Si de plus, \exists $0<K<1$ tel que $\mid g(x)-g(y) \mid$ \leq K \mid x-y \mid \forall x,y \in [a,b]$|
+|(on dit que $g$ est **strictement contractante**)|
+|alors $g$ admet un point fixe **unique** noté $c$ dans $[a,b]$|
+|et la suite $x_{n+1}=g(x_n)$ converge vers $c$ **pour toute valeur de départ $x_0$ dans $[a,b]$**.|
+|On appelle alors $c$ un **point attracteur**.|
 
 ### Exemple
