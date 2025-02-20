@@ -764,6 +764,8 @@ En adaptant la fonction Python donnée précédemment pour la méthode du point 
 Combien d'itérations sont nécessaires pour obtenir cette précision ? Comparez cette valeur à celle obtenue pour la méthode de Newton.
 Expliquez pourquoi ces résultats sont identiques.
 
+---
+
 ## Vitesse de convergence des méthodes
 
 ### Méthode de la dichotomie
@@ -772,9 +774,61 @@ On rappelle que la méthode de la dichotomie converge de manière **linéaire**.
 
 ### Méthodes de point fixe
 
+Supposons que $g$ est dérivable $p \geq 1$ fois dans $[a,b]$ contenant le point fixe $c$.
+
+La formule de Taylor au voisinage de $c$, à l'itération $n$ est :
+
+$g(x_n) = g(c) + g'(c)(x_n-c) + g"(c)\frac{(x_n-c)^2}{2!} + ... + g^{(p)}(c)\frac{(x_n-c)^p}{p!}$
+
+D'où l'erreur absolue à l'itération $n+1$ :
+
+$e_{n+1} = x_{n+1}-c = g(x_n)-g(c) = g'(c)e_n + g"(c)\frac{e_n^2}{2!} + ... + g^{(p)}(c)\frac{e_n^p}{p!}$
+
+|Théorème|
+|:-|
+|La méthode du point fixe est d'ordre $p>1$ si et seulement si :|
+|$g^{(i)}(c)=0$ $\forall 1 \leq i \leq p-1$ et $g^{(p)}(c) \neq 0$|
+
+La méthode est convergente du 1er ordre (i.e. **linéaire**) si $g'(c) \neq 0$ et $\lim\limits_{n \to \infty} \frac{\mid e_{n+1} \mid}{\mid e_n \mid} < 1$.
+(C'est ce que l'on appelle le "facteur de réduction" de l'erreur).
+
+La méthode est convergente d'ordre 2 (i.e. **quadratique**) si $g'(c)=0$ et $g"(c) \neq 0$ et $\lim\limits_{n \to \infty} \frac{\mid e_{n+1} \mid}{\mid e_n \mid^2} = \frac{1}{2} \mid g"(c) \mid$.
+
 ### Méthode de la sécante
 
+On rappelle que dans le cas de la méthode de la sécante :
+
+$g(x) = x_0-f(x_0)\frac{x-x_0}{f(x)-f(x_0)}$
+
+Donc $g'(x) = -f(x_0) \frac{f(x)-f(x_0)-(x-x_0)f'(x)}{(f(x)-f(x_0))^2}$
+
+D'où $g'(c) = \frac{f(x_0)+f'(c)(c-x_0)}{f(x_0)}$
+
+D'après la formule de Taylor, il existe au moins un $c \in ]a,x_0[$ tel que :
+
+$f(x_0)+f'(c)(c-x_0) = f"(c)\frac{(c-x_0)^2}{2!}$
+
+Donc s'il n'y a pas de point d'inflexion, $g'(c) \neq 0$ et la méthode **converge linéairement**.
+
 ### Méthode de Newton
+
+On rappelle que dans le cas de la méthode de Newton :
+
+$g(x) = x-\frac{f(x)}{f'(x)}$
+
+Donc $g'(x) = 1 - \frac{f'(x)f'(x)-f(x)f"(x)}{f'(x)^2} = \frac{f(x)f"(x)}{f'(x)^2}$
+
+D'où $g'(c) = \frac{f(c)f"(c)}{f'(c)^2} = 0$
+
+De plus, $g"(x) = \frac{(f'(x)f"(x)+f(x)f"'(x))f'(x)^2-f(x)f"(x)(2f"(x)f'(x))}{f'(x)^4}$
+
+D'où $g"(c)=\frac{f"(c)}{f'(c)}$
+
+Par conséquent, si $c$ est un zéro **simple** de la fonction $f$ (i.e. $f"(c) \neq 0$) alors la méthode **converge quadratiquement**.
+
+Si $f"(c) = 0$, la convergence est **d'ordre supérieur à 2**.
+
+---
 
 ## Conclusions
 
