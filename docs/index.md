@@ -26,7 +26,7 @@ Vous trouverez dans ce cours des méthodes numériques pour résoudre différent
 
 L'objectif est qu'à la fin de ce cours vous soyez capables de :
 
-* **Choisir* une méthode numérique adaptée à un problème donné, en se basant sur les hypothèses d'**applicabilité** des méthodes, ainsi que sur leurs **performances** (simplicité, vitesse, stabilité, coût en mémoire, etc.).
+* **Choisir** une méthode numérique adaptée à un problème donné, en se basant sur les hypothèses d'**applicabilité** des méthodes, ainsi que sur leurs **performances** (simplicité, vitesse, stabilité, coût en mémoire, etc.).
 
 * **Implémenter** les différents algorithmes sous la forme de codes **Python**, avec des adaptations si besoin.
 
