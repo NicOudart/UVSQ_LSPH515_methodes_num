@@ -4,7 +4,6 @@ site_author: "Nicolas OUDART"
 
 theme:
   name: readthedocs
-
 nav:
   - Introduction: index.md
   - I. Représentation des nombres: Chap1_Representation_des_nombres.md
@@ -12,7 +11,6 @@ nav:
   - III. Interpolation polynomiale: Chap3_Interpolation_polynomiale.md
   - IV. Intégration numérique: Chap4_Integration_numerique.md
   - V. Systèmes linéaires: Chap5_Systemes_lineaires.md
-  
 markdown_extensions:
   - pymdownx.arithmatex:
       generic: true
