@@ -66,6 +66,53 @@ Et nous essayerons d'estimer la valeur de $f$ pour $x = 210$ (i.e. la durée du 
 
 ## Matrices de Vandermonde
 
+Une 1ère approche pour obtenir un polynôme d'interpolation est la suivante : déterminer les coefficients $a_i$ du polynôme en résolvant les $(n+1)$ équations de collocation $p(x_i) = f(x_i)$ pour $i=0,1,2,...,n$.
+
+Ceci revient à résoudre le système linéaire de $(n+1)$ équations à $(n+1)$ inconnues :
+
+$\begin{cases}
+a_0 + a_1 x_0 + a_2 x_0^2 + ... + a_n x_0^n = f(x_0)\\
+a_0 + a_1 x_1 + a_2 x_1^2 + ... + a_n x_1^n = f(x_1)\\
+...\\
+a_0 + a_1 x_n + a_2 x_n^2 + ... + a_n x_n^n = f(x_n)
+\end{cases}$
+
+Ce système admet une unique solution si les $x_i$ sont distincts 2 à 2.
+
+Il peut s'écrire sous la forme matricielle suivante :
+
+$\begin{pmatrix}
+  1 & x_0 & x_0^2 & \cdots & x_0^n \\
+  1 & x_1 & x_1^2 & \cdots & x_1^n \\
+  \vdots  & \vdots  & \ddots & \vdots  \\
+  1 & x_n & x_n^2 &\cdots & x_n^n 
+ \end{pmatrix}
+ \begin{pmatrix}
+  a_0\\
+  a_1\\
+  \vdots\\
+  a_n 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  f(x_0)\\
+  f(x_1)\\
+  \vdots\\
+  f(x_n) 
+ \end{pmatrix}$
+ 
+On reconnait ici une **matrice de Vandermonde**.
+
+La matrice de Vandermonde est inversible si et seulement si les $x_i$ sont distincts 2 à 2.
+
+Dans la pratique, l'inversion de la matrice de Vandermonde **ne conduit pas à une solution satisfaisante** :
+
+- Le nombre d'équations / d'inconnues croit avec le nombre de points d'interpolations, augmentant le nombre d'opérations de l'ordre de $2 n^3 / 3$.
+
+- Ce type de système est souvent mal conditionné, ce qui rend la solution numérique très sensible aux erreurs d'arrondi.
+
+C'est pourquoi dans la suite, on va préférer des techniques exprimant le polynôme dans **une autre base que la base canonique**.
+
 ## Polynômes de Lagrange
 
 ## Polynômes de Newton
