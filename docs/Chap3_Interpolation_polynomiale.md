@@ -44,7 +44,7 @@ Au cours de ce chapitre, nous appliquerons les différentes méthodes numérique
 
 La durée du jour (temps entre le lever et le coucher du soleil) en heures peut être approximée par la fonction $f$ suivante :
 
-$f(x) = \frac{48}{2 \pi} \arccos(\tan(\lambda) \tan(\arcsin(\sin(\alpha) \sin(\delta))))$
+$f(x) = \frac{48}{2 \pi} \arccos(\tan(\lambda) \tan(\arcsin(\sin(\frac{2 \pi x}{365}) \sin(\delta))))$
 
 avec $x$ le jour depuis l'équinoxe de printemps, $\lambda$ la latitude du lieu, et $\delta$ la latitude des tropiques.
 
@@ -56,13 +56,43 @@ D'où l'intérêt de n'évaluer la fonction qu'en un nombre limité de points, e
 
 Nous choisirons ici d'évaluer la fonction pour les 10 valeurs de $x$ suivantes :
 
-|x = jours depuis l'équinoxe de printemps|30     |60    |90    |120   |150    |180    |240    |270    |300    |330    |
-|:---------------------------------------|:-----:|:----:|:----:|:----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|
-|f(x) = durée du jour en heures          |10.2357|8.7281|8.0416|8.6296|10.0949|11.8506|15.1678|15.9488|15.4628|14.0441|
+|x = jours depuis l'équinoxe de printemps|30   |60  |90  |120 |150  |180  |240  |270  |300  |330  |
+|:---------------------------------------|:---:|:--:|:--:|:--:|:---:|:---:|:---:|:---:|:---:|:---:|
+|f(x) = durée du jour en heures          |10.24|8.73|8.04|8.63|10.09|11.84|15.16|15.95|15.47|14.06|
 
 Et nous essayerons d'estimer la valeur de $f$ pour $x = 210$ (i.e. la durée du jour en heures pour le 210ème jour depuis l'équinoxe de printemps) par interpolation polynomiale.
 
 ![Graphique de f](img/Chap3_exemple_fonction.gif)
+
+Sous Python on utilisera la bibliothèque Numpy :
+
+~~~
+import numpy as np
+~~~
+
+Puis, on définira les variables globales suivantes :
+
+~~~
+l = 48.81094*np.pi/180 #Latitude de l'UFR des sciences
+a = 23.438403*np.pi/180 #Latitude des tropiques
+~~~
+
+La fonction $f$ sera définie comme :
+
+~~~
+def f(d):
+    
+    return 48/(2*np.pi)*np.arccos(np.tan(l)*np.tan(np.arcsin(np.sin(a)*np.sin(d*2*np.pi/365.25))))
+~~~
+
+On calculera alors les 10 valeurs "connues" de la fonction de la manière suivante :
+
+~~~
+x = np.array([30,60,90,120,150,180,240,270,300,330],dtype='float')
+y = f(x)
+~~~
+
+(On a ici définit avec Numpy un vecteur de 10 valeurs $x$, auquel on a appliqué $f$. Le vecteur résultant est stocké dans $y$).
 
 ## Matrices de Vandermonde
 
@@ -114,6 +144,22 @@ Dans la pratique, l'inversion de la matrice de Vandermonde **ne conduit pas à u
 C'est pourquoi dans la suite, on va préférer des techniques exprimant le polynôme dans **une autre base que la base canonique**.
 
 ## Polynômes de Lagrange
+
+### L'algorithme
+
+|Base de Lagrange|
+|:-|
+|Soient des $x_i$ (avec $i=0,1,2,...,n$) 2 à 2 distincts.|
+|On appelle base de Lagrange relative aux points x_i les polynômes :|
+|$L_i(x) = \displaystyle\prod_{j=0 , j \neq i}^{n} \frac{(x-x_j)}{x_i-x_j}$|
+|soit $L_i(x) = \frac{(x-x_0)(x-x_1)...(x-x_n)}{(x_i-x_0)(x_i-x_1)...(x_i-x_n)}$|
+|$L_i$ vérifie $L_i(x_i)=1$ et $L_i(x_j)=0$ si $j \neq i$.|
+
+La famille des $(L_i(x))$ forme une base de l'ensemble des polynômes, et le polynôme qui interpoles les valeurs de $f(x_i)$ aux points $x_i$ s'écrit :
+
+$p(x) = \displaystyle\sum_{i=0}^{n} f(x_i) L_i(x) = f(x_0) L_0(x) + f(x_1) L_1(x) + ... + f(x_n) L_n(x)$
+
+### Exemple
 
 ## Polynômes de Newton
 
