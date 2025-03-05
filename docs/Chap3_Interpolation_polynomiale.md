@@ -159,6 +159,50 @@ La famille des $(L_i(x))$ forme une base de l'ensemble des polynômes, et le pol
 
 $p(x) = \displaystyle\sum_{i=0}^{n} f(x_i) L_i(x) = f(x_0) L_0(x) + f(x_1) L_1(x) + ... + f(x_n) L_n(x)$
 
+Voici l'algorithme sous la forme d'une fonction Python.
+
+Elle prend en entrée :
+
+* `x` le vecteur des abscisses des point connus.
+
+* `y` le vecteur des ordonnées des points connus.
+
+* `xp` l'abscisse du point que l'on veut interpoler.
+
+~~~
+def lagrange(x,y,xp):
+    
+    #Récupération du nombre de points connus :
+    n = len(x)
+    
+    #Initialisation de l'ordonnée du point interpolé yp :
+    yp = 0
+    
+    #1ère boucle sur les points connus (x[i],y[i]) :
+    for i in range(n):
+        
+        #Initialisation du polynôme de la base de Lagrange associé au i-ème 
+        #point connu Li :
+        Li = 1
+
+        #2ème boucle sur les abscisses connues x[j]:
+        for j in range(n):
+            
+            #Dans le cas où les 2 points connus x[i] et x[j] sont distincts,
+            #multiplication de Li par un coefficient obtenu avec xp, x[i] et 
+            #x[j], de telle façon que Li = 1 si xp = x[i] et Li = 0 si xp = x[j] 
+            #(voir formule du cours) :
+            if j!=i:
+                Li = Li*(xp-x[j])/(x[i]-x[j])
+           
+        #Addition à yp de la valeur du polynôme y[i]xLi, qui est égal à y[i] en 
+        #x[i] et nul pour tout les x[j] (voir formule du cours):
+        yp = yp + y[i]*Li
+        
+    #Renvoyer l'ordonnée du point interpolé :    
+    return yp
+~~~
+
 ### Exemple
 
 ## Polynômes de Newton
