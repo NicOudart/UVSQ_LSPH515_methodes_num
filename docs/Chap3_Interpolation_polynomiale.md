@@ -62,7 +62,7 @@ Nous choisirons ici d'évaluer la fonction pour les 10 valeurs de $x$ suivantes 
 
 Et nous essayerons d'estimer la valeur de $f$ pour $x = 210$ (i.e. la durée du jour en heures pour le 210ème jour depuis l'équinoxe de printemps) par interpolation polynomiale.
 
-![Graphique de f](img/Chap3_exemple_fonction.png)
+![Graphique de f](img/Chap3_exemple_fonction.gif)
 
 ## Matrices de Vandermonde
 
