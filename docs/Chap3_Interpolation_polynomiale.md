@@ -44,7 +44,7 @@ Au cours de ce chapitre, nous appliquerons les différentes méthodes numérique
 
 La durée du jour (temps entre le lever et le coucher du soleil) en heures peut être approximée par la fonction $f$ suivante :
 
-$f(x) = \frac{48}{2 \pi} \arccos{\tan{\lambda} \tan{\arcsin{\sin{\alpha} \sin{\delta}}}}$
+$f(x) = \frac{48}{2 \pi} \arccos(\tan(\lambda) \tan(\arcsin(\sin(\alpha) \sin(\delta))))$
 
 avec $x$ le jour depuis l'équinoxe de printemps, $\lambda$ la latitude du lieu, et $\delta$ la latitude des tropiques.
 
