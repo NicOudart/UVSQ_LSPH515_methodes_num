@@ -205,6 +205,19 @@ def lagrange(x,y,xp):
 
 ### Exemple
 
+Voici la construction du polynôme de Lagrange pour notre problème exemple :
+
+![Graphique de f](img/Chap3_exemple_lagrange.gif)
+
+On observe bien que pour $i=0,1,...,9$, chaque $f(x_i)L_i(x)$ passe par $f(x_i)$ en $x = x_i$ et par 0 en $x = x_j$ pour $j \neq i$.
+Le polynôme construit passe bien par $f(x_i)$ pour tous les $x_i$.
+
+On trouve une valeur interpolée en $x = 210$ d'environ 13.61.
+
+**Exercice :**
+
+En modifiant la fonction Python donnée précédemment pour l'interpolation de Lagrange, ainsi que la fonction $f$, déterminez l'erreur d'interpolation en $x = 210$ avec 4 chiffres significatifs.
+
 ## Polynômes de Newton
 
 ## Erreur d'interpolation
