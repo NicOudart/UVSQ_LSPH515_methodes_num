@@ -159,6 +159,10 @@ La famille des $(L_i(x))$ forme une base de l'ensemble des polynômes, et le pol
 
 $p(x) = \displaystyle\sum_{i=0}^{n} f(x_i) L_i(x) = f(x_0) L_0(x) + f(x_1) L_1(x) + ... + f(x_n) L_n(x)$
 
+$p$ vérifie bien que $\forall i = 0,1,2,...,n$, $p(x_i) = f(x_i)$ et est unique si les points $x_i$ sont distincts.
+
+Les coefficients du polynôme sont directements les valeurs $f(x_i)$, qui sont connues.
+
 Voici l'algorithme sous la forme d'une fonction Python.
 
 Elle prend en entrée :
@@ -203,6 +207,12 @@ def lagrange(x,y,xp):
     return yp
 ~~~
 
+La base des polynômes de Lagrange permet de ne pas avoir à résoudre un système linéaire de $n+1$ équations à $n+1$ inconnues.
+Lorsque $n$ est petit, il reste cependant plus simple de résoudre le système d'équations.
+
+Un désaventage pratique de l'interpolation de Lagrange est le fait qu'il soit nécessaire tout recalculer si on ajoute un point d'interpolation.
+L'interpolation de Newton, présentée dans la suite, n'a pas ce désaventage.
+
 ### Exemple
 
 Voici la construction du polynôme de Lagrange pour notre problème exemple :
@@ -219,6 +229,24 @@ On trouve une valeur interpolée en $x = 210$ d'environ 13.61.
 En modifiant la fonction Python donnée précédemment pour l'interpolation de Lagrange, ainsi que la fonction $f$, déterminez l'erreur d'interpolation en $x = 210$ avec 4 chiffres significatifs.
 
 ## Polynômes de Newton
+
+### L'algorithme
+
+|Base de Newton|
+|:-|
+|Soient des $x_i$ (avec $i=0,1,2,...,n$) 2 à 2 distincts.|
+|On appelle base de Newton relative aux points $x_i$ les polynômes :|
+|$v_0(x) = 1$|
+|$v_i(x) = \displaystyle\prod_{j=0}^{i-1} (x-x_j) = (x-x_0)(x-x_1)...(x-x_{i-1})$|
+|$v_i$ vérifie $v_i(x_j) = 0$ pour $j<i$.|
+
+La famille $(v_i(x))$ forme une base de l'ensemble des polynômes, et le polynôme qui interpole les valeurs $f(x_i)$ aux points $x_i$ s'écrit :
+
+$p(x) = \displaystyle\sum_{i=0}^{n} c_i v_i(x) = c_0 v_0(x) + c_1 v_1(x) + ... + c_n v_n(x)$
+
+avec des coefficients c_i à déterminer, tels que $p(x_i) = f(x_i) \forall i = 0,1,2,...,n$.
+
+$p$ est unique si les $x_i$ sont 2 à 2 distincts.
 
 ## Erreur d'interpolation
 
