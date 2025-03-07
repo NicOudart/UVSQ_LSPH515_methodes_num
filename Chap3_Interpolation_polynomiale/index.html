@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Nicolas OUDART" /><link rel="canonical" href="https://nicoudart.github.io/UVSQ_LSPH515_methodes_num/Chap3_Interpolation_polynomiale/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>III. Interpolation polynomiale - UVSQ_LSPH515_methodes_num</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "III. Interpolation polynomiale";
+        var mkdocs_page_input_path = "Chap3_Interpolation_polynomiale.md";
+        var mkdocs_page_url = "/UVSQ_LSPH515_methodes_num/Chap3_Interpolation_polynomiale/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> UVSQ_LSPH515_methodes_num
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Introduction</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Chap1_Representation_des_nombres/">I. Représentation des nombres</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Chap2_Recherche_de_racines/">II. Recherche de racines</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">III. Interpolation polynomiale</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#position-du-probleme">Position du problème</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#motivation">Motivation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#existence-et-unicite-dun-polynome-dinterpolation">Existence et unicité d'un polynôme d'interpolation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exemple-de-probleme">Exemple de problème</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#matrices-de-vandermonde">Matrices de Vandermonde</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#polynomes-de-lagrange">Polynômes de Lagrange</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#lalgorithme">L'algorithme</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exemple">Exemple</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#polynomes-de-newton">Polynômes de Newton</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#lalgorithme_1">L'algorithme</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exemple_1">Exemple</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#erreur-dinterpolation">Erreur d'interpolation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#interpolation-aux-noeuds-de-chebychev">Interpolation aux noeuds de Chebychev</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#interpolation-par-morceaux">Interpolation par morceaux</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#interpolation-affine">Interpolation affine</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#interpolation-par-fonctions-splines">Interpolation par fonctions splines</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Chap4_Integration_numerique/">IV. Intégration numérique</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Chap5_Systemes_lineaires/">V. Systèmes linéaires</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">UVSQ_LSPH515_methodes_num</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">III. Interpolation polynomiale</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="chapitre-iii-interpolation-polynomiale">Chapitre III : Interpolation polynomiale</h1>
+<p>Ce chapitre porte sur les méthodes numériques pour l'approximation de valeures inconnues d'une fonction à partir des valeurs connues, par interpolation avec un polynôme.</p>
+<hr />
+<h2 id="position-du-probleme">Position du problème</h2>
+<h3 id="motivation">Motivation</h3>
+<p>Soit une fonction <span class="arithmatex">\(f(x)\)</span> connue en seulement <span class="arithmatex">\(n+1\)</span> points, appelés <strong>points</strong> ou <strong>noeuds d'interpolation</strong> <span class="arithmatex">\((x_i,f(x_i))\)</span> avec <span class="arithmatex">\(i=0,1,2,...,n\)</span> de l'intervalle <span class="arithmatex">\([a,b]\)</span>.
+Peut-on approcher <span class="arithmatex">\(f(x)\)</span> pour tout <span class="arithmatex">\(x\)</span> de <span class="arithmatex">\([a,b]\)</span> par une fonction ?</p>
+<p>Il existe une infinité de fonctions d'interpolation, mais le plus simple est d'approcher la fonction par un <strong>polynôme de degré suffisamment élevé</strong> pour que sa courbe passe par les point d'interpolation.</p>
+<p>Un polynôme <span class="arithmatex">\(p\)</span> de degré inférieur ou égal à <span class="arithmatex">\(n\)</span> s'exprime dans la <strong>base canonique</strong> <span class="arithmatex">\({1,x,x^2,...,x^n}\)</span> de la manière suivante :</p>
+<p><span class="arithmatex">\(p(x) = \displaystyle\sum_{k=0}^{n} a_k x^k\)</span> où les <span class="arithmatex">\(a_k\)</span> sont les coefficients du polynôme.</p>
+<p><strong>L'interpolation polynomiale consiste donc à déterminer les coefficients <span class="arithmatex">\(a_k\)</span> tels que <span class="arithmatex">\(p(x_i) = f(x_i)\)</span> pour <span class="arithmatex">\(i=0,1,2,...,n\)</span>.</strong></p>
+<p><strong>NB :</strong> L'interpolation polynomiale pourra sont utiles pour les méthodes numériques de calcul d'intégrales et de dérivées.</p>
+<p><strong>Attention !</strong> L'interpolation polynomiale et l'approximation polynomiales sont des approches différentes.
+L'approximation polynomiale de données bruitées cherche un polynôme de degré inférieur au nombre de données qui ne passe pas nécessairement par tous les points connus.</p>
+<h3 id="existence-et-unicite-dun-polynome-dinterpolation">Existence et unicité d'un polynôme d'interpolation</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Théorème d'Evariste Galois</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Un polynôme de degré <span class="arithmatex">\(n\)</span> a <strong>au plus</strong> <span class="arithmatex">\(n\)</span> racines qui peuvent être réelles ou complexes conjuguées.</td>
+</tr>
+</tbody>
+</table>
+<p>D'où le corollaire :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Corollaire</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">On ne peut faire passer par <span class="arithmatex">\(n+1\)</span> points distincts <strong>qu'un seul</strong> polynôme de degré n.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Toutes les méthodes présentées dans la suite de ce chapitre doivent donc aboutir au même polynôme</strong>.</p>
+<h3 id="exemple-de-probleme">Exemple de problème</h3>
+<p>Au cours de ce chapitre, nous appliquerons les différentes méthodes numériques d'interpolation polynomiale à un même exemple : <strong>l'estimation de la durée du jour à l'UFR des sciences de l'UVSQ</strong>.</p>
+<p>La durée du jour (temps entre le lever et le coucher du soleil) en heures peut être approximée par la fonction <span class="arithmatex">\(f\)</span> suivante :</p>
+<p><span class="arithmatex">\(f(x) = \frac{48}{2 \pi} \arccos(\tan(\lambda) \tan(\arcsin(\sin(\frac{2 \pi x}{365}) \sin(\delta))))\)</span></p>
+<p>avec <span class="arithmatex">\(x\)</span> le jour depuis l'équinoxe de printemps, <span class="arithmatex">\(\lambda\)</span> la latitude du lieu, et <span class="arithmatex">\(\delta\)</span> la latitude des tropiques.</p>
+<p>On sait que <span class="arithmatex">\(\delta \approx 23.438403°\)</span>.
+On prendra ici l'exemple de l'UFR des sciences de l'UVSQ, dont la latitude est <span class="arithmatex">\(\lambda \approx 48.81094°\)</span>.</p>
+<p>On peut voir que cette formule implique 6 appels à des fonctions trigonométriques, ce qui peut rendre non négligeable le temps nécessaire pour évaluer <span class="arithmatex">\(f\)</span> en un grand nombre de points.
+D'où l'intérêt de n'évaluer la fonction qu'en un nombre limité de points, et d'utiliser l'interpolation polynomiale pour déterminer d'autres valeurs de <span class="arithmatex">\(f(x)\)</span>.</p>
+<p>Nous choisirons ici d'évaluer la fonction pour les 10 valeurs de <span class="arithmatex">\(x\)</span> suivantes :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">x = jours depuis l'équinoxe de printemps</th>
+<th style="text-align: center;">30</th>
+<th style="text-align: center;">60</th>
+<th style="text-align: center;">90</th>
+<th style="text-align: center;">120</th>
+<th style="text-align: center;">150</th>
+<th style="text-align: center;">180</th>
+<th style="text-align: center;">240</th>
+<th style="text-align: center;">270</th>
+<th style="text-align: center;">300</th>
+<th style="text-align: center;">330</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">f(x) = durée du jour en heures</td>
+<td style="text-align: center;">10.24</td>
+<td style="text-align: center;">8.73</td>
+<td style="text-align: center;">8.04</td>
+<td style="text-align: center;">8.63</td>
+<td style="text-align: center;">10.09</td>
+<td style="text-align: center;">11.84</td>
+<td style="text-align: center;">15.16</td>
+<td style="text-align: center;">15.95</td>
+<td style="text-align: center;">15.47</td>
+<td style="text-align: center;">14.06</td>
+</tr>
+</tbody>
+</table>
+<p>Et nous essayerons d'estimer la valeur de <span class="arithmatex">\(f\)</span> pour <span class="arithmatex">\(x = 210\)</span> (i.e. la durée du jour en heures pour le 210ème jour depuis l'équinoxe de printemps) par interpolation polynomiale.</p>
+<p><img alt="Graphique de f" src="../img/Chap3_exemple_fonction.gif" /></p>
+<p>Sous Python on utilisera la bibliothèque Numpy :</p>
+<pre><code>import numpy as np
+</code></pre>
+<p>Puis, on définira les variables globales suivantes :</p>
+<pre><code>l = 48.81094*np.pi/180 #Latitude de l'UFR des sciences
+a = 23.438403*np.pi/180 #Latitude des tropiques
+</code></pre>
+<p>La fonction <span class="arithmatex">\(f\)</span> sera définie comme :</p>
+<pre><code>def f(d):
+
+    return 48/(2*np.pi)*np.arccos(np.tan(l)*np.tan(np.arcsin(np.sin(a)*np.sin(d*2*np.pi/365.25))))
+</code></pre>
+<p>On calculera alors les 10 valeurs "connues" de la fonction de la manière suivante :</p>
+<pre><code>x = np.array([30,60,90,120,150,180,240,270,300,330],dtype='float')
+y = f(x)
+</code></pre>
+<p>(On a ici définit avec Numpy un vecteur de 10 valeurs <span class="arithmatex">\(x\)</span>, auquel on a appliqué <span class="arithmatex">\(f\)</span>. Le vecteur résultant est stocké dans <span class="arithmatex">\(y\)</span>).</p>
+<h2 id="matrices-de-vandermonde">Matrices de Vandermonde</h2>
+<p>Une 1ère approche pour obtenir un polynôme d'interpolation est la suivante : déterminer les coefficients <span class="arithmatex">\(a_i\)</span> du polynôme en résolvant les <span class="arithmatex">\((n+1)\)</span> équations de collocation <span class="arithmatex">\(p(x_i) = f(x_i)\)</span> pour <span class="arithmatex">\(i=0,1,2,...,n\)</span>.</p>
+<p>Ceci revient à résoudre le système linéaire de <span class="arithmatex">\((n+1)\)</span> équations à <span class="arithmatex">\((n+1)\)</span> inconnues :</p>
+<p><span class="arithmatex">\(\begin{cases}
+a_0 + a_1 x_0 + a_2 x_0^2 + ... + a_n x_0^n = f(x_0)\\
+a_0 + a_1 x_1 + a_2 x_1^2 + ... + a_n x_1^n = f(x_1)\\
+...\\
+a_0 + a_1 x_n + a_2 x_n^2 + ... + a_n x_n^n = f(x_n)
+\end{cases}\)</span></p>
+<p>Ce système admet une unique solution si les <span class="arithmatex">\(x_i\)</span> sont distincts 2 à 2.</p>
+<p>Il peut s'écrire sous la forme matricielle suivante :</p>
+<p><span class="arithmatex">\(\begin{pmatrix}
+  1 &amp; x_0 &amp; x_0^2 &amp; \cdots &amp; x_0^n \\
+  1 &amp; x_1 &amp; x_1^2 &amp; \cdots &amp; x_1^n \\
+  \vdots  &amp; \vdots  &amp; \ddots &amp; \vdots  \\
+  1 &amp; x_n &amp; x_n^2 &amp;\cdots &amp; x_n^n 
+ \end{pmatrix}
+ \begin{pmatrix}
+  a_0\\
+  a_1\\
+  \vdots\\
+  a_n 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  f(x_0)\\
+  f(x_1)\\
+  \vdots\\
+  f(x_n) 
+ \end{pmatrix}\)</span></p>
+<p>On reconnait ici une <strong>matrice de Vandermonde</strong>.</p>
+<p>La matrice de Vandermonde est inversible si et seulement si les <span class="arithmatex">\(x_i\)</span> sont distincts 2 à 2.</p>
+<p>Dans la pratique, l'inversion de la matrice de Vandermonde <strong>ne conduit pas à une solution satisfaisante</strong> :</p>
+<ul>
+<li>
+<p>Le nombre d'équations / d'inconnues croit avec le nombre de points d'interpolations, augmentant le nombre d'opérations de l'ordre de <span class="arithmatex">\(2 n^3 / 3\)</span>.</p>
+</li>
+<li>
+<p>Ce type de système est souvent mal conditionné, ce qui rend la solution numérique très sensible aux erreurs d'arrondi.</p>
+</li>
+</ul>
+<p>C'est pourquoi dans la suite, on va préférer des techniques exprimant le polynôme dans <strong>une autre base que la base canonique</strong>.</p>
+<h2 id="polynomes-de-lagrange">Polynômes de Lagrange</h2>
+<h3 id="lalgorithme">L'algorithme</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Base de Lagrange</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Soient des <span class="arithmatex">\(x_i\)</span> (avec <span class="arithmatex">\(i=0,1,2,...,n\)</span>) 2 à 2 distincts.</td>
+</tr>
+<tr>
+<td style="text-align: left;">On appelle base de Lagrange relative aux points x_i les polynômes :</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(L_i(x) = \displaystyle\prod_{j=0 , j \neq i}^{n} \frac{(x-x_j)}{x_i-x_j}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">soit <span class="arithmatex">\(L_i(x) = \frac{(x-x_0)(x-x_1)...(x-x_n)}{(x_i-x_0)(x_i-x_1)...(x_i-x_n)}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(L_i\)</span> vérifie <span class="arithmatex">\(L_i(x_i)=1\)</span> et <span class="arithmatex">\(L_i(x_j)=0\)</span> si <span class="arithmatex">\(j \neq i\)</span>.</td>
+</tr>
+</tbody>
+</table>
+<p>La famille des <span class="arithmatex">\((L_i(x))\)</span> forme une base de l'ensemble des polynômes, et le polynôme qui interpoles les valeurs de <span class="arithmatex">\(f(x_i)\)</span> aux points <span class="arithmatex">\(x_i\)</span> s'écrit :</p>
+<p><span class="arithmatex">\(p(x) = \displaystyle\sum_{i=0}^{n} f(x_i) L_i(x) = f(x_0) L_0(x) + f(x_1) L_1(x) + ... + f(x_n) L_n(x)\)</span></p>
+<p><span class="arithmatex">\(p\)</span> vérifie bien que <span class="arithmatex">\(\forall i = 0,1,2,...,n\)</span>, <span class="arithmatex">\(p(x_i) = f(x_i)\)</span> et est unique si les points <span class="arithmatex">\(x_i\)</span> sont distincts.</p>
+<p>Les coefficients du polynôme sont directements les valeurs <span class="arithmatex">\(f(x_i)\)</span>, qui sont connues.</p>
+<p>Voici l'algorithme sous la forme d'une fonction Python.</p>
+<p>Elle prend en entrée :</p>
+<ul>
+<li>
+<p><code>x</code> le vecteur des abscisses des point connus.</p>
+</li>
+<li>
+<p><code>y</code> le vecteur des ordonnées des points connus.</p>
+</li>
+<li>
+<p><code>xp</code> l'abscisse du point que l'on veut interpoler.</p>
+</li>
+</ul>
+<pre><code>def lagrange(x,y,xp):
+
+    #Récupération du nombre de points connus :
+    n = len(x)
+
+    #Initialisation de l'ordonnée du point interpolé yp :
+    yp = 0
+
+    #1ère boucle sur les points connus (x[i],y[i]) :
+    for i in range(n):
+
+        #Initialisation du polynôme de la base de Lagrange associé au i-ème 
+        #point connu Li :
+        Li = 1
+
+        #2ème boucle sur les abscisses connues x[j]:
+        for j in range(n):
+
+            #Dans le cas où les 2 abscisses connues x[i] et x[j] sont distinctes,
+            #multiplication de Li par un coefficient obtenu avec xp, x[i] et 
+            #x[j], de telle façon que Li = 1 si xp = x[i] et Li = 0 si xp = x[j] 
+            #(voir formule du cours) :
+            if j!=i:
+                Li = Li*(xp-x[j])/(x[i]-x[j])
+
+        #Addition à yp de la valeur du polynôme y[i] Li, qui est égal à y[i] en 
+        #x[i] et nul pour tout les x[j] (voir formule du cours):
+        yp = yp + y[i]*Li
+
+    #Renvoyer l'ordonnée du point interpolé :    
+    return yp
+</code></pre>
+<p>La base des polynômes de Lagrange permet de ne pas avoir à résoudre un système linéaire de <span class="arithmatex">\(n+1\)</span> équations à <span class="arithmatex">\(n+1\)</span> inconnues.
+Lorsque <span class="arithmatex">\(n\)</span> est petit, il reste cependant plus simple de résoudre le système d'équations.</p>
+<p>Un désaventage pratique de l'interpolation de Lagrange est le fait qu'il soit nécessaire tout recalculer si on ajoute un point d'interpolation.
+L'interpolation de Newton, présentée dans la suite, n'a pas ce désaventage.</p>
+<h3 id="exemple">Exemple</h3>
+<p>Voici la construction du polynôme de Lagrange pour notre problème exemple :</p>
+<p><img alt="Graphique de f" src="../img/Chap3_exemple_lagrange.gif" /></p>
+<p>On observe bien que pour <span class="arithmatex">\(i=0,1,...,9\)</span>, chaque <span class="arithmatex">\(f(x_i)L_i(x)\)</span> passe par <span class="arithmatex">\(f(x_i)\)</span> en <span class="arithmatex">\(x = x_i\)</span> et par 0 en <span class="arithmatex">\(x = x_j\)</span> pour <span class="arithmatex">\(j \neq i\)</span>.
+Le polynôme construit passe bien par <span class="arithmatex">\(f(x_i)\)</span> pour tous les <span class="arithmatex">\(x_i\)</span>.</p>
+<p>On trouve une valeur interpolée en <span class="arithmatex">\(x = 210\)</span> d'environ 13.61.</p>
+<p><strong>Exercice :</strong></p>
+<p>En modifiant la fonction Python donnée précédemment pour l'interpolation de Lagrange, ainsi que la fonction <span class="arithmatex">\(f\)</span>, déterminez l'erreur d'interpolation en <span class="arithmatex">\(x = 210\)</span> avec 4 chiffres significatifs.</p>
+<h2 id="polynomes-de-newton">Polynômes de Newton</h2>
+<h3 id="lalgorithme_1">L'algorithme</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Base de Newton</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Soient des <span class="arithmatex">\(x_i\)</span> (avec <span class="arithmatex">\(i=0,1,2,...,n\)</span>) 2 à 2 distincts.</td>
+</tr>
+<tr>
+<td style="text-align: left;">On appelle base de Newton relative aux points <span class="arithmatex">\(x_i\)</span> les polynômes :</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(v_0(x) = 1\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(v_i(x) = \displaystyle\prod_{j=0}^{i-1} (x-x_j) = (x-x_0)(x-x_1)...(x-x_{i-1})\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(v_i\)</span> vérifie <span class="arithmatex">\(v_i(x_j) = 0\)</span> pour <span class="arithmatex">\(j&lt;i\)</span>.</td>
+</tr>
+</tbody>
+</table>
+<p>La famille <span class="arithmatex">\((v_i(x))\)</span> forme une base de l'ensemble des polynômes, et le polynôme qui interpole les valeurs <span class="arithmatex">\(f(x_i)\)</span> aux points <span class="arithmatex">\(x_i\)</span> s'écrit :</p>
+<p><span class="arithmatex">\(p(x) = \displaystyle\sum_{i=0}^{n} c_i v_i(x) = c_0 v_0(x) + c_1 v_1(x) + ... + c_n v_n(x)\)</span></p>
+<p>avec des coefficients c_i à déterminer, tels que <span class="arithmatex">\(p(x_i) = f(x_i) \forall i = 0,1,2,...,n\)</span>.</p>
+<p><span class="arithmatex">\(p\)</span> est unique si les <span class="arithmatex">\(x_i\)</span> sont 2 à 2 distincts.</p>
+<p>L'un des intérêts de la base de Newton est que si l'on ajoute un nouveau point d'interpolation <span class="arithmatex">\((x_{n+1},f(x_{n+1}))\)</span>, les coefficients <span class="arithmatex">\(c_0,c_1,c_2,...,c_n\)</span> restent inchangés et <strong>il suffit de calculer <span class="arithmatex">\(c_{n+1}\)</span> et d'ajouter un terme <span class="arithmatex">\(c_{n+1} v_{n+1}\)</span> à l'expression de <span class="arithmatex">\(p\)</span></strong>.</p>
+<p>Les <span class="arithmatex">\(c_i\)</span> sont les solutions du système linéaire (triangulaire inférieur) suivant :</p>
+<p><span class="arithmatex">\(\begin{cases}
+f(x_0) = c_0 v_0(x_0) = c_0\\
+f(x_1) = c_0 + c_1 v_1(x_1) = f(x_0) + c_1 (x_1-x_0)\\
+f(x_2) = c_0 + c_1 v_1(x_2) + c_2 v_2(x_2) = f(x_0) + c_1 (x_2-x_0) + c_2 (x_2-x_0)(x_2-x_1)\\
+...\\
+f(x_n) = c_0 + \displaystyle\sum_{i=1}^{n} c_i v_i(x_n)
+\end{cases}\)</span></p>
+<p>Ce système est en apparence simple, et peut être résolu de proche en proche.
+Mais dans la pratique, les expressions des <span class="arithmatex">\(c_i\)</span> deviennent de plus en plus complexes.</p>
+<p>C'est pourquoi on fait appel aux <strong>différences divisées</strong> pour exprimer les coefficients de façon compacte.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Les différences divisées</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Soit <span class="arithmatex">\(f\)</span> une fonction définie aux points <span class="arithmatex">\(x_i\)</span>, 2 à 2 distincts.</td>
+</tr>
+<tr>
+<td style="text-align: left;">On définit les différences divisées par récurrence comme suit :</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(\begin{cases} f[x_i] = f(x_i), i=0,...,n\\ f[x_i...x_{i+k}] = \frac{f[x_i...x_{i+k-1}]-f[x_{i+1}...x_{i+k}]}{x_i-x_{i+k}}, i=0,...,n \end{cases}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">avec <span class="arithmatex">\(k\)</span> l'ordre de la récurrence.</td>
+</tr>
+</tbody>
+</table>
+<p>Les coefficients <span class="arithmatex">\(c_i\)</span> peuvent être calculés par récurrence à partir des différences divisées de la manière suivante :</p>
+<p><span class="arithmatex">\(c_i = f[x_0 x_1 x_i] = \frac{f[x_0 x_1 ... x_{i-1}]-f[x_1 x_2 ... x_i]}{x_0-x_i}\)</span></p>
+<p>C'est ce que l'on appelle la <strong>différence divisée d'ordre i</strong>.</p>
+<p>Le polynôme d'interpolation de Newton de degré <span class="arithmatex">\(n\)</span> qui interpole les valeurs <span class="arithmatex">\(f(x_i)\)</span> aux points <span class="arithmatex">\(x_i\)</span> <span class="arithmatex">\((i=0,1,2,...,n)\)</span>, distincts 2 à 2, s'écrit donc :</p>
+<p><span class="arithmatex">\(p(x) = \displaystyle\sum_{i=0}^{n} f[x_0 x_1 ... x_i] v_i(x)\)</span></p>
+<p>Soit <span class="arithmatex">\(p(x) = f[x_0] + f[x_0 x_1] (x-x_0) + f[x_0 x_1 x_2] (x-x_0)(x-x_1) + ... + f[x_0 x_1 ... x_n] \displaystyle\prod_{j=0}^{n-1} (x-x_j)\)</span></p>
+<p>Le calcul <strong>effectif</strong> du polynôme d'interpolation se fait donc de la manière suivante :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"><span class="arithmatex">\(i=0\)</span></th>
+<th style="text-align: center;"><span class="arithmatex">\(i=1\)</span></th>
+<th style="text-align: center;"><span class="arithmatex">\(i=2\)</span></th>
+<th style="text-align: center;">...</th>
+<th style="text-align: center;"><span class="arithmatex">\(i=n\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><span class="arithmatex">\(x_0\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(f[x_0] = c_0\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">...</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: center;"><span class="arithmatex">\(x_1\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(f[x_1]\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(f[x_0 x_1] = c_1\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">...</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: center;"><span class="arithmatex">\(x_2\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(f[x_2]\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(f[x_1 x_2]\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(f[x_0 x_1 x_2] = c_2\)</span></td>
+<td style="text-align: center;">...</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: center;">...</td>
+<td style="text-align: center;">...</td>
+<td style="text-align: center;">...</td>
+<td style="text-align: center;">...</td>
+<td style="text-align: center;">...</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: center;"><span class="arithmatex">\(x_n\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(f[x_n]\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(f[x_{n-1} x_n]\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(f[x_{n-2} x_{n-1} x_n]\)</span></td>
+<td style="text-align: center;">...</td>
+<td style="text-align: center;"><span class="arithmatex">\(f[x_0 x_1 ... x_n] = c_n\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Seules les valeurs sur la diagonale interviennent dans l'expression du polynôme d'interpolation de Newton.</p>
+<p>Si on ajoute un nouveau point d'interpolation <span class="arithmatex">\((x_{n+1})\)</span>, il suffit d'ajouter une ligne au tableau.</p>
+<h3 id="exemple_1">Exemple</h3>
+<h2 id="erreur-dinterpolation">Erreur d'interpolation</h2>
+<h2 id="interpolation-aux-noeuds-de-chebychev">Interpolation aux noeuds de Chebychev</h2>
+<h2 id="interpolation-par-morceaux">Interpolation par morceaux</h2>
+<h3 id="interpolation-affine">Interpolation affine</h3>
+<h3 id="interpolation-par-fonctions-splines">Interpolation par fonctions splines</h3>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../Chap2_Recherche_de_racines/" class="btn btn-neutral float-left" title="II. Recherche de racines"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Chap4_Integration_numerique/" class="btn btn-neutral float-right" title="IV. Intégration numérique">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../Chap2_Recherche_de_racines/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../Chap4_Integration_numerique/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../javascripts/mathjax.js"></script>
+      <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
