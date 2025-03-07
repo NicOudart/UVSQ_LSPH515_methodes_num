@@ -192,14 +192,14 @@ def lagrange(x,y,xp):
         #2ème boucle sur les abscisses connues x[j]:
         for j in range(n):
             
-            #Dans le cas où les 2 points connus x[i] et x[j] sont distincts,
+            #Dans le cas où les 2 abscisses connues x[i] et x[j] sont distinctes,
             #multiplication de Li par un coefficient obtenu avec xp, x[i] et 
             #x[j], de telle façon que Li = 1 si xp = x[i] et Li = 0 si xp = x[j] 
             #(voir formule du cours) :
             if j!=i:
                 Li = Li*(xp-x[j])/(x[i]-x[j])
            
-        #Addition à yp de la valeur du polynôme y[i]xLi, qui est égal à y[i] en 
+        #Addition à yp de la valeur du polynôme y[i] Li, qui est égal à y[i] en 
         #x[i] et nul pour tout les x[j] (voir formule du cours):
         yp = yp + y[i]*Li
         
@@ -247,6 +247,8 @@ $p(x) = \displaystyle\sum_{i=0}^{n} c_i v_i(x) = c_0 v_0(x) + c_1 v_1(x) + ... +
 avec des coefficients c_i à déterminer, tels que $p(x_i) = f(x_i) \forall i = 0,1,2,...,n$.
 
 $p$ est unique si les $x_i$ sont 2 à 2 distincts.
+
+### Exemple
 
 ## Erreur d'interpolation
 
