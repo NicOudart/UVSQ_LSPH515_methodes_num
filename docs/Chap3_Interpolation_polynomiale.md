@@ -270,8 +270,8 @@ C'est pourquoi on fait appel aux **différences divisées** pour exprimer les co
 |Soit $f$ une fonction définie aux points $x_i$, 2 à 2 distincts.|
 |On définit les différences divisées par récurrence comme suit :|
 |$\begin{cases}
-f[x_i] = f(x_i) (ordre 0) pour i=0,...,n\\
-f[x_i...x_{i+k}] = \frac{f[x_i...x_{i+k-1}]-f[x_{i+1}...x_{i+k}]}{x_i-x_{i+k}} (ordre k>0) pour i=0,...,n
+f[x_i] = f(x_i), i=0,...,n\\
+f[x_i...x_{i+k}] = \frac{f[x_i...x_{i+k-1}]-f[x_{i+1}...x_{i+k}]}{x_i-x_{i+k}}, i=0,...,n
 \end{cases}$|
 
 Les coefficients $c_i$ peuvent être calculés par récurrence à partir des différences divisées de la manière suivante :
