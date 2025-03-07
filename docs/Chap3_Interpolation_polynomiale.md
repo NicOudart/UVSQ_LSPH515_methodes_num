@@ -270,6 +270,7 @@ C'est pourquoi on fait appel aux **différences divisées** pour exprimer les co
 |Soit $f$ une fonction définie aux points $x_i$, 2 à 2 distincts.|
 |On définit les différences divisées par récurrence comme suit :|
 |$\begin{cases} f[x_i] = f(x_i), i=0,...,n\\ f[x_i...x_{i+k}] = \frac{f[x_i...x_{i+k-1}]-f[x_{i+1}...x_{i+k}]}{x_i-x_{i+k}}, i=0,...,n \end{cases}$|
+|avec $k$ l'ordre de la récurrence.|
 
 Les coefficients $c_i$ peuvent être calculés par récurrence à partir des différences divisées de la manière suivante :
 
@@ -285,7 +286,13 @@ Soit $p(x) = f[x_0] + f[x_0 x_1] (x-x_0) + f[x_0 x_1 x_2] (x-x_0)(x-x_1) + ... +
 
 Le calcul **effectif** du polynôme d'interpolation se fait donc de la manière suivante :
 
-
+|     |$i=0$         |$i=1$             |$i=2$                   | ... |$i=n$                     |
+|:---:|:------------:|:----------------:|:----------------------:|:---:|:------------------------:|
+|$x_0$|**$f[x_0] = c_0$**|                  |                        | ... |                          |
+|$x_1$|$f[x_1]$      |$f[x_0 x_1] = c_1$|                        | ... |                          |
+|$x_2$|$f[x_2]$      |$f[x_1 x_2]$      |$f[x_0 x_1 x_2] = c_2$  | ... |                          |
+| ... |...           |...               |...                     | ... |                          |
+|$x_n$|$f[x_n]$      |$f[x_{n-1} x_n]$  |$f[x_{n-2} x_{n-1} x_n]$| ... |$f[x_0 x_1 ... x_n] = c_n$|
 
 ### Exemple
 
