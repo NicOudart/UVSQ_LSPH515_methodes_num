@@ -248,6 +248,48 @@ avec des coefficients c_i à déterminer, tels que $p(x_i) = f(x_i) \forall i = 
 
 $p$ est unique si les $x_i$ sont 2 à 2 distincts.
 
+L'un des intérêts de la base de Newton est que si l'on ajoute un nouveau point d'interpolation $(x_{n+1},f(x_{n+1}))$, les coefficients $c_0,c_1,c_2,...,c_n$ restent inchangés et **il suffit de calculer $c_{n+1}$ et d'ajouter un terme $c_{n+1} v_{n+1}$ à l'expression de $p$**.
+
+Les $c_i$ sont les solutions du système linéaire (triangulaire inférieur) suivant :
+
+$\begin{cases}
+f(x_0) = c_0 v_0(x_0) = c_0\\
+f(x_1) = c_0 + c_1 v_1(x_1) = f(x_0) + c_1 (x_1-x_0)\\
+f(x_2) = c_0 + c_1 v_1(x_2) + c_2 v_2(x_2) = f(x_0) + c_1 (x_2-x_0) + c_2 (x_2-x_0)(x_2-x_1)\\
+...\\
+f(x_n) = c_0 + \displaystyle\sum_{i=1}^{n} c_i v_i(x_n)
+\end{cases}$
+
+Ce système est en apparence simple, et peut être résolu de proche en proche.
+Mais dans la pratique, les expressions des $c_i$ deviennent de plus en plus complexes.
+
+C'est pourquoi on fait appel aux **différences divisées** pour exprimer les coefficients de façon compacte.
+
+|Les différences divisées|
+|:-|
+|Soit $f$ une fonction définie aux points $x_i$, 2 à 2 distincts.|
+|On définit les différences divisées par récurrence comme suit :|
+|$\begin{cases}
+f[x_i] = f(x_i) (ordre 0) pour i=0,...,n\\
+f[x_i...x_{i+k}] = \frac{f[x_i...x_{i+k-1}]-f[x_{i+1}...x_{i+k}]}{x_i-x_{i+k}} (ordre k>0) pour i=0,...,n
+\end{cases}$|
+
+Les coefficients $c_i$ peuvent être calculés par récurrence à partir des différences divisées de la manière suivante :
+
+$c_i = f[x_0 x_1 x_i] = \frac{f[x_0 x_1 ... x_{i-1}]-f[x_1 x_2 ... x_i]}{x_0-x_i}$
+
+C'est ce que l'on appelle la **différence divisée d'ordre i**.
+
+Le polynôme d'interpolation de Newton de degré $n$ qui interpole les valeurs $f(x_i)$ aux points $x_i$ $(i=0,1,2,...,n)$, distincts 2 à 2, s'écrit donc :
+
+$p(x) = \displaystyle\sum_{i=0}^{n} f[x_0 x_1 ... x_i] v_i(x)$
+
+Soit $p(x) = f[x_0] + f[x_0 x_1] (x-x_0) + f[x_0 x_1 x_2] (x-x_0)(x-x_1) + ... + f[x_0 x_1 ... x_n] \displaystyle\prod_{j=0}^{n-1} (x-x_j)$
+
+Le calcul **effectif** du polynôme d'interpolation se fait donc de la manière suivante :
+
+
+
 ### Exemple
 
 ## Erreur d'interpolation
