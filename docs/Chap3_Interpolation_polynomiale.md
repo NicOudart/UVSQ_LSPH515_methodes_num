@@ -288,11 +288,15 @@ Le calcul **effectif** du polynôme d'interpolation se fait donc de la manière 
 
 |     |$i=0$         |$i=1$             |$i=2$                   | ... |$i=n$                     |
 |:---:|:------------:|:----------------:|:----------------------:|:---:|:------------------------:|
-|$x_0$|**$f[x_0] = c_0$**|                  |                        | ... |                          |
+|$x_0$|$f[x_0] = c_0$|                  |                        | ... |                          |
 |$x_1$|$f[x_1]$      |$f[x_0 x_1] = c_1$|                        | ... |                          |
 |$x_2$|$f[x_2]$      |$f[x_1 x_2]$      |$f[x_0 x_1 x_2] = c_2$  | ... |                          |
 | ... |...           |...               |...                     | ... |                          |
 |$x_n$|$f[x_n]$      |$f[x_{n-1} x_n]$  |$f[x_{n-2} x_{n-1} x_n]$| ... |$f[x_0 x_1 ... x_n] = c_n$|
+
+Seules les valeurs sur la diagonale interviennent dans l'expression du polynôme d'interpolation de Newton.
+
+Si on ajoute un nouveau point d'interpolation $(x_{n+1})$, il suffit d'ajouter une ligne au tableau.
 
 ### Exemple
 
