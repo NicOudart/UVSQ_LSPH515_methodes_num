@@ -223,7 +223,7 @@ L'interpolation de Newton, présentée dans la suite, n'a pas ce désaventage.
 
 Voici la construction du polynôme de Lagrange pour notre problème exemple :
 
-![Graphique de f](img/Chap3_exemple_lagrange.gif)
+![Polynôme de Lagrange](img/Chap3_exemple_lagrange.gif)
 
 On observe bien que pour $i=0,1,...,9$, chaque $f(x_i)L_i(x)$ passe par $f(x_i)$ en $x = x_i$ et par 0 en $x = x_j$ pour $j \neq i$.
 Le polynôme construit passe bien par $f(x_i)$ pour tous les $x_i$.
@@ -375,6 +375,17 @@ def newton(x,y,xp):
 ~~~
 
 ### Exemple
+
+Voici la construction du polynôme de Newton pour notre problème exemple :
+
+![Polynôme de Newton](img/Chap3_exemple_newton.gif)
+
+On observe bien qu'au fur et à mesure que pour $i=0,1,...,9$, on ajoute les $c_i v_i(x)$ au polynôme, il passe par un point d'interpolation $x_i$ de plus.
+Le polynôme construit passe bien par $f(x_i)$ pour tous les $x_i$.
+
+On trouve encore une fois une valeur interpolée en $x = 210$ d'environ 13.61 (résultat attendu puisqu'il s'agit en théorie du même polynôme d'interpolation que celui obtenu avec la méthode de Lagrange).
+
+**Exercice :**
 
 ## Erreur d'interpolation
 
