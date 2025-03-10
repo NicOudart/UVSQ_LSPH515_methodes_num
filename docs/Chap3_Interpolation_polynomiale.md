@@ -387,6 +387,9 @@ On trouve encore une fois une valeur interpolée en $x = 210$ d'environ 13.61 (r
 
 **Exercice :**
 
+En modifiant la fonction Python donnée précédemment pour l'interpolation de Newton, ainsi que la fonction $f$, déterminez l'erreur d'interpolation en $x = 210$ avec 4 chiffres significatifs.
+Comparez cette valeur à l'erreur obtenue pour l'interpolation de Lagrange. Interprétez ce résultat.
+
 ## Erreur d'interpolation
 
 ## Interpolation aux noeuds de Chebychev
