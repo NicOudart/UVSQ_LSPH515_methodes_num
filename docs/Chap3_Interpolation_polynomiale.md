@@ -173,6 +173,12 @@ Elle prend en entrée :
 
 * `xp` l'abscisse du point que l'on veut interpoler.
 
+On notera les variables suivantes :
+
+* `Li` le polynôme de la base de Lagrange associé au point $x_i$.
+
+* `yp` l'ordonnée du point que l'on veut interpoler.
+
 ~~~
 def lagrange(x,y,xp):
     
@@ -297,6 +303,76 @@ Le calcul **effectif** du polynôme d'interpolation se fait donc de la manière 
 Seules les valeurs sur la diagonale interviennent dans l'expression du polynôme d'interpolation de Newton.
 
 Si on ajoute un nouveau point d'interpolation $(x_{n+1})$, il suffit d'ajouter une ligne au tableau.
+
+Pour déterminer les valeurs de ce tableau, on applique la méthode ici illustrée pour 3 points d'interpolation :
+
+![Différences divisées](img/Chap3_differences_divisees.gif)
+
+Une fois les coefficients calculés, on utilise la stratégie de l'**algorithme de Horner** pour le calcul effectif du polynôme interpolateur de Newton.
+Cette stratégie se base sur le schéma suivant, ici illustré pour 4 points :
+
+$p(x) = c_0 + c_1 (x-x_0) + c_2 (x-x_0) (x-x_1) + c_3 (x-x_0) (x-x_1) (x-x_2)$
+$= c_0 + (x-x_0) (c_1 + (c_2 (x-x_1) + c_3 (x-x_1) (x-x_2)))$
+$= c_0 + (x-x_0) (c_1 + (x-x_1)(c_2 + c_3 (x-x_2)))$
+
+Cette méthode permet de réduire considérablement le nombre d'opérations nécessaires au calcul du polynôme.
+
+Voici l'algorithme sous la forme d'une fonction Python.
+
+Elle prend en entrée :
+
+* `x` le vecteur des abscisses des point connus.
+
+* `y` le vecteur des ordonnées des points connus.
+
+* `xp` l'abscisse du point que l'on veut interpoler.
+
+On notera les variables suivantes :
+
+* `c` le vecteur des coefficients du polynôme de Newton.
+
+* `yp` l'ordonnée du point que l'on veut interpoler.
+
+~~~
+def newton(x,y,xp):
+    
+    #Récupération du nombre de points connus :
+    n = len(x)
+    
+    #Initialisation d'un vecteur nul qui contiendra les coefficients du 
+    #polynôme de Newton :
+    c = np.zeros(n)
+    
+    #Boucle sur les ordonnées connues pour déterminer la 1ère colonne du 
+    #tableau des différences divisées (ordre 0) :
+    for i in range(n):
+        
+        c[i] = y[i]
+    
+    #Boucle pour calculer les colonnes du tableau des différences divisées 
+    #(de gauche à droite):
+    for i in range(1,n):
+        
+        #Boucle pour calculer les lignes du tableau des différences divisées 
+        #(du bas jusqu'à la diagonale de chaque colonnes):
+        for k in range(n-1,i-1,-1):
+            
+            c[k] = (c[k]-c[k-1])/(x[k]-x[k-i])
+            #(Avec cette formule récursive sur les éléments du vecteur des 
+            #coefficients, on ne gardera en mémoire que les éléments de la 
+            #diagonale du tableau des différences divisées).
+          
+    
+    #Calcul de l'ordonnée du point interpolé avec l'algorithme de Horner :
+    yp = c[n-1]
+    
+    for i in range(n-2,-1,-1):
+        
+        yp = c[i] + (xp-x[i])*yp
+        
+    #Renvoyer l'ordonnée du point interpolé :    
+    return yp
+~~~
 
 ### Exemple
 
