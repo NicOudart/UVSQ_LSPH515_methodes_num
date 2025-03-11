@@ -304,7 +304,7 @@ Seules les valeurs sur la diagonale interviennent dans l'expression du polynôme
 
 Si on ajoute un nouveau point d'interpolation $(x_{n+1})$, il suffit d'ajouter une ligne au tableau.
 
-Pour déterminer les valeurs de ce tableau, on applique la méthode ici illustrée pour 3 points d'interpolation :
+Pour déterminer les valeurs de ce tableau, on applique la méthode ici illustrée pour 3 points d'interpolation, en enregistrant les coefficients dans un vecteur $C$ :
 
 ![Différences divisées](img/Chap3_differences_divisees.gif)
 
