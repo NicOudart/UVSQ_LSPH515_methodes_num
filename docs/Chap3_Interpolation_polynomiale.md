@@ -426,7 +426,12 @@ $f(x) = \frac{1}{1+32x^2}$
 
 Voici le polynôme de Lagrange obtenu pour différents nombres de points d'interpolation équidistants :
 
+![Phénomène de Runge](img/Chap3_runge.gif)
 
+On voit des oscillations apparaitre, particulièrement au voisinage des extrémités de l'intervalle, lorsque le nombre de points d'interpolation augmente.
+
+On peut éviter le phénomène de Runge en choisissant correctement la distribution des points d'interpolation.
+En particulier, ce phénomène ne survient pas lorsque les points d'interpolation sont **les racines du polynôme de Chebychev**.
 
 ## Interpolation aux noeuds de Chebychev
 
