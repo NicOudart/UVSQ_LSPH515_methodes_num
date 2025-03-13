@@ -392,6 +392,42 @@ Comparez cette valeur à l'erreur obtenue pour l'interpolation de Lagrange. Inte
 
 ## Erreur d'interpolation
 
+### Formule de Taylor-Young
+
+|Théorème de Taylor-Young|
+|:-|
+|Soit $f$ une fonction continument dérivable jusqu'à l'ordre $n+1$ sur un intervalle $I=[a,b]$|
+|contenant $n+1$ points d'interpolation $x_i$ ($i=0,1,2,...,n$).|
+|Alors $\forall x \in I$, $\exists c \in I$ tel que :|
+|$e(x) = f(x) - p(x) = \frac{f^{(n+1)}(c)}{(n+1)!} \displaystyle\prod_{i=0}^{n} (x-x_i)$|
+
+Aux points d'interpolation, on a bien entendu $e(x_i) = 0$ ($i=0,1,2,...,n$).
+
+La formule de **Taylor-Young** permet de borner l'erreur, et si possible de guider le choix des points d'interpolation.
+
+Dans le cas d'une distribution uniforme de points d'interpolation, on note :
+$x_i = x_{i-1} + h = x_0 + i h$ avec $i=1,2,...,n$ et $h>0$ et $x_0$ donnés.
+Par exemple, $x_0=a$ et $h = \frac{b-a}{n}$ sur $[a,b]$.
+
+On montre alors que l'erreur d'interpolation est de l'ordre de $O(h^n)$.
+Plus exactement :
+
+$max_{x \in [a,b]} e(x) \leq \frac{max_{x \in [a,b]} f^{(n+1)}(x)}{4(n+1)} h^{n+1}$
+
+### Phénomène de Runge
+
+Cependant, même dans le cas d'une distribution uniforme des points d'interpolation, l'erreur ne tend pas nécessairement vers 0 quand $n$ tend vers l'infini.
+
+Quand l'erreur tend vers l'infini quand $n$ tend vers l'infini, on parle de **phénomène de Runge**.
+
+Voici par exemple une fonction connue pour être sensible au phénomène de Runge :
+
+$f(x) = \frac{1}{1+32x^2}$
+
+Voici le polynôme de Lagrange obtenu pour différents nombres de points d'interpolation équidistants :
+
+
+
 ## Interpolation aux noeuds de Chebychev
 
 ## Interpolation par morceaux
