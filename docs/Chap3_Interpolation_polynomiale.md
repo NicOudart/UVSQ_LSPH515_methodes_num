@@ -435,8 +435,24 @@ En particulier, ce phénomène ne survient pas lorsque les points d'interpolatio
 
 ## Interpolation aux noeuds de Chebychev
 
+|Définition|
+|:-|
+|On définit le **polynôme de Chebychev** de degré $n$ par :|
+|$T_n(x) = cos(n cos(x)) \in [-1,1]$|
+|$T_n$ possède $n$ racines dans $[-1,1]$.|
+|Les racines de ce polynôme sont :|
+|$x_i = cos(\frac{(2i+1) \pi}{2n})$ avec $i=0,1,2,...,n-1$|
+|Plus généralement, sur un intervalle $[a,b]$ :|
+|$x_i = \frac{a+b}{2} + \frac{b-a}{2} cos(\frac{(2i+1) \pi}{2n})$|
+
+On peut montrer que l'erreur $e(x) = f(x)-p(x)$ est minimale lorsque les points d'interpolation correspondent aux racines du polynôme de Chebychev.
+
+Toutes les fonctions continuement dérivables **convergent** pour ce choix de points d'interpolation.
+
 ## Interpolation par morceaux
 
 ### Interpolation affine
 
 ### Interpolation par fonctions splines
+
+## Conclusions
