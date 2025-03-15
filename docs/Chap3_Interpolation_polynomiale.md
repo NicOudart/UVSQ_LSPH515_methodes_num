@@ -447,7 +447,14 @@ En particulier, ce phénomène ne survient pas lorsque les points d'interpolatio
 
 On peut montrer que l'erreur $e(x) = f(x)-p(x)$ est minimale lorsque les points d'interpolation correspondent aux racines du polynôme de Chebychev.
 
-Toutes les fonctions continuement dérivables **convergent** pour ce choix de points d'interpolation.
+Toutes les fonctions continuement dérivables voient leur polynôme d'interpolation **converger** pour ce choix de points d'interpolation.
+
+Voici à nouveau le polynôme de Lagrange obtenu avec $f(x) = \frac{1}{1+32x^2}$ pour différents nombres de points d'interpolation, mais cette fois-ci en utilisant le polynôme de Chebychev :
+
+![Polynôme de Chebychev](img/Chap3_chebychev.gif)
+
+Comme prévu, le polynôme d'interpolation converge avec la fonction quand le nombre de points augmente.
+On a bien évité le phénomène de Runge.
 
 ## Interpolation par morceaux
 
