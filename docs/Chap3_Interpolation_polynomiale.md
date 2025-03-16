@@ -458,8 +458,74 @@ On a bien évité le phénomène de Runge.
 
 ## Interpolation par morceaux
 
+L'interpolation polynomiale ne permet pas de correctement interpoler des fonctions qui varient rapidement.
+Il faudrait des polynômes de degré élevé, ce qui entrainerait des oscillations.
+
+|Idée|
+|:-|
+|Pour éviter les oscillations, on peut utiliser **l'interpolation par morceaux avec des polynômes de degré faible** :|
+|- Des fonctions affines : **interpolation affine** ou **linéaire composite**.|
+|- Des fonctions splines cubiques : **interpolation par splines cubiques**.|
+
+|Principe|
+|:-|
+|Etant donnée une distribution de points $a=x_0<x_1<...<x_n=b$,|
+|on construit une approximation polynomiale de la fonction $f$ sur chaque sous-intervalle $[x_i,x_{i+1}]$ $(i=0,1,...,n-1)$.|
+|On obtient ainsi une fonction $g$ telle que $g(x_i) = f(x_i)$ pour $i=0,1,2,...,n$ :|
+|- Si $g$ est de degré 0 ou 1 : ligne brisée (interpolation affine).|
+|- Si $g$ est de degré >1 : le choix n'est plus unique, et on ajoute des conditions de régularité aux noeuds pour que $g$ soit continument dérivable en ces points.|
+
 ### Interpolation affine
+
+Sur chaque sous-intervalle $[x_i,x_{i+1}]$ avec $i=0,1,...,n-1$, on interpole $f$ par un polynôme de degré inférieur ou égal à 1 :
+
+$g(x) = f(x_i) + \frac{f(x_{i+1})-f(x_i)}{x_{i+1}-x_i} (x-x_i)$
+
+ou $g(x) = f(x_i) + f[x_{i+1} x_i] (x-x_i)$
+
+Si $f$ est 2 fois dérivables sur $[a,b] = [x_0,x_n]$ on montre alors que :
+
+$max \mid f(x)-g(x) \mid \leq \frac{H^2}{8} max_{x \in [a,b]} |f"(x)|$
+
+où $H$ désigne la longueur du plus grand sous-intervalle.
+
+Par conséquent, pour tout $x \in [a,b]$, l'erreur d'interpolation tend vers 0 quand $H$ tend vers 0 (à condition que $f$ soit assez régulière).
 
 ### Interpolation par fonctions splines
 
+L'inconvénient de l'interpolation affine est que l'approximation de la fonction $f$ manque de régularité : la fonction $g$ n'est pas dérivable.
+
+Dans le cadre de l'interpolation par splines cubiques, on va choisir une fonction vérifiant les critères suivants :
+- Sur chaque sous-intervalle $[x_i,x_{i+1}]$ avec $i=0,1,...,n$, la fonction est un polynôme de degré $\leq 3$ qui interpole les points $(x_i,f(x_i))$ pour $j=i,i+1$ : $g_i(x) = a_i x^3 + b_i x^2 + c_i x + d_i$
+- $g$ est 2 fois continument dérivable aux points intérieurs $x_i$ avec $i=0,1,...,n$.
+
+La fonction $g$ obtenue en reliant les différents $g_i$ est ainsi 2 fois dérivable.
+
+On peut montrer que si $f$ est 3 fois dérivable sur $[a,b] = [x_0,x_n]$ alors l'erreur d'interpolation tend vers 0 en $H^2$ (avec $H$ la longueur du plus grand sous-intervalle).
+
+La fonction $g$ est appelée **spline d'interpolation cubique**.
+
+Supposons $n+1$ points d'interpolation et donc $n$ sous-intervalles $[x_i,x_{i+1}]$.
+Pour déterminer $g$, il faut déterminer $4n$ coefficients $(a_i,b_i,c_i,d_i)$ pour $i=0,1,...,n-1$.
+Les **contraintes** sont les suivantes :
+
+- Pour les points aux extrémités : $g_0(x_0) = f(x_0)$ et $g_{n-1}(x_n) = f(x_n)$ soit **2 équations**.
+
+- Pour les points intérieurs : $g_{i-1}(x_i) = f(x_i)$ et $g_i(x_i) = f(x_i)$ pour $i=1,...,n-1$ soit **2(n-1) équations**.
+
+- Pour assurer la régularité de la courbe : $g'_{i-1}(x_i) = g'_i(x_i)$ et $g"_{i-1}(x_i) = g"_i(x_i)$ pour $i=1,...,n-1$ soit **2(n-1) équations**.
+
+Au total, on a donc 4n-2 équations pour 4n inconnues.
+On peut ajouter des contraintes pour avoir 2 équations supplémentaires.
+Par exemple : $g"_0(x_0)$ et $g"_n(x_n)=0$.
+
 ## Conclusions
+
+* Il existe un **unique** polynôme de degré égal à $n$ qui interpole les valeurs $f(x_i)$ aux points $x_i$.
+
+* Pour trouver ce polynôme, on peut utiliser (du moins pratique au plus pratique) : la **base canonique**, la **base de Lagrange**, ou la **base de Newton**.
+
+* L'erreur d'interpolation ne tend pas nécessairement vers 0 quand $n$ tend vers l'infini : c'est le **phénomène de Runge**. Ce problème peut être résolu par l'interpolation aux noeuds de **Chebychev**.
+
+* Lorsque la fonction n'est connue qu'en certains points et varie vite, on peut aussi évite le phénomène de Runge en utilisant **l'interpolation par morceaux** (affine ou splines cubiques).
+
