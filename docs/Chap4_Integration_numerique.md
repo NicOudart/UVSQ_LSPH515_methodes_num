@@ -12,17 +12,17 @@ Ce chapitre porte sur les méthodes numériques pour l'approximation de l'intég
 
 Au cours de ce chapitre, nous appliquerons les différentes méthodes d'intégration à un même exemple : **La modélisation de la réfléctivité radar des gouttes de pluies**.
 
-En 1948, Marshall et Palmer ont proposé un modèle de réflectivité des gouttes de pluies (en $mm^6 m^-3$) pour les radars météorologiques :
+En 1948, Marshall et Palmer ont proposé un modèle de réflectivité des gouttes de pluies (en $mm^6 m^{-3}$) pour les radars météorologiques :
 
-$Z = int_{0}^{D_{max}} N_0 e^{- \Lambda D} D^6 dD$
+$Z = \int_{0}^{D_{max}} N_0 e^{- \Lambda D} D^6 dD$
 
 Les paramètres de ce modèle sont :
 
 - $D_{max}$ la plus grande taille de goutte, que nous fixerons à $6 mm$.
 
-- $\Lambda$ une constante empirique en $mm^-1$, pour lequel Marshall et Palmer proposent $4.1 R^-0.21$, avec $R$ le taux de pluie que nous fixerons à $5 mm.h^-1$.
+- $\Lambda$ une constante empirique en $mm^{-1}$, pour lequel Marshall et Palmer proposent $4.1 R^{-0.21}$, avec $R$ le taux de pluie que nous fixerons à $5 mm.h^{-1}$.
 
-- $N_0$ une constante empirique en $m^-3 mm^-1$ nommée "paramètre de forme", pour lequel Marshall et Palmer proposent $N_0 = 8000$.
+- $N_0$ une constante empirique en $m^{-3} mm^{-1}$ nommée "paramètre de forme", pour lequel Marshall et Palmer proposent $N_0 = 8000$.
 
 Nous essayerons donc de calculer l'intégrale entre $x=0$ et $x=6$ de la fonction $f(x) = N_0 e^{- \Lambda x} x^6$, dont la valeur est d'environ $3146.31 mm^6/m^3$.
 
