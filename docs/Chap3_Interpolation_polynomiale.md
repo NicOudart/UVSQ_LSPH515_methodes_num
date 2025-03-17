@@ -491,6 +491,12 @@ où $H$ désigne la longueur du plus grand sous-intervalle.
 
 Par conséquent, pour tout $x \in [a,b]$, l'erreur d'interpolation tend vers 0 quand $H$ tend vers 0 (à condition que $f$ soit assez régulière).
 
+Voici l'interpolation affine appliquée à notre exemple :
+
+![Interpolation affine](img/Chap3_exemple_affine.gif)
+
+On trouve une valeur interpolée en $x = 210$ d'environ 13.50.
+
 ### Interpolation par fonctions splines
 
 L'inconvénient de l'interpolation affine est que l'approximation de la fonction $f$ manque de régularité : la fonction $g$ n'est pas dérivable.
@@ -515,9 +521,15 @@ Les **contraintes** sont les suivantes :
 
 - Pour assurer la régularité de la courbe : $g'_{i-1}(x_i) = g'_i(x_i)$ et $g"_{i-1}(x_i) = g"_i(x_i)$ pour $i=1,...,n-1$ soit **2(n-1) équations**.
 
-Au total, on a donc 4n-2 équations pour 4n inconnues.
-On peut ajouter des contraintes pour avoir 2 équations supplémentaires.
+Au total, on a donc **4n-2 équations** pour **4n inconnues**.
+On peut ajouter des contraintes pour avoir **2 équations supplémentaires**.
 Par exemple : $g"_0(x_0)$ et $g"_n(x_n)=0$.
+
+Voici l'interpolation par splines cubiques appliquée à notre exemple :
+
+![Interpolation spline cubique](img/Chap3_exemple_cubic_spline.gif)
+
+On trouve une valeur interpolée en $x = 210$ d'environ 13.64.
 
 ## Conclusions
 
