@@ -148,11 +148,27 @@ Donc une formule de quadrature de type interpolation à $n+1$ points est au moin
 
 ## Méthodes de Newton-cotes simples
 
-### Méthode des rectangles
+Les méthodes de Newton-Cotes s'appuient sur la formule de quadrature de type interpolation de Lagrange :
 
-### Méthode des trapèzes
+$I = \int_{a}^{b} f(x) dx = I_n + E(f) = \sum_{i=0}^{n} f(x_i) \int_{a}^{b} L_i(x) dx + E(f)$
 
-### Méthode de Simpson
+où $E(f)$ est l'erreur de troncature.
+
+Les pivots de quadrature sont **régulièrement espacés** :
+
+$x_i = x_0 + ih$ avec $i=0,1,...,n$ et $h = \frac{b-a}{n}$
+
+Les pivots sont donc **fixes** (équidistants) alors que les poids sont **ajustés**.
+
+La régularité de la subdivision permet d'obtenir des formules qui sont très générales.
+
+Il y a $n+1$ pivots donc cette méthode est **exacte pour les polynômes de degré $\leq n$ au moins**.
+
+### Méthode des rectangles (n=0)
+
+### Méthode des trapèzes (n=1)
+
+### Méthode de Simpson (n=2)
 
 ## Méthode de Newton-Cotes composites
 
