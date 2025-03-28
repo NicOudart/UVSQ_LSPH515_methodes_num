@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Nicolas OUDART" /><link rel="canonical" href="https://nicoudart.github.io/UVSQ_LSPH515_methodes_num/Chap4_Integration_numerique/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>IV. Intégration numérique - UVSQ_LSPH515_methodes_num</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "IV. Int\u00e9gration num\u00e9rique";
+        var mkdocs_page_input_path = "Chap4_Integration_numerique.md";
+        var mkdocs_page_url = "/UVSQ_LSPH515_methodes_num/Chap4_Integration_numerique/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> UVSQ_LSPH515_methodes_num
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Introduction</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Chap1_Representation_des_nombres/">I. Représentation des nombres</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Chap2_Recherche_de_racines/">II. Recherche de racines</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Chap3_Interpolation_polynomiale/">III. Interpolation polynomiale</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">IV. Intégration numérique</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#position-du-probleme">Position du problème</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#motivation">Motivation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exemple-de-probleme">Exemple de problème</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#formules-de-quadrature">Formules de quadrature</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#principe">Principe</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#formules-de-type-interpolation">Formules de type interpolation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#degre-de-precision">Degré de précision</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#methodes-de-newton-cotes-simples">Méthodes de Newton-cotes simples</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#methode-des-rectangles-n0">Méthode des rectangles (n=0)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#methode-des-trapezes-n1">Méthode des trapèzes (n=1)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#methode-de-simpson-n2">Méthode de Simpson (n=2)</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#methode-de-newton-cotes-composites">Méthode de Newton-Cotes composites</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#rectangles-trapeze-et-simpson">Rectangles, trapèze et Simpson</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#acceleration-de-romberg">Accélération de Romberg</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#methodes-de-gauss">Méthodes de Gauss</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#principe_1">Principe</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#methode-a-1-point">Méthode à 1 point</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#methode-a-2-points">Méthode à 2 points</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Chap5_Systemes_lineaires/">V. Systèmes linéaires</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">UVSQ_LSPH515_methodes_num</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">IV. Intégration numérique</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="chapitre-iv-integration-numerique">Chapitre IV : Intégration numérique</h1>
+<p>Ce chapitre porte sur les méthodes numériques pour l'approximation de l'intégrale d'une fonction.</p>
+<hr />
+<h2 id="position-du-probleme">Position du problème</h2>
+<h3 id="motivation">Motivation</h3>
+<p>Le but de l'intégration numérique est d'évaluer la valeur de l'<strong>intégrale</strong> <span class="arithmatex">\(I\)</span> d'une fonction <span class="arithmatex">\(f\)</span> continue sur un intervalle <span class="arithmatex">\([a,b]\)</span> avec <span class="arithmatex">\(a&lt;b\)</span> réels :</p>
+<p><span class="arithmatex">\(I = \int_{a}^{b} f(x) dx\)</span></p>
+<p>On rappelle que cette intégrale représente l'<strong>aire</strong> comprise entre la courbe de la fonction, l'axe des abscisses, et les droites <span class="arithmatex">\(x=a\)</span> et <span class="arithmatex">\(x=b\)</span>.</p>
+<p><span class="arithmatex">\(I\)</span> est une intégrale <strong>définie</strong> dont le résultat est un scalaire.
+La fonction <span class="arithmatex">\(f\)</span> peut être connue qu'en certains points, mais ne dispose pas de singularité sur <span class="arithmatex">\([a,b]\)</span>, qui est supposé <strong>fini et fermé</strong>.</p>
+<p>Dans certains cas limités, l'intégrale peut être calculée analytiquement, à partir de la <strong>primitive</strong> de <span class="arithmatex">\(f\)</span>, notée <span class="arithmatex">\(F\)</span> :</p>
+<p><span class="arithmatex">\(I = \int_{a}^{b} f(x) dx = F(b)-F(a)\)</span></p>
+<p>Cependant, ce calcul peut être long et compliqué, et beaucoup de fonctions ne disposent pas d'expression analytique pour leurs primitives.
+On préfèrera faire appel à des méthodes numérique pour calculer une valeur approchée de <span class="arithmatex">\(I\)</span>.</p>
+<p>L'approximation de <span class="arithmatex">\(I\)</span> s'effectue le plus souvent à l'aide de combinaisons linéaires des valeurs de <span class="arithmatex">\(f\)</span> : des <strong>formules de quadrature de type interpolation</strong>.</p>
+<p>L'intégrale <span class="arithmatex">\(I\)</span> est remplacée par une somme finie : <span class="arithmatex">\(I \approx \sum_{i=0}^{n} w_i f(x_i)\)</span>.</p>
+<h3 id="exemple-de-probleme">Exemple de problème</h3>
+<p>Au cours de ce chapitre, nous appliquerons les différentes méthodes d'intégration à un même exemple : <strong>La modélisation de la réfléctivité radar des gouttes de pluies</strong>.</p>
+<p>En 1948, Marshall et Palmer ont proposé un modèle du facteur de réflectivité des gouttes de pluies <span class="arithmatex">\(Z\)</span> (en <span class="arithmatex">\(mm^6 m^{-3}\)</span>) pour les radars météorologiques :</p>
+<p><span class="arithmatex">\(Z = \int_{0}^{D_{max}} N_0 e^{- \Lambda D} D^6 dD\)</span></p>
+<p>Les paramètres de ce modèle sont :</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(D_{max}\)</span> la plus grande taille de goutte, que nous fixerons à <span class="arithmatex">\(6 mm\)</span>.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\Lambda\)</span> une constante empirique en <span class="arithmatex">\(mm^{-1}\)</span>, pour lequel Marshall et Palmer proposent <span class="arithmatex">\(4.1 R^{-0.21}\)</span>, avec <span class="arithmatex">\(R\)</span> le taux de pluie que nous fixerons à <span class="arithmatex">\(5 mm.h^{-1}\)</span>.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(N_0\)</span> une constante empirique en <span class="arithmatex">\(m^{-3} mm^{-1}\)</span> nommée "paramètre de forme", pour lequel Marshall et Palmer proposent <span class="arithmatex">\(N_0 = 8000\)</span>.</p>
+</li>
+</ul>
+<p>Ce modèle est encore aujourd'hui utilisé pour l'interprétation des mesures des radars météorologiques, dans le but d'estimer les précipitations aux sol à partir des réflectivités mesurées.</p>
+<p>Afin d'estimer la réflectivité liée aux gouttes de pluie entre 1 et 3 cm, nous essayerons ici de calculer l'intégrale entre <span class="arithmatex">\(x=1\)</span> et <span class="arithmatex">\(x=3\)</span> de la fonction <span class="arithmatex">\(f(x) = N_0 e^{- \Lambda x} x^6\)</span>, dont la valeur est d'environ <span class="arithmatex">\(2337.49 mm^6/m^3\)</span>.</p>
+<p><img alt="Graphique de f" src="../img/Chap4_exemple_fonction.png" /></p>
+<p>Sous Python on utilisera la bibliothèque Numpy :</p>
+<pre><code>import numpy as np
+</code></pre>
+<p>Puis, on définira les variables globales suivantes :</p>
+<pre><code>N0 = 8000 #Paramètre de forme (m3/mm)
+R = 5 #Taux de pluie (mm/h)
+</code></pre>
+<p>La fonction <span class="arithmatex">\(f\)</span> sera définie comme :</p>
+<pre><code>def f(D):
+
+    return N0*np.exp(-(4.1*R**-0.21)*D)*D**6
+</code></pre>
+<h2 id="formules-de-quadrature">Formules de quadrature</h2>
+<h3 id="principe">Principe</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Idée</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Approcher la fonction <span class="arithmatex">\(f\)</span> par un polynôme <span class="arithmatex">\(p\)</span>.</td>
+</tr>
+<tr>
+<td style="text-align: left;">Si cette approximation est suffisamment bonne :</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(I = \int_{a}^{b} f(x) dx \approx \int_{a}^{b} p(x) dx\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Cette approche a 2 avantages :</p>
+<ul>
+<li>
+<p>Les polynômes sont faciles à intégrer.</p>
+</li>
+<li>
+<p>Cette méthode est utilisable même si on ne connait <span class="arithmatex">\(f\)</span> qu'en un nombre fini de points <span class="arithmatex">\((x_i,f(x_i))\)</span>.</p>
+</li>
+</ul>
+<p>Les méthodes de Newton-Cotes et de Gauss s'appuient sur cette idée en utilisant des <strong>formules de quadrature de type interpolation</strong>, qui s'expriment comme une <strong>combinaison linéaire de valeurs de la fonction en des points à définir</strong>.</p>
+<p>On cherche donc une valeur approchée de <span class="arithmatex">\(I\)</span> au moyen d'une somme finie :</p>
+<p><span class="arithmatex">\(I = \int_{a}^{b} f(x) dx \approx I_n = \sum_{a}^{b} w_i f(x_i)\)</span></p>
+<p>On dit que <span class="arithmatex">\(I_n\)</span> est une <strong>formule de quadrature de type interpolation à <span class="arithmatex">\(n+1\)</span> points</strong></p>
+<p>Les valeurs <span class="arithmatex">\(x_i\)</span> sont les "<strong>pivots</strong>" ou "points / noeuds de quadrature".</p>
+<p>Les coefficients <span class="arithmatex">\(w_i\)</span> sont les "<strong>poids</strong>" de la formule de quadrature.</p>
+<h3 id="formules-de-type-interpolation">Formules de type interpolation</h3>
+<p>Soient <span class="arithmatex">\((x_i,f(x_i))\)</span> avec <span class="arithmatex">\(i=0,1,...,n+1\)</span> points d'interpolation.
+Un choix naturel consiste à approximer la fonction <span class="arithmatex">\(f\)</span> par le <strong>polynôme de Lagrange de degré <span class="arithmatex">\(\leq n\)</span></strong> qui passe par ces <span class="arithmatex">\(n+1\)</span> points :</p>
+<p><span class="arithmatex">\(f(x) \approx p(x) = \sum_{i=0}^{n} f(x_i) L_i(x)\)</span></p>
+<p>Il en résulte la <strong>formule de quadrature de type interpolation à <span class="arithmatex">\(n+1\)</span> points</strong> :</p>
+<p><span class="arithmatex">\(I = \int_{a}^{b} f(x) dx \approx I_n = \int_{a}^{b} p(x) dx = \int_{a}^{b} \sum_{i=0}^{n} f(x_i) L_i(x) dx\)</span></p>
+<p>Par linéarité de l'intégrale, on obtient les coefficients de la formule de quadrature :</p>
+<p><span class="arithmatex">\(I_n = \sum_{i=0}^{n} f(x_i) \int_{a}^{b} L_i(x) dx\)</span></p>
+<p>D'où : <span class="arithmatex">\(w_i = \int_{a}^{b} L_i(x) dx\)</span></p>
+<p>Les poids <span class="arithmatex">\(w_i\)</span> s'obtiennent par <strong>intégration des polynômes de Lagrange</strong>.
+Ils sont donc indépendants de <span class="arithmatex">\(f\)</span> et ne dépendent que des points <span class="arithmatex">\(x_i\)</span>.</p>
+<h3 id="degre-de-precision">Degré de précision</h3>
+<p>On définit l'<strong>erreur de troncation</strong> pour l'intégration comme :</p>
+<p><span class="arithmatex">\(E(f) = I-I_n\)</span></p>
+<p>Une formule de quadrature est dite <strong>exacte</strong> pour <span class="arithmatex">\(f\)</span> si <span class="arithmatex">\(E(f)=0\)</span>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Degré de précision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Le degré de précision d'une formule de quadrature est l'entier positif <span class="arithmatex">\(n\)</span> tel que <span class="arithmatex">\(E(p_i)=0\)</span> pour tout polynôme de degré <span class="arithmatex">\(i \leq n\)</span> et <span class="arithmatex">\(E(p_{n+1}) \neq 0\)</span> pour un polynôme <span class="arithmatex">\(p_{n+1}\)</span> de degré <span class="arithmatex">\(n+1\)</span>.</td>
+</tr>
+</tbody>
+</table>
+<p>Donc une formule de quadrature exacte sur l'ensemble des polynômes de degré <span class="arithmatex">\(\leq n\)</span> est au moins de degré de précision <span class="arithmatex">\(n\)</span>.</p>
+<p>Autrement dit, une formule de quadrature de degré de précision <span class="arithmatex">\(n\)</span> vérifie :</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(I = \int_{a}^{b} p_k(x) dx = \int_{a}^{b} x^k dx = I_n = \sum_{i=0}^{n} w_i x_i^k\)</span> pour tout <span class="arithmatex">\(0 &lt; k \leq n\)</span></p>
+</li>
+<li>
+<p><span class="arithmatex">\(I = \int_{a}^{b} p_{n+1}(x) dx = \int_{a}^{b} x^{n+1} dx \neq I_n = \sum_{i=0}^{n} w_i x_i^{n+1}\)</span></p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Théorème</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Une formule de quadrature à <span class="arithmatex">\(n+1\)</span> points est exacte sur l'ensemble des polynômes de degré <span class="arithmatex">\(\leq n\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">si est seulement si c'est une formule de quadrature de type interpolation à <span class="arithmatex">\(n+1\)</span> points.</td>
+</tr>
+</tbody>
+</table>
+<p>Donc une formule de quadrature de type interpolation à <span class="arithmatex">\(n+1\)</span> points est au moins de degré de précision <span class="arithmatex">\(n\)</span>.</p>
+<h2 id="methodes-de-newton-cotes-simples">Méthodes de Newton-cotes simples</h2>
+<p>Les méthodes de Newton-Cotes s'appuient sur la formule de quadrature de type interpolation de Lagrange :</p>
+<p><span class="arithmatex">\(I = \int_{a}^{b} f(x) dx = I_n + E(f) = \sum_{i=0}^{n} f(x_i) \int_{a}^{b} L_i(x) dx + E(f)\)</span></p>
+<p>où <span class="arithmatex">\(E(f)\)</span> est l'erreur de troncature.</p>
+<p>Les pivots de quadrature sont <strong>régulièrement espacés</strong> :</p>
+<p><span class="arithmatex">\(x_i = x_0 + ih\)</span> avec <span class="arithmatex">\(i=0,1,...,n\)</span> et <span class="arithmatex">\(h = \frac{b-a}{n}\)</span></p>
+<p>Les pivots sont donc <strong>fixes</strong> (équidistants) alors que les poids sont <strong>ajustés</strong>.</p>
+<p>La régularité de la subdivision permet d'obtenir des formules qui sont très générales.</p>
+<p>Il y a <span class="arithmatex">\(n+1\)</span> pivots donc cette méthode est <strong>exacte pour les polynômes de degré <span class="arithmatex">\(\leq n\)</span> au moins</strong>.</p>
+<h3 id="methode-des-rectangles-n0">Méthode des rectangles (n=0)</h3>
+<p>Lorsque l'on ne dispose que d'un seul point <span class="arithmatex">\((x_0,f(x_0))\)</span>, on peut utiliser la <strong>formule des rectangles</strong> :</p>
+<p><span class="arithmatex">\(I = \int_{a}^{b} f(x) dx \approx I_0 = \int_{a}^{b} f(x_0) dx = (b-a) f(x_0)\)</span></p>
+<p>On donnera différents noms à la méthode suivant le choix de <span class="arithmatex">\(x_0\)</span> :</p>
+<ul>
+<li>
+<p>"A gauche" : si on choisit <span class="arithmatex">\(x_0 = a\)</span>.</p>
+</li>
+<li>
+<p>"A droite" : si on choisit <span class="arithmatex">\(x_0 = b\)</span>.</p>
+</li>
+<li>
+<p>"Au point milieu" : si on choisit <span class="arithmatex">\(x_0 = \frac{a+b}{2}\)</span></p>
+</li>
+</ul>
+<p>On remarque que <span class="arithmatex">\(I_0\)</span> est l'<strong>aire du rectangle</strong> de largeur <span class="arithmatex">\(b-a\)</span> et de longueur <span class="arithmatex">\(f(x_0)\)</span>.</p>
+<p><img alt="Méthode des rectangles" src="../img/Chap4_exemple_rectangles.gif" /></p>
+<p>Les formules des rectangles <strong>à droite</strong> et <strong>à gauche</strong> sont exactes pour des polynômes de degré 0 uniquement : leur <strong>degré de précision est de 0</strong>.</p>
+<p>La formule au point milieu est aussi exacte pour les fonctions affines car elle exploite les symétries du problème : son <strong>degré de précision est de 1</strong>.</p>
+<p>Si <span class="arithmatex">\(f\)</span> est continue et 2 fois dérivable sur <span class="arithmatex">\([a,b]\)</span>, alors il existe <span class="arithmatex">\(\xi \in ]a,b[\)</span> tel que <span class="arithmatex">\(I = I_0 + E(f)\)</span> avec :</p>
+<p><span class="arithmatex">\(\begin{cases}
+E(f) = \frac{(b-a)^2}{2} f'(\xi) = \frac{h^2}{2} f'(\xi) \; si \; x_0 = a \; ou \; x_0 = b \\
+E(f) = \frac{(b-a)^3}{24} f"(\xi) = \frac{h^3}{24} f"(\xi) \; si \; x_0 = \frac{a+b}{2}
+\end{cases}\)</span></p>
+<p>On en déduit que :</p>
+<ul>
+<li>
+<p>Donc plus <span class="arithmatex">\([a,b]\)</span> est petit, plus l'erreur est faible.</p>
+</li>
+<li>
+<p>Pour les formules à droite et à gauche, l'erreur décroit en <span class="arithmatex">\(h^2\)</span>.</p>
+</li>
+<li>
+<p>Pour la formule au point milieu, l'erreur décroit en <span class="arithmatex">\(h^3\)</span>.</p>
+</li>
+<li>
+<p>Plus les variations de <span class="arithmatex">\(f\)</span> sont limitées (<span class="arithmatex">\(f'\)</span> faible), plus l'erreur est faible pour les méthodes à droite et à gauche.</p>
+</li>
+</ul>
+<h3 id="methode-des-trapezes-n1">Méthode des trapèzes (n=1)</h3>
+<p>Lorsque l'on dispose que de 2 points <span class="arithmatex">\((x_0,f(x_0))\)</span> et <span class="arithmatex">\((x_1,f(x_1))\)</span>, on peut utiliser la <strong>formule des trapèzes</strong> :</p>
+<p><span class="arithmatex">\(I = \int_{a}^{b} f(x) dx \approx I_1 = frac{(b-a)}{2} (f(a)+f(b))\)</span></p>
+<p><span class="arithmatex">\(I_1\)</span> est une formule de quadrature de type interpolation à 2 points.</p>
+<p>On remarque qu'elle correspond à l'<strong>aire d'un trapèze</strong>.</p>
+<p><img alt="Méthode des trapèzes" src="../img/Chap4_exemple_trapezes.png" /></p>
+<p>Si <span class="arithmatex">\(f\)</span> est continue et 2 fois dérivable sur <span class="arithmatex">\([a,b]\)</span>, alors il existe <span class="arithmatex">\(\xi \in ]a,b[\)</span> tel que <span class="arithmatex">\(I = I_1 + E(f)\)</span> avec :</p>
+<p><span class="arithmatex">\(E(f) = - \frac{h^3}{12} f"(\xi)\)</span></p>
+<p>La méthode des trapèzes est exacte sur l'espace des polynômes de degré <span class="arithmatex">\(\leq 1\)</span> donc de <strong>degré de précision 1</strong>.  </p>
+<p>Par contre, elle est 2 plus lente que la méthode des rectangles au point milieu pour le même degré de précision.</p>
+<h3 id="methode-de-simpson-n2">Méthode de Simpson (n=2)</h3>
+<h2 id="methode-de-newton-cotes-composites">Méthode de Newton-Cotes composites</h2>
+<h3 id="rectangles-trapeze-et-simpson">Rectangles, trapèze et Simpson</h3>
+<h3 id="acceleration-de-romberg">Accélération de Romberg</h3>
+<h2 id="methodes-de-gauss">Méthodes de Gauss</h2>
+<h3 id="principe_1">Principe</h3>
+<h3 id="methode-a-1-point">Méthode à 1 point</h3>
+<h3 id="methode-a-2-points">Méthode à 2 points</h3>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../Chap3_Interpolation_polynomiale/" class="btn btn-neutral float-left" title="III. Interpolation polynomiale"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Chap5_Systemes_lineaires/" class="btn btn-neutral float-right" title="V. Systèmes linéaires">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../Chap3_Interpolation_polynomiale/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../Chap5_Systemes_lineaires/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../javascripts/mathjax.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
