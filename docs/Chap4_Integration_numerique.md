@@ -189,8 +189,8 @@ La formule au point milieu est aussi exacte pour les fonctions affines car elle 
 Si $f$ est continue et 2 fois dérivable sur $[a,b]$, alors il existe $\xi \in ]a,b[$ tel que $I = I_0 + E(f)$ avec :
 
 $\begin{cases}
-E(f) = \frac{(b-a)^2}{2} f'(\xi) = \frac{h^2}{2} f'(\xi) si x_0 = a ou x_0 = b \\
-E(f) = \frac{(b-a)^3}{24} f"(\xi) = \frac{h^3}{24} f"(\xi) si x_0 = \frac{a+b}{2}
+E(f) = \frac{(b-a)^2}{2} f'(\xi) = \frac{h^2}{2} f'(\xi) \; si \; x_0 = a \; ou \; x_0 = b \\
+E(f) = \frac{(b-a)^3}{24} f"(\xi) = \frac{h^3}{24} f"(\xi) \; si \; x_0 = \frac{a+b}{2}
 \end{cases}$
 
 On en déduit que :
