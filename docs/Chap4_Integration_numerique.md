@@ -46,7 +46,7 @@ Les paramètres de ce modèle sont :
 
 Ce modèle est encore aujourd'hui utilisé pour l'interprétation des mesures des radars météorologiques, dans le but d'estimer les précipitations aux sol à partir des réflectivités mesurées.
 
-Nous essayerons donc de calculer l'intégrale entre $x=0$ et $x=6$ de la fonction $f(x) = N_0 e^{- \Lambda x} x^6$, dont la valeur est d'environ $3146.31 mm^6/m^3$.
+Afin d'estimer la réflectivité liée aux gouttes de pluie entre 1 et 3 cm, nous essayerons ici de calculer l'intégrale entre $x=1$ et $x=3$ de la fonction $f(x) = N_0 e^{- \Lambda x} x^6$, dont la valeur est d'environ $2337.49 mm^6/m^3$.
 
 ![Graphique de f](img/Chap4_exemple_fonction.png)
 
@@ -165,6 +165,18 @@ La régularité de la subdivision permet d'obtenir des formules qui sont très g
 Il y a $n+1$ pivots donc cette méthode est **exacte pour les polynômes de degré $\leq n$ au moins**.
 
 ### Méthode des rectangles (n=0)
+
+Lorsque l'on ne dispose que d'un seul point $(x_0,f(x_0))$, on peut utiliser la **formule des rectangles** :
+
+$I = \int_{a}^{b} f(x) dx \approx I_0 = \int_{a}^{b} f(x_0) dx = (b-a) f(x_0)$
+
+On donnera différents noms à la méthode suivant le choix de $x_0$ :
+
+- A droite :
+
+- A gauche :
+
+- Au point milieu :
 
 ### Méthode des trapèzes (n=1)
 
