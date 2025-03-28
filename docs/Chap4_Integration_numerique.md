@@ -172,13 +172,56 @@ $I = \int_{a}^{b} f(x) dx \approx I_0 = \int_{a}^{b} f(x_0) dx = (b-a) f(x_0)$
 
 On donnera différents noms à la méthode suivant le choix de $x_0$ :
 
-- A droite :
+- "A gauche" : si on choisit $x_0 = a$.
 
-- A gauche :
+- "A droite" : si on choisit $x_0 = b$.
 
-- Au point milieu :
+- "Au point milieu" : si on choisit $x_0 = \frac{a+b}{2}$
+
+On remarque que $I_0$ est l'**aire du rectangle** de largeur $b-a$ et de longueur $f(x_0)$.
+
+![Méthode des rectangles](img/Chap4_exemple_rectangles.gif)
+
+Les formules des rectangles **à droite** et **à gauche** sont exactes pour des polynômes de degré 0 uniquement : leur **degré de précision est de 0**.
+
+La formule au point milieu est aussi exacte pour les fonctions affines car elle exploite les symétries du problème : son **degré de précision est de 1**.
+
+Si $f$ est continue et 2 fois dérivable sur $[a,b]$, alors il existe $\xi \in ]a,b[$ tel que $I = I_0 + E(f)$ avec :
+
+$\begin{cases}
+E(f) = \frac{(b-a)^2}{2} f'(\xi) = \frac{h^2}{2} f'(\xi) si x_0 = a ou x_0 = b \\
+E(f) = \frac{(b-a)^3}{24} f"(\xi) = \frac{h^3}{24} f"(\xi) si x_0 = \frac{a+b}{2}
+\end{cases}$
+
+On en déduit que :
+
+- Donc plus $[a,b]$ est petit, plus l'erreur est faible.
+
+- Pour les formules à droite et à gauche, l'erreur décroit en $h^2$.
+
+- Pour la formule au point milieu, l'erreur décroit en $h^3$.
+
+- Plus les variations de $f$ sont limitées ($f'$ faible), plus l'erreur est faible pour les méthodes à droite et à gauche.
 
 ### Méthode des trapèzes (n=1)
+
+Lorsque l'on dispose que de 2 points $(x_0,f(x_0))$ et $(x_1,f(x_1))$, on peut utiliser la **formule des trapèzes** :
+
+$I = \int_{a}^{b} f(x) dx \approx I_1 = frac{(b-a)}{2} (f(a)+f(b))$
+
+$I_1$ est une formule de quadrature de type interpolation à 2 points.
+
+On remarque qu'elle correspond à l'**aire d'un trapèze**.
+
+![Méthode des trapèzes](img/Chap4_exemple_trapezes.png)
+
+Si $f$ est continue et 2 fois dérivable sur $[a,b]$, alors il existe $\xi \in ]a,b[$ tel que $I = I_1 + E(f)$ avec :
+
+$E(f) = - \frac{h^3}{12} f"(\xi)$
+
+La méthode des trapèzes est exacte sur l'espace des polynômes de degré $\leq 1$ donc de **degré de précision 1**.  
+
+Par contre, elle est 2 plus lente que la méthode des rectangles au point milieu pour le même degré de précision.
 
 ### Méthode de Simpson (n=2)
 
