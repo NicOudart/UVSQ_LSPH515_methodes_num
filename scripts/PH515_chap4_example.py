@@ -9,10 +9,11 @@ def f(D):
     
     return N0*np.exp(-(4.1*R**-0.21)*D)*D**6
 
-D = np.linspace(0,6,1000)
+D = np.linspace(0,6,6000)
 
 plt.figure(0)
 plt.plot(D,f(D),'r-')
+plt.fill([1]+[D[i] for i in range(1000,3000)]+[3],[0]+[f(D[i]) for i in range(1000,3000)]+[0],'pink')
 plt.xlim([0,6])
 plt.ylim([0,1600])
 plt.xlabel("D = taille des gouttes de pluie [mm]",fontsize=14)
