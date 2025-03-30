@@ -235,7 +235,7 @@ Lorsque l'on dispose que de 3 points $(x_0,f(x_0))$, $(x_1,f(x_1))$ et $(x_2,f(x
 
 Si on choisit $x_0 = a$, $x_1 = \frac{a+b}{2}$ et $x_2 = b$ :
 
-$I = \int_{a}^{b} f(x) dx \approx I_2 = frac{(b-a)}{6} (f(a)+4 f(\frac{a+b}{2})+f(b))$
+$I = \int_{a}^{b} f(x) dx \approx I_2 = \frac{(b-a)}{6} (f(a)+4 f(\frac{a+b}{2})+f(b))$
 
 $I_2$ est une formule de quadrature de type interpolation à 3 points.
 
