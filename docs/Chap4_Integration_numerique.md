@@ -34,19 +34,21 @@ Au cours de ce chapitre, nous appliquerons les différentes méthodes d'intégra
 
 En 1948, Marshall et Palmer ont proposé un modèle du facteur de réflectivité des gouttes de pluies $Z$ (en $mm^6 m^{-3}$) pour les radars météorologiques :
 
-$Z = \int_{0}^{D_{max}} N_0 e^{- \Lambda D} D^6 dD$
+$Z = \int_{D_{min}}^{D_{max}} N_0 e^{- \Lambda D} D^6 dD$
 
 Les paramètres de ce modèle sont :
 
-- $D_{max}$ la plus grande taille de goutte, que nous fixerons à $6 mm$.
+- $D_{min}$ la plus petite taille de goutte, que nous fixerons à $1 mm$.
 
-- $\Lambda$ une constante empirique en $mm^{-1}$, pour lequel Marshall et Palmer proposent $4.1 R^{-0.21}$, avec $R$ le taux de pluie que nous fixerons à $5 mm.h^{-1}$.
+- $D_{max}$ la plus grande taille de goutte, que nous fixerons à $3 mm$.
+
+- $\Lambda$ une constante empirique en $mm^{-1}$, pour laquelle Marshall et Palmer proposent $4.1 R^{-0.21}$, avec $R$ le taux de pluie que nous fixerons à $5 mm.h^{-1}$.
 
 - $N_0$ une constante empirique en $m^{-3} mm^{-1}$ nommée "paramètre de forme", pour lequel Marshall et Palmer proposent $N_0 = 8000$.
 
 Ce modèle est encore aujourd'hui utilisé pour l'interprétation des mesures des radars météorologiques, dans le but d'estimer les précipitations aux sol à partir des réflectivités mesurées.
 
-Afin d'estimer la réflectivité liée aux gouttes de pluie entre 1 et 3 cm, nous essayerons ici de calculer l'intégrale entre $x=1$ et $x=3$ de la fonction $f(x) = N_0 e^{- \Lambda x} x^6$, dont la valeur est d'environ $2337.49 mm^6/m^3$.
+Afin d'estimer la réflectivité $Z$ liée aux gouttes de pluie entre 1 et 3 cm, nous essayerons ici de calculer l'intégrale entre $x=1$ et $x=3$ de la fonction $f(x) = N_0 e^{- \Lambda x} x^6$, dont la valeur est d'environ $2337.49 mm^6/m^3$.
 
 ![Graphique de f](img/Chap4_exemple_fonction.png)
 
@@ -180,6 +182,8 @@ On donnera différents noms à la méthode suivant le choix de $x_0$ :
 
 On remarque que $I_0$ est l'**aire du rectangle** de largeur $b-a$ et de longueur $f(x_0)$.
 
+Voici pour illustration l'aire de ce rectangle dans le cas de notre exemple :
+
 ![Méthode des rectangles](img/Chap4_exemple_rectangles.gif)
 
 Les formules des rectangles **à droite** et **à gauche** sont exactes pour des polynômes de degré 0 uniquement : leur **degré de précision est de 0**.
@@ -213,6 +217,8 @@ $I_1$ est une formule de quadrature de type interpolation à 2 points.
 
 On remarque qu'elle correspond à l'**aire d'un trapèze**.
 
+Voici pour illustration l'aire de ce trapèze dans le cas de notre exemple :
+
 ![Méthode des trapèzes](img/Chap4_exemple_trapezes.png)
 
 Si $f$ est continue et 2 fois dérivable sur $[a,b]$, alors il existe $\xi \in ]a,b[$ tel que $I = I_1 + E(f)$ avec :
@@ -221,9 +227,48 @@ $E(f) = - \frac{h^3}{12} f"(\xi)$
 
 La méthode des trapèzes est exacte sur l'espace des polynômes de degré $\leq 1$ donc de **degré de précision 1**.  
 
-Par contre, elle est 2 plus lente que la méthode des rectangles au point milieu pour le même degré de précision.
+Par contre, elle est 2X plus lente que la méthode des rectangles au point milieu pour le même degré de précision.
 
 ### Méthode de Simpson (n=2)
+
+Lorsque l'on dispose que de 3 points $(x_0,f(x_0))$, $(x_1,f(x_1))$ et $(x_2,f(x_2))$, on peut utiliser la **formule de Simpson**.
+
+Si on choisit $x_0 = a$, $x_1 = \frac{a+b}{2}$ et $x_2 = b$ :
+
+$I = \int_{a}^{b} f(x) dx \approx I_2 = frac{(b-a)}{6} (f(a)+4 f(\frac{a+b}{2})+f(b))$
+
+$I_2$ est une formule de quadrature de type interpolation à 3 points.
+
+On remarque qu'elle correspond à l'**aire sous un morceau de parabole**.
+
+Voici pour illustration l'aire sous la parabole dans le cas de notre exemple :
+
+![Méthode de Simpson](img/Chap4_exemple_simpson.png)
+
+
+
+### Méthodes de Newton-Cotes (n>0)
+
+### Algorithmes
+
+### Exemple
+
+En appliquant les algorithmes précédents à notre problème exemple, on trouve les valeurs suivantes :
+
+|Méthode                   |Estimation de Z ($mm^6 m^{-3}$)|
+|:-------------------------|:-----------------------------:|
+|Rectangles à gauche       |859.36                         |
+|Rectangles à droite       |1807.24                        |
+|Rectangles au point milieu|2954.01                        |
+|Trapèzes                  |1333.30                        |
+|Simpson                   |2413.78                        |
+
+
+
+**Exercice :**
+
+Déterminez la formule de Newton-Cotes pour $n=4$ (aussi appellée "méthode de Boole-Villarceau"), et implémentez-là sous la forme d'une fonction Python.
+Quelle estimation de $Z$ obtenez-vous ? Cette valeur est-elle plus proche du résultat attendu ? Ce résultat était-il attendu ?
 
 ## Méthode de Newton-Cotes composites
 

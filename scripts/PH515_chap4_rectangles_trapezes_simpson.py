@@ -33,6 +33,8 @@ plt.tight_layout()
 
 plt.savefig('C:/Users/oudart/Documents/Enseignements/Blog_PH515/Chap4_rectangles_1.png')
 
+print('Rectangles à gauche = '+str((3-1)*f(1)))
+
 #A droite :
 plt.figure(2)
 plt.plot(D,f(D),'r-')
@@ -53,6 +55,8 @@ plt.tight_layout()
 
 plt.savefig('C:/Users/oudart/Documents/Enseignements/Blog_PH515/Chap4_rectangles_2.png')
 
+print('Rectangles à droite = '+str((3-1)*f(3)))
+
 #Point milieu :
 plt.figure(3)
 plt.plot(D,f(D),'r-')
@@ -72,6 +76,8 @@ plt.grid()
 plt.tight_layout()
 
 plt.savefig('C:/Users/oudart/Documents/Enseignements/Blog_PH515/Chap4_rectangles_3.png')
+
+print('Rectangles au point milieu = '+str((3-1)*f(2)))
 
 #Trapezes----------------------------------------------------------------------
 
@@ -95,10 +101,27 @@ plt.tight_layout()
 
 plt.savefig('C:/Users/oudart/Documents/Enseignements/Blog_PH515/Chap4_trapezes.png')
 
+print('Trapèzes = '+str((3-1)*(f(3)+f(1))/2))
+
 #Simpson-----------------------------------------------------------------------
+
+#Interpolation de Lagrange pour déterminer la parabole :
+def lagrange(x,y,xp):
+    n = len(x)
+    yp = 0
+    for i in range(n):
+        Li = 1
+        for j in range(n):
+            if j!=i:
+                Li = Li*(xp-x[j])/(x[i]-x[j])
+        yp = yp + y[i]*Li
+    return yp
+
+D_fill = np.linspace(1,3,3000)
 
 plt.figure(5)
 plt.plot(D,f(D),'r-')
+plt.fill([1]+[d for d in D_fill]+[3],[0]+[lagrange([1,2,3],[f(1),f(2),f(3)],d) for d in D_fill]+[0],'pink')
 plt.plot([1,1],[0,1600],'k--')
 plt.plot([3,3],[0,1600],'k--')
 plt.scatter([1,2,3],[f(1),f(2),f(3)],color='r',marker='o')
@@ -115,3 +138,5 @@ plt.grid()
 plt.tight_layout()
 
 plt.savefig('C:/Users/oudart/Documents/Enseignements/Blog_PH515/Chap4_simpson.png')
+
+print('Simpson = '+str((3-1)*(f(1)+f(3)+4*f(2))/6))
