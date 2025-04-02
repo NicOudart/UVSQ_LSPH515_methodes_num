@@ -211,7 +211,7 @@ On en déduit que :
 
 Lorsque l'on dispose que de 2 points $(x_0,f(x_0))$ et $(x_1,f(x_1))$, on peut utiliser la **formule des trapèzes** :
 
-$I = \int_{a}^{b} f(x) dx \approx I_1 = frac{(b-a)}{2} (f(a)+f(b))$
+$I = \int_{a}^{b} f(x) dx \approx I_1 = \frac{(b-a)}{2} (f(a)+f(b))$
 
 $I_1$ est une formule de quadrature de type interpolation à 2 points.
 
