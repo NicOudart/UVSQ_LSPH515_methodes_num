@@ -359,7 +359,34 @@ Quelle estimation de $Z$ obtenez-vous ? Cette valeur est-elle plus proche du ré
 
 ## Méthode de Newton-Cotes composites
 
-### Rectangles, trapèze et Simpson
+Pour améliorer la précision des méthode de Newton-Cotes, on pourrai augmenter le nombre de point d'intégration, et donc le degré du polynôme d'interpolation.
+Mais cela conduit à des formules de plus en plus complexes, et même potentiellement à un phénomène de Runge (voir le Chapitre 3).
+
+C'est pourquoi on utilise en général des méthodes composites avec des formules de Newton-Cotes de degré $n<6$.
+
+L'idée des formules composites est la suivante :
+
+- Découper l'intervalle $[a,b]$ en $M$ sous-intervalles.
+
+- Appliquer une formule de Newton-Cotes sur chaque sous-intervalle pour estimer l'aire sous la courbe.
+
+- Additionner les aires estimées pour chaque sous-intervalle.
+
+Ceci revient à l'expression suivante de l'intégrale :
+
+$I = \int_{a}^{b} f(x) dx = \displaystyle\sum_{j=0}^{M} \int_{x_{j-1}=a+(j-1)h}^{x_j=a+jh} f(x) dx$
+
+Dans ce cas, les points de subdivision sont régulièrement espacés d'un pas $h=\frac{b-a}{M}$.
+
+Une **formule de quadrature de type interpolation composite** s'écrit donc :
+
+$I_{n,M} = \displaystyle\sum_{j=1}^{M} \displaystyle\sum_{i=0}^{n} w_i^{(j)} f(x_i^{(j)})$
+
+### Formule composite des rectangles
+
+### Formule composite des trapèzes
+
+### Formule composite de Simpson
 
 ### Accélération de Romberg
 
