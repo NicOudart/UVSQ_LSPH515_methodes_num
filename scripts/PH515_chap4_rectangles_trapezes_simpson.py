@@ -14,6 +14,11 @@ D = np.linspace(0,6,1000)
 #Rectangles--------------------------------------------------------------------
 
 #A gauche :
+    
+def rectangles_gauche(f,a,b):
+    
+    return (b-a)*f(a)
+    
 plt.figure(1)
 plt.plot(D,f(D),'r-')
 plt.fill([1,1,3,3],[0,f(1),f(1),0],'pink')
@@ -33,9 +38,14 @@ plt.tight_layout()
 
 plt.savefig('C:/Users/oudart/Documents/Enseignements/Blog_PH515/Chap4_rectangles_1.png')
 
-print('Rectangles à gauche = '+str((3-1)*f(1)))
+print('Rectangles à gauche = '+str(rectangles_gauche(f,1,3)))
 
 #A droite :
+
+def rectangles_droite(f,a,b):
+    
+    return (b-a)*f(b)
+    
 plt.figure(2)
 plt.plot(D,f(D),'r-')
 plt.fill([1,1,3,3],[0,f(3),f(3),0],'pink')
@@ -55,9 +65,14 @@ plt.tight_layout()
 
 plt.savefig('C:/Users/oudart/Documents/Enseignements/Blog_PH515/Chap4_rectangles_2.png')
 
-print('Rectangles à droite = '+str((3-1)*f(3)))
+print('Rectangles à droite = '+str(rectangles_droite(f,1,3)))
 
 #Point milieu :
+    
+def rectangles_milieu(f,a,b):
+    
+    return (b-a)*f((a+b)/2)
+
 plt.figure(3)
 plt.plot(D,f(D),'r-')
 plt.fill([1,1,3,3],[0,f(2),f(2),0],'pink')
@@ -77,9 +92,13 @@ plt.tight_layout()
 
 plt.savefig('C:/Users/oudart/Documents/Enseignements/Blog_PH515/Chap4_rectangles_3.png')
 
-print('Rectangles au point milieu = '+str((3-1)*f(2)))
+print('Rectangles au point milieu = '+str(rectangles_milieu(f,1,3)))
 
 #Trapezes----------------------------------------------------------------------
+
+def trapezes(f,a,b):
+    
+    return (b-a)*(f(a)+f(b))/2
 
 plt.figure(4)
 plt.plot(D,f(D),'r-')
@@ -101,9 +120,13 @@ plt.tight_layout()
 
 plt.savefig('C:/Users/oudart/Documents/Enseignements/Blog_PH515/Chap4_trapezes.png')
 
-print('Trapèzes = '+str((3-1)*(f(3)+f(1))/2))
+print('Trapèzes = '+str(trapezes(f,1,3)))
 
 #Simpson-----------------------------------------------------------------------
+
+def simpson(f,a,b):
+    
+    return (b-a)*(f(a)+4*f((a+b)/2)+f(b))/6
 
 #Interpolation de Lagrange pour déterminer la parabole :
 def lagrange(x,y,xp):
@@ -139,4 +162,4 @@ plt.tight_layout()
 
 plt.savefig('C:/Users/oudart/Documents/Enseignements/Blog_PH515/Chap4_simpson.png')
 
-print('Simpson = '+str((3-1)*(f(1)+f(3)+4*f(2))/6))
+print('Simpson = '+str(simpson(f,1,3)))

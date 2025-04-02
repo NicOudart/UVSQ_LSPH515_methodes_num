@@ -245,11 +245,98 @@ Voici pour illustration l'aire sous la parabole dans le cas de notre exemple :
 
 ![Méthode de Simpson](img/Chap4_exemple_simpson.png)
 
+Si $f$ est continue et 4 fois dérivable sur $[a,b]$, alors il existe $\xi \in ]a,b[$ tel que $I = I_2 + E(f)$ avec :
 
+$E(f) = - \frac{h^5}{90} f^{(4)}(\xi)$
+
+La méthode de Simpson est exacte sur l'espace des polynômes de degré $\leq 2$ donc de **degré de précision 3**.
+
+Elle nécessite l'évaluation de $f$ en 3 points, mais l'erreur diminue rapidement, en $h^5$.
 
 ### Méthodes de Newton-Cotes (n>0)
 
+On peut généraliser les formule de quadrature de type interpolation de Lagrange à tout degré $n>0$.
+On parle alors de **méthodes de Newton-Cotes** de manière générale.
+
+On distingue 2 formules suivant si $n$ est pair ou impair :
+
+|Cas de $n$ **impair**|
+|:-|
+|Si $f$ est dérivable $n+1$ fois sur $[a,b]$, alors il existe un réel $K$ et $\xi \in ]a,b[$ tel que|
+|$E(f) = \frac{K}{(n+1)!} (b-a)^{n+2} f^{(n+1)}(\xi)$|
+|Le degré de précision est $n$.|
+
+|Cas de $n$ **pair**|
+|:-|
+|Si $f$ est dérivable $n+2$ fois sur $[a,b]$, alors il existe un réel $K$ et $\xi \in ]a,b[$ tel que|
+|$E(f) = \frac{K}{(n+2)!} (b-a)^{n+3} f^{(n+2)}(\xi)$|
+|Le degré de précision est $n+1$.|
+
+On peut en conclure qu'une **formule centrée** ($n$ pair, donc nombre de points impair) est préférable.
+
+Voici les formules des méthodes de Newton-Cotes jusqu'à $n=6$ :
+
+|Degré $n$|Nom                        |Formule                                                                             |
+|:--------|:--------------------------|:----------------------------------------------------------------------------------:|
+|1        |Méthode des trapèzes       |$\frac{b-a}{2}(f(x_0)+f(x_1))$                                                      |
+|2        |Méthode de Simpson 1/3     |$\frac{b-a}{6}(f(x_0)+4f(x_1)+f(x_2))$                                              |
+|3        |Méthode de Simpson 3/8     |$\frac{b-a}{8}(f(x_0)+3f(x_1)+3f(x_2)+f(x_3))$                                      |
+|4        |Méthode de Boole-Villarceau|$\frac{b-a}{90}(7f(x_0)+32f(x_1)+12f(x_2)+32f(x_3)+7f(x_4))$                        |
+|6        |Méthode de Weddle-Hardy    |$\frac{b-a}{840}(41f(x_0)+216f(x_1)+27f(x_2)+272f(x_3)+27f(x_4)+216f(x_5)+41f(x_6))$|
+
+En pratique, les méthodes de Newton-Cotes ne sont **presque jamais utilisées pour $n>6$**.
+
 ### Algorithmes
+
+Voici les différentes méthodes de Newton-Cotes présentées précédemment sous la forme de fonctions Python.
+
+Elles prennent toutes en entrée :
+
+* `f` la fonction Python à intégrer.
+
+* `a` la borne inférieure de l'intervalle d'intégration.
+
+* `b` la borne supérieure de l'intervalle d'intégration.
+
+La fonction pour la méthode des rectangles à gauche :
+
+~~~
+def rectangles_gauche(f,a,b):
+    
+    return (b-a)*f(a)
+~~~
+
+La fonction pour la méthode des rectangles à droite :
+
+~~~
+def rectangles_droite(f,a,b):
+    
+    return (b-a)*f(b)
+~~~
+
+La fonction pour la méthode des rectangles au point milieu :
+
+~~~
+def rectangles_milieu(f,a,b):
+    
+    return (b-a)*f((a+b)/2)
+~~~
+
+La fonction pour la méthode des trapèzes :
+
+~~~
+def trapezes(f,a,b):
+    
+    return (b-a)*(f(a)+f(b))/2
+~~~
+
+La fonction pour la méthode de Simpson :
+
+~~~
+def simpson(f,a,b):
+    
+    return (b-a)*(f(a)+4*f((a+b)/2)+f(b))/6
+~~~
 
 ### Exemple
 
@@ -263,7 +350,7 @@ En appliquant les algorithmes précédents à notre problème exemple, on trouve
 |Trapèzes                  |1333.30                        |
 |Simpson                   |2413.78                        |
 
-
+Ces estimations sont à comparer à la valeur théorique $Z = 2337.49 mm^6/m^3$.
 
 **Exercice :**
 
