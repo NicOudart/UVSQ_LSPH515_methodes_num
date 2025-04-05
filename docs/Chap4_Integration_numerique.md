@@ -386,7 +386,9 @@ $I_{n,M} = \displaystyle\sum_{j=1}^{M} \displaystyle\sum_{i=0}^{n} w_i^{(j)} f(x
 
 Soit $M+1$ points de discrétisation $(x_j,f(x_j))$ avec $x_j=a+jh$ et $h=\frac{b-a}{M}$.
 
-Sur chaque sous-intervalle $[x_{j-1},x_j]$, dans le cas "à gauche" (application au point $x_{j-1}$) :
+**Rectangles à gauche :**
+
+Sur chaque sous-intervalle $[x_{j-1},x_j]$ :
 
 $\int_{x_j}^{x_{j-1}} f(x) dx \approx hf(x_{j-1})$
 
@@ -394,9 +396,29 @@ D'où la formule composite des rectangles à gauche :
 
 $\int_{a}^{b} f(x) dx \approx h(\displaystyle\sum_{j=1}^{M} f(x_{j-1}))$
 
-Cette formule nécessite $M$ évaluation de $f$.
+**Rectangles à droite :**
 
-On peut alors montrer que l'erreur est majorée ainsi :
+Sur chaque sous-intervalle $[x_{j-1},x_j]$ :
+
+$\int_{x_j}^{x_{j-1}} f(x) dx \approx hf(x_{j})$
+
+D'où la formule composite des rectangles à droite :
+
+$\int_{a}^{b} f(x) dx \approx h(\displaystyle\sum_{j=1}^{M} f(x_{j}))$
+
+**Rectangles au point milieu :**
+
+Sur chaque sous-intervalle $[x_{j-1},x_j]$ :
+
+$\int_{x_j}^{x_{j-1}} f(x) dx \approx hf(\frac{x_{j-1}+x_{j}}{2})$
+
+D'où la formule composite des rectangles au point milieu :
+
+$\int_{a}^{b} f(x) dx \approx h(\displaystyle\sum_{j=1}^{M} f(\frac{x_{j-1}+x_{j}}{2}))$
+
+Ces formules nécessitent $M$ évaluations de $f$.
+
+On peut alors montrer que dans le cas du point milieu, l'erreur est majorée ainsi :
 
 $\mid E(f) \mid \leq \frac{b-a}{24} h^2 max_{x \in [a,b]} \mid f"(x) \mid$
 
@@ -411,6 +433,10 @@ L'ordre de convergence est de 2 : **l'erreur est divisée par 4 lorsque h est di
 ### Formule composite de Simpson
 
 ### Accélération de Romberg
+
+### Algorithmes
+
+### Exemples
 
 ## Méthodes de Gauss
 
