@@ -388,33 +388,33 @@ Soit $M+1$ points de discrétisation $(x_j,f(x_j))$ avec $x_j=a+jh$ et $h=\frac{
 
 **Rectangles à gauche :**
 
-Sur chaque sous-intervalle $[x_{j-1},x_j]$ :
+Sur chaque sous-intervalle $[x_j,x_{j+1}]$ :
 
-$\int_{x_j}^{x_{j-1}} f(x) dx \approx hf(x_{j-1})$
+$\int_{x_{j+1}}^{x_j} f(x) dx \approx hf(x_{j})$
 
 D'où la formule composite des rectangles à gauche :
 
-$\int_{a}^{b} f(x) dx \approx h(\displaystyle\sum_{j=1}^{M} f(x_{j-1}))$
+$\int_{a}^{b} f(x) dx \approx h(\displaystyle\sum_{j=0}^{M-1} f(x_{j}))$
 
 **Rectangles à droite :**
 
-Sur chaque sous-intervalle $[x_{j-1},x_j]$ :
+Sur chaque sous-intervalle $[x_j,x_{j+1}]$ :
 
-$\int_{x_j}^{x_{j-1}} f(x) dx \approx hf(x_{j})$
+$\int_{x_{j+1}}^{x_j} f(x) dx \approx hf(x_{j+1})$
 
 D'où la formule composite des rectangles à droite :
 
-$\int_{a}^{b} f(x) dx \approx h(\displaystyle\sum_{j=1}^{M} f(x_{j}))$
+$\int_{a}^{b} f(x) dx \approx h(\displaystyle\sum_{j=0}^{M-1} f(x_{j+1}))$
 
 **Rectangles au point milieu :**
 
-Sur chaque sous-intervalle $[x_{j-1},x_j]$ :
+Sur chaque sous-intervalle $[x_j,x_{j+1}]$ :
 
-$\int_{x_j}^{x_{j-1}} f(x) dx \approx hf(\frac{x_{j-1}+x_{j}}{2})$
+$\int_{x_{j+1}}^{x_j} f(x) dx \approx hf(\frac{x_{j}+x_{j+1}}{2})$
 
 D'où la formule composite des rectangles au point milieu :
 
-$\int_{a}^{b} f(x) dx \approx h(\displaystyle\sum_{j=1}^{M} f(\frac{x_{j-1}+x_{j}}{2}))$
+$\int_{a}^{b} f(x) dx \approx h(\displaystyle\sum_{j=0}^{M-1} f(\frac{x_{j}+x_{j+1}}{2}))$
 
 Ces formules nécessitent $M$ évaluations de $f$.
 
