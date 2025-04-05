@@ -432,11 +432,32 @@ L'ordre de convergence est de 2 : **l'erreur est divisée par 4 lorsque h est di
 
 ### Formule composite de Simpson
 
-### Accélération de Romberg
+### Algorithme
 
-### Algorithmes
+~~~
+def methode_composite(f,a,b,methode,M):
+    
+    #Découpage de l'intervalle [a,b] en M sous-intervalles avec un pas de 
+    #(b-a)/M :
+    x_i = [a+i*(b-a)/M for i in range(M+1)]
+    
+    #Initialisation de la somme des aires sous la courbe des différents 
+    #sous-intervalles :
+    somme = 0 
+    
+    #Boucle sur les sous-intervalles :
+    for i in range(M):
+              
+        #Addition au compteur de l'aire sous la courbe pour ce sous-intervalle :
+        somme += methode(f,x_i[i],x_i[i+1])
+    
+    #Renvoyer l'estimation de l'aire sous la courbe pour l'intervalle [a,b] :
+    return somme
+~~~
 
 ### Exemples
+
+### Accélération de Romberg
 
 ## Méthodes de Gauss
 

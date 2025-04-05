@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import scipy
 
 N0 = 8000 #Paramètre de forme (m3/mm)
 R = 5 #Taux de pluie (mm/h)
