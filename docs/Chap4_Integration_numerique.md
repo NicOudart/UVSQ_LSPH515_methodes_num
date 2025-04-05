@@ -400,9 +400,9 @@ On peut alors montrer que l'erreur est majorée ainsi :
 
 $\mid E(f) \mid \leq \frac{b-a}{24} h^2 max_{x \in [a,b]} \mid f"(x) \mid$
 
-On observe que $lim_{M \rightarrow \infty} E(f) = lim_{h \rightarrow 0} E(f) = 0$.
+On observe que $\lim\limits_{M \rightarrow \infty} E(f) = \lim\limits_{h \rightarrow 0} E(f) = 0$.
 
-On en déduit que la méthode converge bien vers la valeur exacte de l'intégrale/
+On en déduit que la méthode converge bien vers la valeur exacte de l'intégrale.
 
 L'ordre de convergence est de 2 : **l'erreur est divisée par 4 lorsque h est divisé par 2**.
 
