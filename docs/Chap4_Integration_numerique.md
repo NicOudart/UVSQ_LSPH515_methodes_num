@@ -396,6 +396,10 @@ D'où la formule composite des rectangles à gauche :
 
 $\int_{a}^{b} f(x) dx \approx h(\displaystyle\sum_{j=0}^{M-1} f(x_{j}))$
 
+Voici une illustration pour notre exemple, avec $M=5$ :
+
+![Méthode des rectangles composite à gauche](img/Chap4_exemple_rectangles_composite_gauche.png)
+
 **Rectangles à droite :**
 
 Sur chaque sous-intervalle $[x_j,x_{j+1}]$ :
@@ -406,6 +410,10 @@ D'où la formule composite des rectangles à droite :
 
 $\int_{a}^{b} f(x) dx \approx h(\displaystyle\sum_{j=0}^{M-1} f(x_{j+1}))$
 
+Voici une illustration pour notre exemple, avec $M=5$ :
+
+![Méthode des rectangles composite à droite](img/Chap4_exemple_rectangles_composite_droite.png)
+
 **Rectangles au point milieu :**
 
 Sur chaque sous-intervalle $[x_j,x_{j+1}]$ :
@@ -415,6 +423,10 @@ $\int_{x_{j+1}}^{x_j} f(x) dx \approx hf(\frac{x_{j}+x_{j+1}}{2})$
 D'où la formule composite des rectangles au point milieu :
 
 $\int_{a}^{b} f(x) dx \approx h(\displaystyle\sum_{j=0}^{M-1} f(\frac{x_{j}+x_{j+1}}{2}))$
+
+Voici une illustration pour notre exemple, avec $M=5$ :
+
+![Méthode des rectangles composite au point milieu](img/Chap4_exemple_rectangles_composite_point_milieu.png)
 
 Ces formules nécessitent $M$ évaluations de $f$.
 
