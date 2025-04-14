@@ -442,6 +442,30 @@ L'ordre de convergence est de 2 : **l'erreur est divisée par 4 lorsque h est di
 
 ### Formule composite des trapèzes
 
+Sur chaque sous-intervalle $[x_j,x_{j+1}]$ :
+
+$\int_{x_{j+1}}^{x_j} f(x) dx \approx \frac{h}{2} (f(x_{j})+f(x_{j+1}))$
+
+D'où la formule composite des trapèzes :
+
+$\int_{a}^{b} f(x) dx \approx h (\frac{1}{2} f(a) + \displaystyle\sum_{j=1}^{M-1} f(x_j) + \frac{1}{2} f(b))$
+
+Voici une illustration pour notre exemple, avec $M=5$ :
+
+![Méthode des trapèzes composite](img/Chap4_trapezes_composite.png)
+
+Cette formule nécessite $M+1$ évaluations de $f$.
+
+On peut montrer que l'erreur est majorée ainsi :
+
+$\mid E(f) \mid \leq \frac{b-a}{12} h^2 max_{x \in [a,b]} \mid f"(x) \mid$
+
+On observe que $\lim\limits_{M \rightarrow \infty} E(f) = \lim\limits_{h \rightarrow 0} E(f) = 0$.
+
+On en déduit que la méthode converge bien vers la valeur exacte de l'intégrale.
+
+
+
 ### Formule composite de Simpson
 
 ### Algorithme
