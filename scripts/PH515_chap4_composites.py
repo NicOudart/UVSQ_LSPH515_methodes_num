@@ -127,7 +127,12 @@ def trapezes(f,a,b):
 
 plt.figure(4)
 plt.plot(D,f(D),'r-')
-
+for i in range(M):
+    plt.fill([x[i],x[i],x[i+1],x[i+1]],[0,f(x[i]),f(x[i+1]),0],'pink')
+    plt.plot([x[i],x[i],x[i+1],x[i+1]],[0,f(x[i]),f(x[i+1]),0],color='deeppink',linestyle='dotted')
+for i in range(M):
+    plt.scatter(x[i],f(x[i]),color='r',marker='o')
+    plt.scatter(x[i+1],f(x[i+1]),color='r',marker='o')
 plt.plot([1,1],[0,1600],'k--')
 plt.plot([3,3],[0,1600],'k--')
 plt.xlim([0,6])
@@ -164,7 +169,14 @@ D_fill = np.linspace(1,3,3000)
 
 plt.figure(5)
 plt.plot(D,f(D),'r-')
-
+for i in range(M):
+    D_fill = np.linspace(x[i],x[i+1],100)
+    plt.fill([x[i]]+[d for d in D_fill]+[x[i+1]],[0]+[lagrange([x[i],(x[i]+x[i+1])/2,x[i+1]],[f(x[i]),f((x[i]+x[i+1])/2),f(x[i+1])],d) for d in D_fill]+[0],'pink')
+    plt.plot([x[i]]+[d for d in D_fill]+[x[i+1]],[0]+[lagrange([x[i],(x[i]+x[i+1])/2,x[i+1]],[f(x[i]),f((x[i]+x[i+1])/2),f(x[i+1])],d) for d in D_fill]+[0],color='deeppink',linestyle='dotted')
+for i in range(M):
+    plt.scatter(x[i],f(x[i]),color='r',marker='o')
+    plt.scatter((x[i]+x[i+1])/2,f((x[i]+x[i+1])/2),color='r',marker='o')
+    plt.scatter(x[i+1],f(x[i+1]),color='r',marker='o')
 plt.plot([1,1],[0,1600],'k--')
 plt.plot([3,3],[0,1600],'k--')
 plt.xlim([0,6])

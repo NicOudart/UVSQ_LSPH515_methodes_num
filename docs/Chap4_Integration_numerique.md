@@ -464,9 +464,11 @@ On observe que $\lim\limits_{M \rightarrow \infty} E(f) = \lim\limits_{h \righta
 
 On en déduit que la méthode converge bien vers la valeur exacte de l'intégrale.
 
-
+L'ordre de convergence est de 2 : **l'erreur est divisée par 4 lorsque h est divisé par 2**.
 
 ### Formule composite de Simpson
+
+![Méthode de Simpson composite](img/Chap4_simpson_composite.png)
 
 ### Algorithme
 
