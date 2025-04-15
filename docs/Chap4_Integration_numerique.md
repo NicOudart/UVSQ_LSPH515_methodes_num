@@ -494,7 +494,7 @@ On en déduit que la méthode converge bien vers la valeur exacte de l'intégral
 
 L'ordre de convergence est de 4 : **l'erreur est divisée par 16 lorsque h est divisé par 2**.
 
-### Algorithme
+### Algorithmes
 
 Voici une fonction Python pour calculer une intégrale à partir des méthodes simples programmées précédemment.
 
@@ -531,10 +531,10 @@ def methode_composite(f,a,b,methode,M):
     return somme
 ~~~
 
-Si cette fonction est élégante, car elle est adaptable à toutes les méthodes programmées précédemment, il est à noter qu'elle n'est pas optimisée pour la méthode des trapèzes et la méthode de Simpson.
+Si cette fonction est élégante, car elle est utilisable pour toutes les méthodes programmées précédemment, il est à noter qu'elle n'est pas optimisée pour la méthode des trapèzes et la méthode de Simpson.
 En effet, avec cette implémentation, on évalue plusieurs fois la fonction aux mêmes points.
 
-Pour une implémentation plus optimisée, il vaut mieux se baser sur les formules déterminées pour les méthodes composite :
+Pour une implémentation plus optimisée, il vaut mieux programmer une fonction pour chaque méthode composite, en se basant sur les formules données précédemment :
 
 
 
