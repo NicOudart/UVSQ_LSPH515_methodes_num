@@ -468,9 +468,47 @@ L'ordre de convergence est de 2 : **l'erreur est divisée par 4 lorsque h est di
 
 ### Formule composite de Simpson
 
+Pour faciliter l'écriture, on définira pour la méthode de Simpson composite $h = \frac{b-a}{2M} pour un nombre d'intervalles $M$.
+
+Sur chaque sous-intervalle $[x_j,x_{j+2}]$ :
+
+$\int_{x_{j+2}}^{x_j} f(x) dx \approx \frac{h}{3} (f(x_{j})+4f(x_{j+1})+f(x_{j+2}))$
+
+D'où la formule composite de Simpson :
+
+$\int_{a}^{b} f(x) dx \approx \frac{h}{3} (f(a) + 2 \displaystyle\sum_{j=1}^{M-1} f(x_{2j}) + 4 \displaystyle\sum_{j=1}^{M-1} f(x_{2j-1}) + f(b))$
+
+Voici une illustration pour notre exemple, avec $M=5$ :
+
 ![Méthode de Simpson composite](img/Chap4_simpson_composite.png)
 
+Cette formule nécessite $2M+1$ évaluations de $f$.
+
+On peut montrer que l'erreur est majorée ainsi :
+
+$\mid E(f) \mid \leq \frac{b-a}{90} h^4 max_{x \in [a,b]} \mid f^{(4)}(x) \mid$
+
+On observe que $\lim\limits_{M \rightarrow \infty} E(f) = \lim\limits_{h \rightarrow 0} E(f) = 0$.
+
+On en déduit que la méthode converge bien vers la valeur exacte de l'intégrale.
+
+L'ordre de convergence est de 4 : **l'erreur est divisée par 16 lorsque h est divisé par 2**.
+
 ### Algorithme
+
+Voici une fonction Python pour calculer une intégrale à partir des méthodes simples programmées précédemment.
+
+Elle prend en entrée :
+
+* `f` la fonction Python à intégrer.
+
+* `a` la borne inférieure de l'intervalle d'intégration.
+
+* `b` la borne supérieure de l'intervalle d'intégration.
+
+* `methode` la méthode d'intégration (rectangles, trapèzes ou Simpson) sous la forme d'une fonction Python.
+
+* `M` le nombre d'intervalles d'intégration.
 
 ~~~
 def methode_composite(f,a,b,methode,M):
@@ -492,6 +530,13 @@ def methode_composite(f,a,b,methode,M):
     #Renvoyer l'estimation de l'aire sous la courbe pour l'intervalle [a,b] :
     return somme
 ~~~
+
+Si cette fonction est élégante, car elle est adaptable à toutes les méthodes programmées précédemment, il est à noter qu'elle n'est pas optimisée pour la méthode des trapèzes et la méthode de Simpson.
+En effet, avec cette implémentation, on évalue plusieurs fois la fonction aux mêmes points.
+
+Pour une implémentation plus optimisée, il vaut mieux se baser sur les formules déterminées pour les méthodes composite :
+
+
 
 ### Exemples
 
