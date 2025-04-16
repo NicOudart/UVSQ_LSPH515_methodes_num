@@ -10,8 +10,29 @@ def f(D):
 
 D = np.linspace(0,6,1000)
 
-
 M = 5 #Nombre de sous-intervalles
+
+#Methodes simples--------------------------------------------------------------
+
+def rectangles_gauche(f,a,b):
+    
+    return (b-a)*f(a)
+
+def rectangles_droite(f,a,b):
+    
+    return (b-a)*f(b)
+
+def rectangles_milieu(f,a,b):
+    
+    return (b-a)*f((a+b)/2)
+
+def trapezes(f,a,b):
+    
+    return (b-a)*(f(a)+f(b))/2
+
+def simpson(f,a,b):
+    
+    return (b-a)*(f(a)+4*f((a+b)/2)+f(b))/6
 
 #Methodes composite------------------------------------------------------------
 
@@ -23,26 +44,144 @@ def methode_composite(f,a,b,methode,M):
     
     #Initialisation de la somme des aires sous la courbe des différents 
     #sous-intervalles :
-    somme = 0 
+    aire = 0 
     
     #Boucle sur les sous-intervalles :
     for i in range(M):
               
         #Addition au compteur de l'aire sous la courbe pour ce sous-intervalle :
-        somme += methode(f,x_i[i],x_i[i+1])
+        aire += methode(f,x_i[i],x_i[i+1])
     
     #Renvoyer l'estimation de l'aire sous la courbe pour l'intervalle [a,b] :
-    return somme
+    return aire
+
+def rectangles_gauche_composite(f,a,b,M):
+    
+    #Déterminer la largeur h de chaque sous-intervalle :
+    h = (b-a)/M
+    
+    #Découpage de l'intervalle [a,b] en M sous-intervalles avec un pas de h :
+    x_i = [a+i*h for i in range(M+1)]
+    
+    #Initialiser la somme des évaluations de f pour chaque sous-intervalle:
+    somme = 0 
+    
+    #Boucle sur les sous-intervalles :
+    for i in range(M):
+        
+        #Sommer la valeur de f "à gauche" du sous-intervalle :
+        somme += f(x_i[i])
+        
+    #Calcul de la somme des aires des sous-intervalles :
+    aire = somme*h
+    
+    return aire
+
+def rectangles_droite_composite(f,a,b,M):
+    
+    #Déterminer la largeur h de chaque sous-intervalle :
+    h = (b-a)/M
+    
+    #Découpage de l'intervalle [a,b] en M sous-intervalles avec un pas de h :
+    x_i = [a+i*h for i in range(M+1)]
+    
+    #Initialiser la somme des évaluations de f pour chaque sous-intervalle:
+    somme = 0 
+    
+    #Boucle sur les sous-intervalles :
+    for i in range(M):
+        
+        #Sommer la valeur de f "à droite" du sous-intervalle :
+        somme += f(x_i[i+1])
+        
+    #Calcul de la somme des aires des sous-intervalles :
+    aire = somme*h
+    
+    return aire
+
+def rectangles_milieu_composite(f,a,b,M):
+    
+    #Déterminer la largeur h de chaque sous-intervalle :
+    h = (b-a)/M
+    
+    #Découpage de l'intervalle [a,b] en M sous-intervalles avec un pas de h :
+    x_i = [a+i*h for i in range(M+1)]
+    
+    #Initialiser la somme des évaluations de f pour chaque sous-intervalle:
+    somme = 0 
+    
+    #Boucle sur les sous-intervalles :
+    for i in range(M):
+        
+        #Sommer la valeur de f "au milieu" du sous-intervalle :
+        somme += f((x_i[i]+x_i[i+1])/2)
+        
+    #Calcul de la somme des aires des sous-intervalles :
+    aire = somme*h
+    
+    return aire
+
+def trapezes_composite(f,a,b,M):
+    
+    #Déterminer la largeur h de chaque sous-intervalle :
+    h = (b-a)/M
+    
+    #Découpage de l'intervalle [a,b] en M sous-intervalles avec un pas de h :
+    x_i = [a+i*h for i in range(M+1)]
+    
+    #Initialiser la somme des évaluations de f pour chaque sous-intervalle avec
+    #f(a) et f(b):
+    somme = (f(x_i[0])+f(x_i[-1]))/2
+    
+    #Boucle sur les sous-intervalles :
+    for i in range(1,M):
+        
+        #Sommer la valeur de f à gauche du sous-intervalle :
+        somme += f(x_i[i])
+        
+    #Calcul de la somme des aires des sous-intervalles :
+    aire = somme*h
+    
+    return aire
+
+def simpson_composite(f,a,b,M):
+    
+    #Déterminer la largeur h de chaque sous-intervalle :
+    h = (b-a)/(2*M)
+    
+    #Découpage de l'intervalle [a,b] en M sous-intervalles avec un pas de h :
+    x_i = [a+i*h for i in range(2*M+1)]
+    
+    #Initialiser la somme des évaluations de f pour les éléments pairs et 
+    #impairs de l'intervalle :
+    somme_pair = 0
+    somme_impair = 0
+    
+    #1ère boucle sur les éléments pairs des sous-intervalles :
+    for i in range(1,M):
+        
+        #Sommer la valeur de f du sous-intervalle :
+        somme_pair += f(x_i[2*i])
+    
+    #2nde boucle sur les éléments impairs des sous-intervalles :
+    for i in range(M):
+        somme_impair += f(x_i[2*i+1])
+       
+    #Additionner les valeurs de f :
+    somme = f(x_i[0])+f(x_i[-1])+2*somme_pair+4*somme_impair
+        
+    #Calcul de la somme des aires des sous-intervalles :
+    aire = somme*h/3
+    
+    return aire
+
+#Vecteur de valeurs à évaluer pour l'affichage---------------------------------
 
 x = [1+i*(3-1)/M for i in range(M+1)]
 
 #Rectangles composite----------------------------------------------------------
 
 #A gauche :
-    
-def rectangles_gauche(f,a,b):
-    
-    return (b-a)*f(a)
     
 plt.figure(1)
 plt.plot(D,f(D),'r-')
@@ -66,10 +205,6 @@ plt.savefig('C:/Users/oudart/Documents/Enseignements/Blog_PH515/Chap4_rectangles
 print('Rectangles composite à gauche = '+str(methode_composite(f,1,3,rectangles_gauche,M)))
 
 #A droite :
-
-def rectangles_droite(f,a,b):
-    
-    return (b-a)*f(b)
     
 plt.figure(2)
 plt.plot(D,f(D),'r-')
@@ -93,10 +228,6 @@ plt.savefig('C:/Users/oudart/Documents/Enseignements/Blog_PH515/Chap4_rectangles
 print('Rectangles composite à droite = '+str(methode_composite(f,1,3,rectangles_droite,M)))
 
 #Point milieu :
-    
-def rectangles_milieu(f,a,b):
-    
-    return (b-a)*f((a+b)/2)
 
 plt.figure(3)
 plt.plot(D,f(D),'r-')
@@ -121,10 +252,6 @@ print('Rectangles composite au point milieu = '+str(methode_composite(f,1,3,rect
 
 #Trapezes composite------------------------------------------------------------
 
-def trapezes(f,a,b):
-    
-    return (b-a)*(f(a)+f(b))/2
-
 plt.figure(4)
 plt.plot(D,f(D),'r-')
 for i in range(M):
@@ -148,10 +275,6 @@ plt.savefig('C:/Users/oudart/Documents/Enseignements/Blog_PH515/Chap4_trapezes_c
 print('Trapèzes composite = '+str(methode_composite(f,1,3,trapezes,M)))
 
 #Simpson composite-------------------------------------------------------------
-
-def simpson(f,a,b):
-    
-    return (b-a)*(f(a)+4*f((a+b)/2)+f(b))/6
 
 #Interpolation de Lagrange pour déterminer la parabole :
 def lagrange(x,y,xp):

@@ -536,6 +536,16 @@ En effet, avec cette implémentation, on évalue plusieurs fois la fonction aux 
 
 Pour une implémentation plus optimisée, il vaut mieux programmer une fonction pour chaque méthode composite, en se basant sur les formules données précédemment.
 
+Toutes les fonctions suivantes prennent toutes en entrée :
+
+* `f` la fonction Python à intégrer.
+
+* `a` la borne inférieure de l'intervalle d'intégration.
+
+* `b` la borne supérieure de l'intervalle d'intégration.
+
+* `M` le nombre d'intervalles d'intégration.
+
 Voici la fonction pour la méthode composite des rectangles à gauche :
 
 ~~~
@@ -641,7 +651,40 @@ def trapezes_composite(f,a,b,M):
     return aire
 ~~~
 
+Voici la fonction pour la méthode composite de Simpson :
 
+~~~
+def simpson_composite(f,a,b,M):
+    
+    #Déterminer la largeur h de chaque sous-intervalle :
+    h = (b-a)/(2*M)
+    
+    #Découpage de l'intervalle [a,b] en M sous-intervalles avec un pas de h :
+    x_i = [a+i*h for i in range(2*M+1)]
+    
+    #Initialiser la somme des évaluations de f pour les éléments pairs et 
+    #impairs de l'intervalle :
+    somme_pair = 0
+    somme_impair = 0
+    
+    #1ère boucle sur les éléments pairs des sous-intervalles :
+    for i in range(1,M):
+        
+        #Sommer la valeur de f du sous-intervalle :
+        somme_pair += f(x_i[2*i])
+    
+    #2nde boucle sur les éléments impairs des sous-intervalles :
+    for i in range(M):
+        somme_impair += f(x_i[2*i+1])
+       
+    #Additionner les valeurs de f :
+    somme = f(x_i[0])+f(x_i[-1])+2*somme_pair+4*somme_impair
+        
+    #Calcul de la somme des aires des sous-intervalles :
+    aire = somme*h/3
+    
+    return aire
+~~~
 
 ### Exemples
 
