@@ -468,7 +468,7 @@ L'ordre de convergence est de 2 : **l'erreur est divisée par 4 lorsque h est di
 
 ### Formule composite de Simpson
 
-Pour faciliter l'écriture, on définira pour la méthode de Simpson composite $h = \frac{b-a}{2M}$ pour un nombre d'intervalles $M$.
+Pour faciliter l'écriture, on définira pour la méthode de Simpson composite $h = \frac{b-a}{2M}$ pour un nombre de sous-intervalles $M$.
 
 Sur chaque sous-intervalle $[x_j,x_{j+2}]$ :
 
@@ -508,7 +508,7 @@ Elle prend en entrée :
 
 * `methode` la méthode d'intégration (rectangles, trapèzes ou Simpson) sous la forme d'une fonction Python.
 
-* `M` le nombre d'intervalles d'intégration.
+* `M` le nombre de sous-intervalles d'intégration.
 
 ~~~
 def methode_composite(f,a,b,methode,M):
@@ -544,7 +544,7 @@ Toutes les fonctions suivantes prennent toutes en entrée :
 
 * `b` la borne supérieure de l'intervalle d'intégration.
 
-* `M` le nombre d'intervalles d'intégration.
+* `M` le nombre de sous-intervalles d'intégration.
 
 Voici la fonction pour la méthode composite des rectangles à gauche :
 
@@ -687,6 +687,18 @@ def simpson_composite(f,a,b,M):
 ~~~
 
 ### Exemples
+
+En appliquant les algorithmes précédents à notre problème exemple, avec un nombre de sous-intervalles $M = 5$ on trouve les valeurs suivantes :
+
+|Méthode composite (M=5)   |Estimation de Z ($mm^6 m^{-3}$)|
+|:-------------------------|:-----------------------------:|
+|Rectangles à gauche       |2213.67                        |
+|Rectangles à droite       |2403.25                        |
+|Rectangles au point milieu|2352.11                        |
+|Trapèzes                  |2308.46                        |
+|Simpson                   |2337.56                        |
+
+Ces estimations sont à comparer à la valeur théorique $Z = 2337.49 mm^6/m^3$.
 
 ### Accélération de Romberg
 
