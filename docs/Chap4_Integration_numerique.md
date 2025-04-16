@@ -468,7 +468,7 @@ L'ordre de convergence est de 2 : **l'erreur est divisée par 4 lorsque h est di
 
 ### Formule composite de Simpson
 
-Pour faciliter l'écriture, on définira pour la méthode de Simpson composite $h = \frac{b-a}{2M} pour un nombre d'intervalles $M$.
+Pour faciliter l'écriture, on définira pour la méthode de Simpson composite $h = \frac{b-a}{2M}$ pour un nombre d'intervalles $M$.
 
 Sur chaque sous-intervalle $[x_j,x_{j+2}]$ :
 
@@ -476,7 +476,7 @@ $\int_{x_{j+2}}^{x_j} f(x) dx \approx \frac{h}{3} (f(x_{j})+4f(x_{j+1})+f(x_{j+2
 
 D'où la formule composite de Simpson :
 
-$\int_{a}^{b} f(x) dx \approx \frac{h}{3} (f(a) + 2 \displaystyle\sum_{j=1}^{M-1} f(x_{2j}) + 4 \displaystyle\sum_{j=1}^{M-1} f(x_{2j-1}) + f(b))$
+$\int_{a}^{b} f(x) dx \approx \frac{h}{3} (f(a) + 2 \displaystyle\sum_{j=1}^{M} f(x_{2j}) + 4 \displaystyle\sum_{j=0}^{M-1} f(x_{2j+1}) + f(b))$
 
 Voici une illustration pour notre exemple, avec $M=5$ :
 
@@ -519,22 +519,127 @@ def methode_composite(f,a,b,methode,M):
     
     #Initialisation de la somme des aires sous la courbe des différents 
     #sous-intervalles :
-    somme = 0 
+    aire = 0 
     
     #Boucle sur les sous-intervalles :
     for i in range(M):
               
         #Addition au compteur de l'aire sous la courbe pour ce sous-intervalle :
-        somme += methode(f,x_i[i],x_i[i+1])
+        aire += methode(f,x_i[i],x_i[i+1])
     
     #Renvoyer l'estimation de l'aire sous la courbe pour l'intervalle [a,b] :
-    return somme
+    return aire
 ~~~
 
 Si cette fonction est élégante, car elle est utilisable pour toutes les méthodes programmées précédemment, il est à noter qu'elle n'est pas optimisée pour la méthode des trapèzes et la méthode de Simpson.
 En effet, avec cette implémentation, on évalue plusieurs fois la fonction aux mêmes points.
 
-Pour une implémentation plus optimisée, il vaut mieux programmer une fonction pour chaque méthode composite, en se basant sur les formules données précédemment :
+Pour une implémentation plus optimisée, il vaut mieux programmer une fonction pour chaque méthode composite, en se basant sur les formules données précédemment.
+
+Voici la fonction pour la méthode composite des rectangles à gauche :
+
+~~~
+def rectangles_gauche_composite(f,a,b,M):
+    
+    #Déterminer la largeur h de chaque sous-intervalle :
+    h = (b-a)/M
+    
+    #Découpage de l'intervalle [a,b] en M sous-intervalles avec un pas de h :
+    x_i = [a+i*h for i in range(M+1)]
+    
+    #Initialiser la somme des évaluations de f pour chaque sous-intervalle:
+    somme = 0 
+    
+    #Boucle sur les sous-intervalles :
+    for i in range(M):
+        
+        #Sommer la valeur de f "à gauche" du sous-intervalle :
+        somme += f(x_i[i])
+        
+    #Calcul de la somme des aires des sous-intervalles :
+    aire = somme*h
+    
+    return aire
+~~~
+
+Voici la fonction pour la méthode composite des rectangles à droite :
+
+~~~
+def rectangles_droite_composite(f,a,b,M):
+    
+    #Déterminer la largeur h de chaque sous-intervalle :
+    h = (b-a)/M
+    
+    #Découpage de l'intervalle [a,b] en M sous-intervalles avec un pas de h :
+    x_i = [a+i*h for i in range(M+1)]
+    
+    #Initialiser la somme des évaluations de f pour chaque sous-intervalle:
+    somme = 0 
+    
+    #Boucle sur les sous-intervalles :
+    for i in range(M):
+        
+        #Sommer la valeur de f "à droite" du sous-intervalle :
+        somme += f(x_i[i+1])
+        
+    #Calcul de la somme des aires des sous-intervalles :
+    aire = somme*h
+    
+    return aire
+~~~
+
+Voici la fonction pour la méthode composite des rectangles au point milieu :
+
+~~~
+def rectangles_milieu_composite(f,a,b,M):
+    
+    #Déterminer la largeur h de chaque sous-intervalle :
+    h = (b-a)/M
+    
+    #Découpage de l'intervalle [a,b] en M sous-intervalles avec un pas de h :
+    x_i = [a+i*h for i in range(M+1)]
+    
+    #Initialiser la somme des évaluations de f pour chaque sous-intervalle:
+    somme = 0 
+    
+    #Boucle sur les sous-intervalles :
+    for i in range(M):
+        
+        #Sommer la valeur de f "au milieu" du sous-intervalle :
+        somme += f((x_i[i]+x_i[i+1])/2)
+        
+    #Calcul de la somme des aires des sous-intervalles :
+    aire = somme*h
+    
+    return aire
+~~~
+
+Voici la fonction pour la méthode composite des trapèzes :
+
+~~~
+def trapezes_composite(f,a,b,M):
+    
+    #Déterminer la largeur h de chaque sous-intervalle :
+    h = (b-a)/M
+    
+    #Découpage de l'intervalle [a,b] en M sous-intervalles avec un pas de h :
+    x_i = [a+i*h for i in range(M+1)]
+    
+    #Initialiser la somme des évaluations de f pour chaque sous-intervalle avec
+    #f(a) et f(b):
+    somme = (f(x_i[0])+f(x_i[-1]))/2
+    
+    #Boucle sur les sous-intervalles :
+    for i in range(1,M):
+        
+        #Sommer la valeur de f à gauche du sous-intervalle :
+        somme += f(x_i[i])
+        
+    #Calcul de la somme des aires des sous-intervalles :
+    aire = somme*h
+    
+    return aire
+~~~
 
 
 
