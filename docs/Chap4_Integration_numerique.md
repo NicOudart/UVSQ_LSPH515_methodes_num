@@ -826,7 +826,15 @@ $I_1 = \frac{b-a}{2} (f(\frac{-1}{\sqrt{3}} \frac{b-a}{2} + \frac{a+b}{2})+f(\fr
 
 On peut généraliser les formules trouvées précédemment pour un nombre de points quelconque :
 
-$I_n = \frac{b-a}{2} \displaystyle\sum_{i=1}^{n} w_i f(\frac{}{} x_i)$
+$I_n = \frac{b-a}{2} \displaystyle\sum_{i=1}^{n} w_i f(\frac{b-a}{2} x_i + \frac{a+b}{2})$
+
+Voici les points et les poids déterminés pour des ordres de 0 à 4 :
+
+|Ordre $n$|Nombre de points|Points $x_i$                                     |Poids $w_i$                                  |
+|:-------:|:--------------:|:-----------------------------------------------:|:-------------------------------------------:|
+|0        |1               |0                                                |2                                            |
+|1        |2               |$-\sqrt{\frac{1}{3}}$ et $\sqrt{\frac{1}{3}}$    |1 et 1                                       |
+|2        |3               |0, $-\sqrt{\frac{3}{5}}$ et $-\sqrt{\frac{3}{5}}$|$\frac{8}{9}$, $\frac{5}{9}$ et $\frac{5}{9}$|
 
 |NB :|
 |:-|
