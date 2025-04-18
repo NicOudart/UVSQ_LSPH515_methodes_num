@@ -710,14 +710,14 @@ L'**accélération de Romberg** est une méthode itérative qui permet d'amélio
 Elle tire partie du fait que :
 
 |Pour la méthode des trapèzes : |
-|:-:|
+|:-|
 |$I = I_h + E_h(f) = I_{2h} + E_{2h}(f)$|
 |avec $E_{2h}(f) = 4 E_h(f)$|
 |d'où $\mid I_{2h} - I_h \mid = 3 E_h(f)$|
 |et donc : $E_h(f) = \frac{\mid I_{2h} - I_h \mid}{3}$|
 
 |Pour la méthode de Simpson : |
-|:-:|
+|:-|
 |$I = I_h + E_h(f) = I_{2h} + E_{2h}(f)$|
 |avec $E_{2h}(f) = 16 E_h(f)$|
 |d'où $\mid I_{2h} - I_h \mid = 15 E_h(f)$|
@@ -726,7 +726,7 @@ Elle tire partie du fait que :
 On détermine alors le pas d'intégration $h$ permettant d'obtenir $\epsilon$ avec l'algorithme suivant :
 
 |Algorithme d'accélération de Romberg|
-|:-:|
+|:-|
 |On se donne un découpage initial $2h$|
 |On calcule $I_{2h}$|
 |On double le nombre d'intervalles : on prend un pas de $h$|
@@ -779,6 +779,55 @@ Pour obtenir une précision de $10^{-3}$ sur la valeur de $Z = 2337.49 mm^6/m^3$
 
 ### Principe
 
-### Méthode à 1 point
+Les méthodes de Newton-Cotes fixent les pivots de quadrature et utilisent des poids assurant un degré de précision de $n$ ou $n+1$.
 
-### Méthode à 2 points
+L'idée des **méthodes de Gauss** est de **choisir les pivots** pour que le degré de précision de la formule soit le plus élevé possible.
+
+Soit la formule de quadrature à $(n+1)$ points :
+
+$I = \int_{a}^{b} f(x) dx \approx I_n = \displaystyle\sum_{i=0}^{n} w_i f(x_i)$
+
+Les $(n+1)$ pivots et les $(n+1)$ poids, donc les $2(n+1)$ paramètres, sont ajustés pour optimiser la précision de la méthode.
+
+Pour que la méthode soit exacte pour les polynômes de degré $\leq 2n+1$ on cherche donc les $2(n+1)$ paramètres tels que :
+
+$\int_{a}^{b} x^k dx = \displaystyle\sum_{i=0}^{n} w_i x_i^k$ avec $k=0,1,...,2n+1$
+
+### Méthode à 1 point (n=0)
+
+A l'ordre le plus bas ($n=0$), on cherche la position de l'unique point $x_0$ et de l'unique coefficient $w_0$ tel que $I_0 = w_0 f(x_0)$ soit exacte pour tous les polynômes de degré $\leq 2n+1 = 1$.
+
+Il faut donc qu'elle soit exacte pour les polynômes $p_0(x)=1$ et $p_1(x)=x$.
+
+On trouve que l'unique point de quadrature correspond au point milieu : cette méthode correspond en fait à la **méthode du point milieu** de Newton-Cotes.
+
+### Méthode à 2 points (n=1)
+
+A l'ordre 2 ($n=1$), on a 4 inconnues à ajuster : les 2 points $x_0$ et $x_1$, et les 2 points $w_0$ et $w_1$.
+
+Soit $I_1 = w_0 f(x_0) + w_1 f(x_1)$
+
+On va ajuster ces paramètres pour que la méthode soit exacte dans l'ensemble des polynômes de degré $\leq 3$ (à comparer au degré $\leq 1$ de la méthode des trapèzes).
+
+On résout donc le système de 4 équations à 4 inconnues :
+
+$\begin{cases}
+\int_{a}^{b} 1 dx = w_0 + w_1\\
+\int_{a}^{b} x dx = w_0 x_0 + w_1 x_1\\
+\int_{a}^{b} x^2 dx = w_0 x_0^2 + w_1 x_1^2\\
+\int_{a}^{b} x^3 dx = w_0 x_0^3 + w_1 x_1^3
+\end{cases}$
+
+On obtient la **formule optimale de Gauss** :
+
+$I_1 = \frac{b-a}{2} (f(\frac{-1}{\sqrt{3}} \frac{b-a}{2} + \frac{a+b}{2})+f(\frac{1}{\sqrt{3}} \frac{b-a}{2} + \frac{a+b}{2}))$
+
+### Généralisation (n quelconque)
+
+On peut généraliser les formules trouvées précédemment pour un nombre de points quelconque :
+
+$I_n = \frac{b-a}{2} \displaystyle\sum_{i=1}^{n} w_i f(\frac{}{} x_i)$
+
+|NB :|
+|:-|
+|Pour les curieux, les points et les poids sont déterminés grâce à ce qu'on appelle les "polynômes de Legendre".|
