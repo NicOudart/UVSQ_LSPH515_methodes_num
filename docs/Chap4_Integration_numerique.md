@@ -734,6 +734,47 @@ On détermine alors le pas d'intégration $h$ permettant d'obtenir $\epsilon$ av
 |Pour la méthode des trapèzes : tant que $\mid I_{2h} - I_h \mid > 3 \epsilon$ on répète les opérations précédentes|
 |Pour la méthode de Simpson : tant que $\mid I_{2h} - I_h \mid > 15 \epsilon$ on répète les opérations précédentes|
 
+Voici une fonction Python implémentant l'accélération de Romberg pour la méthode des trapèzes composite.
+
+Elle prend en entrée :
+
+* `f` la fonction Python à intégrer.
+
+* `a` la borne inférieure de l'intervalle d'intégration.
+
+* `b` la borne supérieure de l'intervalle d'intégration.
+
+* `epsilon` la précision souhaitée sur la valeur de l'intégrale.
+
+~~~
+def romberg_trapezes(f,a,b,epsilon):
+    
+    #Initialiser le nombre de sous-intervalles d'intégration M :
+    M = 1
+    
+    #Initialiser les aires estimées pour M et 2M sous-intervalles d'intégration :
+    aire_M = trapezes_composite(f,a,b,M)
+    aire_2M = trapezes_composite(f,a,b,2*M)
+    
+    #Boucler tant que la condition sur l'erreur d'intégration n'est pas atteinte :
+    while abs(aire_M-aire_2M)>(3*epsilon):
+        
+        #Multiplier le nombre de sous-intervalles d'intégration par 2 :
+        M *= 2
+        
+        #Estimer l'aire pour M et 2M sous-intervalles d'intégration :
+        aire_M = trapezes_composite(f,a,b,M)
+        aire_2M = trapezes_composite(f,a,b,2*M)
+        
+    return aire_2M
+~~~
+
+Voici une application de l'accélération de Romberg à notre problème, avec la méthode des trapèzes composite, en demandant une précision de $1 mm^6/m^3$ :
+
+![Méthode de Romberg pour les trapèzes composite](img/Chap4_exemple_trapezes_composite_romberg.gif)
+
+Pour obtenir une précision de $10^{-3}$ sur la valeur de $Z = 2337.49 mm^6/m^3$ avec la méthode des trapèzes composite, on trouve par la méthode de Romberg qu'il faut $M=1024$.
+
 ## Méthodes de Gauss
 
 ### Principe
