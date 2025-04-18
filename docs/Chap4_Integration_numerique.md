@@ -702,6 +702,38 @@ Ces estimations sont à comparer à la valeur théorique $Z = 2337.49 mm^6/m^3$.
 
 ### Accélération de Romberg
 
+Concernant les méthodes composites, il reste la question suivante : 
+**Comment choisir un pas d'intégration $h$ pour obtenir la précision souhaitée $\epsilon$ ?**
+
+L'**accélération de Romberg** est une méthode itérative qui permet d'améliorer l'ordre de convergence de la méthode des trapèzes ou de Simpson.
+
+Elle tire partie du fait que :
+
+|Pour la méthode des trapèzes : |
+|:-:|
+|$I = I_h + E_h(f) = I_{2h} + E_{2h}(f)$|
+|avec $E_{2h}(f) = 4 E_h(f)$|
+|d'où $\mid I_{2h} - I_h \mid = 3 E_h(f)$|
+|et donc : $E_h(f) = \frac{\mid I_{2h} - I_h \mid}{3}$|
+
+|Pour la méthode de Simpson : |
+|:-:|
+|$I = I_h + E_h(f) = I_{2h} + E_{2h}(f)$|
+|avec $E_{2h}(f) = 16 E_h(f)$|
+|d'où $\mid I_{2h} - I_h \mid = 15 E_h(f)$|
+|et donc : $E_h(f) = \frac{\mid I_{2h} - I_h \mid}{15}$|
+
+On détermine alors le pas d'intégration $h$ permettant d'obtenir $\epsilon$ avec l'algorithme suivant :
+
+|Algorithme d'accélération de Romberg|
+|:-:|
+|On se donne un découpage initial $2h$|
+|On calcule $I_{2h}$|
+|On double le nombre d'intervalles : on prend un pas de $h$|
+|On calcule $I_h$|
+|Pour la méthode des trapèzes : tant que $\mid I_{2h} - I_h \mid > 3 \epsilon$ on répète les opérations précédentes|
+|Pour la méthode de Simpson : tant que $\mid I_{2h} - I_h \mid > 15 \epsilon$ on répète les opérations précédentes|
+
 ## Méthodes de Gauss
 
 ### Principe
