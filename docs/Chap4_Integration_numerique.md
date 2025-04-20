@@ -919,7 +919,7 @@ Néanmoins, on peut observer comme attendu que le résultat converge beaucoup pl
 **Exercice :**
 
 Avec la fonction Python précédente, calculez l'erreur absolue commise par les méthodes de Gauss pour $n$ allant de 0 à 3. 
-Tracez ces point sur un graphique. Comment l'erreur semble diminuer avec $n$ ?
+Tracez ces point sur un graphique. Comment l'erreur semble diminuer avec $n$ ? Ce résultat est-il attendu ?
 
 ## Conclusions
 
