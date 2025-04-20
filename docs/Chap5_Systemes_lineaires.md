@@ -79,6 +79,8 @@ $\begin{pmatrix}
   \frac{1}{2} (x_{s2}^2 + y_{s2}^2 + z_{s2}^2 - (c t_2)^2)\\
   \frac{1}{2} (x_{s3}^2 + y_{s3}^2 + z_{s3}^2 - (c t_3)^2)
  \end{pmatrix}$
+ 
+C'est ce système d'équations linéaires que nous chercherons à résoudre pour déterminer la position $(x_r,y_r,z_r)$ du récepteur.
 
 ### Propriétés des systèmes linéaires
 
