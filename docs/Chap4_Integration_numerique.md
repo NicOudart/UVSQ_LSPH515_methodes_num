@@ -709,7 +709,10 @@ En appliquant les algorithmes précédents à notre problème exemple, avec un n
 
 Ces estimations sont à comparer à la valeur théorique $Z = 2337.49 mm^6/m^3$.
 
-On obtiendra comme attendu des estimations plus précise en augmentant le nombre de sous-intervalles $M$.
+**Exercice :**
+
+Utilisez les fonctions Python précédentes pour calculer l'erreur absolue commise par les méthodes composite des trapèzes et de Simpson.
+Calculez l'erreur pour M = 1, 2, 4, 8 et 16. Qu'observez-vous ?
 
 ### Accélération de Romberg
 
@@ -911,7 +914,12 @@ En appliquant l'algorithme précédent pour différents ordres à notre problèm
 Ces estimations sont à comparer à la valeur théorique $Z = 2337.49 mm^6/m^3$.
 
 Notre fonction à intégrer n'étant pas un polynôme de degré $\leq 2n+1$, on ne s'attendait pas à avoir un résultat exact.
-Néanmoins, on peut observer que le résultat converge plus rapidement avec $n$ que les méthodes de Newton-Cotes.
+Néanmoins, on peut observer comme attendu que le résultat converge beaucoup plus rapidement avec $n$ que les méthodes de Newton-Cotes.
+
+**Exercice :**
+
+Avec la fonction Python précédente, calculez l'erreur absolue commise par les méthodes de Gauss pour $n$ allant de 0 à 3. 
+Tracez ces point sur un graphique. Comment l'erreur semble diminuer avec $n$ ?
 
 ## Conclusions
 
