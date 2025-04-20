@@ -352,6 +352,9 @@ En appliquant les algorithmes précédents à notre problème exemple, on trouve
 
 Ces estimations sont à comparer à la valeur théorique $Z = 2337.49 mm^6/m^3$.
 
+Notre fonction à intégrer n'étant pas un polynôme de degré $\leq n$, on ne s'attendait pas à avoir un résultat exact.
+On note toutefois que plus le degré de précision augmente, meilleure est l'estimation.
+
 **Exercice :**
 
 Déterminez la formule de Newton-Cotes pour $n=4$ (aussi appellée "méthode de Boole-Villarceau"), et implémentez-là sous la forme d'une fonction Python.
@@ -531,6 +534,12 @@ def methode_composite(f,a,b,methode,M):
     return aire
 ~~~
 
+On peut appliquer la méthode de Simpson composite $M=5$ à notre exemple avec la commande Python :
+
+~~~
+I_simpson_composite = methode_composite(f,1,3,simpson,5)
+~~~
+
 Si cette fonction est élégante, car elle est utilisable pour toutes les méthodes programmées précédemment, il est à noter qu'elle n'est pas optimisée pour la méthode des trapèzes et la méthode de Simpson.
 En effet, avec cette implémentation, on évalue plusieurs fois la fonction aux mêmes points.
 
@@ -700,6 +709,8 @@ En appliquant les algorithmes précédents à notre problème exemple, avec un n
 
 Ces estimations sont à comparer à la valeur théorique $Z = 2337.49 mm^6/m^3$.
 
+On obtiendra comme attendu des estimations plus précise en augmentant le nombre de sous-intervalles $M$.
+
 ### Accélération de Romberg
 
 Concernant les méthodes composites, il reste la question suivante : 
@@ -824,13 +835,15 @@ $I_1 = \frac{b-a}{2} (f(\frac{-1}{\sqrt{3}} \frac{b-a}{2} + \frac{a+b}{2})+f(\fr
 
 ### Généralisation (n quelconque)
 
-On peut généraliser les formules trouvées précédemment pour un nombre de points quelconque :
+On peut généraliser les formules trouvées précédemment pour un nombre de points quelconque.
 
-$I_n = \frac{b-a}{2} \displaystyle\sum_{i=1}^{n} w_i f(\frac{b-a}{2} x_i + \frac{a+b}{2})$
+Les points et les poids sont déterminés pour l'intégrale d'un polynôme entre -1 et 1, puis par un changement de variable $x_i = \frac{b-a}{2} y_i + \frac{a+b}{2}$ et $w_i = \frac{b-a}{2} v_i$ on obtient la formule générale suivante :
 
-Voici les points et les poids déterminés pour des ordres de 0 à 3 :
+$I_n = \frac{b-a}{2} \displaystyle\sum_{i=1}^{n} v_i f(\frac{b-a}{2} y_i + \frac{a+b}{2})$
 
-|Ordre $n$|Nombre de points|Points $x_i$                                                                                                                                                                                                      |Poids $w_i$                                                                                                 |
+Voici les points et les poids $y_i$ déterminés pour des ordres de 0 à 3 :
+
+|Ordre $n$|Nombre de points|Points $y_i$                                                                                                                                                                                                      |Poids $v_i$                                                                                                 |
 |:-------:|:--------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------:|
 |0        |1               |0                                                                                                                                                                                                                 |2                                                                                                           |
 |1        |2               |$-\sqrt{\frac{1}{3}}$ et $\sqrt{\frac{1}{3}}$                                                                                                                                                                     |1 et 1                                                                                                      |
@@ -839,9 +852,50 @@ Voici les points et les poids déterminés pour des ordres de 0 à 3 :
 
 |NB :|
 |:-|
-|Pour les curieux, les points et les poids sont déterminés grâce à ce qu'on appelle les "polynômes de Legendre".|
+|Pour les curieux, les points $y_i$ et les poids $v_i$ sont déterminés grâce à ce qu'on appelle les "polynômes de Legendre".|
+
+Les méthodes de Gauss sont **plus performantes** que les méthodes de Newton-Cotes en termes de précision pour un même temps de calcul : l'erreur **décroit exponentiellement** avec $n$. 
+Toutefois, la théorie derrière ces méthodes est **plus difficile**, et leur programmation est plus lourde si l'on doit déterminer les points / poids soi-même.
 
 ### Algorithmes
+
+Voici une fonction Python implémentant la méthode de Gauss pour des points / poids donnés.
+
+Elle prend en entrée :
+
+* `f` la fonction Python à intégrer.
+
+* `a` la borne inférieure de l'intervalle d'intégration.
+
+* `b` la borne supérieure de l'intervalle d'intégration.
+
+* `y_i` la liste des points déterminés pour l'ordre de la méthode choisie.
+
+* `v_i` la liste des poids déterminés pour l'ordre de la méthode choisie.
+
+~~~
+def gauss(f,a,b,y_i,v_i):
+    
+    #Initialiser la somme de la formule de quadrature :
+    somme = 0
+    
+    #Boucles sur les points / poids :
+    for i in range(len(y_i)):
+        
+        #Sommer l'évaluation de f au point choisi, pondérée par le poids choisi :
+        somme += v_i[i]*f(y_i[i]*(b-a)/2+((a+b)/2))
+    
+    #Calculer l'estimation de l'aire sous la courbe :
+    aire = somme*(b-a)/2
+    
+    return aire
+~~~
+
+On peut appliquer la méthode de Gauss d'ordre 2 à notre exemple avec la commande Python :
+
+~~~
+I_gauss_ord2 = gauss(f,1,3,[0,-(3/5)**0.5,(3/5)**0.5],[8/9,5/9,5/9])
+~~~
 
 ### Exemples
 
@@ -855,3 +909,22 @@ En appliquant l'algorithme précédent pour différents ordres à notre problèm
 |$n=3$                   |2337.64                        |
 
 Ces estimations sont à comparer à la valeur théorique $Z = 2337.49 mm^6/m^3$.
+
+Notre fonction à intégrer n'étant pas un polynôme de degré $\leq 2n+1$, on ne s'attendait pas à avoir un résultat exact.
+Néanmoins, on peut observer que le résultat converge plus rapidement avec $n$ que les méthodes de Newton-Cotes.
+
+## Conclusions
+
+* On appelle **formule de quadrature** une formule permettant d'approcher l'intégrale d'une fonction $f$ sur un intervalle. De **type interpolation**, elle s'exprime comme une combinaison linéaire de valeurs de $f$ (pivots) et de poids.
+
+* Le **degré de précision** d'une formule de quadrature est le degré maximal des polynômes pouvant être intégrés exactement.
+
+* Les **méthodes de Newton-Cotes** s'appuient sur des formules de quadrature de type **interpolation de Lagrange**. Les plus connues sont les méthodes du **point milieu**, des **trapèzes** et de **Simpson**. Les pivots sont équidistants et les poids ajustés. Elles sont exactes pour les polynômes de degré $\leq n+1$.
+
+* Les formules de Newton-Cotes ne sont pas utilisées au-delà de l'ordre 6. On utilise leur version **composite**. La précision dépend alors de la taille des sous-intervalles.
+
+* Les **méthodes de Gauss** ajustent les pivots et les poids. Elles sont exactes pour les polynômes de degré $\leq 2n+1$, et on les dit donc **optimales**. Leur théorie / programmation est cependant plus lourde.
+
+|NB :|
+|:-|
+|Pour les curieux, il existe aussi des méthodes d'intégration numérique qui ne s'appuient pas sur des formules de quadrature. Par exemple, la méthode de Monte-Carlo.|
