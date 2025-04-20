@@ -828,14 +828,30 @@ On peut généraliser les formules trouvées précédemment pour un nombre de po
 
 $I_n = \frac{b-a}{2} \displaystyle\sum_{i=1}^{n} w_i f(\frac{b-a}{2} x_i + \frac{a+b}{2})$
 
-Voici les points et les poids déterminés pour des ordres de 0 à 4 :
+Voici les points et les poids déterminés pour des ordres de 0 à 3 :
 
-|Ordre $n$|Nombre de points|Points $x_i$                                     |Poids $w_i$                                  |
-|:-------:|:--------------:|:-----------------------------------------------:|:-------------------------------------------:|
-|0        |1               |0                                                |2                                            |
-|1        |2               |$-\sqrt{\frac{1}{3}}$ et $\sqrt{\frac{1}{3}}$    |1 et 1                                       |
-|2        |3               |0, $-\sqrt{\frac{3}{5}}$ et $-\sqrt{\frac{3}{5}}$|$\frac{8}{9}$, $\frac{5}{9}$ et $\frac{5}{9}$|
+|Ordre $n$|Nombre de points|Points $x_i$                                                                                                                                                                                                      |Poids $w_i$                                                                                                 |
+|:-------:|:--------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------:|
+|0        |1               |0                                                                                                                                                                                                                 |2                                                                                                           |
+|1        |2               |$-\sqrt{\frac{1}{3}}$ et $\sqrt{\frac{1}{3}}$                                                                                                                                                                     |1 et 1                                                                                                      |
+|2        |3               |0, $-\sqrt{\frac{3}{5}}$ et $\sqrt{\frac{3}{5}}$                                                                                                                                                                  |$\frac{8}{9}$, $\frac{5}{9}$ et $\frac{5}{9}$                                                               |
+|3        |4               |$\sqrt{\frac{3}{7}-\frac{2}{7}\sqrt{\frac{6}{5}}}$, $-\sqrt{\frac{3}{7}-\frac{2}{7}\sqrt{\frac{6}{5}}}$, $\sqrt{\frac{3}{7}+\frac{2}{7}\sqrt{\frac{6}{5}}}$ et $-\sqrt{\frac{3}{7}+\frac{2}{7}\sqrt{\frac{6}{5}}}$|$\frac{18+\sqrt{30}}{36}$, $\frac{18+\sqrt{30}}{36}$, $\frac{18-\sqrt{30}}{36}$ et $\frac{18-\sqrt{30}}{36}$|
 
 |NB :|
 |:-|
 |Pour les curieux, les points et les poids sont déterminés grâce à ce qu'on appelle les "polynômes de Legendre".|
+
+### Algorithmes
+
+### Exemples
+
+En appliquant l'algorithme précédent pour différents ordres à notre problème exemple, on trouve les valeurs suivantes :
+
+|Méthode de Gauss d'ordre|Estimation de Z ($mm^6 m^{-3}$)|
+|:-----------------------|:-----------------------------:|
+|$n=0$                   |2954.01                        |
+|$n=1$                   |2285.50                        |
+|$n=2$                   |2338.36                        |
+|$n=3$                   |2337.64                        |
+
+Ces estimations sont à comparer à la valeur théorique $Z = 2337.49 mm^6/m^3$.
