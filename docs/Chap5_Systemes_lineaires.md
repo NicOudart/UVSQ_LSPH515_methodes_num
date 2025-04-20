@@ -20,7 +20,7 @@ Au cours de ce chapitre, nous appliquerons les différentes méthodes d'intégra
 
 * Soit un récepteur au sol dont on veut connaitre la position $(x_r,y_r,z_r)$ dans un repère cartésien.
 
-* Soit 3 satellites de la constellation GPS, dont la position est connue dans ce même repère : $(x_{s1},y_{s1},z_{s1})$, $(x_{s2},y_{s2},z_{s2})$ et $(x_{s3},y_{s3},z_{s3})$.
+* Soient 3 satellites de la constellation GPS, dont la position est connue dans ce même repère : $(x_{s1},y_{s1},z_{s1})$, $(x_{s2},y_{s2},z_{s2})$ et $(x_{s3},y_{s3},z_{s3})$.
 
 * Chaque satellite émet un signal, qui est reçu avec un certain temps de retard par le récepteur. Ces temps de retard $(t_1,t_2,t_3)$ sont mesurés par le récepteur.
 
