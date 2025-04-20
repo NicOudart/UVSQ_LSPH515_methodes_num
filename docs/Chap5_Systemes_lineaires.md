@@ -61,7 +61,24 @@ x_{s3} x_r + y_{s3} y_r + z_{s3} z_r = \frac{1}{2} (x_{s3}^2 + y_{s3}^2 + z_{s3}
 
 avec 3 équations et 3 inconnues $(x_r,y_r,z_r)$.
 
-On peut écrire ce système sous la forme matricielle $A x = b$, avec :
+On peut écrire ce système sous la forme matricielle $A x = b$ :
+
+$\begin{pmatrix}
+  x_{s1} & y_{s1} & z_{s1} \\
+  x_{s2} & y_{s2} & z_{s2} \\
+  x_{s3} & y_{s3} & z_{s3} 
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  \frac{1}{2} (x_{s1}^2 + y_{s1}^2 + z_{s1}^2 - (c t_1)^2)\\
+  \frac{1}{2} (x_{s2}^2 + y_{s2}^2 + z_{s2}^2 - (c t_2)^2)\\
+  \frac{1}{2} (x_{s3}^2 + y_{s3}^2 + z_{s3}^2 - (c t_3)^2)
+ \end{pmatrix}$
 
 ### Propriétés des systèmes linéaires
 
