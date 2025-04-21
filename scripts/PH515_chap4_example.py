@@ -23,5 +23,6 @@ plt.tight_layout()
 
 plt.savefig('C:/Users/oudart/Documents/Enseignements/Blog_PH515/Chap4_example_0.png')
 
+#Valeur théorique :
 D = np.linspace(1,3,1000000)
 Z=scipy.integrate.simpson(f(D),x=D)
