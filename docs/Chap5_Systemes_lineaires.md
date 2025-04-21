@@ -94,6 +94,8 @@ $\begin{pmatrix}
  
 C'est ce système d'équations linéaires que nous chercherons à résoudre pour déterminer la position $(x_r,y_r,z_r)$ du récepteur.
 
+Pour vérifier nos résultats, nous considérerons que le récepteur GPS se trouve aux coordonnées ECEF (4205,158,4777), correspondant approximativement à la position de l'UFR des Sciences de l'UVSQ.
+
 ### Propriétés des systèmes linéaires
 
 ### Pivot de Gauss
