@@ -8,7 +8,78 @@ Ce chapitre porte sur les méthodes numériques pour la résolution d'un systèm
 
 ### Motivation
 
+Notre but est de résoudre un **système linéaire** : un ensemble d'équations portant sur les mêmes inconnues.
+
+Un système de $m$ équations linéaires à $n$ inconnues peut s'écrire sous la forme suivante :
+
+$\begin{cases}
+a_{1,1} x_1 + a_{1,2} x_2 + ... + a_{1,n} x_n = b_1\\
+a_{2,1} x_1 + a_{2,2} x_2 + ... + a_{2,n} x_n = b_2\\
+...\\
+a_{m,1} x_1 + a_{m,2} x_2 + ... + a_{m,n} x_n = b_m
+\end{cases}$
+
+avec $x_1,x_2,...,x_n$ les **inconnues** et $a_{i,j}$ les **coefficients** du système.
+
+On peut également écrire ce système sous forme matricielle :
+
+$A x = b$
+
+avec $A$ une matrice de coefficients réels de taille $m \times n$, $x$ est un vecteur de taille $n$ contenant les variables réelles recherchées, et $b$ est un vecteur contenant $m$ réels.
+
+$A = 
+ \begin{pmatrix}
+  a_{1,1} & a_{1,2} & \cdots & a_{1,n} \\
+  a_{2,1} & a_{2,2} & \cdots & a_{2,n} \\
+  \vdots  & \vdots  & \ddots & \vdots  \\
+  a_{m,1} & a_{m,2} &\cdots & a_{m,n} 
+ \end{pmatrix}$
+ 
+$x =
+ \begin{pmatrix}
+  x_1\\
+  x_2\\
+  \vdots\\
+  x_n 
+ \end{pmatrix}$
+ 
+$b =
+ \begin{pmatrix}
+  b_1\\
+  b_2\\
+  \vdots\\
+  b_n 
+ \end{pmatrix}$
+ 
+Si $m>n$, on dit le système **sur-déterminé**.
+Si $m<n$, on dit le système **sous-déterminé**.
+
 ### Solution, rang, déterminant, conditionnement
+
+Face à un système linéaire, il y a 3 cas possibles :
+
+- Le système n'a pas de solution.
+- Le système a une infinité de solution.
+- Le système a une solution unique.
+
+On peut savoir dans quel cas on se trouve avec le **rang de la matrice $A$**.
+
+|Définition|
+|:-|
+|Le **rang** d'une matrice $A$ est le nombre de vecteurs lignes ou colonnes linéairement indépendants.|
+
+Si $A$ est de dimensions $m \times n$, alors $rang(A) \leq min(m,n)$.
+
+|Théorème de Rouché-Fontené|
+|:-|
+|Le système linéaire $A x = b$ avec|
+|$A$ une matrice de taille $m \times n$,|
+|$x$ un vecteur de taille $n$,|
+|et $b$ un vecteur de taille $m$,|
+|admet une solution **si et seulement si** :|
+|$rang(A) = rang([A \mid b])$|
+|Si de plus, $rang(A) = n$, alors le système admet une **unique solution**.|
+|Sinon, le système admet une infinité de solutions.|
 
 ### Règle de Cramer
 
@@ -24,7 +95,7 @@ Nous exprimerons ici les positions en km, avec des coordonnées dans le repère 
 
 * Chaque satellite émet un signal, qui est reçu avec un certain temps de retard par le récepteur. Ces temps de retard $(t_1,t_2,t_3,t_4)$ sont mesurés par le récepteur.
 
-* On admet que les signaux émis par chaque satellites se déplacent à vitesse constante jusqu'au récepteur : $c = 3.10^5 km/s$.
+* On admet que les signaux émis par chaque satellite se déplacent à vitesse constante jusqu'au récepteur : $c = 3.10^5 km/s$.
 
 La distance euclidienne entre chaque satellite et le récepteur doit être égale au temps de retard du signal multiplié par sa vitesse.
 On en déduit facilement que les différentes variables sont liées par le système de 4 équations suivant :
@@ -92,7 +163,7 @@ $\begin{pmatrix}
  
 C'est ce système d'équations linéaires que nous chercherons à résoudre pour déterminer la position $(x_r,y_r,z_r)$ du récepteur.
 
-Pour vérifier nos résultats, nous considérerons que le récepteur GPS se trouve aux coordonnées ECEF (4205,158,4777), correspondant approximativement à la position de l'UFR des Sciences de l'UVSQ.
+Pour vérifier nos résultats, nous considérerons que le récepteur GPS se trouve aux coordonnées ECEF $(x_r,y_r,z_r) = (4205,158,4777)$, correspondant approximativement à la position de l'UFR des Sciences de l'UVSQ.
 
 ## Méthodes directes d'élimination
 
