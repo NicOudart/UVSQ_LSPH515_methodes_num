@@ -337,6 +337,51 @@ Cette méthode est très couteuse en nombre d'opérations et devient donc inappl
 
 ### Algorithme (n=3)
 
+Le déterminant d'une matrice de dimensions $3 \times 3$ peut être calculé à l'aide de la fonction Python suivante :
+
+~~~
+def det_3(A):
+    
+    return A[0,0]*A[1,1]*A[2,2]+A[0,1]*A[1,2]*A[2,0]+A[0,2]*A[1,0]*A[2,1]-A[0,2]*A[1,1]*A[2,0]-A[0,1]*A[1,0]*A[2,2]-A[0,0]*A[1,2]*A[2,1]
+~~~
+
+Voici l'algorithme de Cramer pour une matrice de dimensions $3 \times 3$ sous la forme d'une fonction Python :
+
+~~~
+def cramer_3(A,b):
+    
+    #Vérification des dimensions de A (3x3) et b (3) :
+    if (np.shape(A)!=(3,3))or(len(b)!=3):
+        
+        raise ValueError("Le système n'est pas de Cramer")
+    
+    #Calculer le déterminant de A :
+    det_A = det_3(A)
+    
+    #Vérifier que le système admet bien une unique solution :
+    if det_A==0:
+        
+        raise ValueError("Le système n'admet pas une solution unique !")
+        
+    #Initialiser le vecteur qui contiendra les 3 solutions du système :
+    x = np.array([0,0,0],dtype=np.float64)
+    
+    #Boucle sur les 3 colonnes de la matrice A :
+    for i in range(3):
+        
+        #Remplir la matrice A_i avec les éléments de A :
+        A_i = np.copy(A)
+        
+        #Remplacer la i-ème colonne de A_i avec les éléments de b :
+        A_i[:,i] = b
+        
+        #Calculer la valeur de la i-ème inconnue du système :
+        x[i] = det_3(A_i)/det_A
+        
+    #Renvoyer le vecteur contenant les 3solutions du système :
+    return x
+~~~ 
+
 ### Exemple
 
 ## Méthodes directes d'élimination
