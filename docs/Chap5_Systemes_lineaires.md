@@ -54,12 +54,6 @@ $b =
 Si $m>n$, on dit le système **sur-déterminé**.
 Si $m<n$, on dit le système **sous-déterminé**.
 
-Sous Python, on utilisera la bibliothèque Numpy pour définir / manipuler des matrices :
-
-~~~
-import numpy as np
-~~~
-
 ### Solution, rang et déterminant
 
 Face à un système linéaire, il y a 3 cas possibles :
@@ -276,6 +270,48 @@ $\begin{pmatrix}
  
 C'est ce système d'équations linéaires que nous chercherons à résoudre pour essayer de retrouver la position $(x_r,y_r,z_r)$ du récepteur.
 
+Sous Python, on utilisera la bibliothèque Numpy pour définir / manipuler ces matrices :
+
+~~~
+import numpy as np
+~~~
+
+On définira le vecteur de la position du récepteur GPS à retrouver avec :
+
+~~~
+pos_rec = np.array([4205,158,4777],dtype=np.float64)
+~~~
+
+On définira ensuite les vecteurs de positions des satellites GPS avec :
+
+~~~
+pos_sat1 = np.array([14000,4000,25000],dtype=np.float64) #Coordonnées du satellite GPS 1
+pos_sat2 = np.array([24000,6000,15000],dtype=np.float64) #Coordonnées du satellite GPS 2
+pos_sat3 = np.array([9000,-14000,21000],dtype=np.float64) #Coordonnées du satellite GPS 3
+pos_sat4 = np.array([10000,16000,19000],dtype=np.float64) #Coordonnées du satellite GPS 4
+~~~
+
+On pourra alors en déduire les temps de retard associés :
+
+~~~
+t1 = ((sum((pos_rec-pos_sat1)**2))**0.5)/3e5 #Temps de retard associé au satellite GPS 1
+t2 = ((sum((pos_rec-pos_sat2)**2))**0.5)/3e5 #Temps de retard associé au satellite GPS 2
+t3 = ((sum((pos_rec-pos_sat3)**2))**0.5)/3e5 #Temps de retard associé au satellite GPS 3
+t4 = ((sum((pos_rec-pos_sat4)**2))**0.5)/3e5 #Temps de retard associé au satellite GPS 4
+~~~
+
+Et pour finir, on pourra définir les matrices $A$ et $b$ du système linéaire à résoudre :
+
+~~~
+A = np.vstack((pos_sat2-pos_sat1,pos_sat3-pos_sat1,pos_sat4-pos_sat1))
+
+b_row1 = 0.5*(sum(pos_sat2**2)-sum(pos_sat1**2)-(3e5*t2)**2+(3e5*t1)**2)
+b_row2 = 0.5*(sum(pos_sat3**2)-sum(pos_sat1**2)-(3e5*t3)**2+(3e5*t1)**2)
+b_row3 = 0.5*(sum(pos_sat4**2)-sum(pos_sat1**2)-(3e5*t4)**2+(3e5*t1)**2)
+
+b = np.array([b_row1,b_row2,b_row3])
+~~~
+
 ## La règle de Cramer
 
 ### Théorème
@@ -297,9 +333,9 @@ Lorsque le système n'est pas de Cramer (donc si $det(A)=0$) :
 - Si le déterminant d'une des racines $A_i$ est nul alors le système n'a pas de solution.
 - La réciproque est fausse : il peut arriver qu'un système n'ait pas de solution alors que tous les $det(A_i)$ sont non-nuls.
 
-Cette méthode est très couteuse en nombre d'opérations et devient donc inapplicable à de grands systèmes.
+Cette méthode est très couteuse en nombre d'opérations et devient donc inapplicable à de grands systèmes (plus de 4 équations).
 
-### Algorithme
+### Algorithme (n=3)
 
 ### Exemple
 
