@@ -95,12 +95,16 @@ On dit alors que le **système est de Cramer** et on peut écrire :
 
 $x = A^{-1} b$
 
-Le **système homogène** $A x = 0$ admet toujours le vecteur nul comme solution. 
+Le **système homogène** $A x = 0$ admet toujours le vecteur nul comme solution :
+
 - Si $det(A) \neq 0$ c'est l'unique solution. 
+
 - Sinon il y en a une infinité.
 
 Dans le cas d'un **système non homogène** ($b \neq 0$), si $det(A) = 0$ :
+
 - Soit $rang(A) = rang([A \ mid b])$ alors il y a une infinité de solutions.
+
 - Soit $rang(A) \neq rang([A \mid b])$ alors il n'y a pas de solution.
 
 ### Conditionnement
@@ -118,7 +122,9 @@ $\kappa(A) = \|A\| \|A^{-1}\|$
 avec une norme matricielle à définir.
 
 L'erreur relative sur la solution est inférieure à l'erreur relative sur les données multiplisée par $\kappa(A)$ :
+
 - Si $\kappa(A)$ est petit (de l'ordre de l'unité) on dit que le conditionnement est bon.
+
 - Si $\kappa(A) >> 1$ le système est dit mal conditionné.
 
 Le calcul du conditionnement dépend du choix de la norme :
@@ -152,6 +158,16 @@ Pour une matrice carrée $A$ d'ordre $n$ inversible, le conditionnement vérifie
 - Si $A$ est une matrice **réelle symétrique** ($A = A^T$), si $lambda_{min}$ et $lambda_{max}$ sont la plus petite et la plus grande valeur propre de $A$ en valeur absolue, on a : $\kappa_2(A) = \mid \frac{\lambda_{max}}{\lambda_{min}} \mid$
 
 - Si $A$ est une matrice **orthogonale** ($A A^T = A^T A = I$) alors $\kappa_2(A) = 1$
+
+|Effet d'une perturbation de $b$|
+|:-|
+|Si on a une perturbation $\Delta b$ sur $b$ induisant une erreur $\Delta x$ sur $x$, alors on aura la majoration :|
+||
+
+|Effet d'une perturbation de $A$|
+|:-|
+|Si on a une perturbation $\Delta A$ sur $A$ induisant une erreur $\Delta x$ sur $x$, alors on aura la majoration :|
+||
 
 ### Exemple de problème
 
@@ -270,7 +286,23 @@ $\begin{pmatrix}
  
 C'est ce système d'équations linéaires que nous chercherons à résoudre pour essayer de retrouver la position $(x_r,y_r,z_r)$ du récepteur.
 
-Sous Python, on utilisera la bibliothèque Numpy pour définir / manipuler ces matrices :
+On peut déjà vérifier que ce système a bien une unique racine :
+
+- $A$ est carrée de dimensions $3 \times 3$, $x$ et $b$ sont de taille 3.
+
+- $det(A) = (10000 \times -18000 \times -6000) + (-4000 \times 2000 \times -4000) + (-5000 \times 12000 \times -10000) - (-10000 \times -18000 \times -4000) - (-5000 \times 2000 \times -6000) - (10000 \times 12000 \times -4000) = 2852000000000 \neq 0$
+
+Il s'agit donc d'un **système de Cramer** : on a bien **unicité de la solution**.
+
+On peut également vérifier si le système est bien conditionné :
+
+- $\|A\|_1 = $ d'où $\kappa_1(A) \approx 5.03$
+
+- $\|A\|_2 = $ d'où $\kappa_2(A) \approx 2.36$
+
+Dans les 2 cas, le conditionnement est de l'ordre de l'unité : un a donc un **bon conditionnement**.
+
+Dans la suite de ce chapitre, on utilisera Numpy sous Python pour définir / manipuler les matrices $A$ et $b$ :
 
 ~~~
 import numpy as np
@@ -316,7 +348,7 @@ b = np.array([b_row1,b_row2,b_row3])
 
 ### Théorème
 
-La **règle de Cramer** est un théorème d'algèbre linéaire qui donne la solution d'un système de Cramer :
+La **règle de Cramer** (ou méthode de Cramer) est un théorème d'algèbre linéaire qui donne la solution d'un système de Cramer :
 
 |Théorème de la règle de Cramer|
 |:-|
@@ -330,12 +362,16 @@ La **règle de Cramer** est un théorème d'algèbre linéaire qui donne la solu
 |où $A_i$ est la matrice carrée formée en remplaçant la i-ème colonne de $A$ par le vecteur $b$.|
 
 Lorsque le système n'est pas de Cramer (donc si $det(A)=0$) :
+
 - Si le déterminant d'une des racines $A_i$ est nul alors le système n'a pas de solution.
+
 - La réciproque est fausse : il peut arriver qu'un système n'ait pas de solution alors que tous les $det(A_i)$ sont non-nuls.
 
 Cette méthode est très couteuse en nombre d'opérations et devient donc inapplicable à de grands systèmes (plus de 4 équations).
 
 ### Algorithme (n=3)
+
+Dans cette section, nous présenterons les algorithmes permettant d'appliquer la méthode de Cramer dans le cas d'une matrice de dimensions $(3 \times 3)$ : 3 équations et 3 inconnues.
 
 Le déterminant d'une matrice de dimensions $3 \times 3$ peut être calculé à l'aide de la fonction Python suivante :
 
@@ -378,11 +414,60 @@ def cramer_3(A,b):
         #Calculer la valeur de la i-ème inconnue du système :
         x[i] = det_3(A_i)/det_A
         
-    #Renvoyer le vecteur contenant les 3solutions du système :
+    #Renvoyer le vecteur contenant les 3 solutions du système :
     return x
 ~~~ 
 
 ### Exemple
+
+Avant d'appliquer la méthode Cramer à notre problème exemple, il convient de vérifier que celle-ci est bien applicable.
+
+On rappelle que nous avons montré précédemment que nous avons ici affaire à un système de Cramer car :
+
+- $A$ est carrée de dimensions $3 \times 3$, $x$ et $b$ sont de taille 3.
+
+- $det(A) = 2852000000000 \neq 0$
+
+La solution est par conséquent unique, et nous pouvons appliquer la méthode de Cramer.
+
+Tout d'abord, nous construisons $A_1$, $A_2$ et $A_3$ :
+
+$A_1 =
+ \begin{pmatrix}
+  -5404000 & 2000 & -10000 \\
+  -42977000 & -18000 & -4000 \\
+  -43586000 & 12000 & -6000
+ \end{pmatrix}
+ 
+$A_2 =
+ \begin{pmatrix}
+  10000 & -5404000 & -10000 \\
+  -5000 & -42977000 & -4000 \\
+  -4000 & -43586000 & -6000
+ \end{pmatrix}
+ 
+$A_3 =
+ \begin{pmatrix}
+  10000 & 2000 & -5404000 \\
+  -5000 & -18000 & -42977000 \\
+  -4000 & 12000 & -43586000
+ \end{pmatrix}
+ 
+On peut alors calculer que :
+
+$det(A_1) = 11992660000000000$
+
+$det(A_2) = 450616000000000$
+
+$det(A_3) = 13624004000000000$
+
+On en déduit que :
+
+$x_r = \frac{det(A_1)}{det(A)} = 4205$
+
+$y_r = \frac{det(A_2)}{det(A)} = 158$
+
+$z_r = \frac{det(A_3)}{det(A)} = 4777$
 
 ## Méthodes directes d'élimination
 

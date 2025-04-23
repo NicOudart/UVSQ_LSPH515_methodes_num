@@ -48,7 +48,7 @@ def cramer_3(A,b):
         
         raise ValueError("Le système n'admet pas une solution unique !")
         
-    #Initialiser le vecteur qui contiendra la solution :
+    #Initialiser le vecteur qui contiendra les 3 solutions du système :
     x = np.array([0,0,0],dtype=np.float64)
     
     #Boucle sur les 3 colonnes de la matrice A :
@@ -59,10 +59,11 @@ def cramer_3(A,b):
         
         #Remplacer la i-ème colonne de A_i avec les éléments de b :
         A_i[:,i] = b
-        
-        #
+                
+        #Calculer la valeur de la i-ème inconnue du système :
         x[i] = det_3(A_i)/det_A
-    
+        
+    #Renvoyer le vecteur contenant les 3 solutions du système :
     return x
 
 print('Cramer method solution = '+str(cramer_3(A,b)))
