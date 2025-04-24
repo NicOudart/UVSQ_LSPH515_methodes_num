@@ -528,7 +528,7 @@ $\begin{cases}
 a_{1,1}* x_1 + a_{1,2}* x_2 + ... + a_{1,n}* x_n = b_1*\\
 a_{2,2}* x_2 + a_{2,3}* x_2 + ... + a_{2,n}* x_n = b_2*\\
 ...\\
-a_{n-1,n-1}* x_{n-1} + a_{n-1,n}* x_n = b_{n-1}*
+a_{n-1,n-1}* x_{n-1} + a_{n-1,n}* x_n = b_{n-1}*\\
 a_{n,n}* x_n = b_n*
 \end{cases}$
 
@@ -540,7 +540,7 @@ $\begin{cases}
 x_n = \frac{b_n*}{a_{n,n}*}\\
 x_{n-1} = \frac{1}{a_{n-1,n-1}*} (b_{n-1}* - a_{n-1,n}* x_n)\\
 ...\\
-x_i = \frac{1}{a_{i,i}*} (b_i* - \displaystyle\sum_{j=i+1}^{n} a_{i,j}* x_j)
+x_i = \frac{1}{a_{i,i}*} (b_i* - \displaystyle\sum_{j=i+1}^{n} a_{i,j}* x_j)\\
 ...\\
 x_1 = \frac{1}{a_{1,1}*} (b_1* - \displaystyle\sum_{j=2}^{n} a_{1,j}* x_j)
 \end{cases}$
@@ -552,11 +552,11 @@ Pour triangulariser la matrice $A$, on répète ces opérations pour chaque colo
 |- On ramène le pivot sur la ligne $j$ en effectuant si nécessaire un changement de ligne.|
 |- On effectue les opérations suivantes sur les lignes d'indice $j < k \leq n$ :|
 |$L_k = L_k - \frac{a_{k,j}}{a_{jj}} L_j$|
-|On passe à la colonne suivante.|
+|On passe à la colonne suivante, jusqu'à l'avant-dernière.|
 
 Pour réduire les erreurs liées aux arrondis, on peut adopter plusieurs stratégies pour le choix du pivot :
 
-- **Sans pivot** : on ne réalise ni permutations de lignes, ni permutations de colonnes.
+- **Sans pivotage** : on ne réalise ni permutations de lignes, ni permutations de colonnes.
 
 - Le **pivot partiel** : on choisi le pivot comme étant l'élément de valeur absolue maximale de la colonne. Cette stratégie n'implique que des permutations de lignes.
 
@@ -567,6 +567,68 @@ La triangularisation d'une matrice $A$ de dimensions $n \times n$ requiert de l'
 La remontée requiert de l'ordre de $n^2$ opérations.
 
 #### Algorithmes
+
+Voici sous la forme d'une fonction Python l'algorithme de Gauss sans pivotage.
+
+Cette fonction prend en entrée un système de Cramer :
+
+* `A` la matrice des coefficients du système.
+
+* `b` le vecteur du second membre du système.
+
+~~~
+def gauss_sans_pivot(A,b):
+    
+    #Récupérer les dimensions de la matrice A :
+    m,n = np.shape(A)
+    
+    #Vérification des dimensions de A (nxn) et b (n) :
+    if (m!=n)or(len(b)!=n):
+        
+        raise ValueError("Le système n'est pas de Cramer")
+     
+    #Copier A et b pour ne pas modifier les matrices originales :
+    A_2 = np.copy(A)
+    b_2 = np.copy(b)
+    
+    #Boucle sur les colonnes de la matrice A, jusqu'à l'avant-dernière :
+    for j in range(n-1):
+        
+        #Sélection du pivot comme étant la valeur sur la diagonale de la j-ème colonne :
+        pivot = A_2[j,j]
+        
+        #On vérifie que le pivot n'est pas nul :
+        if pivot!=0:
+            
+            #Boucle sur les lignes sous le pivot :
+            for k in range(j+1,n):
+                
+                #Opérations sur les lignes de A et b en utilisant le pivot :
+                b_2[k] = b_2[k] - b_2[j]*A_2[k,j]/pivot
+                A_2[k,:] = A_2[k,:] - A_2[j,:]*A_2[k,j]/pivot
+    
+    #Renvoyer les matrices A et b modifiées :
+    return A_2,b_2
+~~~
+
+~~~
+def remontee(A,b):
+    
+    #Récupérer le nombre n d'équations / inconnues du système :
+    n = len(A)
+    
+    #Initialiser le vecteur qui contiendra les solutions du système :
+    x = np.zeros(n,dtype=np.float64)
+    
+    #Boucle sur les lignes de la matrice A, de n à 1 :
+    for i in range(n-1,-1,-1):
+        
+        #Détermination de la i-ème inconnue :
+        x[i] = (b[i]-sum(A[i,i+1:n]*x[i+1:n]))/A[i,i]
+    
+    #Renvoyer le vecteur contenant les solutions du système :
+    return x
+~~~
 
 #### Exemple
 
