@@ -290,7 +290,9 @@ On peut déjà vérifier que ce système a bien une unique racine :
 
 - $A$ est carrée de dimensions $3 \times 3$, $x$ et $b$ sont de taille 3.
 
-- $det(A) = (10000 \times -18000 \times -6000) + (-4000 \times 2000 \times -4000) + (-5000 \times 12000 \times -10000) - (-10000 \times -18000 \times -4000) - (-5000 \times 2000 \times -6000) - (10000 \times 12000 \times -4000) = 2852000000000 \neq 0$
+- $det(A) = (10000 \times -18000 \times -6000) + (-4000 \times 2000 \times -4000) + (-5000 \times 12000 \times -10000)$ 
+$ - (-10000 \times -18000 \times -4000) - (-5000 \times 2000 \times -6000) - (10000 \times 12000 \times -4000)$
+$ = 2852000000000 \neq 0$
 
 Il s'agit donc d'un **système de Cramer** : on a bien **unicité de la solution**.
 
@@ -449,21 +451,21 @@ $A_1 =
   -5404000 & 2000 & -10000 \\
   -42977000 & -18000 & -4000 \\
   -43586000 & 12000 & -6000
- \end{pmatrix}
+ \end{pmatrix}$
  
 $A_2 =
  \begin{pmatrix}
   10000 & -5404000 & -10000 \\
   -5000 & -42977000 & -4000 \\
   -4000 & -43586000 & -6000
- \end{pmatrix}
+ \end{pmatrix}$
  
 $A_3 =
  \begin{pmatrix}
   10000 & 2000 & -5404000 \\
   -5000 & -18000 & -42977000 \\
   -4000 & 12000 & -43586000
- \end{pmatrix}
+ \end{pmatrix}$
  
 On peut alors calculer que :
 
@@ -493,7 +495,7 @@ Ce résultat était-il attendu d'après le conditionnement de $A$ ?
 
 Les méthodes dites "d'**élimination**" pour la résolution de systèmes linéaires se basent sur 4 grandes propriétés de ces systèmes.
 
-La solution d'un système linéaire $A x = b$ **reste inchangée* lorsque l'on applique les opérations suivantes :
+La solution d'un système linéaire $A x = b$ **reste inchangée** lorsque l'on applique les opérations suivantes :
 
 |Permutation de lignes|
 |:-|
@@ -522,6 +524,12 @@ L'idée derrière les méthodes d'élimination est d'utiliser ces opération pou
 #### Exemple
 
 ### Elimination de Gauss-Jordan
+
+#### Idée
+
+#### Algorithme
+
+#### Exemple
 
 ## Méthodes directes de factorisation / décomposition
 
