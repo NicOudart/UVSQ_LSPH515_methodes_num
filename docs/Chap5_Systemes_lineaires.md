@@ -291,6 +291,7 @@ On peut déjà vérifier que ce système a bien une unique racine :
 - $A$ est carrée de dimensions $3 \times 3$, $x$ et $b$ sont de taille 3.
 
 - $det(A) = (10000 \times -18000 \times -6000) + (-4000 \times 2000 \times -4000) + (-5000 \times 12000 \times -10000)$ 
+
 $ - (-10000 \times -18000 \times -4000) - (-5000 \times 2000 \times -6000) - (10000 \times 12000 \times -4000)$
 $ = 2852000000000 \neq 0$
 
