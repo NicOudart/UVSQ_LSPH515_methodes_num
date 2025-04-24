@@ -147,27 +147,27 @@ $\kappa_2(A) = \|A\|_2 \|A^{-1}\|_2$
 
 Pour une matrice carrée $A$ d'ordre $n$ inversible, le conditionnement vérifie les propriétés suivantes :
 
-- $\kappa(A) /geq 1$
+- $\kappa(A) \geq 1$
 
 - $\forall \alpha \in \mathbb{R}$, $\kappa(\alpha A) = \kappa(A)$
 
 - $\kappa(A) = \kappa(A^{-1})$
 
-- Si on note $\sigma_{min}^2$ et $sigma_{max}^2$ la plus petite et la plus grande valeur propre de $A A^T$ : $\kappa_2(A) = \frac{\sigma_{max}}{\sigma_{min}}$
+- Si on note $\sigma_{min}^2$ et $\sigma_{max}^2$ la plus petite et la plus grande valeur propre de $A A^T$ : $\kappa_2(A) = \frac{\sigma_{max}}{\sigma_{min}}$
 
-- Si $A$ est une matrice **réelle symétrique** ($A = A^T$), si $lambda_{min}$ et $lambda_{max}$ sont la plus petite et la plus grande valeur propre de $A$ en valeur absolue, on a : $\kappa_2(A) = \mid \frac{\lambda_{max}}{\lambda_{min}} \mid$
+- Si $A$ est une matrice **réelle symétrique** ($A = A^T$), si $\lambda_{min}$ et $\lambda_{max}$ sont la plus petite et la plus grande valeur propre de $A$ en valeur absolue, on a : $\kappa_2(A) = \mid \frac{\lambda_{max}}{\lambda_{min}} \mid$
 
 - Si $A$ est une matrice **orthogonale** ($A A^T = A^T A = I$) alors $\kappa_2(A) = 1$
 
 |Effet d'une perturbation de $b$|
 |:-|
 |Si on a une perturbation $\Delta b$ sur $b$ induisant une erreur $\Delta x$ sur $x$, alors on aura la majoration :|
-||
+|$\frac{\Vert \Delta x \Vert}{\Vert x \Vert} \leq \kappa(A) \frac{\Vert \Delta b \Vert}{\Vert b \Vert}$|
 
 |Effet d'une perturbation de $A$|
 |:-|
 |Si on a une perturbation $\Delta A$ sur $A$ induisant une erreur $\Delta x$ sur $x$, alors on aura la majoration :|
-||
+|$\frac{\Vert \Delta x \Vert}{\Vert x + \Delta x \Vert} \leq \kappa(A) \frac{\Vert \Delta A \Vert}{\Vert A \Vert}$|
 
 ### Exemple de problème
 
@@ -373,7 +373,13 @@ Cette méthode est très couteuse en nombre d'opérations et devient donc inappl
 
 Dans cette section, nous présenterons les algorithmes permettant d'appliquer la méthode de Cramer dans le cas d'une matrice de dimensions $(3 \times 3)$ : 3 équations et 3 inconnues.
 
-Le déterminant d'une matrice de dimensions $3 \times 3$ peut être calculé à l'aide de la fonction Python suivante :
+Le déterminant d'une matrice de dimensions $3 \times 3$ peut être calculé à l'aide de la fonction Python suivante.
+
+Cette fonction prend en entrée :
+
+* `A` la matrice de dimensions $3 \times 3$ dont on veut trouver le déterminant.
+
+Elle se base simplement sur la formule du déterminant d'une matrice $3 \times 3$.
 
 ~~~
 def det_3(A):
@@ -381,7 +387,13 @@ def det_3(A):
     return A[0,0]*A[1,1]*A[2,2]+A[0,1]*A[1,2]*A[2,0]+A[0,2]*A[1,0]*A[2,1]-A[0,2]*A[1,1]*A[2,0]-A[0,1]*A[1,0]*A[2,2]-A[0,0]*A[1,2]*A[2,1]
 ~~~
 
-Voici l'algorithme de Cramer pour une matrice de dimensions $3 \times 3$ sous la forme d'une fonction Python :
+Voici l'algorithme de Cramer pour une matrice de dimensions $3 \times 3$ sous la forme d'une fonction Python.
+
+Cette fonction prend en entrée :
+
+* `A` la matrice de dimensions $3 \times 3$ des coefficients du système.
+
+* `b` le vecteur de dimension 3 du second membre du système.
 
 ~~~
 def cramer_3(A,b):
@@ -463,17 +475,51 @@ $det(A_3) = 13624004000000000$
 
 On en déduit que :
 
-$x_r = \frac{det(A_1)}{det(A)} = 4205$
+$x_r = \frac{det(A_1)}{det(A)} = \frac{11992660000000000}{2852000000000} = 4205$
 
-$y_r = \frac{det(A_2)}{det(A)} = 158$
+$y_r = \frac{det(A_2)}{det(A)} = \frac{450616000000000}{2852000000000} = 158$
 
-$z_r = \frac{det(A_3)}{det(A)} = 4777$
+$z_r = \frac{det(A_3)}{det(A)} = \frac{13624004000000000}{2852000000000} = 4777$
+
+**Exercice :**
+
+Introduisez une erreur de 10 km dans les valeurs de $A$, et appliquez de nouveau la méthode de Cramer au système.
+Comment ces erreurs se répercutent-elles sur l'estimation de $(x_r,y_r,z_r)$ ?
+Ce résultat était-il attendu d'après le conditionnement de $A$ ?
 
 ## Méthodes directes d'élimination
 
 ### Propriétés des systèmes linéaires
 
+Les méthodes dites "d'**élimination**" pour la résolution de systèmes linéaires se basent sur 4 grandes propriétés de ces systèmes.
+
+La solution d'un système linéaire $A x = b$ **reste inchangée* lorsque l'on applique les opérations suivantes :
+
+|Permutation de lignes|
+|:-|
+|Permuter 2 lignes de $A$ et les éléments correspondants de $b$ revient à permuter 2 équations.|
+
+|Permutation de colonnes|
+|:-|
+|Permuter 2 colonnes de $A$ et les éléments correspondants de $x$ revient à permuter 2 inconnues.|
+
+|Addition d'une ligne à une autre|
+|:-|
+|Ajouter une ligne de $A$ à une autre, et ajouter les éléments correspondants de $b$, revient à additionner une équation à une autre.|
+
+|Multiplication d'une ligne par un réel non nul|
+|:-|
+|Multiplier une ligne de $A$ et les éléments correspondants de $b$ par un réel non nul revient à multipler une équation par ce réel.|
+
+L'idée derrière les méthodes d'élimination est d'utiliser ces opération pour construire une matrice $A$ modifiée, **triangulaire** ou **diagonale**, afin de se ramener à un système **simple à résoudre**.
+
 ### Pivot de Gauss
+
+#### Idée
+
+#### Algorithme
+
+#### Exemple
 
 ### Elimination de Gauss-Jordan
 
