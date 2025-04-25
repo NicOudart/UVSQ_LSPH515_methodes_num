@@ -252,15 +252,15 @@ Admettons que le récepteur GPS se trouve aux coordonnées ECEF $(x_r,y_r,z_r) =
 Si la position des 4 satellites est :
 
 $(x_{s1},y_{s1},z_{s1}) = (14000,4000,25000)$
-$(x_{s2},y_{s2},z_{s2}) = (24000,6000,15000)$
-$(x_{s3},y_{s3},z_{s3}) = (9000,-14000,21000)$
+$(x_{s2},y_{s2},z_{s2}) = (9000,-14000,21000)$
+$(x_{s3},y_{s3},z_{s3}) = (24000,6000,15000)$
 $(x_{s4},y_{s4},z_{s4}) = (10000,16000,19000)$
 
 Alors le temps de retard associé à chaque satellite sera approximativement :
 
 $t_1 = 0.0759878 s$
-$t_2 = 0.0767739 s$
-$t_3 = 0.0735321 s$
+$t_2 = 0.0735321 s$
+$t_3 = 0.0767739 s$
 $t_4 = 0.0735485 s$
 
 (Il est à noter que les positions des satellites ont été choisies pour être réalistes des satellites GPS).
@@ -268,8 +268,8 @@ $t_4 = 0.0735485 s$
 Le système devient alors :
 
 $\begin{pmatrix}
-  10000 & 2000 & -10000 \\
   -5000 & -18000 & -4000 \\
+  10000 & 2000 & -10000 \\
   -4000 & 12000 & -6000
  \end{pmatrix}
  \begin{pmatrix}
@@ -279,8 +279,8 @@ $\begin{pmatrix}
  \end{pmatrix}
  =
  \begin{pmatrix}
-  -5404000\\
   -42977000\\
+  -5404000\\
   -43586000
  \end{pmatrix}$ 
  
@@ -290,9 +290,9 @@ On peut déjà vérifier que ce système a bien une unique racine :
 
 - $A$ est carrée de dimensions $3 \times 3$, $x$ et $b$ sont de taille 3.
 
-- $det(A) = (10000 \times -18000 \times -6000) + (-4000 \times 2000 \times -4000) + (-5000 \times 12000 \times -10000)$ 
-$- (-10000 \times -18000 \times -4000) - (-5000 \times 2000 \times -6000) - (10000 \times 12000 \times -4000)$
-$= 2852000000000 \neq 0$
+- $det(A) = (-5000 \times 2000 \times -6000) + (10000 \times 12000 \times -4000) + (-18000 \times -10000 \times -4000)$ 
+$- (-4000 \times 2000 \times -4000) - (-5000 \times 12000 \times -10000) - (10000 \times -18000 \times -6000)$
+$= -2852000000000 \neq 0$
 
 Il s'agit donc d'un **système de Cramer** : on a bien **unicité de la solution**.
 
@@ -320,8 +320,8 @@ On définira ensuite les vecteurs de positions des satellites GPS avec :
 
 ~~~
 pos_sat1 = np.array([14000,4000,25000],dtype=np.float64) #Coordonnées du satellite GPS 1
-pos_sat2 = np.array([24000,6000,15000],dtype=np.float64) #Coordonnées du satellite GPS 2
-pos_sat3 = np.array([9000,-14000,21000],dtype=np.float64) #Coordonnées du satellite GPS 3
+pos_sat2 = np.array([9000,-14000,21000],dtype=np.float64) #Coordonnées du satellite GPS 2
+pos_sat3 = np.array([24000,6000,15000],dtype=np.float64) #Coordonnées du satellite GPS 3
 pos_sat4 = np.array([10000,16000,19000],dtype=np.float64) #Coordonnées du satellite GPS 4
 ~~~
 
@@ -448,22 +448,22 @@ Tout d'abord, nous construisons $A_1$, $A_2$ et $A_3$ :
 
 $A_1 =
  \begin{pmatrix}
-  -5404000 & 2000 & -10000 \\
   -42977000 & -18000 & -4000 \\
+  -5404000 & 2000 & -10000 \\
   -43586000 & 12000 & -6000
  \end{pmatrix}$
  
 $A_2 =
  \begin{pmatrix}
-  10000 & -5404000 & -10000 \\
   -5000 & -42977000 & -4000 \\
+  10000 & -5404000 & -10000 \\
   -4000 & -43586000 & -6000
  \end{pmatrix}$
  
 $A_3 =
  \begin{pmatrix}
-  10000 & 2000 & -5404000 \\
   -5000 & -18000 & -42977000 \\
+  10000 & 2000 & -5404000 \\
   -4000 & 12000 & -43586000
  \end{pmatrix}$
  
@@ -477,11 +477,11 @@ $det(A_3) = 13624004000000000$
 
 On en déduit que :
 
-$x_r = \frac{det(A_1)}{det(A)} = \frac{11992660000000000}{2852000000000} = 4205$
+$x_r = \frac{det(A_1)}{det(A)} = \frac{-11992660000000000}{-2852000000000} = 4205$
 
-$y_r = \frac{det(A_2)}{det(A)} = \frac{450616000000000}{2852000000000} = 158$
+$y_r = \frac{det(A_2)}{det(A)} = \frac{-450616000000000}{-2852000000000} = 158$
 
-$z_r = \frac{det(A_3)}{det(A)} = \frac{13624004000000000}{2852000000000} = 4777$
+$z_r = \frac{det(A_3)}{det(A)} = \frac{-13624004000000000}{-2852000000000} = 4777$
 
 **Exercice :**
 
@@ -568,13 +568,15 @@ La remontée requiert de l'ordre de $n^2$ opérations.
 
 #### Algorithmes
 
-Voici sous la forme d'une fonction Python l'algorithme de Gauss sans pivotage.
+Voici sous la forme de fonctions Python les algorithmes d'élimination de Gauss sans pivotage, avec pivot partiel et avec pivot total.
 
-Cette fonction prend en entrée un système de Cramer :
+Toutes ces fonctions prennent en entrée un système de Cramer :
 
 * `A` la matrice des coefficients du système.
 
 * `b` le vecteur du second membre du système.
+
+Voici l'algorithme d'élimination de Gauss sans pivotage : 
 
 ~~~
 def gauss_sans_pivot(A,b):
@@ -610,6 +612,59 @@ def gauss_sans_pivot(A,b):
     #Renvoyer les matrices A et b modifiées :
     return A_2,b_2
 ~~~
+
+Voici l'algorithme d'élimination de Gauss avec pivot partiel : 
+
+~~~
+def gauss_pivot_partiel(A,b):
+    
+    #Récupérer les dimensions de la matrice A :
+    m,n = np.shape(A)
+    
+    #Vérification des dimensions de A (nxn) et b (n) :
+    if (m!=n)or(len(b)!=n):
+        
+        raise ValueError("Le système n'est pas de Cramer")
+     
+    #Copier A et b pour ne pas modifier les matrices originales :
+    A_2 = np.copy(A)
+    b_2 = np.copy(b)
+    
+    #Boucle sur les colonnes de la matrice A, jusqu'à l'avant-dernière :
+    for j in range(n-1):
+        
+        #Sélection du pivot comme étant la valeur maximale en absolu sur la colonne, 
+        #sur la j-ième ligne ou en dessous :
+        idx_pivot = np.argmax(abs(A_2[j:,j]))+j #Indice de la ligne du pivot
+        pivot = A_2[idx_pivot,j] #Valeur du pivot
+        
+        #Si le pivot n'est pas sur la j-ième ligne, échanger la j-ième et la
+        #ligne du pivot :
+        if idx_pivot!=j:
+            A_2[[j,idx_pivot]] = A_2[[idx_pivot,j]] #Pour la matrice A
+            b_2[[j,idx_pivot]] = b_2[[idx_pivot,j]] #Pour le vecteur b
+        
+        #On vérifie que le pivot n'est pas nul :
+        if pivot!=0:
+            
+            #Boucle sur les lignes sous le pivot :
+            for k in range(j+1,n):
+                
+                #Opérations sur les lignes de A et b en utilisant le pivot :
+                b_2[k] = b_2[k] - b_2[j]*A_2[k,j]/pivot
+                A_2[k,:] = A_2[k,:] - A_2[j,:]*A_2[k,j]/pivot
+    
+    #Renvoyer les matrices A et b modifiées :
+    return A_2,b_2
+~~~
+
+Voici l'algorithme d'élimination de Gauss avec pivot total :
+
+~~~
+~~~
+
+Une fois, le système triangularisé par une des méthodes d'élimination de Gauss, il faut lui appliquer l'algorithme de remontée pour le résoudre.
+Voici l'algorithme de remontée sous la forme d'une fonction Python :
 
 ~~~
 def remontee(A,b):
