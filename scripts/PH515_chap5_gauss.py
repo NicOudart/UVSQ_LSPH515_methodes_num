@@ -119,6 +119,7 @@ def gauss_pivot_total(A,b):
     A_2 = np.copy(A)
     b_2 = np.copy(b)
     
+    #Créer un vecteur contenant l'ordre des inconnues dans x (de 0 à n-1) :
     idx_x = np.arange(n)
     
     #Boucle sur les colonnes de la matrice A, jusqu'à l'avant-dernière :
@@ -142,7 +143,6 @@ def gauss_pivot_total(A,b):
         if colonne_pivot!=j:
             A_2[:,[j,colonne_pivot]] = A_2[:,[colonne_pivot,j]] #Pour la matrice A
             idx_x[[j,colonne_pivot]] = idx_x[[colonne_pivot,j]] #Pour les éléments de x
-        
         #On vérifie que le pivot n'est pas nul :
         if pivot!=0:
             
@@ -153,8 +153,11 @@ def gauss_pivot_total(A,b):
                 b_2[k] = b_2[k] - b_2[j]*A_2[k,j]/pivot
                 A_2[k,:] = A_2[k,:] - A_2[j,:]*A_2[k,j]/pivot
     
-    #Renvoyer les matrices A et b modifiées :
-    return A_2,b_2,idx_x
+    #Déterminer les indices de x permettant d'obtenir les inconnues dans l'ordre :
+    ordre_x = np.argsort(idx_x)
+    
+    #Renvoyer les matrices A et b modifiées, et l'ordre des inconnues :
+    return A_2,b_2,ordre_x
 
 #Algorithme de remontée--------------------------------------------------------
 
@@ -193,8 +196,9 @@ print('A = '+str(A_2))
 print('b = '+str(b_2))
 print('x = '+str(x_2))
 
-A_3,b_3,idx_x = gauss_pivot_total(A,b)
+A_3,b_3,ordre_x = gauss_pivot_total(A,b)
 x_3 = remontee(A_3,b_3)
+x_3 = x_3[ordre_x]
 
 print('Gauss avec pivot total :')
 print('A = '+str(A_3))

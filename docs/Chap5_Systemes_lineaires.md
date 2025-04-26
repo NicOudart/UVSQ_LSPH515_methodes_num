@@ -1,4 +1,4 @@
-# Chapitre IV : Intégration numérique
+# Chapitre V : Résolution de systèmes d'équations linéaires
 
 Ce chapitre porte sur les méthodes numériques pour la résolution d'un système linéaire d'équations.
 
@@ -661,6 +661,59 @@ def gauss_pivot_partiel(A,b):
 Voici l'algorithme d'élimination de Gauss avec pivot total :
 
 ~~~
+def gauss_pivot_total(A,b):
+    
+    #Récupérer les dimensions de la matrice A :
+    m,n = np.shape(A)
+    
+    #Vérification des dimensions de A (nxn) et b (n) :
+    if (m!=n)or(len(b)!=n):
+        
+        raise ValueError("Le système n'est pas de Cramer")
+     
+    #Copier A et b pour ne pas modifier les matrices originales :
+    A_2 = np.copy(A)
+    b_2 = np.copy(b)
+    
+    #Créer un vecteur contenant l'ordre des inconnues dans x (de 0 à n-1) :
+    idx_x = np.arange(n)
+    
+    #Boucle sur les colonnes de la matrice A, jusqu'à l'avant-dernière :
+    for j in range(n-1):
+        
+        #Sélection du pivot comme étant la valeur maximale en absolu sur la 
+        #portion de matrice non-triangularisée :
+        idx_pivot = np.argmax(abs(A_2[j:,j:])) #Indice du pivot
+        ligne_pivot = idx_pivot//(n-j)+j
+        colonne_pivot = idx_pivot%(n-j)+j
+        pivot = A_2[ligne_pivot,colonne_pivot] #Valeur du pivot
+        
+        #Si le pivot n'est pas sur la j-ième ligne, échanger la j-ième et la
+        #ligne du pivot :
+        if ligne_pivot!=j:
+            A_2[[j,ligne_pivot]] = A_2[[ligne_pivot,j]] #Pour la matrice A
+            b_2[[j,ligne_pivot]] = b_2[[ligne_pivot,j]] #Pour le vecteur b
+            
+        #Si le pivot n'est pas sur la j-ième colonne, échanger la j-ième et la
+        #colonne du pivot :
+        if colonne_pivot!=j:
+            A_2[:,[j,colonne_pivot]] = A_2[:,[colonne_pivot,j]] #Pour la matrice A
+            idx_x[[j,colonne_pivot]] = idx_x[[colonne_pivot,j]] #Pour les éléments de x
+        #On vérifie que le pivot n'est pas nul :
+        if pivot!=0:
+            
+            #Boucle sur les lignes sous le pivot :
+            for k in range(j+1,n):
+                
+                #Opérations sur les lignes de A et b en utilisant le pivot :
+                b_2[k] = b_2[k] - b_2[j]*A_2[k,j]/pivot
+                A_2[k,:] = A_2[k,:] - A_2[j,:]*A_2[k,j]/pivot
+    
+    #Déterminer les indices de x permettant d'obtenir les inconnues dans l'ordre :
+    ordre_x = np.argsort(idx_x)
+    
+    #Renvoyer les matrices A et b modifiées, et l'ordre des inconnues :
+    return A_2,b_2,ordre_x
 ~~~
 
 Une fois, le système triangularisé par une des méthodes d'élimination de Gauss, il faut lui appliquer l'algorithme de remontée pour le résoudre.
@@ -683,6 +736,14 @@ def remontee(A,b):
     
     #Renvoyer le vecteur contenant les solutions du système :
     return x
+~~~
+
+Dans le cas du pivot total, pour récupérer les inconnues dans l'ordre, il faudra utiliser le vecteur retourné par la fonction "gauss_pivot_total" :
+
+~~~
+A_2,b_2,ordre_x = gauss_pivot_total(A,b)
+x_2 = remontee(A_2,b_2)
+x_2 = x_2[ordre_x]
 ~~~
 
 #### Exemple
