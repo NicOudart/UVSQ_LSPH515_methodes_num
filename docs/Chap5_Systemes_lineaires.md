@@ -548,6 +548,7 @@ x_1 = \frac{1}{a_{1,1}*} (b_1* - \displaystyle\sum_{j=2}^{n} a_{1,j}* x_j)
 Pour triangulariser la matrice $A$, on répète ces opérations pour chaque colonne $j$ :
 
 |Opérations du pivot de Gauss|
+|:-|
 |- On choisit une valeur non-nulle dans la colonne $j$, d'indice supérieur ou égal à $j$, que l'on appellera **pivot**.|
 |- On ramène le pivot sur la ligne $j$ en effectuant si nécessaire un changement de ligne.|
 |- On effectue les opérations suivantes sur les lignes d'indice $j < k \leq n$ :|
