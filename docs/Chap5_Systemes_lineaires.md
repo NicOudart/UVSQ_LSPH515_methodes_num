@@ -135,8 +135,8 @@ Le calcul du conditionnement dépend du choix de la norme :
 
 - La **norme 2** : $\|A\|_2 = \|A^T\|_2 = \sqrt{\rho(A A^T)} = \sqrt{\rho(A^T A)}$
 
-$rho(A)$ est le **rayon spectral** de $A$, que l'on définit comme : 
-$rho(A) = max_{1 \leq i \leq n} |\lambda_i|$
+$\rho(A)$ est le **rayon spectral** de $A$, que l'on définit comme : 
+$\rho(A) = max_{1 \leq i \leq n} |\lambda_i|$
 avec $\lambda_i$ les **valeurs propres** de $A$.
 
 On utilisera surtout le conditionnement de $A$ au sens de la norme 1 et de la norme 2 :
@@ -298,9 +298,9 @@ Il s'agit donc d'un **système de Cramer** : on a bien **unicité de la solution
 
 On peut également vérifier si le système est bien conditionné :
 
-- $\|A\|_1 = $ d'où $\kappa_1(A) \approx 5.03$
+- $\kappa_1(A) \approx 5.03$
 
-- $\|A\|_2 = $ d'où $\kappa_2(A) \approx 2.36$
+- $\kappa_2(A) \approx 2.36$
 
 Dans les 2 cas, le conditionnement est de l'ordre de l'unité : un a donc un **bon conditionnement**.
 
@@ -747,6 +747,8 @@ x_2 = x_2[ordre_x]
 ~~~
 
 #### Exemple
+
+![Elimination de Gauss sans pivotage](img/Chap5_exemple_gauss_sans_pivotage.gif)
 
 ### Elimination de Gauss-Jordan
 
