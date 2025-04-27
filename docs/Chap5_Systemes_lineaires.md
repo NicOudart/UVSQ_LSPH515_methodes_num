@@ -778,6 +778,7 @@ $\begin{pmatrix}
 - On réalise les opérations suivantes : 
 
 $L_2 = L_2 - L_1 \times \frac{10000}{-5000}$
+
 $L_3 = L_3 - L_1 \times \frac{-4000}{-5000}$
 
 Le système devient alors :
@@ -805,7 +806,7 @@ $\begin{pmatrix}
 
 - On réalise l'opération suivante :
 
-$L_3 = L_3 - L_1 \times \frac{26400}{-34000}$
+$L_3 = L_3 - L_2 \times \frac{26400}{-34000}$
 
 Le système devient alors :
 
@@ -832,9 +833,221 @@ Voici un résumé des différentes étapes de l'algorithme sous la forme d'une a
 
 ![Elimination de Gauss sans pivotage](img/Chap5_exemple_gauss_sans_pivotage.gif)
 
+On en déduit alors les solutions par l'algorithme de remontée :
+
+$\begin{cases}
+z_r = \frac{-80141200}{-16776.47} = 4777\\
+y_r = \frac{1}{-34000} (-91358000 - (-18000 \times z_r)) = 158\\
+x_r = \frac{1}{-5000} (-42977000 - (-18000 \times y_r) - (-4000 \times z_r)) = 4205
+\end{cases}$
+
 **Pivot partiel :**
 
+- 1ère itération : nous commençons par la colonne 1.
+
+- On sélectionne le pivot comme étant le maximum en valeur absolue sur la colonne : 10000.
+
+- On échange la ligne 1 et la ligne 2 pour faire passer le pivot sur la diagonale.
+
+Le système devient alors :
+
+$\begin{pmatrix}
+  10000 & 2000 & -10000 \\
+  -5000 & -18000 & -4000 \\
+  -4000 & 12000 & -6000
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -5404000\\
+  -42977000\\
+  -43586000
+ \end{pmatrix}$
+
+- On réalise les opérations suivantes : 
+
+$L_2 = L_2 - L_1 \times \frac{-5000}{10000}$
+
+$L_3 = L_3 - L_1 \times \frac{-4000}{10000}$
+
+Le système devient alors :
+
+$\begin{pmatrix}
+  10000 & 2000 & -10000 \\
+  0 & -17000 & -9000 \\
+  0 & 12800 & -10000
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -5404000\\
+  -45679000\\
+  -45747600
+ \end{pmatrix}$
+ 
+- 2nde itération : nous continue avec la colonne 2.
+
+- On sélectionne le pivot comme étant le maximum en valeur absolue sur la colonne : -17000.
+
+- On réalise l'opération suivante :
+
+$L_3 = L_3 - L_2 \times \frac{12800}{-17000}$
+
+Le système devient alors :
+
+$\begin{pmatrix}
+  10000 & 2000 & -10000 \\
+  0 & -17000 & -9000 \\
+  0 & 0 & -16776.47
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -5404000\\
+  -45679000\\
+  -80141200
+ \end{pmatrix}$
+ 
+On obtient bien un système triangulaire auquel on peut appliquer l'algorithme de remontée.
+
+Voici un résumé des différentes étapes de l'algorithme sous la forme d'une animation :
+
+
+
+On en déduit alors les solutions par l'algorithme de remontée :
+
+$\begin{cases}
+z_r = \frac{-80141200}{-16776.47} = 4777\\
+y_r = \frac{1}{-17000} (-45679000 - (-9000 \times z_r)) = 158\\
+x_r = \frac{1}{10000} (-5404000 - (2000 \times y_r) - (-10000 \times z_r)) = 4205
+\end{cases}$
+
 **Pivot total :**
+
+- 1ère itération : nous commençons par la colonne 1.
+
+- On sélectionne le pivot comme étant le maximum en valeur absolue sur la portion de matrice non-triangularisée : -18000.
+
+- On échange la colonne 1 et la colonne 2 pour faire passer le pivot sur la diagonale.
+
+Le système devient alors :
+
+$\begin{pmatrix}
+  -18000 & -5000 & -4000 \\
+  2000 & 10000 & -10000 \\
+  12000 & -4000 & -6000
+ \end{pmatrix}
+ \begin{pmatrix}
+  y_r\\
+  x_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -42977000\\
+  -5404000\\
+  -43586000
+ \end{pmatrix}$ 
+ 
+- On réalise les opérations suivantes : 
+
+$L_2 = L_2 - L_1 \times \frac{2000}{-18000}$
+
+$L_3 = L_3 - L_1 \times \frac{12000}{-18000}$
+
+$\begin{pmatrix}
+  -18000 & -5000 & -4000 \\
+  0 & 9444.44 & -10444.44 \\
+  0 & -7333.33 & -8666.67
+ \end{pmatrix}
+ \begin{pmatrix}
+  y_r\\
+  x_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -42977000\\
+  -10179222.22\\
+  -72237333.33
+ \end{pmatrix}$
+ 
+- 2nde itération : nous continue avec la colonne 2.
+
+- On sélectionne le pivot comme étant le maximum en valeur absolue sur la portion de matrice non-triangularisée : -10444.44.
+ 
+- On échange la colonne 2 et la colonne 3 pour faire passer le pivot sur la diagonale.
+
+Le système devient alors :
+
+$\begin{pmatrix}
+  -18000 & -4000 & -5000 \\
+  0 & -10444.44 & 9444.44 \\
+  0 & -8666.67 & -7333.33
+ \end{pmatrix}
+ \begin{pmatrix}
+  y_r\\
+  z_r\\
+  x_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -42977000\\
+  -10179222.22\\
+  -72237333.33
+ \end{pmatrix}$
+ 
+- On réalise l'opération suivante :
+
+$L_3 = L_3 - L_2 \times \frac{-8666.67}{-10444.44}$
+
+Le système devient alors :
+
+$\begin{pmatrix}
+  -18000 & -4000 & -5000 \\
+  0 & -10444.44 & 9444.44 \\
+  0 & 0 & -15170.21
+ \end{pmatrix}
+ \begin{pmatrix}
+  y_r\\
+  z_r\\
+  x_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -42977000\\
+  -10179222.22\\
+  -63790744.68
+ \end{pmatrix}$
+ 
+On obtient bien un système triangulaire auquel on peut appliquer l'algorithme de remontée.
+
+Voici un résumé des différentes étapes de l'algorithme sous la forme d'une animation :
+
+
+
+On en déduit alors les solutions par l'algorithme de remontée :
+
+$\begin{cases}
+x_r = \frac{-63790744.68}{-15170.21} = 4205\\
+z_r = \frac{1}{-10444.44} (-10179222.22 - (9444.44 \times x_r)) = 4777\\
+y_r = \frac{1}{-18000} (-63790744.68 - (-4000 \times z_r) - (-5000 \times x_r)) = 158
+
+**Exercice :**
+
+Dans le cas de notre problème exemple, 
 
 ### Elimination de Gauss-Jordan
 
