@@ -557,7 +557,7 @@ Pour triangulariser la matrice $A$, on répète ces opérations pour chaque colo
 
 Pour réduire les erreurs liées aux arrondis, on peut adopter plusieurs stratégies pour le choix du pivot :
 
-- **Sans pivotage** : on ne réalise ni permutations de lignes, ni permutations de colonnes.
+- **Sans pivotage** : on ne réalise ni permutations de lignes, ni permutations de colonnes. Le pivot es toujours séléctionné sur la diagonale de la matrice.
 
 - Le **pivot partiel** : on choisi le pivot comme étant l'élément de valeur absolue maximale de la colonne. Cette stratégie n'implique que des permutations de lignes.
 
@@ -749,7 +749,92 @@ x_2 = x_2[ordre_x]
 
 #### Exemple
 
+Nous allons appliquer chacun des 3 algorithmes d'élimination de Gauss (sans pivotage, avec pivot partiel, avec pivot total) à notre problème exemple.
+On rappelle que nous avons initialement le système de Cramer $A x = b$ suivant :
+
+$\begin{pmatrix}
+  -5000 & -18000 & -4000 \\
+  10000 & 2000 & -10000 \\
+  -4000 & 12000 & -6000
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -42977000\\
+  -5404000\\
+  -43586000
+ \end{pmatrix}$ 
+
+**Sans pivotage :**
+
+- 1ère itération : nous commençons par la colonne 1.
+
+- On sélectionne le pivot comme étant sur la diagonale : -5000.
+
+- On réalise les opérations suivantes : 
+
+$L_2 = L_2 - L_1 \times \frac{10000}{-5000}$
+$L_3 = L_3 - L_1 \times \frac{-4000}{-5000}$
+
+Le système devient alors :
+
+$\begin{pmatrix}
+  -5000 & -18000 & -4000 \\
+  0 & -34000 & -18000 \\
+  0 & 26400 & -2800
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -42977000\\
+  -91358000\\
+  -9204400
+ \end{pmatrix}$
+ 
+- 2nde itération : nous continue avec la colonne 2.
+
+- On séléctionne le pivot comme étant sur la diagonale : -34000.
+
+- On réalise l'opération suivante :
+
+$L_3 = L_3 - L_1 \times \frac{26400}{-34000}$
+
+Le système devient alors :
+
+$\begin{pmatrix}
+  -5000 & -18000 & -4000 \\
+  0 & -34000 & -18000 \\
+  0 & 0 & -16776.47
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -42977000\\
+  -91358000\\
+  -80141200
+ \end{pmatrix}$
+ 
+On obtient bien un système triangulaire auquel on peut appliquer l'algorithme de remontée.
+
+Voici un résumé des différentes étapes de l'algorithme sous la forme d'une animation :
+
 ![Elimination de Gauss sans pivotage](img/Chap5_exemple_gauss_sans_pivotage.gif)
+
+**Pivot partiel :**
+
+**Pivot total :**
 
 ### Elimination de Gauss-Jordan
 
