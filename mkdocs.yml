@@ -6,7 +6,7 @@ theme:
   name: readthedocs
 nav:
   - Introduction: index.md
-  - I. Représentation des nombres: Chap1_Representation_des_nombres.md
+  - I. Représentation des nombres: Chap1_Introduction.md
   - II. Recherche de racines: Chap2_Recherche_de_racines.md
   - III. Interpolation polynomiale: Chap3_Interpolation_polynomiale.md
   - IV. Intégration numérique: Chap4_Integration_numerique.md

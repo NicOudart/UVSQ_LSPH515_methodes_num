@@ -14,7 +14,7 @@ Une **méthode numérique** est une suite de procédures calculatoires ou d'**al
 
 Vous trouverez dans ce cours des méthodes numériques pour résoudre différent problèmes classiques en Physique :
 
-* [Chapitre I : Représentation des nombres](Chap1_Representation_des_nombres.md) : une introduction à la représentation des nombres en machine.
+* [Chapitre I : Introduction](Chap1_Introduction.md) : une introduction aux méthodes numériques.
 
 * [Chapitre II : Recherche de racines](Chap2_Recherche_de_racines.md) : un panel de méthodes pour approximer les racines d'une fonction.
 
@@ -32,13 +32,7 @@ L'objectif est qu'à la fin de ce cours vous soyez capables de :
 
 * **Appliquer** les méthodes numériques à un problème donné, en choisissant pertinemment les **paramètres** d'entrée de l'algorithme (valeurs initiales, conditions d'arrêt, etc.). 
 
-### Etapes d'une résolution numérique
-
-### Algorithme et codage
-
-### Sources et types d'erreurs
-
-### Convergence et stabilité
+Chaque chapitre sera accompagné d'un **problème exemple**, auquel seront appliquées les différentes méthodes vues dans ce cours.
 
 ---
 

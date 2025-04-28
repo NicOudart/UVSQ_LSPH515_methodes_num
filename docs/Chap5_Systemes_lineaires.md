@@ -555,13 +555,15 @@ Pour triangulariser la matrice $A$, on répète ces opérations pour chaque colo
 |$L_k = L_k - \frac{a_{k,j}}{a_{jj}} L_j$|
 |On passe à la colonne suivante, jusqu'à l'avant-dernière.|
 
-Pour réduire les erreurs liées aux arrondis, on peut adopter plusieurs stratégies pour le choix du pivot :
+Pour **réduire les erreurs** liées aux arrondis, on peut adopter plusieurs stratégies pour le choix du pivot :
 
 - **Sans pivotage** : on ne réalise ni permutations de lignes, ni permutations de colonnes. Le pivot es toujours séléctionné sur la diagonale de la matrice.
 
 - Le **pivot partiel** : on choisi le pivot comme étant l'élément de valeur absolue maximale de la colonne. Cette stratégie n'implique que des permutations de lignes.
 
 - Le **pivot total** : on choisi le pivot comme étant l'élément de valeur absolue maximale sur toute la portion de matrice non-triangularisée. Cette stratégie implique des permutations de lignes et de colonnes.
+
+Choisir le pivot le plus grand possible assure que les coefficients de $A$ et $A*$ soient de **même magnitude relative**, réduisant ainsi la propagation des erreurs d'arrondis. 
 
 La triangularisation d'une matrice $A$ de dimensions $n \times n$ requiert de l'ordre de $\frac{2 n^3}{3}$ opérations.
 
@@ -924,7 +926,7 @@ On obtient bien un système triangulaire auquel on peut appliquer l'algorithme d
 
 Voici un résumé des différentes étapes de l'algorithme sous la forme d'une animation :
 
-
+![Elimination de Gauss avec pivot partiel](img/Chap5_exemple_gauss_pivot_partiel.gif)
 
 On en déduit alors les solutions par l'algorithme de remontée :
 
@@ -1036,7 +1038,7 @@ On obtient bien un système triangulaire auquel on peut appliquer l'algorithme d
 
 Voici un résumé des différentes étapes de l'algorithme sous la forme d'une animation :
 
-
+![Elimination de Gauss avec pivot total](img/Chap5_exemple_gauss_pivot_total.gif)
 
 On en déduit alors les solutions par l'algorithme de remontée :
 
