@@ -1096,7 +1096,7 @@ Il s'agit d'une **méthode de diagonalisation**.
 Si la matrice $A$ est **carrée inversible** de taille $n \times n$, sa forme échelonnée réduite est la **matrice identité** de taille $n \times n$.
 
 Le nombre d'opérations de l'algorithme de Gauss-Jordan est de l'ordre de $n^3$ au lieu de $\frac{2}{3} n^3$ pour l'élimination de Gauss.
-Mais avec l'élimination de Gauss-Jordan, **la résolution du système est immédiate**.
+Mais avec l'élimination de Gauss-Jordan, **la résolution du système est immédiate** : la solution est directement $x = b*$.
 
 #### Algorithme
 
@@ -1104,7 +1104,61 @@ Comme pour l'élimination de Gauss, l'élimination de Gauss-Jordan peut se décl
 
 Nous donnerons ici l'algorithme de l'élimination de Gauss-Jordan avec pivot partiel, qui est le plus communément utilisé.
 
+Le voici sous la forme d'une fonction Python, qui prend en entrée un système de Cramer :
 
+* `A` la matrice des coefficients du système.
+
+* `b` le vecteur du second membre du système.
+
+~~~
+def gauss_jordan(A,b):
+    
+    #Récupérer les dimensions de la matrice A :
+    m,n = np.shape(A)
+    
+    #Vérification des dimensions de A (nxn) et b (n) :
+    if (m!=n)or(len(b)!=n):
+        
+        raise ValueError("Le système n'est pas de Cramer")
+     
+    #Copier A et b pour ne pas modifier les matrices originales :
+    A_2 = np.copy(A)
+    b_2 = np.copy(b)
+    
+    #Boucle sur les colonnes de la matrice A :
+    for j in range(n):
+        
+        #Sélection du pivot comme étant la valeur maximale en absolu sur la colonne, 
+        #sur la j-ième ligne ou en dessous :
+        idx_pivot = np.argmax(abs(A_2[j:,j]))+j #Indice de la ligne du pivot
+        pivot = A_2[idx_pivot,j] #Valeur du pivot
+        
+        #On vérifie que le pivot n'est pas nul :
+        if pivot!=0:
+        
+            #Division de la ligne du pivot par le pivot, pour que le pivot soit égal à 1 :
+            A_2[idx_pivot,:] = A_2[idx_pivot,:]/pivot #Pour la matrice A
+            b_2[idx_pivot] = b_2[idx_pivot]/pivot #Pour le vecteur b
+            
+            #Si le pivot n'est pas sur la j-ième ligne, échanger la j-ième et la
+            #ligne du pivot :
+            if idx_pivot!=j:
+                A_2[[j,idx_pivot]] = A_2[[idx_pivot,j]] #Pour la matrice A
+                b_2[[j,idx_pivot]] = b_2[[idx_pivot,j]] #Pour le vecteur b
+                
+            #Boucle sur toutes les lignes sauf celle du pivot :
+            for k in range(n):
+                if k!=j:
+                
+                    #Opérations sur les lignes de A et b :
+                    b_2[k] = b_2[k] - b_2[j]*A_2[k,j]
+                    A_2[k,:] = A_2[k,:] - A_2[j,:]*A_2[k,j]
+    
+    #Renvoyer les matrices A et b modifiées :
+    return A_2,b_2
+~~~
+
+Il n'y a pas besoin d'un algorithme de remontée ici, puisque les solutions seront directement les valeurs du vecteur "b_2" en sortie.
 
 #### Exemple
 
