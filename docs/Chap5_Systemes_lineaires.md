@@ -1050,7 +1050,22 @@ y_r = \frac{1}{-18000} (-63790744.68 - (-4000 \times z_r) - (-5000 \times x_r)) 
 
 **Exercice :**
 
-Dans le cas de notre problème exemple, 
+Pourquoi choisir le pivot le plus grand possible ?
+
+Dans le cas de notre problème exemple, les coefficients de $A$ sont tous du même ordre de grandeur, et nous n'avons pas de gros problèmes d'arrondis.
+Le résutat obtenu est donc le même pour les 3 méthodes d'élimination de Gauss (sans pivotage, avec pivot partiel, avec pivot total).
+
+Essayez à la main d'appliquer au système suivant l'élimination de Gauss sans pivotage puis avec pivot partiel, pour 4 chiffres significatifs sur tous les calculs :
+
+$\begin{cases}
+1.308 x_1 + 4.951 x_2 = 6.259\\
+27.05 x_1 + 1.020 x_2 = 28.07
+\end{cases}$
+
+La solution de ce système est évidente : $x_1 = 1.000$ et $x_2 = 1.000$.
+
+Retrouvez-vous ce résultat avec la méthode sans pivotage ? Avec pivot partiel ?
+Quelle est la cause de cette différence ?
 
 ### Elimination de Gauss-Jordan
 
