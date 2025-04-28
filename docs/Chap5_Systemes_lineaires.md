@@ -559,7 +559,7 @@ Pour **réduire les erreurs** liées aux arrondis, on peut adopter plusieurs str
 
 - **Sans pivotage** : on ne réalise ni permutations de lignes, ni permutations de colonnes. Le pivot es toujours séléctionné sur la diagonale de la matrice.
 
-- Le **pivot partiel** : on choisi le pivot comme étant l'élément de valeur absolue maximale de la colonne. Cette stratégie n'implique que des permutations de lignes.
+- Le **pivot partiel** : on choisi le pivot comme étant l'élément de valeur absolue maximale de la colonne sur ou sous la diagonale. Cette stratégie n'implique que des permutations de lignes.
 
 - Le **pivot total** : on choisi le pivot comme étant l'élément de valeur absolue maximale sur toute la portion de matrice non-triangularisée. Cette stratégie implique des permutations de lignes et de colonnes.
 
@@ -805,7 +805,7 @@ $\begin{pmatrix}
   -9204400
  \end{pmatrix}$
  
-- 2nde itération : nous continue avec la colonne 2.
+- 2nde itération : nous continuons avec la colonne 2.
 
 - On séléctionne le pivot comme étant sur la diagonale : -34000.
 
@@ -850,7 +850,7 @@ x_r = \frac{1}{-5000} (-42977000 - (-18000 \times y_r) - (-4000 \times z_r)) = 4
 
 - 1ère itération : nous commençons par la colonne 1.
 
-- On sélectionne le pivot comme étant le maximum en valeur absolue sur la colonne : 10000.
+- On sélectionne le pivot comme étant le maximum en valeur absolue sur la colonne, sur ou sous la diagonale : 10000.
 
 - On échange la ligne 1 et la ligne 2 pour faire passer le pivot sur la diagonale.
 
@@ -898,9 +898,9 @@ $\begin{pmatrix}
   -45747600
  \end{pmatrix}$
  
-- 2nde itération : nous continue avec la colonne 2.
+- 2nde itération : nous continuons avec la colonne 2.
 
-- On sélectionne le pivot comme étant le maximum en valeur absolue sur la colonne : -17000.
+- On sélectionne le pivot comme étant le maximum en valeur absolue sur la colonne, sur ou sous la diagonale : -17000.
 
 - On réalise l'opération suivante :
 
@@ -989,7 +989,7 @@ $\begin{pmatrix}
   -72237333.33
  \end{pmatrix}$
  
-- 2nde itération : nous continue avec la colonne 2.
+- 2nde itération : nous continuons avec la colonne 2.
 
 - On sélectionne le pivot comme étant le maximum en valeur absolue sur la portion de matrice non-triangularisée : -10444.44.
  
@@ -1161,6 +1161,145 @@ def gauss_jordan(A,b):
 Il n'y a pas besoin d'un algorithme de remontée ici, puisque les solutions seront directement les valeurs du vecteur "b_2" en sortie.
 
 #### Exemple
+
+Nous allons appliquer l'algorithme d'élimination de Gauss-Jordan (avec pivot partiel) à notre problème exemple.
+On rappelle que nous avons initialement le système de Cramer $A x = b$ suivant :
+
+$\begin{pmatrix}
+  -5000 & -18000 & -4000 \\
+  10000 & 2000 & -10000 \\
+  -4000 & 12000 & -6000
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -42977000\\
+  -5404000\\
+  -43586000
+ \end{pmatrix}$ 
+ 
+- 1ère itération : nous commençons par la colonne 1.
+
+- On sélectionne le pivot comme étant le maximum en valeur absolue sur la colonne, sur ou sous la diagonale : 10000.
+
+- On divise la ligne du pivot par le pivot : $L_2 = \frac{L_2}{10000}$
+
+Le système devient alors :
+
+$\begin{pmatrix}
+  -5000 & -18000 & -4000 \\
+  1 & 0.2 & -1 \\
+  -4000 & 12000 & -6000
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -42977000\\
+  -540.4\\
+  -43586000
+ \end{pmatrix}$
+ 
+- On échange la ligne 1 et la ligne 2 pour faire passer le pivot sur la diagonale.
+
+Le système devient alors :
+
+$\begin{pmatrix}
+  1 & 0.2 & -1 \\
+  -5000 & -18000 & -4000 \\
+  -4000 & 12000 & -6000
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -540.4\\
+  -42977000\\
+  -43586000
+ \end{pmatrix}$
+ 
+- On réalise les opérations suivantes : 
+
+$L_2 = L_2 - L_1 \times -5000$
+
+$L_3 = L_3 - L_1 \times -4000$
+
+Le système devient alors :
+
+$\begin{pmatrix}
+  1 & 0.2 & -1 \\
+  0 & -17000 & -9000 \\
+  0 & 12800 & -10000
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -540.4\\
+  -45679000\\
+  -45747600
+ \end{pmatrix}$
+ 
+- 2nde itération : nous continuons avec la colonne 2.
+
+- On sélectionne le pivot comme étant le maximum en valeur absolue sur la colonne, sur ou sous la diagonale : -17000.
+
+Le système devient alors :
+
+$\begin{pmatrix}
+  1 & 0.2 & -1 \\
+  0 & 1 & 0.5294 \\
+  0 & 12800 & -10000
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -540.4\\
+  2687\\
+  -45747600
+ \end{pmatrix}$
+ 
+- On réalise les opérations suivantes : 
+
+$L_1 = L_1 - L_2 \times 0.2$
+
+$L_3 = L_3 - L_2 \times 12800$
+
+Le système devient alors :
+
+$\begin{pmatrix}
+  1 & 0 & -1.1059 \\
+  0 & 1 & 0.5294 \\
+  0 & 0 & -16776.47
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -1078\\
+  2687\\
+  -80141200
+ \end{pmatrix}$
 
 ## Méthodes directes de factorisation / décomposition
 
