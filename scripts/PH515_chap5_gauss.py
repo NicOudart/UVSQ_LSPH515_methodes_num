@@ -84,14 +84,14 @@ def gauss_pivot_partiel(A,b):
         idx_pivot = np.argmax(abs(A_2[j:,j]))+j #Indice de la ligne du pivot
         pivot = A_2[idx_pivot,j] #Valeur du pivot
         
-        #Si le pivot n'est pas sur la j-ième ligne, échanger la j-ième et la
-        #ligne du pivot :
-        if idx_pivot!=j:
-            A_2[[j,idx_pivot]] = A_2[[idx_pivot,j]] #Pour la matrice A
-            b_2[[j,idx_pivot]] = b_2[[idx_pivot,j]] #Pour le vecteur b
-        
         #On vérifie que le pivot n'est pas nul :
         if pivot!=0:
+        
+            #Si le pivot n'est pas sur la j-ième ligne, échanger la j-ième et la
+            #ligne du pivot :
+            if idx_pivot!=j:
+                A_2[[j,idx_pivot]] = A_2[[idx_pivot,j]] #Pour la matrice A
+                b_2[[j,idx_pivot]] = b_2[[idx_pivot,j]] #Pour le vecteur b
             
             #Boucle sur les lignes sous le pivot :
             for k in range(j+1,n):
@@ -132,19 +132,20 @@ def gauss_pivot_total(A,b):
         colonne_pivot = idx_pivot%(n-j)+j
         pivot = A_2[ligne_pivot,colonne_pivot] #Valeur du pivot
         
-        #Si le pivot n'est pas sur la j-ième ligne, échanger la j-ième et la
-        #ligne du pivot :
-        if ligne_pivot!=j:
-            A_2[[j,ligne_pivot]] = A_2[[ligne_pivot,j]] #Pour la matrice A
-            b_2[[j,ligne_pivot]] = b_2[[ligne_pivot,j]] #Pour le vecteur b
-            
-        #Si le pivot n'est pas sur la j-ième colonne, échanger la j-ième et la
-        #colonne du pivot :
-        if colonne_pivot!=j:
-            A_2[:,[j,colonne_pivot]] = A_2[:,[colonne_pivot,j]] #Pour la matrice A
-            idx_x[[j,colonne_pivot]] = idx_x[[colonne_pivot,j]] #Pour les éléments de x
         #On vérifie que le pivot n'est pas nul :
         if pivot!=0:
+        
+            #Si le pivot n'est pas sur la j-ième ligne, échanger la j-ième et la
+            #ligne du pivot :
+            if ligne_pivot!=j:
+                A_2[[j,ligne_pivot]] = A_2[[ligne_pivot,j]] #Pour la matrice A
+                b_2[[j,ligne_pivot]] = b_2[[ligne_pivot,j]] #Pour le vecteur b
+                
+            #Si le pivot n'est pas sur la j-ième colonne, échanger la j-ième et la
+            #colonne du pivot :
+            if colonne_pivot!=j:
+                A_2[:,[j,colonne_pivot]] = A_2[:,[colonne_pivot,j]] #Pour la matrice A
+                idx_x[[j,colonne_pivot]] = idx_x[[colonne_pivot,j]] #Pour les éléments de x
             
             #Boucle sur les lignes sous le pivot :
             for k in range(j+1,n):

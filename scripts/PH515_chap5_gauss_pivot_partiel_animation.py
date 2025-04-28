@@ -55,18 +55,18 @@ for j in range(n-1):
     pivot = A_2[idx_pivot,j] #Valeur du pivot
     print('Pivot = '+str(pivot))
     
-    #Si le pivot n'est pas sur la j-ième ligne, échanger la j-ième et la
-    #ligne du pivot :
-    if idx_pivot!=j:
-        A_2[[j,idx_pivot]] = A_2[[idx_pivot,j]] #Pour la matrice A
-        b_2[[j,idx_pivot]] = b_2[[idx_pivot,j]] #Pour le vecteur b
-        print('Echange L'+str(idx_pivot+1)+' et L'+str(j+1))
-        print('A = '+str(A_2))
-        print('b = '+str(b_2))
-    
     #On vérifie que le pivot n'est pas nul :
     if pivot!=0:
-        
+    
+        #Si le pivot n'est pas sur la j-ième ligne, échanger la j-ième et la
+        #ligne du pivot :
+        if idx_pivot!=j:
+            A_2[[j,idx_pivot]] = A_2[[idx_pivot,j]] #Pour la matrice A
+            b_2[[j,idx_pivot]] = b_2[[idx_pivot,j]] #Pour le vecteur b
+            print('Echange L'+str(idx_pivot+1)+' et L'+str(j+1))
+            print('A = '+str(A_2))
+            print('b = '+str(b_2))
+            
         #Boucle sur les lignes sous le pivot :
         for k in range(j+1,n):
             

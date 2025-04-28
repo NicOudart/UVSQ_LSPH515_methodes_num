@@ -61,29 +61,29 @@ for j in range(n-1):
     pivot = A_2[ligne_pivot,colonne_pivot] #Valeur du pivot
     print('Pivot = '+str(pivot))
     
-    #Si le pivot n'est pas sur la j-ième ligne, échanger la j-ième et la
-    #ligne du pivot :
-    if ligne_pivot!=j:
-        A_2[[j,ligne_pivot]] = A_2[[ligne_pivot,j]] #Pour la matrice A
-        b_2[[j,ligne_pivot]] = b_2[[ligne_pivot,j]] #Pour le vecteur b
-        print('Echange L'+str(ligne_pivot+1)+' et L'+str(j+1))
-        print('A = '+str(A_2))
-        print('b = '+str(b_2))
-        print('x = '+str(idx_x))
-        
-    #Si le pivot n'est pas sur la j-ième colonne, échanger la j-ième et la
-    #colonne du pivot :
-    if colonne_pivot!=j:
-        A_2[:,[j,colonne_pivot]] = A_2[:,[colonne_pivot,j]] #Pour la matrice A
-        idx_x[[j,colonne_pivot]] = idx_x[[colonne_pivot,j]] #Pour les éléments de x
-        print('Echange C'+str(colonne_pivot+1)+' et C'+str(j+1))
-        print('A = '+str(A_2))
-        print('b = '+str(b_2))
-        print('x = '+str(idx_x))
-        
     #On vérifie que le pivot n'est pas nul :
     if pivot!=0:
-        
+    
+        #Si le pivot n'est pas sur la j-ième ligne, échanger la j-ième et la
+        #ligne du pivot :
+        if ligne_pivot!=j:
+            A_2[[j,ligne_pivot]] = A_2[[ligne_pivot,j]] #Pour la matrice A
+            b_2[[j,ligne_pivot]] = b_2[[ligne_pivot,j]] #Pour le vecteur b
+            print('Echange L'+str(ligne_pivot+1)+' et L'+str(j+1))
+            print('A = '+str(A_2))
+            print('b = '+str(b_2))
+            print('x = '+str(idx_x))
+            
+        #Si le pivot n'est pas sur la j-ième colonne, échanger la j-ième et la
+        #colonne du pivot :
+        if colonne_pivot!=j:
+            A_2[:,[j,colonne_pivot]] = A_2[:,[colonne_pivot,j]] #Pour la matrice A
+            idx_x[[j,colonne_pivot]] = idx_x[[colonne_pivot,j]] #Pour les éléments de x
+            print('Echange C'+str(colonne_pivot+1)+' et C'+str(j+1))
+            print('A = '+str(A_2))
+            print('b = '+str(b_2))
+            print('x = '+str(idx_x))
+            
         #Boucle sur les lignes sous le pivot :
         for k in range(j+1,n):
             
