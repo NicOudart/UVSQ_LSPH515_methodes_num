@@ -565,6 +565,8 @@ Pour **réduire les erreurs** liées aux arrondis, on peut adopter plusieurs str
 
 Choisir le pivot le plus grand possible assure que les coefficients de $A$ et $A*$ soient de **même magnitude relative**, réduisant ainsi la propagation des erreurs d'arrondis. 
 
+L'algorithme du pivot partiel est le plus communément utilisé.
+
 La triangularisation d'une matrice $A$ de dimensions $n \times n$ requiert de l'ordre de $\frac{2 n^3}{3}$ opérations.
 
 La remontée requiert de l'ordre de $n^2$ opérations.
@@ -641,14 +643,14 @@ def gauss_pivot_partiel(A,b):
         idx_pivot = np.argmax(abs(A_2[j:,j]))+j #Indice de la ligne du pivot
         pivot = A_2[idx_pivot,j] #Valeur du pivot
         
-        #Si le pivot n'est pas sur la j-ième ligne, échanger la j-ième et la
-        #ligne du pivot :
-        if idx_pivot!=j:
-            A_2[[j,idx_pivot]] = A_2[[idx_pivot,j]] #Pour la matrice A
-            b_2[[j,idx_pivot]] = b_2[[idx_pivot,j]] #Pour le vecteur b
-        
         #On vérifie que le pivot n'est pas nul :
         if pivot!=0:
+        
+            #Si le pivot n'est pas sur la j-ième ligne, échanger la j-ième et la
+            #ligne du pivot :
+            if idx_pivot!=j:
+                A_2[[j,idx_pivot]] = A_2[[idx_pivot,j]] #Pour la matrice A
+                b_2[[j,idx_pivot]] = b_2[[idx_pivot,j]] #Pour le vecteur b
             
             #Boucle sur les lignes sous le pivot :
             for k in range(j+1,n):
@@ -691,19 +693,20 @@ def gauss_pivot_total(A,b):
         colonne_pivot = idx_pivot%(n-j)+j
         pivot = A_2[ligne_pivot,colonne_pivot] #Valeur du pivot
         
-        #Si le pivot n'est pas sur la j-ième ligne, échanger la j-ième et la
-        #ligne du pivot :
-        if ligne_pivot!=j:
-            A_2[[j,ligne_pivot]] = A_2[[ligne_pivot,j]] #Pour la matrice A
-            b_2[[j,ligne_pivot]] = b_2[[ligne_pivot,j]] #Pour le vecteur b
-            
-        #Si le pivot n'est pas sur la j-ième colonne, échanger la j-ième et la
-        #colonne du pivot :
-        if colonne_pivot!=j:
-            A_2[:,[j,colonne_pivot]] = A_2[:,[colonne_pivot,j]] #Pour la matrice A
-            idx_x[[j,colonne_pivot]] = idx_x[[colonne_pivot,j]] #Pour les éléments de x
         #On vérifie que le pivot n'est pas nul :
         if pivot!=0:
+        
+            #Si le pivot n'est pas sur la j-ième ligne, échanger la j-ième et la
+            #ligne du pivot :
+            if ligne_pivot!=j:
+                A_2[[j,ligne_pivot]] = A_2[[ligne_pivot,j]] #Pour la matrice A
+                b_2[[j,ligne_pivot]] = b_2[[ligne_pivot,j]] #Pour le vecteur b
+                
+            #Si le pivot n'est pas sur la j-ième colonne, échanger la j-ième et la
+            #colonne du pivot :
+            if colonne_pivot!=j:
+                A_2[:,[j,colonne_pivot]] = A_2[:,[colonne_pivot,j]] #Pour la matrice A
+                idx_x[[j,colonne_pivot]] = idx_x[[colonne_pivot,j]] #Pour les éléments de x
             
             #Boucle sur les lignes sous le pivot :
             for k in range(j+1,n):
@@ -1071,7 +1074,37 @@ Quelle est la cause de cette différence ?
 
 #### Idée
 
+L'algorithme de **Gauss-Jordan** a pour but de transformer le système en un **système échelonné réduit** à l'aide d'opérations élémentaires sur les lignes (et éventuellement sur les colonnes). 
+L'idée est de pousser plus loin les éliminations que la méthode de Gauss, pour construire une matrice $A*$ de la forme :
+
+$\begin{pmatrix}
+  1 & * & 0 & 0 & * & 0\\
+  0 & 0 & 1 & 0 & * & 0\\
+  0 & 0 & 0 & 1 & * & 0\\
+  0 & 0 & 0 & 0 & 0 & 1\\
+  0 & 0 & 0 & 0 & 0 & 0\\
+ \end{pmatrix}$
+
+Il faut donc ajouter à l'élimination de Gauss vue précédemment :
+
+- Une division de la ligne du pivot par le pivot, pour que le pivot soit égal à 1.
+
+- Des opérations sur les lignes au-dessus de la ligne du pivot.
+
+Il s'agit d'une **méthode de diagonalisation**.
+
+Si la matrice $A$ est **carrée inversible** de taille $n \times n$, sa forme échelonnée réduite est la **matrice identité** de taille $n \times n$.
+
+Le nombre d'opérations de l'algorithme de Gauss-Jordan est de l'ordre de $n^3$ au lieu de $\frac{2}{3} n^3$ pour l'élimination de Gauss.
+Mais avec l'élimination de Gauss-Jordan, **la résolution du système est immédiate**.
+
 #### Algorithme
+
+Comme pour l'élimination de Gauss, l'élimination de Gauss-Jordan peut se décliner sous 3 formes suivant la stratégie choix du pivot : sans pivotage, avec pivot partiel, avec pivot total.
+
+Nous donnerons ici l'algorithme de l'élimination de Gauss-Jordan avec pivot partiel, qui est le plus communément utilisé.
+
+
 
 #### Exemple
 
