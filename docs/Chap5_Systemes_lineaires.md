@@ -563,7 +563,7 @@ Pour **réduire les erreurs** liées aux arrondis, on peut adopter plusieurs str
 
 - Le **pivot total** : on choisi le pivot comme étant l'élément de valeur absolue maximale sur toute la portion de matrice non-triangularisée. Cette stratégie implique des permutations de lignes et de colonnes.
 
-Choisir le pivot le plus grand possible assure que les coefficients de $A$ et $A^*$ soient de **même magnitude relative**, réduisant ainsi la propagation des erreurs d'arrondis. 
+Choisir **le pivot le plus grand possible** assure que les coefficients de $A$ et $A^*$ soient de **même magnitude relative**, réduisant ainsi la propagation des erreurs d'arrondis. 
 
 L'algorithme du pivot partiel est le plus communément utilisé.
 
@@ -1364,7 +1364,12 @@ $x =
  
 Voici un résumé des différentes étapes de l'algorithme sous la forme d'une animation :
 
+![Elimination de Gauss-Jordan avec pivot partiel](img/Chap5_exemple_gauss_jordan.gif)
 
+**Exercice :**
+
+En vous inspirant des fonctions Python précédentes, implémentez la méthode de Gauss-Jordan avec pivot total, puis appliquez-la à notre problème exemple.
+Vérifiez que vous retrouvez bien le résultat attendu.
 
 ## Méthodes directes de factorisation / décomposition
 
