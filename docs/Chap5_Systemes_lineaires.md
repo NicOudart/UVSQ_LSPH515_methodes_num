@@ -1382,7 +1382,7 @@ On remarque qu'appliquer l'opération $L_2 = l_2 - \frac{a_{2,1}}{a_{1,1}} L_1$ 
 $M = 
  \begin{pmatrix}
   1 & 0 & 0 \\
-  -frac{a_{2,1}}{a_{1,1}} & 1 & 0 \\
+  -a_{2,1}/a_{1,1} & 1 & 0 \\
   0 & 0 & 1
  \end{pmatrix}$
  
