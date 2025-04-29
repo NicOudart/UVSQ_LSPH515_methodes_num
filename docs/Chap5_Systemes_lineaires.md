@@ -1257,6 +1257,8 @@ $\begin{pmatrix}
 
 - On sélectionne le pivot comme étant le maximum en valeur absolue sur la colonne, sur ou sous la diagonale : -17000.
 
+- On divise la ligne du pivot par le pivot : $L_2 = \frac{L_2}{-17000}$
+
 Le système devient alors :
 
 $\begin{pmatrix}
@@ -1296,10 +1298,73 @@ $\begin{pmatrix}
  \end{pmatrix}
  =
  \begin{pmatrix}
-  -1078\\
+  -1077.8\\
   2687\\
   -80141200
  \end{pmatrix}$
+ 
+- 3ème itération : nous continuons avec la colonne 3.
+
+- On sélectionne le pivot comme étant le maximum en valeur absolue sur la colonne, sur ou sous la diagonale : -16776.47.
+
+- On divise la ligne du pivot par le pivot : $L_3 = \frac{L_3}{-16776.47}$
+
+Le système devient alors :
+
+$\begin{pmatrix}
+  1 & 0 & -1.1059 \\
+  0 & 1 & 0.5294 \\
+  0 & 0 & 1
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -1077.8\\
+  2687\\
+  4777
+ \end{pmatrix}$
+ 
+- On réalise les opérations suivantes : 
+
+$L_1 = L_1 - L_3 \times -1.1059$
+
+$L_2 = L_2 - L_3 \times 0.5294$
+
+Le système devient alors :
+
+$\begin{pmatrix}
+  1 & 0 & 0 \\
+  0 & 1 & 0 \\
+  0 & 0 & 1
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  4205\\
+  158\\
+  4777
+ \end{pmatrix}$
+ 
+- On trouve alors directement la solution du système :
+
+$x = 
+ \begin{pmatrix}
+  4205\\
+  158\\
+  4777 
+ \end{pmatrix}$
+ 
+Voici un résumé des différentes étapes de l'algorithme sous la forme d'une animation :
+
+
 
 ## Méthodes directes de factorisation / décomposition
 
