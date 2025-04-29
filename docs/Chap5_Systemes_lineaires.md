@@ -513,7 +513,7 @@ La solution d'un système linéaire $A x = b$ **reste inchangée** lorsque l'on 
 |:-|
 |Multiplier une ligne de $A$ et les éléments correspondants de $b$ par un réel non nul revient à multipler une équation par ce réel.|
 
-L'idée derrière les méthodes d'élimination est d'utiliser ces opération pour construire une matrice $A*$ modifiée, **triangulaire** ou **diagonale**, afin de se ramener à un système **simple à résoudre**.
+L'idée derrière les méthodes d'élimination est d'utiliser ces opération pour construire une matrice $A^*$ modifiée, **triangulaire** ou **diagonale**, afin de se ramener à un système **simple à résoudre**.
 
 ### Pivot de Gauss
 
@@ -525,24 +525,24 @@ Il s'agit donc d'une **méthode de triangularisation**.
 Une fois la matrice triangularisée, le système à résoudre devient :
 
 $\begin{cases}
-a_{1,1}* x_1 + a_{1,2}* x_2 + ... + a_{1,n}* x_n = b_1*\\
-a_{2,2}* x_2 + a_{2,3}* x_2 + ... + a_{2,n}* x_n = b_2*\\
+a_{1,1}^* x_1 + a_{1,2}^* x_2 + ... + a_{1,n}^* x_n = b_1^*\\
+a_{2,2}^* x_2 + a_{2,3}^* x_2 + ... + a_{2,n}^* x_n = b_2^*\\
 ...\\
-a_{n-1,n-1}* x_{n-1} + a_{n-1,n}* x_n = b_{n-1}*\\
-a_{n,n}* x_n = b_n*
+a_{n-1,n-1}^* x_{n-1} + a_{n-1,n}^* x_n = b_{n-1}^*\\
+a_{n,n}^* x_n = b_n^*
 \end{cases}$
 
-où les $a_{i,j}*$ sont les coefficients de la matrice modifiée $A*$, et les $b_i*$ les éléments du vecteur modifié $b*$.
+où les $a_{i,j}*$ sont les coefficients de la matrice modifiée $A^*$, et les $b_i^*$ les éléments du vecteur modifié $b^*$.
 
 Pour résoudre ce système, il suffit alors d'effectuer les calculs de "**remontée**" suivants :
 
 $\begin{cases}
-x_n = \frac{b_n*}{a_{n,n}*}\\
-x_{n-1} = \frac{1}{a_{n-1,n-1}*} (b_{n-1}* - a_{n-1,n}* x_n)\\
+x_n = \frac{b_n^*}{a_{n,n}^*}\\
+x_{n-1} = \frac{1}{a_{n-1,n-1}^*} (b_{n-1}^* - a_{n-1,n}^* x_n)\\
 ...\\
-x_i = \frac{1}{a_{i,i}*} (b_i* - \displaystyle\sum_{j=i+1}^{n} a_{i,j}* x_j)\\
+x_i = \frac{1}{a_{i,i}^*} (b_i^* - \displaystyle\sum_{j=i+1}^{n} a_{i,j}^* x_j)\\
 ...\\
-x_1 = \frac{1}{a_{1,1}*} (b_1* - \displaystyle\sum_{j=2}^{n} a_{1,j}* x_j)
+x_1 = \frac{1}{a_{1,1}^*} (b_1^* - \displaystyle\sum_{j=2}^{n} a_{1,j}^* x_j)
 \end{cases}$
 
 Pour triangulariser la matrice $A$, on répète ces opérations pour chaque colonne $j$ :
@@ -563,7 +563,7 @@ Pour **réduire les erreurs** liées aux arrondis, on peut adopter plusieurs str
 
 - Le **pivot total** : on choisi le pivot comme étant l'élément de valeur absolue maximale sur toute la portion de matrice non-triangularisée. Cette stratégie implique des permutations de lignes et de colonnes.
 
-Choisir le pivot le plus grand possible assure que les coefficients de $A$ et $A*$ soient de **même magnitude relative**, réduisant ainsi la propagation des erreurs d'arrondis. 
+Choisir le pivot le plus grand possible assure que les coefficients de $A$ et $A^*$ soient de **même magnitude relative**, réduisant ainsi la propagation des erreurs d'arrondis. 
 
 L'algorithme du pivot partiel est le plus communément utilisé.
 
@@ -1075,7 +1075,7 @@ Quelle est la cause de cette différence ?
 #### Idée
 
 L'algorithme de **Gauss-Jordan** a pour but de transformer le système en un **système échelonné réduit** à l'aide d'opérations élémentaires sur les lignes (et éventuellement sur les colonnes). 
-L'idée est de pousser plus loin les éliminations que la méthode de Gauss, pour construire une matrice $A*$ de la forme :
+L'idée est de pousser plus loin les éliminations que la méthode de Gauss, pour construire une matrice $A^*$ de la forme :
 
 $\begin{pmatrix}
   1 & * & 0 & 0 & * & 0\\
@@ -1096,7 +1096,7 @@ Il s'agit d'une **méthode de diagonalisation**.
 Si la matrice $A$ est **carrée inversible** de taille $n \times n$, sa forme échelonnée réduite est la **matrice identité** de taille $n \times n$.
 
 Le nombre d'opérations de l'algorithme de Gauss-Jordan est de l'ordre de $n^3$ au lieu de $\frac{2}{3} n^3$ pour l'élimination de Gauss.
-Mais avec l'élimination de Gauss-Jordan, **la résolution du système est immédiate** : la solution est directement $x = b*$.
+Mais avec l'élimination de Gauss-Jordan, **la résolution du système est immédiate** : la solution est directement $x = b^*$.
 
 #### Algorithme
 
