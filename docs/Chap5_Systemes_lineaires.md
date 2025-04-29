@@ -1375,7 +1375,103 @@ Vérifiez que vous retrouvez bien le résultat attendu.
 
 ### Equivalence élimination - factorisation
 
+- **Les opérations d'élimination :**
+
+On remarque qu'appliquer l'opération $L_2 = l_2 - \frac{a_{2,1}}{a_{1,1}} L_1$ à un système $A x = b$ de dimensions $n \times n$ revient à multiplier $A$ et $b$ par la matrice :
+
+$M = 
+ \begin{pmatrix}
+  1 & 0 & 0 \\
+  -frac{a_{2,1}}{a_{1,1}} & 1 & 0 \\
+  0 & 0 & 1
+ \end{pmatrix}$
+ 
+Si on notre $A^{(k)}$ et $b^{(k)}$ les matrices avant l'opération, et $A^{(k+1)}$ et $b^{(k+1)}$ les matrices après l'opération, on a :
+
+$A^{(k+1)} = M A^{(k)}$ et $b^{(k+1)} = M b^{(k)}$
+
+- **Les permutations :**
+
+On remarque que permutter les lignes $L_2$ et $L_3$ d'un système $A x = b$ de dimension $n \times n$ revient à multiplier $A$ et $b$ par la matrice :
+
+$P = 
+ \begin{pmatrix}
+  1 & 0 & 0 \\
+  0 & 0 & 1 \\
+  0 & 1 & 0
+ \end{pmatrix}$
+ 
+Si on notre $A^{(k)}$ et $b^{(k)}$ les matrices avant l'opération, et $A^{(k+1)}$ et $b^{(k+1)}$ les matrices après l'opération, on a :
+
+$A^{(k+1)} = P A^{(k)}$ et $b^{(k+1)} = P b^{(k)}$
+
+|Equivalence|
+|:-|
+|Les algorithmes d'élimination de Gauss peuvent donc s'écrire comme une succession de **multiplications** par :|
+|- Des matrices **triangulaires** $M$.|
+|- Des matrices de **permutation** $P$.|
+
+- **La représentation matricelle de l'élimation de Gauss :**
+
+On peut voir l'algorithme de l'élimination de Gauss comme la transformation d'un système $A x = b$ en un système $U x = c$ avec $U$ une matrice **triangulaire supérieure**.
+
+On a vu qu'à chaque étape $k$, les opérations de l'algorithme sont équivalentes à multiplier $A^{(k)}$ et $b^{(k)}$ par une matric du type :
+
+$M_k =
+ \begin{pmatrix}
+  1 & 0 & 0 & 0 & \cdots & 0 & 0\\
+  0 & 1 & 0 & 0 & \cdots & 0 & 0\\
+  0 & 0 & 1 & 0 & \cdots & 0 & 0\\
+  0 & 0 & m_{k+1,k} & 0 & \cdots & 0 & 0\\
+  \vdots  & \vdots  & \vdots & \vdots & \vdots & \vdots & \vdots\\
+  0 & 0 & m_{n,k} & 0 & \cdots & 0 & 1
+ \end{pmatrix}$
+
+avec les $m_{i,k} = - \frac{a_{i,k}}{a_{k,k}}$ pour $i>k$.
+
+A la 1ère étape on a $A^{(1)}=A$, et à la dernière étape on a $A^{(n)}=U$.
+
+On en déduit que l'on peut exprimer $U$ comme :
+
+$U = A^{(n)} = M_{n-1} A^{(n-1)} = M_{n-1} M_{n-2} A^{(n-2)} = M_{n-1} M_{n-2} ... M_1 A^{(1)} = M A$
+
+en notant $M = M_{n-1} M_{n-2} ... M_1$
+
+Si on pose $L = M^{-1}$, alors on peut écrire $A = L U$ avec $L$ et $U$ des matrices **triangulaires inférieure (L) et supérieure (U)**.
+
+Les matrices $M_k$ sont inversibles, et leurs inverses sont les matrices triangulaires inférieures :
+
+$L_k =
+ \begin{pmatrix}
+  1 & 0 & 0 & 0 & \cdots & 0 & 0\\
+  0 & 1 & 0 & 0 & \cdots & 0 & 0\\
+  0 & 0 & 1 & 0 & \cdots & 0 & 0\\
+  0 & 0 & -m_{k+1,k} & 0 & \cdots & 0 & 0\\
+  \vdots  & \vdots  & \vdots & \vdots & \vdots & \vdots & \vdots\\
+  0 & 0 & -m_{n,k} & 0 & \cdots & 0 & 1
+ \end{pmatrix}$
+ 
+Il en résulte que $L = M^{-1} = L_{n-1} L_{n-2} ... L_1$.
+
+Dans le cadre des stratégies avec pivot partiel ou total, on ajoute les permutations : $A = P L U$.
+
+D'où les décompositions "LU" et "PLU" présentées dans la section suivante.
+
 ### Décomposition LU et PLU
+
+On appelle **décomposition LU** (ou factorisation LU) d'une matrice carrée $A$ la recherche d'une matrice **triangulaire inférieure** $L$ et d'une matrice **triangulaire supérieure** $U$ telles que :
+
+$A = L U$
+
+Si $A$ est inversible, alors $L$ et $U$ le sont aussi, et leurs termes diagonaux sont non-nuls.
+
+Alors, résoudre $A x = b$ revient à résoudre **2 systèmes triangulaires** :
+
+$L y = b$ et $U x = y$
+
+Ces 2 systèmes sont faciles à résoudre :
+
+
 
 ### Autres décompositions (QR et Cholesky)
 

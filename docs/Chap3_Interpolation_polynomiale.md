@@ -114,7 +114,7 @@ Il peut s'écrire sous la forme matricielle suivante :
 $\begin{pmatrix}
   1 & x_0 & x_0^2 & \cdots & x_0^n \\
   1 & x_1 & x_1^2 & \cdots & x_1^n \\
-  \vdots  & \vdots  & \ddots & \vdots  \\
+  \vdots  & \vdots  & \vdots & \vdots & \vdots \\
   1 & x_n & x_n^2 &\cdots & x_n^n 
  \end{pmatrix}
  \begin{pmatrix}

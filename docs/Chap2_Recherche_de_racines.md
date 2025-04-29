@@ -35,7 +35,7 @@ Le principe est le suivant :
 
 ### Existence et localisation des racines
 
-Que l'approche soit analytique ou numérique, la 1ère étape consiste généralement à localiser les solution de l'équation.
+Que l'approche soit analytique ou numérique, la 1ère étape consiste généralement à localiser les solutions de l'équation.
 
 Pour ce faire, on détermine les intervalles $[a,b]$ contenant une unique **racine**.
 C'est ce que l'on appelle la **séparation des racines**.
@@ -125,7 +125,7 @@ De manière générale, les méthodes localement convergentes on un ordre de con
 Au cours de ce chapitre, nous appliquerons les différentes méthodes numériques de recherche de racines à un même exemple : **l'estimation de $\sqrt{2}$**.
 
 $\sqrt{2}$ est un nombre irrationel, dont l'approximation est un problème depuis l'antiquité, notamment parce qu'il correspond à l'hypothénuse d'un carré de côté 1.
-Une valeur approchée de $\sqrt{2}$ à $10^-9$ près est : 1.414213562.
+Une valeur approchée de $\sqrt{2}$ à $10^{-9}$ près est : 1.414213562.
 
 Par définition, $\sqrt{2}$ et $-\sqrt{2}$ sont les solutions de l'équation $x^2 = 2$.
 
@@ -280,7 +280,7 @@ D'un point de vue géométrique, la racine $c$ est à l'intersection entre la dr
 
 $y = f'(\xi) x + f(x') - f'(\xi) x'$
 
-Et l'axe $(Ox)$ donc d'équation $y = 0$.
+et l'axe $(Ox)$ donc d'équation $y = 0$.
 
 ![Illustration des méthodes linéarisées](img/Chap2_methodes_linearisees.png){width="350"}
 
