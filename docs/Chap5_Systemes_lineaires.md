@@ -1415,7 +1415,7 @@ $A^{(k+1)} = P A^{(k)}$ et $b^{(k+1)} = P b^{(k)}$
 
 On peut voir l'algorithme de l'élimination de Gauss comme la transformation d'un système $A x = b$ en un système $U x = c$ avec $U$ une matrice **triangulaire supérieure**.
 
-On a vu qu'à chaque étape $k$, les opérations de l'algorithme sont équivalentes à multiplier $A^{(k)}$ et $b^{(k)}$ par une matric du type :
+On a vu qu'à chaque étape $k$, les opérations de l'algorithme sont équivalentes à multiplier $A^{(k)}$ et $b^{(k)}$ par une matrice du type :
 
 $M_k =
  \begin{pmatrix}
@@ -1459,6 +1459,8 @@ D'où les décompositions "LU" et "PLU" présentées dans la section suivante.
 
 ### Décomposition LU et PLU
 
+#### Idée
+
 On appelle **décomposition LU** (ou factorisation LU) d'une matrice carrée $A$ la recherche d'une matrice **triangulaire inférieure** $L$ et d'une matrice **triangulaire supérieure** $U$ telles que :
 
 $A = L U$
@@ -1471,7 +1473,33 @@ $L y = b$ et $U x = y$
 
 Ces 2 systèmes sont faciles à résoudre :
 
+- $L y = b$ peut être résolu avec un **algorithme de descente** :
 
+$\begin{cases}
+y_1 = \frac{1}{l_{1,1}} b_1\\
+y_i = \frac{1}{l_{i,i}} (b_i - \displaystyle\sum_{j=1}^{i-1} l_{i,j} y_j), i=2,...,n
+\end{cases}$
+
+- $U x = y$ peut être résolu avec un **algorithme de remontée** :
+
+$\begin{cases}
+x_n = \frac{1}{u_{n,n}} y_n\\
+x_i = \frac{1}{u_{i,i}} (y_i - \displaystyle\sum_{j=i+1}^{n} u_{i,j} x_j), i=n-1,...,1
+\end{cases}$
+
+Chacun de ces algorithmes nécessite $n^2$ opérations.
+On devine alors un des grands avantages de la décomposition LU comparée l'élimination de Gauss : si on a $n$ systèmes $A x_1 = b_1$, $A x_2 = b_2$, ... , $A x_n = b_n$ à résoudre, il est inutile d'appliquer $n$ fois l'élimination de Gauss.
+Une fois la décomposition LU obtenue pour un système, il suffit d'appliquer les algorithmes de descente / remontée aux autres, ce qui est **beaucoup moins coûteux en calculs**. 
+
+La factorisation $L U$, quand elle existe, **n'est pas unique** : le système $A = L U$ est sous-déterminé.
+
+On peut rendre la solution unique en donnant des conditions supplémentaires.
+Par exemple, on peut fixer les éléments diagonaux de $L$ à 1.
+C'est que l'on appelle la **factorisation de Gauss**.
+
+#### Algorithme
+
+#### Exemple
 
 ### Autres décompositions (QR et Cholesky)
 
