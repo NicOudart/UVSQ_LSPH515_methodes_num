@@ -1497,9 +1497,314 @@ On peut rendre la solution unique en donnant des conditions supplémentaires.
 Par exemple, on peut fixer les éléments diagonaux de $L$ à 1.
 C'est que l'on appelle la **factorisation de Gauss**.
 
+La décomposition LU (sans pivotage) **n'existe pas toujours**, même si $A$ est inversible.
+
+|Existence de la décomposition LU|
+|:-|
+|La décomposition LU existe si et seulement si :|
+|toutes les sous-matrices principales $A_k = (a_{i,j})_{1 \leq i,j \leq k}$ de $A$ sont inversibles.|
+|Si toutes les sous-matrices principales d'ordre 1 à $n$ sont inversibles, elle est même **unique**.|
+
+Il est à noter que le fait qu'une sous-matrice principale de $A$ ne soit pas inversible ne signifie pas nécessairement que $A$ n'est pas inversible.
+
+Pour les matrice inversibles pour lesquelles il n'existe pas de décomposition LU, d'autres méthodes de triangularisation existent, comme la **décomposition PLU** :
+Elle ajoute à la décomposition LU les permutations (pivot partiel ou total).
+
+|Existence de la décomposition PLU|
+|:-|
+|La décomposition PLU **existe toujours** si $A$ est carrée et régulière (inversible).|
+
+En plus de permettre la résolution du système d'équation, les décompositions LU et PLU permettent de **calculer le déterminant de $A$** rapidement :
+
+- $det(A) = det(LU) =  \displaystyle\prod_{k=1}^{n} u_{k,k}$
+
+- $det(A) = det(PLU) = (-1)^p \displaystyle\prod_{k=1}^{n} u_{k,k}$ avec $p$ permutations
+
+La décomposition LU facilite aussi le calcul de **l'inverse de $A$** :
+
+En effet, recherche $X = A^{-1}$ revient à résoudre $A X = I$, et donc à résoudre $L U X = I$.
+On peut alors trouver $A^{-1}$ en résolvant le système :
+
+$\begin{cases}
+L Y = I\\
+U X = Y
+\end{cases}$
+
 #### Algorithme
 
+Nous donnerons dans cette section les algorithmes pour les décompositions LU puis PLU.
+
+Voici sous la forme d'une fonction Python l'algorithme de la décomposition LU.
+
+Cette fonction prend en entrée un système de Cramer :
+
+* `A` la matrice des coefficients du système.
+
+* `b` le vecteur du second membre du système.
+
+~~~
+def decomposition_LU(A):
+    
+    #Récupérer les dimensions de la matrice A :
+    m,n = np.shape(A)
+    
+    #Vérification des dimensions de A (nxn) :
+    if (m!=n):
+        
+        raise ValueError("La matrice A n'est pas carrée")
+     
+    #Copier A pour ne pas modifier la matrice originale :
+    U = np.copy(A)
+    
+    #Initialiser la matrice L comme la matrice identité (nxn) :
+    L = np.eye(n)
+    
+    #Boucle sur les colonnes de la matrice A, jusqu'à l'avant-dernière :
+    for j in range(n-1):
+        
+        #Sélection du pivot comme étant la valeur sur la diagonale de la j-ème colonne :
+        pivot = U[j,j]
+        
+        #On vérifie que le pivot n'est pas nul :
+        if pivot!=0:
+            
+            #Boucle sur les lignes sous le pivot :
+            for k in range(j+1,n):
+                
+                #Sauvegarde du coefficient d'élimination de Gauss dans L :
+                L[k,j] = U[k,j]/pivot
+                
+                #Opérations d'élimination de Gauss sur les lignes de A en 
+                #utilisant le pivot :
+                U[k,:] = U[k,:] - U[j,:]*L[k,j]
+    
+    #Renvoyer les matrices L et U :
+    return L,U
+~~~
+
+Voici sous la forme d'une fonction Python l'algorithme de descente liée à la décomposition LU.
+
+Cette fonction prend en entrée :
+
+* `L` la matrice $L$ obtenue par la décomposition LU de $A$.
+
+* `b` le vecteur du second membre du système.
+
+~~~
+def descente(L,b):
+    
+    #Récupérer le nombre n d'équations / inconnues du système Ly=b :
+    n = len(L)
+    
+    #Initialiser le vecteur qui contiendra les solutions du système Ly=b :
+    y = np.zeros(n,dtype=np.float64)
+    
+    #Boucle sur les lignes de la matrice L, de 1 à n :
+    for i in range(n):
+        
+        #Détermination de la i-ème inconnue :
+        y[i] = (b[i]-sum(L[i,:i]*y[:i]))/L[i,i]
+    
+    #Renvoyer le vecteur contenant les solutions du système Ly=b :
+    return y
+~~~
+
+Voici sous la forme d'une fonction Python l'algorithme de remontée liée à la décomposition LU.
+
+Cette fonction prend en entrée :
+
+* `U` la matrice $U$ obtenue par la décomposition LU de $A$.
+
+* `y` le vecteur des solution du système $L y = b$ obtenue par l'algorithme de descente.
+
+~~~
+def remontee(U,y):
+    
+    #Récupérer le nombre n d'équations / inconnues du système Ux=y :
+    n = len(U)
+    
+    #Initialiser le vecteur qui contiendra les solutions du système Ux=y :
+    x = np.zeros(n,dtype=np.float64)
+    
+    #Boucle sur les lignes de la matrice U, de n à 1 :
+    for i in range(n-1,-1,-1):
+        
+        #Détermination de la i-ème inconnue :
+        x[i] = (y[i]-sum(U[i,i+1:n]*x[i+1:n]))/U[i,i]
+    
+    #Renvoyer le vecteur contenant les solutions du système Ux=y :
+    return x
+~~~
+
+Voici maintenant sous la forme d'une fonction Python l'algorithme de la décomposition PLU.
+
+Comme pour la décomposition LU, cette fonction prend en entrée un système de Cramer :
+
+* `A` la matrice des coefficients du système.
+
+* `b` le vecteur du second membre du système.
+
+~~~
+
+~~~
+
 #### Exemple
+
+Nous allons appliquer l'algorithme de décomposion LU, puis PLU à notre problème exemple
+
+**Décomposition LU :**
+
+Appliquons d'abord l'algorithme de décomposion LU.
+On rappelle que nous avons initialement le système de Cramer $A x = b$ suivant :
+
+$\begin{pmatrix}
+  -5000 & -18000 & -4000 \\
+  10000 & 2000 & -10000 \\
+  -4000 & 12000 & -6000
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -42977000\\
+  -5404000\\
+  -43586000
+ \end{pmatrix}$ 
+ 
+ Nous initialisons $L$ et $U$ de la manière suivante :
+ 
+$L = 
+ \begin{pmatrix}
+  1 & 0 & 0 \\
+  0 & 1 & 0 \\
+  0 & 0 & 1
+ \end{pmatrix}
+ 
+$U = 
+ \begin{pmatrix}
+  -5000 & -18000 & -4000 \\
+  10000 & 2000 & -10000 \\
+  -4000 & 12000 & -6000
+ \end{pmatrix}
+
+- 1ère itération : nous commençons par la colonne 1.
+
+- On sélectionne le pivot comme étant sur la diagonale de $U$ : -5000.
+
+- On réalise les opérations suivantes : 
+
+On ajoute $\frac{10000}{-5000} = -2$ en ligne 2 dans $L$.
+
+On applique $L_2 = L_2 - L_1 \times -2$ sur $U$.
+
+On ajoute $\frac{-4000}{-5000} = 0.8$ en ligne 3 dans $L$.
+
+On applique $L_3 = L_3 - L_1 \times 0.8$ sur $U$.
+
+Le système devient alors :
+
+$L = 
+ \begin{pmatrix}
+  1 & 0 & 0 \\
+  -2 & 1 & 0 \\
+  0.8 & 0 & 1
+ \end{pmatrix}
+ 
+$U = 
+ \begin{pmatrix}
+  -5000 & -18000 & -4000 \\
+  0 & -34000 & -18000 \\
+  0 & 26400 & -2800
+ \end{pmatrix}
+ 
+- 2nde itération : nous continuons avec la colonne 2.
+
+- On séléctionne le pivot comme étant sur la diagonale : -34000.
+
+- On réalise les opérations suivantes : 
+
+On ajoute $\frac{26400}{-34000} = -0.7765$ en ligne 3 dans $L$.
+
+On applique $L_3 = L_3 - L_2 \times -0.7765$ sur $U$.
+
+Le système devient alors :
+
+$L = 
+ \begin{pmatrix}
+  1 & 0 & 0 \\
+  -2 & 1 & 0 \\
+  0.8 & -0.7764 & 1
+ \end{pmatrix}
+ 
+$U = 
+ \begin{pmatrix}
+  -5000 & -18000 & -4000 \\
+  0 & -34000 & -18000 \\
+  0 & 0 & -16776.47
+ \end{pmatrix}
+ 
+On retrouve bien pour $U$ la matrice triangulaire obtenue avec l'élimination de Gauss sans pivotage, et pour $L$ les coefficients ayant servi à l'élimination.
+
+Voici un résumé des différentes étapes de l'algorithme sous la forme d'une animation :
+
+
+
+On peut vérifier que $det(A) = -5000 \times -34000 \times -16776.47 \approx 2852000000000$
+
+On déduit les solutions du système par les algorithmes de descente puis de remontée :
+
+$\begin{cases}
+-42977000
+-5404000 - (-2 \times -42977000) = -91358000
+-43586000 - (0.8 \times -42977000) - (-0.7764 \times -91358000) = -80141200
+\end{cases}$
+
+puis 
+
+$\begin{cases}
+z_r = \frac{-80141200}{-16776.47} = 4777\\
+y_r = \frac{1}{-34000} (-91358000 - (-18000 \times z_r)) = 158\\
+x_r = \frac{1}{-5000} (-42977000 - (-4000 \times y_r) - (-18000 \times z_r)) = 4205
+\end{cases}$
+
+**Ré-utilisation de la décomposition LU :**
+
+Imaginons maintenant qu'un récepteur situé au Beffroi de Lille, de coordonnées ECEF approximatives $(x_r,y_r,z_r) = (4048,217,4908)$, utilise les mêmes satellites GPS de mêmes coordonnées ECEF pour se positionner.
+
+Le vecteur $b$ devient alors :
+
+\begin{pmatrix}
+  -43778000\\
+  -8166000\\
+  -43036000
+ \end{pmatrix}$ 
+ 
+Les coefficients de la matrice $A$ ne dépendant que de la position des satellites GPS, ils restent inchangés.
+
+On peut donc ré-utiliser la décomposition LU précédente pour résoudre ce système :
+
+$\begin{cases}
+-43778000
+-8166000 - (-2 \times -43778000) = -95722000
+-43036000 - (0.8 \times -43778000) - (-0.7764 \times -95722000) = -82338917.65
+\end{cases}$
+
+puis 
+
+$\begin{cases}
+z_r = \frac{-82338917.65}{-16776.47} = 4048\\
+y_r = \frac{1}{-34000} (-95722000 - (-18000 \times z_r)) = 217\\
+x_r = \frac{1}{-5000} (-43778000 - (-4000 \times y_r) - (-18000 \times z_r)) = 4908
+\end{cases}$
+
+On retrouve bien la position de notre récepteur lillois.
+
+**Décomposition PLU :**
+
+**Exercice :**
 
 ### Autres décompositions (QR et Cholesky)
 
