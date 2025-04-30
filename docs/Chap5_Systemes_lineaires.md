@@ -1681,14 +1681,14 @@ $L =
   1 & 0 & 0 \\
   0 & 1 & 0 \\
   0 & 0 & 1
- \end{pmatrix}
+ \end{pmatrix}$
  
 $U = 
  \begin{pmatrix}
   -5000 & -18000 & -4000 \\
   10000 & 2000 & -10000 \\
   -4000 & 12000 & -6000
- \end{pmatrix}
+ \end{pmatrix}$
 
 - 1ère itération : nous commençons par la colonne 1.
 
@@ -1711,14 +1711,14 @@ $L =
   1 & 0 & 0 \\
   -2 & 1 & 0 \\
   0.8 & 0 & 1
- \end{pmatrix}
+ \end{pmatrix}$
  
 $U = 
  \begin{pmatrix}
   -5000 & -18000 & -4000 \\
   0 & -34000 & -18000 \\
   0 & 26400 & -2800
- \end{pmatrix}
+ \end{pmatrix}$
  
 - 2nde itération : nous continuons avec la colonne 2.
 
@@ -1737,14 +1737,14 @@ $L =
   1 & 0 & 0 \\
   -2 & 1 & 0 \\
   0.8 & -0.7764 & 1
- \end{pmatrix}
+ \end{pmatrix}$
  
 $U = 
  \begin{pmatrix}
   -5000 & -18000 & -4000 \\
   0 & -34000 & -18000 \\
   0 & 0 & -16776.47
- \end{pmatrix}
+ \end{pmatrix}$
  
 On retrouve bien pour $U$ la matrice triangulaire obtenue avec l'élimination de Gauss sans pivotage, et pour $L$ les coefficients ayant servi à l'élimination.
 
@@ -1757,8 +1757,8 @@ On peut vérifier que $det(A) = -5000 \times -34000 \times -16776.47 \approx 285
 On déduit les solutions du système par les algorithmes de descente puis de remontée :
 
 $\begin{cases}
--42977000
--5404000 - (-2 \times -42977000) = -91358000
+-42977000\\
+-5404000 - (-2 \times -42977000) = -91358000\\
 -43586000 - (0.8 \times -42977000) - (-0.7764 \times -91358000) = -80141200
 \end{cases}$
 
@@ -1787,8 +1787,8 @@ Les coefficients de la matrice $A$ ne dépendant que de la position des satellit
 On peut donc ré-utiliser la décomposition LU précédente pour résoudre ce système :
 
 $\begin{cases}
--43778000
--8166000 - (-2 \times -43778000) = -95722000
+-43778000\\
+-8166000 - (-2 \times -43778000) = -95722000\\
 -43036000 - (0.8 \times -43778000) - (-0.7764 \times -95722000) = -82338917.65
 \end{cases}$
 
