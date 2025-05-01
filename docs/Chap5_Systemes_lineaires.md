@@ -1839,7 +1839,7 @@ Imaginons maintenant qu'un récepteur situé au Beffroi de Lille, de coordonnée
 
 Le vecteur $b$ devient alors :
 
-\begin{pmatrix}
+$\begin{pmatrix}
   -43778000\\
   -8166000\\
   -43036000
