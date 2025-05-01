@@ -1461,13 +1461,15 @@ D'où les décompositions "LU" et "PLU" présentées dans la section suivante.
 
 #### Idée
 
+**Décomposition LU :**
+
 On appelle **décomposition LU** (ou factorisation LU) d'une matrice carrée $A$ la recherche d'une matrice **triangulaire inférieure** $L$ et d'une matrice **triangulaire supérieure** $U$ telles que :
 
 $A = L U$
 
 Si $A$ est inversible, alors $L$ et $U$ le sont aussi, et leurs termes diagonaux sont non-nuls.
 
-Alors, résoudre $A x = b$ revient à résoudre **2 systèmes triangulaires** :
+Alors, résoudre $A x = b$ revient à résoudre $L U x = b**, soit 2 systèmes triangulaires** :
 
 $L y = b$ et $U x = y$
 
@@ -1507,12 +1509,24 @@ La décomposition LU (sans pivotage) **n'existe pas toujours**, même si $A$ est
 
 Il est à noter que le fait qu'une sous-matrice principale de $A$ ne soit pas inversible ne signifie pas nécessairement que $A$ n'est pas inversible.
 
-Pour les matrice inversibles pour lesquelles il n'existe pas de décomposition LU, d'autres méthodes de triangularisation existent, comme la **décomposition PLU** :
-Elle ajoute à la décomposition LU les permutations (pivot partiel ou total).
+Pour les matrice inversibles pour lesquelles il n'existe pas de décomposition LU, d'autres méthodes de triangularisation existent, comme la **décomposition PLU**.
+
+**Décomposition PLU :**
+
+Elle ajoute à la décomposition LU les permutations (pivot partiel ou total), avec une matrice de permutation $P$ : 
+
+$P A = L U$
+
+Cette fois-ci, résoudre $A x = b$ revient à résoudre $P^{-1} L U x = b**, soit $L U x = P b$.
+On doit donc appliquer les algorithmes de descente et de remontée aux systèmes triangulaires :
+
+$L y = P b$ et $U x = y$
 
 |Existence de la décomposition PLU|
 |:-|
 |La décomposition PLU **existe toujours** si $A$ est carrée et régulière (inversible).|
+
+**Autres intérêts de la décomposition LU :**
 
 En plus de permettre la résolution du système d'équation, les décompositions LU et PLU permettent de **calculer le déterminant de $A$** rapidement :
 
@@ -1645,8 +1659,57 @@ Comme pour la décomposition LU, cette fonction prend en entrée un système de 
 * `b` le vecteur du second membre du système.
 
 ~~~
-
+def decomposition_PLU(A):
+    
+    #Récupérer les dimensions de la matrice A :
+    m,n = np.shape(A)
+    
+    #Vérification des dimensions de A (nxn) :
+    if (m!=n):
+        
+        raise ValueError("La matrice A n'est pas carrée")
+     
+    #Copier A pour ne pas modifier la matrice originale :
+    U = np.copy(A)
+    
+    #Initialiser la matrice L comme la matrice identité (nxn) :
+    L = np.eye(n)
+    
+    #Initialiser la matrice de permutation P comme la matrice identité (nxn) :
+    P = np.eye(n)
+    
+    #Boucle sur les colonnes de la matrice A, jusqu'à l'avant-dernière :
+    for j in range(n-1):
+        
+        #Sélection du pivot comme étant la valeur maximale en absolu sur la colonne, 
+        #sur la j-ième ligne ou en dessous :
+        idx_pivot = np.argmax(abs(U[j:,j]))+j #Indice de la ligne du pivot
+        pivot = U[idx_pivot,j] #Valeur du pivot
+        
+        #On vérifie que le pivot n'est pas nul :
+        if pivot!=0:
+            
+            #Si le pivot n'est pas sur la j-ième ligne, échanger la j-ième et la
+            #ligne du pivot :
+            if idx_pivot!=j:
+                U[[j,idx_pivot]] = U[[idx_pivot,j]] #Pour la matrice A
+                P[[j,idx_pivot]] = P[[idx_pivot,j]] #Pour la matrice P
+            
+            #Boucle sur les lignes sous le pivot :
+            for k in range(j+1,n):
+                
+                #Sauvegarde du coefficient d'élimination de Gauss dans L :
+                L[k,j] = U[k,j]/pivot
+                
+                #Opérations d'élimination de Gauss sur les lignes de A en 
+                #utilisant le pivot :
+                U[k,:] = U[k,:] - U[j,:]*L[k,j]
+    
+    #Renvoyer les matrices P, L et U :
+    return P,L,U
 ~~~
+
+Après une décomposition PLU, il ne faudra pas oublier d'appliquer l'algorithme de descente à $P b$ au lieu de $b$.
 
 #### Exemple
 
@@ -1805,6 +1868,10 @@ On retrouve bien la position de notre récepteur lillois.
 **Décomposition PLU :**
 
 **Exercice :**
+
+Imaginons maintenant qu'un récepteur situé au Cirque de Gavarnie, de coordonnées ECEF approximatives $(x_r,y_r,z_r) = (4695,0,4303)$, utilise les mêmes satellites GPS de mêmes coordonnées ECEF pour se positionner.
+En vous servant des programmes Python précédents, déterminez les nouvelles valeurs de $b$, puis utilisez la décomposition PLU obtenue précédemment pour estimer la position du récepteur.
+Vous devriez retrouver la position ECEF du Cirque de Gavarnie.
 
 ### Autres décompositions (QR et Cholesky)
 
