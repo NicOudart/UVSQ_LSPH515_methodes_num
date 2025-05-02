@@ -1469,7 +1469,7 @@ $A = L U$
 
 Si $A$ est inversible, alors $L$ et $U$ le sont aussi, et leurs termes diagonaux sont non-nuls.
 
-Alors, résoudre $A x = b$ revient à résoudre $L U x = b**, soit 2 systèmes triangulaires** :
+Alors, résoudre $A x = b$ revient à résoudre $L U x = b$, soit **2 systèmes triangulaires** :
 
 $L y = b$ et $U x = y$
 
