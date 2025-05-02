@@ -1767,7 +1767,7 @@ On ajoute $\frac{-4000}{-5000} = 0.8$ en ligne 3 dans $L$.
 
 On applique $L_3 = L_3 - L_1 \times 0.8$ sur $U$.
 
-Le système devient alors :
+$L$ et $U$ deviennent alors :
 
 $L = 
  \begin{pmatrix}
@@ -1785,7 +1785,7 @@ $U =
  
 - 2nde itération : nous continuons avec la colonne 2.
 
-- On séléctionne le pivot comme étant sur la diagonale : -34000.
+- On séléctionne le pivot comme étant sur la diagonale de $U$ : -34000.
 
 - On réalise les opérations suivantes : 
 
@@ -1793,7 +1793,7 @@ On ajoute $\frac{26400}{-34000} = -0.7765$ en ligne 3 dans $L$.
 
 On applique $L_3 = L_3 - L_2 \times -0.7765$ sur $U$.
 
-Le système devient alors :
+$L$ et $U$ deviennent alors :
 
 $L = 
  \begin{pmatrix}
@@ -1817,7 +1817,9 @@ Voici un résumé des différentes étapes de l'algorithme sous la forme d'une a
 
 On peut vérifier que $det(A) = -5000 \times -34000 \times -16776.47 \approx 2852000000000$
 
-On déduit les solutions du système par les algorithmes de descente puis de remontée :
+On déduit les solutions du système par les algorithmes : 
+
+de descente pour $L y = b$
 
 $\begin{cases}
 -42977000\\
@@ -1825,7 +1827,7 @@ $\begin{cases}
 -43586000 - (0.8 \times -42977000) - (-0.7764 \times -91358000) = -80141200
 \end{cases}$
 
-puis 
+puis de remontée pour $U x = y$
 
 $\begin{cases}
 z_r = \frac{-80141200}{-16776.47} = 4777\\
@@ -1866,6 +1868,158 @@ x_r = \frac{1}{-5000} (-43778000 - (-4000 \times y_r) - (-18000 \times z_r)) = 4
 On retrouve bien la position de notre récepteur lillois.
 
 **Décomposition PLU :**
+
+Appliquons à présent au système l'algorithme de décomposion PLU.
+On rappelle que nous avons initialement le système de Cramer $A x = b$ suivant :
+
+$\begin{pmatrix}
+  -5000 & -18000 & -4000 \\
+  10000 & 2000 & -10000 \\
+  -4000 & 12000 & -6000
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -42977000\\
+  -5404000\\
+  -43586000
+ \end{pmatrix}$ 
+ 
+ Nous initialisons $P$, $L$ et $U$ de la manière suivante :
+ 
+$P = 
+ \begin{pmatrix}
+  1 & 0 & 0 \\
+  0 & 1 & 0 \\
+  0 & 0 & 1
+ \end{pmatrix}$
+ 
+$L = 
+ \begin{pmatrix}
+  1 & 0 & 0 \\
+  0 & 1 & 0 \\
+  0 & 0 & 1
+ \end{pmatrix}$
+ 
+$U = 
+ \begin{pmatrix}
+  -5000 & -18000 & -4000 \\
+  10000 & 2000 & -10000 \\
+  -4000 & 12000 & -6000
+ \end{pmatrix}$
+ 
+- 1ère itération : nous commençons par la colonne 1.
+
+- On sélectionne le pivot comme étant le maximum en valeur absolue sur la colonne, sur ou sous la diagonale de $U$ : 10000.
+
+- On échange la ligne 1 et la ligne 2 pour faire passer le pivot sur la diagonale.
+
+$U$ et $P$ deviennent alors :
+
+$P = 
+ \begin{pmatrix}
+  0 & 1 & 0 \\
+  1 & 0 & 0 \\
+  0 & 0 & 1
+ \end{pmatrix}$
+ 
+$U = 
+ \begin{pmatrix}
+  10000 & 2000 & -10000 \\
+  -5000 & -18000 & -4000 \\
+  -4000 & 12000 & -6000
+ \end{pmatrix}$
+ 
+- On réalise les opérations suivantes : 
+
+On ajoute $\frac{-5000}{10000} = -0.5$ en ligne 2 dans $L$.
+
+On applique $L_2 = L_2 - L_1 \times -0.5$ sur $U$.
+
+On ajoute $\frac{-5000}{10000} = -0.4$ en ligne 3 dans $L$.
+
+On applique $L_3 = L_3 - L_1 \times -0.4$ sur $U$.
+
+$L$ et $U$ deviennent alors :
+
+$L = 
+ \begin{pmatrix}
+  1 & 0 & 0 \\
+  -0.5 & 1 & 0 \\
+  -0.4 & 0 & 1
+ \end{pmatrix}$
+ 
+$U = 
+ \begin{pmatrix}
+  10000 & 2000 & -10000 \\
+  0 & -17000 & -9000 \\
+  0 & 12800 & -10000
+ \end{pmatrix}$
+ 
+- 2nde itération : nous continuons avec la colonne 2.
+
+- On sélectionne le pivot comme étant le maximum en valeur absolue sur la colonne, sur ou sous la diagonale de $U$ : -17000.
+
+- On réalise les opérations suivantes : 
+
+On ajoute $\frac{12800}{-17000} = -0.7529$ en ligne 3 dans $L$.
+
+On applique $L_3 = L_3 - L_2 \times -0.7529$ sur $U$.
+
+$L$ et $U$ deviennent alors :
+
+$L = 
+ \begin{pmatrix}
+  1 & 0 & 0 \\
+  -0.5 & 1 & 0 \\
+  -0.4 & -0.7529 & 1
+ \end{pmatrix}$
+ 
+$U = 
+ \begin{pmatrix}
+  10000 & 2000 & -10000 \\
+  0 & -17000 & -9000 \\
+  0 & 0 & -16776.47
+ \end{pmatrix}$
+ 
+On retrouve bien pour $U$ la matrice triangulaire obtenue avec l'élimination de Gauss avec pivot partiel, et pour $L$ les coefficients ayant servi à l'élimination.
+
+Voici un résumé des différentes étapes de l'algorithme sous la forme d'une animation :
+
+
+ 
+On peut vérifier que $det(A) = (-1) \times 10000 \times -17000 \times -16776.47 \approx 2852000000000$
+
+On déduit les solutions du système :
+
+Tout d'abord, on calcule
+
+$P b =
+ \begin{pmatrix}
+  -5404000\\
+  -42977000\\
+  -43586000
+ \end{pmatrix}$
+ 
+puis on applique à $L y = P b$ l' algorithme de descente
+
+$\begin{cases}
+-5404000\\
+-42977000 - (-0.5 \times -5404000) = -45679000\\
+-43586000 - (-0.4 \times -5404000) - (-0.7529 \times -45679000) = -80141200
+\end{cases}$
+
+et on applique l'algorithme de remontée à $U x =y$
+
+$\begin{cases}
+z_r = \frac{-80141200}{-16776.47} = 4777\\
+y_r = \frac{1}{-17000} (-45679000 - (-9000 \times z_r)) = 158\\
+x_r = \frac{1}{10000} (-5404000 - (2000 \times y_r) - (-10000 \times z_r)) = 4205
+\end{cases}$
 
 **Exercice :**
 
