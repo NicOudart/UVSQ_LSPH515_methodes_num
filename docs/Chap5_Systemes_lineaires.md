@@ -1517,7 +1517,7 @@ Elle ajoute à la décomposition LU les permutations (pivot partiel ou total), a
 
 $P A = L U$
 
-Cette fois-ci, résoudre $A x = b$ revient à résoudre $P^{-1} L U x = b**, soit $L U x = P b$.
+Cette fois-ci, résoudre $A x = b$ revient à résoudre $P^{-1} L U x = b$, soit $L U x = P b$.
 On doit donc appliquer les algorithmes de descente et de remontée aux systèmes triangulaires :
 
 $L y = P b$ et $U x = y$
