@@ -440,7 +440,7 @@ On rappelle que nous avons montré précédemment que nous avons ici affaire à 
 
 - $A$ est carrée de dimensions $3 \times 3$, $x$ et $b$ sont de taille 3.
 
-- $det(A) = 2852000000000 \neq 0$
+- $det(A) = -2852000000000 \neq 0$
 
 La solution est par conséquent unique, et nous pouvons appliquer la méthode de Cramer.
 
@@ -469,11 +469,11 @@ $A_3 =
  
 On peut alors calculer que :
 
-$det(A_1) = 11992660000000000$
+$det(A_1) = -11992660000000000$
 
-$det(A_2) = 450616000000000$
+$det(A_2) = -450616000000000$
 
-$det(A_3) = 13624004000000000$
+$det(A_3) = -13624004000000000$
 
 On en déduit que :
 
@@ -1532,7 +1532,7 @@ En plus de permettre la résolution du système d'équation, les décompositions
 
 - $det(A) = det(LU) =  \displaystyle\prod_{k=1}^{n} u_{k,k}$
 
-- $det(A) = det(PLU) = (-1)^p \displaystyle\prod_{k=1}^{n} u_{k,k}$ avec $p$ permutations
+- $det(A) = det(P^{-1}LU) = (-1)^p \displaystyle\prod_{k=1}^{n} u_{k,k}$ avec $p$ permutations
 
 La décomposition LU facilite aussi le calcul de **l'inverse de $A$** :
 
@@ -1815,7 +1815,7 @@ Voici un résumé des différentes étapes de l'algorithme sous la forme d'une a
 
 
 
-On peut vérifier que $det(A) = -5000 \times -34000 \times -16776.47 \approx 2852000000000$
+On peut vérifier que $det(A) = -5000 \times -34000 \times -16776.47 \approx -2852000000000$
 
 On déduit les solutions du système par les algorithmes : 
 
@@ -1992,7 +1992,7 @@ Voici un résumé des différentes étapes de l'algorithme sous la forme d'une a
 
 
  
-On peut vérifier que $det(A) = (-1) \times 10000 \times -17000 \times -16776.47 \approx 2852000000000$
+On peut vérifier que $det(A) = (-1)^1 \times 10000 \times -17000 \times -16776.47 \approx -2852000000000$
 
 On déduit les solutions du système :
 
