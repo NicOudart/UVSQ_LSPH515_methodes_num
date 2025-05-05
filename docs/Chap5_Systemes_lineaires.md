@@ -2074,9 +2074,81 @@ Résoudre le système $A x = b$ revient alors à appliquer les algorithmes de re
 
 ## Méthodes itératives
 
+Les méthodes directes donnent la solution du système $A x = b$ en un nombre fini d'opérations, **mais** :
 
+- Si la taille du système est élevée, le nombre d'opérations est important, ce qui augmente les erreurs.
+
+- Si la taille du système est élevée, le nombre de coefficients à mettre en mémoire l'est aussi.
+
+- Elles utilisent des propriétés mathématiques nécessitant un calcul exact : il est donc difficile de tenir compte des erreurs de calculs.
+
+Les **méthodes itératives** sont généralement plus rapides et nécessitent moins de mémoire.
+
+L'idée est de construire une suite $(x^{(n)})_{n \geq 0}$ qui converge vers la solution $x$.
+
+Pour construire une telle suite, on va s'appuyer sur la linéarité du problème en décomposant $A$ en une matrice **facilement inversible** et un **reste**.
 
 ### Principe et convergence
+
+Les **méthodes itératives** vont donc décomposer la matrice $A$ du système d'équations de la manière suivante :
+
+$A = M-(M-A) = M-N$
+
+avec $M$ **facilement inversible**.
+
+Alors, résoudre $A x = b$ revient à résoudre $M x = N x + b$.
+
+On calcule la suite de vecteurs $(x^{(k)})_k$ à partir d'un vecteur de départ $x^{(0)}$ et de la relation de récurrence :
+
+$M x^{(k+1)} = N x^{(k)} + b$
+
+soit $x^{(k+1)} = M^{-1} N x^{(k)} + M^{-1} b$
+
+En posant $C = M^{-1} N$ et $d = M^{-1} b$, la suite devient :
+
+$x^{(k+1)} = C x^{(k)} + d$
+
+La solution $x$ est alors le **point fixe** de la fonction linéaire $g(x) = C x + d$.
+Reste alors à vérifier sa convergence.
+
+|Théorème|
+|:-|
+|Soit $C$ une matrice carrée de taille $n \times n$,|
+|s'il existe une norme matricielle telle que $\lVert C \lVert < 1$, alors :|
+|- $g(x) = C x + d$ admet un point fixe **unique** $x$.|
+|- La suite $(x^{(k)})_k$ telle que $x^{(k+1)} = g(x^{(k)})$ **converge** vers ce point fixe quel que soit vecteur de départ $x^{(0)}$.|
+
+$C$ est appelée **matrice d'itération**.
+
+Le **vecteur d'erreur absolue** à l'itération $k$ est : $e^{(k)} = x^{(k)} - x$
+
+On en déduit que :
+
+$e^{(k)} = x^{(k)} - x = (C x^{k-1} + d) - x = C x^{(k-1)} - C x = C (x^{(k-1)} - x) = C e^{(k-1)}$
+
+d'où $e^{(k)} = C^k e^{(0)}$
+
+On peut donc majorer l'erreur de la manière suivante :
+
+$\|e^{(k)}\| \leq \|C\|^k \|e^{(0)}\|$ d'où $\lim\limits_{k \to \infty} e^{(k)} = 0$ et donc $$\lim\limits_{k \to \infty} x^{(k)} = x$.
+
+Plus $\|C\|$ est petit, moins il est nécessaire d'effectuer des itérations pour réduire l'erreur initiale d'un facteur donné.
+
+|Convergence|
+|:-|
+|Pour établir la convergence de $x^{(k+1)} = C x^{(k)} + d$,|
+|il suffit de montrer que $C$ vérifie :|
+|$\rho(C) = max_{1 \leq i \leq n} \lVert \lambda_i \lVert < 1$|
+
+Cette condition suffisante **est aussi nécessaire**, car on a toujours $\rho(C) \leq \|C\|$.
+
+On peut calculer à chaque itération le **vecteur résidu** :
+
+$r^{(k)} = b - A x^{(k)}$
+
+Voici alors 2 **critères d'arrêt** possibles :
+
+$\|r^{(k)}\| \leq \epsilon \|b\|$ ou $\|x^{(k)}-x^{(k-1)}\| \leq \epsilon \|x^{(k-1)}\|$
 
 ### Méthode de Jacobi
 
