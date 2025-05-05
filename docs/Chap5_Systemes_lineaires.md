@@ -1813,7 +1813,7 @@ On retrouve bien pour $U$ la matrice triangulaire obtenue avec l'élimination de
 
 Voici un résumé des différentes étapes de l'algorithme sous la forme d'une animation :
 
-
+![Factorisation LU](img/Chap5_exemple_LU.gif)
 
 On peut vérifier que $det(A) = -5000 \times -34000 \times -16776.47 \approx -2852000000000$
 
