@@ -78,12 +78,12 @@ for j in range(n-1):
             
             #Sauvegarde du coefficient d'élimination de Gauss dans L :
             L[k,j] = U[k,j]/pivot
-            print('Ajouter '+ str(L[k,j]) +' à la ligne '+str(k+1)+' de L')
+            print('Ajouter '+str(U[k,j])+'/'+str(pivot)+' à la ligne '+str(k+1)+' de L')
             
             #Opérations d'élimination de Gauss sur les lignes de A en 
             #utilisant le pivot :
+            print('Opération L'+str(k+1)+' = L'+str(k+1)+' - L'+str(j+1)+'x'+str(U[k,j])+'/'+str(pivot)+' sur U')
             U[k,:] = U[k,:] - U[j,:]*L[k,j]
-            print('Opération L'+str(k+1)+' = L'+str(k+1)+' - L'+str(j+1)+'x'+str(L[k,j])+' sur U')
     
     print('P = '+str(P))
     print('L = '+str(L))
