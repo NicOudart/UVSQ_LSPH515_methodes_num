@@ -2029,7 +2029,52 @@ Vous devriez retrouver la position ECEF du Cirque de Gavarnie.
 
 ### Autres décompositions (QR et Cholesky)
 
+Il existe d'autres types de décomposition moins coûteux en temps de calcul, qui peuvent s'appliquer à des systèmes particulier.
+Nous présenterons rapidement ici les décompositions QR et de Cholesky.
+
+#### Décomposition QR
+
+|Théorème|
+|:-|
+|Si $A$ est une matrice réelle **inversible**,|
+|il existe une unique couple $(Q,R)$ avec $Q$ une matrice **orthogonale**|
+|(c'est-à-dire $QQ^T=Q^TQ=I$)|
+|et $R$ une matrice **triangulaire supérieure** dont les éléments diagonaux sont positifs,|
+|tel que $A = QR$|
+
+La **décomposition QR** consiste à décomposer la matrice $A$ de cette façon : $A = QR$.
+
+Résoudre le système $A x = b$ revient alors à résoudre :
+
+$\begin{cases}
+Q y = b\\
+R x = y
+\end{cases}$
+
+soit
+$\begin{cases}
+y = Q^{-1} b = Q^T b\\
+R x = y
+\end{cases}$
+
+#### Décomposition de Cholesky
+
+|Théorème|
+|:-|
+|Si $A$ est **symétrique définie positive**,|
+|(c'est-à-dire une matrice carrée égale à sa transposée, positive et inversible)|
+|il existe une **matrice triangulaire inférieure** $L$|
+|telle que $A = LL^T$|
+
+La **décomposition de Cholesky** consiste à décomposer la matrice $A$ de cette façon : $A = LL^T$.
+
+On peut imposer que les éléments diagonaux de $L$ soient positifs, pour obtenir l'**unicité** de la factorisation.
+
+Résoudre le système $A x = b$ revient alors à appliquer les algorithmes de remontée et de descente pour résoudre $LL^T x = b$.
+
 ## Méthodes itératives
+
+
 
 ### Principe et convergence
 
