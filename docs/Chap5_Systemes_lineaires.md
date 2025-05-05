@@ -1990,7 +1990,7 @@ On retrouve bien pour $U$ la matrice triangulaire obtenue avec l'élimination de
 
 Voici un résumé des différentes étapes de l'algorithme sous la forme d'une animation :
 
-
+![Factorisation PLU](img/Chap5_exemple_PLU.gif)
  
 On peut vérifier que $det(A) = (-1)^1 \times 10000 \times -17000 \times -16776.47 \approx -2852000000000$
 
