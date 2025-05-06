@@ -1544,6 +1544,9 @@ L Y = I\\
 U X = Y
 \end{cases}$
 
+Déterminer les éléments de $L$ et $U$ par la factorisation de Gauss requiert $2 n^3/2$ opérations (sans compter les permutations).
+Il faut ensuite de l'ordre de $2 n^2$ opérations pour les algorithmes de remontée et de descente.
+
 #### Algorithme
 
 Nous donnerons dans cette section les algorithmes pour les décompositions LU puis PLU.
@@ -2151,6 +2154,81 @@ Voici alors 2 **critères d'arrêt** possibles :
 $\|r^{(k)}\| \leq \epsilon \|b\|$ ou $\|x^{(k)}-x^{(k-1)}\| \leq \epsilon \|x^{(k-1)}\|$
 
 ### Méthode de Jacobi
+
+#### Idée
+
+La **méthode de Jacobi** décompose la matrice $A$ en $A = M-N$ et calcule la suite $x^{(k+1)} = M^{-1} N x^{(k)} + M^{-1} b$ avec :
+
+- $M = D$ avec $D$ la **matrice des éléments diagonaux de $A$**.
+
+- $N = E+F$ avec $E$ la **matrice des éléments sous-diagonaux** de $A$, et $F$ la **matrice des éléments sur-diagonaux** de $A$.
+
+On décompose donc $A$ en $A = D-E-F$ avec $D$ **diagonale**, avec $E$ **triangulaire inférieure**, et avec $F$ **triangulaire supérieure**.
+
+$D =
+ \begin{pmatrix}
+  a_{1,1} & 0 & 0 & 0 & \cdots & 0 & 0 & 0\\
+  0 & a_{2,2} & 0 & 0 & \cdots & 0 & 0 & 0\\
+  0 & 0 & a_{3,3} & 0 & \cdots & 0 & 0 & 0\\
+  \vdots  & \vdots  & \vdots & \vdots & \vdots & \vdots & \vdots\\
+  0 & 0 & 0 & 0 & \cdots & 0 & a_{n-1,n-1} & 0\\
+  0 & 0 & 0 & 0 & \cdots & 0 & 0 & a_{n,n}
+ \end{pmatrix}$
+ 
+$E =
+ \begin{pmatrix}
+  0 & 0 & 0 & 0 & \cdots & 0 & 0 & 0\\
+  a_{2,1} & 0 & 0 & 0 & \cdots & 0 & 0 & 0\\
+  a_{3,1} & a_{3,2} & 0 & 0 & \cdots & 0 & 0 & 0\\
+  \vdots  & \vdots  & \vdots & \vdots & \vdots & \vdots & \vdots\\
+  a_{n-1,1} & a_{n-1,2} & a_{n-1,3} & a_{n-1,4} & \cdots a_{n-1,n-2} & 0 & 0\\
+  a_{n,1} & a_{n,2} & a_{n,3} & a_{n,4} & \cdots & 0 & a_{n,n-1} & 0
+ \end{pmatrix}$
+ 
+$F =
+ \begin{pmatrix}
+  0 & a_{1,2} & a_{1,3} & a_{1,4} & \cdots & a_{1,n-2} & a_{1,n-1} & a_{1,n}\\
+  0 & 0 & a_{2,3} & a_{2,4} & \cdots & a_{2,n-2} & a_{2,n-1} & a_{2,n}\\
+  0 & 0 & 0 & a_{3,4} & \cdots & a_{3,n-2} & a_{3,n-1} & a_{3,n}\\
+  \vdots  & \vdots  & \vdots & \vdots & \vdots & \vdots & \vdots\\
+  0 & 0 & 0 & 0 & \cdots & 0 & 0 & a_{n-1,n}
+  0 & 0 & 0 & 0 & \cdots & 0 & 0 & 0
+ \end{pmatrix}$
+
+On appelle **matrice de Jacobi** :
+
+$J = M^{-1} N = D^{-1} (E+F)$ 
+
+La suite dont on cherche la limite est alors :
+
+$x^{(k+1)} = D^{-1} (E+F)x^{(k)} + D^{-1}b$
+
+On peut montrer qu'à l'itération $k$, et pour chaque ligne $i$ :
+
+$x_i^{(k)} = \frac{1}{a_{i,i}} (b_i - \displaystyle\sum_{j=1,j \neq i}^{n} a_{i,j} x_j^{(k-1)})$
+
+Une condition nécessaire et suffisante de convergence :
+
+- $D$ doit être **inversible** (tous les éléments diagonaux de $A$ doivent être non-nuls).
+
+- $\rho(J) < 1$ (la valeur propre de $J$ de plus grand module est < 1).
+
+Dans la pratique, on peut utiliser le théorème suivant :
+
+|Théorème de convergence|
+|:-|
+|La méthode de Jacobi converge quelque soit $x^{(0)}$ pour les systèmes linéaires dont|
+|$A$ est à **diagonale strictement dominante**, c'est-à-dire :|
+|$\forall 1 \leq i \leq n$, $\mid a_{i,i} \mid > \displaystyle\sum_{j=1,j \neq i}^{n} \mid a_{i,j} \mid$|
+
+Le coût de la méthode est de l'ordre de $3 n^2 + 2 n$.
+
+La méthode de Jacobi **converge lentement**, mais on peut facilement la rendre plus rapide :
+c'est l'idée de la méthode de Gauss-Seidel, présentée dans la suite de ce chapitre.
+
+#### Algorithme
+
+#### Exemple
 
 ### Méthode de Gauss-Seidel
 
