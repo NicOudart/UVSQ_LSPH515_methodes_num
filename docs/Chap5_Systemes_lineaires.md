@@ -2133,7 +2133,7 @@ d'où $e^{(k)} = C^k e^{(0)}$
 
 On peut donc majorer l'erreur de la manière suivante :
 
-$\|e^{(k)}\| \leq \|C\|^k \|e^{(0)}\|$ d'où $\lim\limits_{k \to \infty} e^{(k)} = 0$ et donc $$\lim\limits_{k \to \infty} x^{(k)} = x$.
+$\|e^{(k)}\| \leq \|C\|^k \|e^{(0)}\|$ d'où $\lim\limits_{k \to \infty} e^{(k)} = 0$ et donc $\lim\limits_{k \to \infty} x^{(k)} = x$.
 
 Plus $\|C\|$ est petit, moins il est nécessaire d'effectuer des itérations pour réduire l'erreur initiale d'un facteur donné.
 
@@ -2191,7 +2191,7 @@ $F =
   0 & 0 & a_{2,3} & a_{2,4} & \cdots & a_{2,n-2} & a_{2,n-1} & a_{2,n}\\
   0 & 0 & 0 & a_{3,4} & \cdots & a_{3,n-2} & a_{3,n-1} & a_{3,n}\\
   \vdots  & \vdots  & \vdots & \vdots & \vdots & \vdots & \vdots\\
-  0 & 0 & 0 & 0 & \cdots & 0 & 0 & a_{n-1,n}
+  0 & 0 & 0 & 0 & \cdots & 0 & 0 & a_{n-1,n}\\
   0 & 0 & 0 & 0 & \cdots & 0 & 0 & 0
  \end{pmatrix}$
 
@@ -2203,7 +2203,7 @@ La suite dont on cherche la limite est alors :
 
 $x^{(k+1)} = D^{-1} (E+F)x^{(k)} + D^{-1}b$
 
-On peut montrer qu'à l'itération $k$, et pour chaque ligne $i$ :
+On peut facilement montrer qu'à l'itération $k$, et pour chaque ligne $i$ :
 
 $x_i^{(k)} = \frac{1}{a_{i,i}} (b_i - \displaystyle\sum_{j=1,j \neq i}^{n} a_{i,j} x_j^{(k-1)})$
 
