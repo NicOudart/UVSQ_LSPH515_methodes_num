@@ -2153,6 +2153,10 @@ Voici alors 2 **critères d'arrêt** possibles :
 
 $\|r^{(k)}\| \leq \epsilon \|b\|$ ou $\|x^{(k)}-x^{(k-1)}\| \leq \epsilon \|x^{(k-1)}\|$
 
+L'avantage des méthodes itératives est leur **coût** : de l'ordre de $n^2$ pour chaque itération, à comparer au $\frac{2}{3} n^3$ des méthodes directes.
+
+Toute la difficulté des méthodes itérative est dans leurs conditions de **convergence**, qui restreignent leur application à certains systèmes.
+
 ### Méthode de Jacobi
 
 #### Idée
@@ -2201,7 +2205,7 @@ $J = M^{-1} N = D^{-1} (E+F)$
 
 La suite dont on cherche la limite est alors :
 
-$x^{(k+1)} = D^{-1} (E+F)x^{(k)} + D^{-1}b$
+$x^{(k+1)} = D^{-1} (E+F) x^{(k)} + D^{-1} b$
 
 On peut facilement montrer qu'à l'itération $k$, et pour chaque ligne $i$ :
 
@@ -2220,8 +2224,6 @@ Dans la pratique, on peut utiliser le théorème suivant :
 |La méthode de Jacobi converge quelque soit $x^{(0)}$ pour les systèmes linéaires dont|
 |$A$ est à **diagonale strictement dominante**, c'est-à-dire :|
 |$\forall 1 \leq i \leq n$, $\mid a_{i,i} \mid > \displaystyle\sum_{j=1,j \neq i}^{n} \mid a_{i,j} \mid$|
-
-Le coût de la méthode est de l'ordre de $3 n^2 + 2 n$.
 
 La méthode de Jacobi **converge lentement**, mais on peut facilement la rendre plus rapide :
 c'est l'idée de la méthode de Gauss-Seidel, présentée dans la suite de ce chapitre.
@@ -2304,6 +2306,49 @@ def jacobi(A,b,x_0,n_max,e):
 
 #### Idée
 
+La **méthode de Gauss-Seidel** décompose la matrice $A$ en $A = M-N$ et calcule la suite $x^{(k+1)} = M^{-1} N x^{(k)} + M^{-1} b$ avec :
+
+- $M = D-E$ avec $D$ la **matrice des éléments diagonaux de $A$**, et $E$ la **matrice des éléments sous-diagonaux** de $A$.
+
+- $N = F$ avec $F$ la **matrice des éléments sur-diagonaux** de $A$.
+
+On appelle **matrice de Gauss-Seidel** :
+
+$G = (D-E)^{-1} F = M^{-1}N$
+
+La suite dont on cherche la limite est alors :
+
+x^{(k+1)} = (D-E)^{-1} F x^{(k)} + (D-E)^{-1} b
+
+On peut facilement montrer qu'à l'itération $k$, et pour chaque ligne $i$ :
+
+$x_i^{(k)} = \frac{1}{a_{i,i}} (b_i - \displaystyle\sum_{j=1}^{i-1} a_{i,j} x_j^{(k)} - \displaystyle\sum_{j=i+1}^{n} a_{i,j} x_j^{(k-1)})$
+
+Une condition nécessaire et suffisante de convergence :
+
+- $D-E$ doit être **inversible** (tous les éléments diagonaux de $A$ doivent être non-nuls).
+
+- $\rho(G) < 1$ (la valeur propre de $G$ de plus grand module est < 1).
+
+Dans la pratique, on peut utiliser les théorèmes suivant :
+
+|Théorème de convergence 1|
+|:-|
+|La méthode de Gauss-Seidel converge quelque soit $x^{(0)}$ pour les systèmes linéaires dont|
+|$A$ est à **diagonale strictement dominante**, c'est-à-dire :|
+|$\forall 1 \leq i \leq n$, $\mid a_{i,i} \mid > \displaystyle\sum_{j=1,j \neq i}^{n} \mid a_{i,j} \mid$|
+
+|Théorème de convergence 2|
+|:-|
+|Si $A$ est une matrice **symétrique définie positive** alors|
+|la méthode de Gauss-Seidel converge.|
+
+Contrairement à la méthode de Jacobi, la mise à jour des composantes de $x^{(k)}$ se fait de manière **séquentielle** et non en parallèle.
+Ceci rend la convergence de la méthode de Gauss-Seidel **plus rapide** que celle de Jacobi.
+
+Cependant, la méthode de Gauss-Seidel peut **osciller** autour de la solution.
+Pour limiter ce phénomène, on peut utiliser les **méthodes de relaxation**, décrite dans la suite de ce chapitre.
+
 #### Algorithme
 
 Voici sous la forme d'une fonction Python l'algorithme de la méthode de Gauss-Seidel.
@@ -2383,7 +2428,5 @@ def gauss_seidel(A,b,x_0,n_max,e):
 #### Exemple
 
 ### Méthode de relaxation
-
-### Méthodes du gradient
 
 ## Conclusion
