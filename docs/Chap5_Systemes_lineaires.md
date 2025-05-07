@@ -2228,9 +2228,159 @@ c'est l'idée de la méthode de Gauss-Seidel, présentée dans la suite de ce ch
 
 #### Algorithme
 
+Voici sous la forme d'une fonction Python l'algorithme de la méthode de Jacobi.
+
+Elle prend en entrée :
+
+* `A` et `b` les matrices du système linéaire à résoudre.
+
+* `x_0` la valeur initiale de la suite convergeant vers la solution.
+
+* `n_max` le nombre maximum d'itérations.
+
+* `e` la précision désirée.
+
+On notera les variables à l'itération `n` : 
+
+* `x_n` l'estimation de la solution du système.
+
+* `r_n` le résidu.
+
+~~~
+def jacobi(A,b,x_0,n_max,e):
+    
+    #Récupérer les dimensions de la matrice A :
+    m,n = np.shape(A)
+    
+    #Vérification des dimensions de A (nxn) et b (n) :
+    if (m!=n)or(len(b)!=n):
+        
+        raise ValueError("Le système n'est pas de Cramer")
+    
+    #Récupérer les valeurs sur la diagonale de A :
+    A_diag = np.diag(A)
+    
+    #Créer la matrice diagonale D, ayant les mêmes valeurs que la diagonale de A :
+    D = np.diag(A_diag)
+    
+    #Créer la matrice E+F, ayant des zéros sur sa diagonale et les mêmes valeurs
+    #que A partout ailleurs :
+    EF = A-D
+    
+    #Vérifier si la matrice A est à diagonale strictement dominante :
+    for i in range(n):
+        
+        if sum(abs(EF[:,i]))>=abs(A_diag[i]):
+            
+            print("Attention : la matrice A n'est pas à diagonale strictement dominante")
+        
+    #Initialisation des variables :
+    n = 0 #Nombre d'itérations
+    x_n_old = np.copy(x_0) #Estimation de la solution à l'itération n-1
+    x_n = (b-np.dot(EF,x_n_old))/A_diag #Estimation de la solution à l'itération n
+    r_n = np.dot(A,x_n)-b #Résidu
+    
+    #Itérations de l'algorithme de Jacobi
+	#tant qu'une des conditions d'arrêt n'est pas atteinte :
+    while (n<n_max)and(np.linalg.norm(x_n-x_n_old,ord=2)>e)and(np.linalg.norm(r_n,ord=2)>e):
+        
+        #Mettre à jour l'estimation de la solution :
+        x_n_old = np.copy(x_n) #Itération n
+        x_n = (b-np.dot(EF,x_n_old))/A_diag #Iteration n+1
+        
+        #Incrémenter le nombre d'itérations :
+        n+=1
+        
+        #Mettre à jour le résidu :
+        r_n = np.dot(A,x_n)-b
+            
+    #Renvoyer l'estimation de la solution du système et le résidu :
+    return x_n,r_n
+~~~
+
 #### Exemple
 
 ### Méthode de Gauss-Seidel
+
+#### Idée
+
+#### Algorithme
+
+Voici sous la forme d'une fonction Python l'algorithme de la méthode de Gauss-Seidel.
+
+Elle prend en entrée :
+
+* `A` et `b` les matrices du système linéaire à résoudre.
+
+* `x_0` la valeur initiale de la suite convergeant vers la solution.
+
+* `n_max` le nombre maximum d'itérations.
+
+* `e` la précision désirée.
+
+On notera les variables à l'itération `n` : 
+
+* `x_n` l'estimation de la solution du système.
+
+* `r_n` le résidu.
+
+~~~
+def gauss_seidel(A,b,x_0,n_max,e):
+    
+    #Récupérer les dimensions de la matrice A :
+    m,n = np.shape(A)
+    
+    #Vérification des dimensions de A (nxn) et b (n) :
+    if (m!=n)or(len(b)!=n):
+        
+        raise ValueError("Le système n'est pas de Cramer")
+        
+    #Récupérer les valeurs sur la diagonale de A :
+    A_diag = np.diag(A)
+    
+    #Créer la matrice diagonale D, ayant les mêmes valeurs que la diagonale de A :
+    D = np.diag(A_diag)
+    
+    #Créer la matrice A-D, ayant des zéros sur sa diagonale et les mêmes valeurs
+    #que A partout ailleurs :
+    AD = A-D
+        
+    #Vérifier si la matrice A est à diagonale strictement dominante :
+    for i in range(n):
+        
+        if sum(abs(AD[:,i]))>=abs(A_diag[i]):
+            
+            print("Attention : la matrice A n'est pas à diagonale strictement dominante")
+            break
+        
+    #Initialisation des variables :
+    n = 0 #Nombre d'itérations
+    x_n_old = np.copy(x_0) #Estimation de la solution à l'itération n-1
+    x_n = np.copy(x_0) #Estimation de la solution à l'itération n
+    for i in range(len(b)):
+        x_n[i] = (b[i]-np.dot(A[i,:i],x_n[:i])-np.dot(A[i,i+1:],x_n[i+1:]))/A[i,i]
+    r_n = np.dot(A,x_n)-b #Résidu
+    
+    #Itérations de l'algorithme de Gauss-Seidel
+	#tant qu'une des conditions d'arrêt n'est pas atteinte :
+    while (n<n_max)and(np.linalg.norm(x_n-x_n_old,ord=2)>e)and(np.linalg.norm(r_n,ord=2)>e):
+        
+        #Mettre à jour l'estimation de la solution :
+        x_n_old = np.copy(x_n) #Itération n
+        for i in range(len(b)):
+            x_n[i] = (b[i]-np.dot(A[i,:i],x_n[:i])-np.dot(A[i,i+1:],x_n[i+1:]))/A[i,i] #Iteration n+1
+        
+        #Incrémenter le nombre d'itérations :
+        n+=1
+        
+        #Renvoyer l'estimation de la solution du système et le résidu :
+        r_n = np.dot(A,x_n)-b
+                            
+    #Renvoyer l'estimation de la solution du système et le résidu :
+    return x_n,r_n
+~~~
+
+#### Exemple
 
 ### Méthode de relaxation
 
