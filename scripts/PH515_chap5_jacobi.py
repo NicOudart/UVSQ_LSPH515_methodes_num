@@ -60,7 +60,7 @@ def jacobi(A,b,x_0,n_max,e):
     x_n_old = np.copy(x_0) #Estimation de la solution à l'itération n-1
     x_n = (b-np.dot(EF,x_n_old))/A_diag #Estimation de la solution à l'itération n
     r_n = np.dot(A,x_n)-b #Résidu
-    
+        
     #Itérations de l'algorithme de Jacobi
 	#tant qu'une des conditions d'arrêt n'est pas atteinte :
     while (n<n_max)and(np.linalg.norm(x_n-x_n_old,ord=2)>e)and(np.linalg.norm(r_n,ord=2)>e):
@@ -74,7 +74,7 @@ def jacobi(A,b,x_0,n_max,e):
         
         #Mettre à jour le résidu :
         r_n = np.dot(A,x_n)-b
-            
+                    
     #Renvoyer l'estimation de la solution du système et le résidu :
     return x_n,r_n
 
@@ -82,4 +82,4 @@ def jacobi(A,b,x_0,n_max,e):
 
 x_0 = np.array([0,0,0],dtype=np.float64)
 
-x_n,r_n = jacobi(A,b,x_0,100,1e-6)
+x_n,r_n = jacobi(A,b,x_0,100,1e-3)

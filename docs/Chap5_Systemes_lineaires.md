@@ -2302,6 +2302,132 @@ def jacobi(A,b,x_0,n_max,e):
 
 #### Exemple
 
+On rappelle que la matrice $A$ de notre problème exemple est :
+
+$A =
+\begin{pmatrix}
+  -5000 & -18000 & -4000 \\
+  10000 & 2000 & -10000 \\
+  -4000 & 12000 & -6000
+ \end{pmatrix}$
+ 
+Cette matrice n'est pas à diagonale strictement dominante :
+
+- $\mid -5000 \mid leq \mid -18000 \mid + \mid -4000 \mid
+
+- $\mid 2000 \mid leq \mid 10000 \mid + \mid -10000 \mid
+
+- $\mid -6000 \mid leq \mid -4000 \mid + \mid 12000 \mid
+
+La convergence de la méthode n'est donc pas assurée pour une initialisation quelconque.
+Et en effet, en appliquant l'algorithme de Jacobi à notre système, on observe que la suite diverge.
+
+Ceci illustre bien la limite des méthodes itératives : leurs conditions de convergence.
+
+Mais admettons que notre récepteur situé à l'UFR des Sciences de l'UVSQ utilise les signaux provenant de 4 autres satellites, de positions ECEF :
+
+$(x_{s1},y_{s1},z_{s1}) = (15000,13000,18000)$
+$(x_{s2},y_{s2},z_{s2}) = (1000,6000,24000)$
+$(x_{s3},y_{s3},z_{s3}) = (19000,2000,19000)$
+$(x_{s4},y_{s4},z_{s4}) = (12000,12000,26000)$
+
+Le système à résoudre devient alors :
+
+$\begin{pmatrix}
+  -14000 & -7000 & 6000 \\
+  4000 & -11000 & 1000 \\
+  -3000 & -1000 & 8000
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -31314000\\
+  19859000\\
+  25443000
+ \end{pmatrix}$
+ 
+Cette fois-ci, $A$ est à diagonale strictement dominante :
+
+- $\mid -14000 \mid > \mid -7000 \mid + \mid 6000 \mid
+
+- $\mid -11000 \mid > \mid 4000 \mid + \mid 1000 \mid
+
+- $\mid 8000 \mid > \mid -3000 \mid + \mid -1000 \mid
+
+La convergence de la méthode est donc assurée pour une initialisation quelconque.
+Nous choisirons :
+
+$x^{(0)}
+=\begin{pmatrix}
+  0\\
+  0\\
+  0
+ \end{pmatrix}$
+ 
+On décompose la matrice $A = D-(E+F)$ avec :
+
+$D =
+\begin{pmatrix}
+  -14000 & 0 & 0 \\
+  0 & -11000 & 0 \\
+  0 & 0 & 8000
+ \end{pmatrix}$
+ 
+$E =
+\begin{pmatrix}
+  0 & 0 & 0 \\
+  4000 & 0 & 0 \\
+  -3000 & -1000 & 0
+ \end{pmatrix}$
+ 
+$F =
+\begin{pmatrix}
+  0 & -7000 & 6000 \\
+  0 & 0 & 1000 \\
+  0 & 0 & 0
+ \end{pmatrix}$
+ 
+On a donc :
+
+$E+F =
+\begin{pmatrix}
+  0 & -7000 & 6000 \\
+  4000 & 0 & 1000 \\
+  -3000 & -1000 & 0
+ \end{pmatrix}$
+ 
+La suite de la méthode de Jacobi convergeant vers la solution est alors :
+
+$\begin{cases}
+x_r^{(k+1)} = \frac{1}{-14000} (-31314000 + 7000 y_r^{(k)} - 6000 z_r^{(k)})\\
+y_r^{(k+1)} = \frac{1}{-11000} (19859000 - 4000 x_r^{(k)} - 1000 z_r^{(k)})\\
+z_r^{(k+1)} = \frac{1}{8000} (25443000 + 3000 x_r^{(k)} + 1000 y_r^{(k)})
+\end{cases}$
+
+Pour atteindre une précision de $10^{-3}$, on a besoin d'itérer 10 fois la méthode de Jacobi :
+
+|Itération $k$|$x_r^{(k)}$|$y_r^{(k)}$|$z_r^{(k)}$|
+|:------------|:---------:|:---------:|:---------:|
+|0            |0.0000     |0.0000     |0.0000     |
+|1            |2236.7143  |-1805.3636 |3180.3750  |
+|2            |4502.4140  |-702.8880  |3793.4724  |
+|3            |4213.9322  |176.7389   |4780.9192  |
+|4            |4197.3102  |161.6044   |4782.6919  |
+|5            |4205.6372  |155.7212   |4774.5669  |
+|6            |4205.0967  |158.0105   |4776.9541  |
+|7            |4204.9751  |158.0310   |4777.0376  |
+|8            |4205.0006  |157.9943   |4776.9945  |
+|9            |4205.0005  |157.9997   |4776.9995  |
+|10           |4204.9999  |158.0001   |4777.0001  |
+
+**Exercice :**
+
+
+
 ### Méthode de Gauss-Seidel
 
 #### Idée
@@ -2426,6 +2552,19 @@ def gauss_seidel(A,b,x_0,n_max,e):
 ~~~
 
 #### Exemple
+
+|Itération $k$|$x_r^{(k)}$|$y_r^{(k)}$|$z_r^{(k)}$|
+|:------------|:---------:|:---------:|:---------:|
+|0            |0.0000     |0.0000     |0.0000     |
+|1            |2236.7143  |-992.0130  |3895.1412  |
+|2            |4402.0670  |149.4918   |4849.8366  |
+|3            |4240.4698  |177.5196   |4792.7411  |
+|4            |4201.9864  |158.3352   |4775.9118  |
+|5            |4204.3660  |157.6705   |4776.7211  |
+|6            |4205.0452  |157.9911   |4777.0158  |
+|7            |4205.0112  |158.0055   |4777.0049  |
+|8            |4204.9993  |158.0002   |4776.9998  |
+|9            |4204.9998  |157.9999   |4776.9999  |
 
 ### Méthode de relaxation
 

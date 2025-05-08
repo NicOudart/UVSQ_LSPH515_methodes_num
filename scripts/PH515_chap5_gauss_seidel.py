@@ -62,7 +62,7 @@ def gauss_seidel(A,b,x_0,n_max,e):
     for i in range(len(b)):
         x_n[i] = (b[i]-np.dot(A[i,:i],x_n[:i])-np.dot(A[i,i+1:],x_n[i+1:]))/A[i,i]
     r_n = np.dot(A,x_n)-b #Résidu
-    
+        
     #Itérations de l'algorithme de Gauss-Seidel
 	#tant qu'une des conditions d'arrêt n'est pas atteinte :
     while (n<n_max)and(np.linalg.norm(x_n-x_n_old,ord=2)>e)and(np.linalg.norm(r_n,ord=2)>e):
@@ -77,7 +77,7 @@ def gauss_seidel(A,b,x_0,n_max,e):
         
         #Renvoyer l'estimation de la solution du système et le résidu :
         r_n = np.dot(A,x_n)-b
-                            
+                                    
     #Renvoyer l'estimation de la solution du système et le résidu :
     return x_n,r_n
 
@@ -86,4 +86,4 @@ def gauss_seidel(A,b,x_0,n_max,e):
 
 x_0 = np.array([0,0,0],dtype=np.float64)
 
-x_n,r_n = gauss_seidel(A,b,x_0,100,1e-6)
+x_n,r_n = gauss_seidel(A,b,x_0,100,1e-3)
