@@ -2180,7 +2180,7 @@ $D =
   a_{1,1} & 0 & 0 & 0 & \cdots & 0 & 0 & 0\\
   0 & a_{2,2} & 0 & 0 & \cdots & 0 & 0 & 0\\
   0 & 0 & a_{3,3} & 0 & \cdots & 0 & 0 & 0\\
-  \vdots  & \vdots  & \vdots & \vdots & \vdots & \vdots & \vdots\\
+  \vdots  & \vdots  & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots\\
   0 & 0 & 0 & 0 & \cdots & 0 & a_{n-1,n-1} & 0\\
   0 & 0 & 0 & 0 & \cdots & 0 & 0 & a_{n,n}
  \end{pmatrix}$
@@ -2190,7 +2190,7 @@ $E =
   0 & 0 & 0 & 0 & \cdots & 0 & 0 & 0\\
   a_{2,1} & 0 & 0 & 0 & \cdots & 0 & 0 & 0\\
   a_{3,1} & a_{3,2} & 0 & 0 & \cdots & 0 & 0 & 0\\
-  \vdots  & \vdots  & \vdots & \vdots & \vdots & \vdots & \vdots\\
+  \vdots  & \vdots  & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots\\
   a_{n-1,1} & a_{n-1,2} & a_{n-1,3} & a_{n-1,4} & \cdots a_{n-1,n-2} & 0 & 0\\
   a_{n,1} & a_{n,2} & a_{n,3} & a_{n,4} & \cdots & 0 & a_{n,n-1} & 0
  \end{pmatrix}$
@@ -2200,7 +2200,7 @@ $F =
   0 & a_{1,2} & a_{1,3} & a_{1,4} & \cdots & a_{1,n-2} & a_{1,n-1} & a_{1,n}\\
   0 & 0 & a_{2,3} & a_{2,4} & \cdots & a_{2,n-2} & a_{2,n-1} & a_{2,n}\\
   0 & 0 & 0 & a_{3,4} & \cdots & a_{3,n-2} & a_{3,n-1} & a_{3,n}\\
-  \vdots  & \vdots  & \vdots & \vdots & \vdots & \vdots & \vdots\\
+  \vdots  & \vdots  & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots\\
   0 & 0 & 0 & 0 & \cdots & 0 & 0 & a_{n-1,n}\\
   0 & 0 & 0 & 0 & \cdots & 0 & 0 & 0
  \end{pmatrix}$
@@ -2213,9 +2213,20 @@ La suite dont on cherche la limite est alors :
 
 $x^{(k+1)} = D^{-1} (E+F) x^{(k)} + D^{-1} b$
 
-On peut facilement montrer qu'à l'itération $k$, et pour chaque ligne $i$ :
+On remarque que $D^{-1} (E+F) = D^{-1} (D-A) = I - D^{-1}A
+=
+\begin{pmatrix}
+  0 & -a_{1,2}/a_{1,1} & -a_{1,3}/a_{1,1} & \cdots & -a_{1,n-1}/a_{1,1} & -a_{1,n}/a_{1,1}\\
+  -a_{2,1}/a_{2,2} & 0 & -a_{2,3}/a_{2,2} & \cdots & -a_{2,n-1}/a_{2,2} & -a_{2,n}/a_{2,2}\\
+  \vdots  & \vdots  & \vdots & \vdots & \vdots & \vdots\\
+  -a_{n,1}/a_{n,n} & -a_{n,2}/a_{n,n} & -a_{n,3}/a_{n,n} & \cdots & -a_{n,n-1}/a_{n,n} & 0
+ \end{pmatrix}$
+ 
+On peut facilement en déduire qu'à l'itération $k$, et pour chaque ligne $i$ :
 
-$x_i^{(k)} = \frac{1}{a_{i,i}} (b_i - \displaystyle\sum_{j=1,j \neq i}^{n} a_{i,j} x_j^{(k-1)})$
+$D^{-1} (E+F) x_i^{(k)} = - \frac{\displaystyle\sum_{j=1,j \neq i}^{n} a_{i,j} x_j^{(k)}}{a_{i,i}}$ et $D^{-1} b_i = \frac{b_i}{a_{i,i}}$
+
+D'où $x_i^{(k)} = \frac{1}{a_{i,i}} (b_i - \displaystyle\sum_{j=1,j \neq i}^{n} a_{i,j} x_j^{(k-1)})$
 
 Une condition nécessaire et suffisante de convergence :
 
@@ -2319,11 +2330,11 @@ $A =
  
 Cette matrice n'est pas à diagonale strictement dominante :
 
-- $\mid -5000 \mid leq \mid -18000 \mid + \mid -4000 \mid$
+- $\mid -5000 \mid \leq \mid -18000 \mid + \mid -4000 \mid$
 
-- $\mid 2000 \mid leq \mid 10000 \mid + \mid -10000 \mid$
+- $\mid 2000 \mid \leq \mid 10000 \mid + \mid -10000 \mid$
 
-- $\mid -6000 \mid leq \mid -4000 \mid + \mid 12000 \mid$
+- $\mid -6000 \mid \leq \mid -4000 \mid + \mid 12000 \mid$
 
 La convergence de la méthode de Jacobi n'est donc pas assurée pour une initialisation quelconque.
 Et en effet, en appliquant l'algorithme de Jacobi à notre système, on observe que la suite diverge.
@@ -2474,11 +2485,26 @@ $G = (D-E)^{-1} F = M^{-1}N$
 
 La suite dont on cherche la limite est alors :
 
-x^{(k+1)} = (D-E)^{-1} F x^{(k)} + (D-E)^{-1} b
+$x^{(k+1)} = (D-E)^{-1} F x^{(k)} + (D-E)^{-1} b$
 
-On peut facilement montrer qu'à l'itération $k$, et pour chaque ligne $i$ :
+On remarque que : $(D-E) x^{(k+1)} = F x_{(k)} + b$ avec
 
-$x_i^{(k)} = \frac{1}{a_{i,i}} (b_i - \displaystyle\sum_{j=1}^{i-1} a_{i,j} x_j^{(k)} - \displaystyle\sum_{j=i+1}^{n} a_{i,j} x_j^{(k-1)})$
+$D-E
+=
+\begin{pmatrix}
+  0 & 0 & 0 & 0 & \cdots & 0 & 0 & 0\\
+  -a_{2,1} & 0 & 0 & 0 & \cdots & 0 & 0 & 0\\
+  -a_{3,1} & -a_{3,2} & 0 & 0 & \cdots & 0 & 0 & 0\\
+  \vdots  & \vdots  & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots\\
+  -a_{n-1,1} & -a_{n-1,2} & a_{n-1,3} & a_{n-1,4} & \cdots a_{n-1,n-2} & 0 & 0\\
+  a_{n,1} & a_{n,2} & a_{n,3} & a_{n,4} & \cdots & 0 & a_{n,n-1} & 0
+ \end{pmatrix}$
+
+On peut facilement en déduire qu'à l'itération $k$, et pour chaque ligne $i$ :
+
+$(D-E) x_i^{(k+1)} = \displaystyle\sum_{j=1}^{i} a_{i,j} x_j^{(k+1)} = a_{i,i} x_i^{(k+1)} + \displaystyle\sum_{j=1}^{i-1} a_{i,j} x_j^{(k+1)}$ et $F x_i^{(k)} = \displaystyle\sum_{j=i+1}^{n} a_{i,j} x_j^{(k)}$
+
+D'où $x_i^{(k)} = \frac{1}{a_{i,i}} (b_i - \displaystyle\sum_{j=1}^{i-1} a_{i,j} x_j^{(k)} - \displaystyle\sum_{j=i+1}^{n} a_{i,j} x_j^{(k-1)})$
 
 Une condition nécessaire et suffisante de convergence :
 
@@ -2648,16 +2674,12 @@ $D-E =
   3000 & 1000 & 8000
  \end{pmatrix}$
  
-Soit :
-
-
- 
 La suite de la méthode de Gauss-Seidel convergeant vers la solution est alors :
 
 $\begin{cases}
-x_r^{(k+1)} = \\
-y_r^{(k+1)} = \\
-z_r^{(k+1)} = 
+x_r^{(k+1)} = \frac{1}{-14000} (-31314000 + 7000 y_r^{(k)} - 6000 z_r^{(k)})\\
+y_r^{(k+1)} = \frac{1}{-11000} (19859000 - 4000 x_r^{(k+1)} - 1000 z_r^{(k)})\\
+z_r^{(k+1)} = \frac{1}{8000} (25443000 + 3000 x_r^{(k+1)} + 1000 y_r^{(k+1)})
 \end{cases}$
 
 Pour atteindre une précision de $10^{-3}$, on a besoin d'itérer 9 fois la méthode de Gauss-Seidel :
@@ -2675,10 +2697,18 @@ Pour atteindre une précision de $10^{-3}$, on a besoin d'itérer 9 fois la mét
 |8            |4204.9993  |158.0002   |4776.9998  |
 |9            |4204.9998  |157.9999   |4776.9999  |
 
-On obtient bien la solution recherchée avec la précision attendue.
+On obtient bien la solution recherchée avec la précision attendue, pour une itération de moins que la méthode de Jacobi.
 
 **Exercice :**
+Essayez d'appliquer la méthode Gauss-Seidel au système définit dans le problème exemple.
+La méthode converge-t-elle ? Ce résultat était-il prévisible ? Prouvez-le.
 
 ### Méthode de relaxation
+
+#### Idée
+
+#### Algorithme
+
+#### Exemple
 
 ## Conclusion
