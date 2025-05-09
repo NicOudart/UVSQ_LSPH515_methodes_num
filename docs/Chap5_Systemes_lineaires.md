@@ -2707,6 +2707,43 @@ La méthode converge-t-elle ? Ce résultat était-il prévisible ? Prouvez-le.
 
 #### Idée
 
+La **méthode de la relaxation** est une variante de l'algorithme de Gauss-Seidel.
+L'idée est de calculer un vecteur $x_G^{(k+1)}$ à l'aide de de la méthode de Gauss-Seidel, puis de calculer $x^{(k+1)}$ comme la moyenne pondérée :
+
+$x^{(k+1)} = \omega x_G^{(k+1)} + (1-\omega) x^{(k)}$ avec $\omega > 0$
+
+L'algorithme de relaxation décompose donc la matrice $A = M-N$ et calcule la suite $x^{(k+1)} = M^{-1} N x^{(k)} + M^{-1} b$ avec :
+
+- $M = \frac{1}{\omega} D - E$ avec $D$ la **matrice des éléments diagonaux de $A$** et $E$ la **matrice des éléments sous-diagonaux** de $A$.
+
+- $N = (\frac{1}{\omega}-1) D + F$ avec $D$ la **matrice des éléments diagonaux** de $A$ et $F$ la **matrice des éléments sur-diagonaux** de $A$.
+
+On appelle $\omega$ le **paramètre de relaxation**.
+
+Il y a différents cas de figure suivant la valeur de $\omega$ choisie :
+
+- Si $\omega < 1$ on parle de **sous-relaxation** : la méthode est plus "prudente" que Gauss-Seidel.
+
+- Si $\omega > 1$ on parle de **sur-relaxation** : la méthode est plus "plus ambitieuse" que Gauss-Seidel.
+
+- Si $\omega = 1$ on retrouve la méthode de Gauss-Seidel.
+
+La matrice d'itération est ici :
+
+$C = (D - \omega E)^{-1} ((1-\omega) D + \omega F)$
+
+On cherche à **optimiser $\omega$** pour que $\rho(C)$ soit minimal.
+
+On sait qu'à l'itération $k$, et pour chaque ligne $i$ :
+
+$x_i^{(k)} = \omega x_Gi^{(k)} + (1-\omega) x_i^{(k-1)}$
+
+On peut donc en déduire que :
+
+$x_i^{(k)} = \frac{\omega}{a_{i,i}} (b_i - \displaystyle\sum_{j=1}^{i-1} a_{i,j} x_j^{(k)} - \displaystyle\sum_{j=i+1}^{n} a_{i,j} x_j^{(k-1)} - (\frac{1}{\omega}-1) a_{i,i} x_i^{(k-1)})$
+
+
+
 #### Algorithme
 
 #### Exemple
