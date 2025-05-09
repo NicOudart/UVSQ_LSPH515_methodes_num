@@ -2213,8 +2213,9 @@ La suite dont on cherche la limite est alors :
 
 $x^{(k+1)} = D^{-1} (E+F) x^{(k)} + D^{-1} b$
 
-On remarque que $D^{-1} (E+F) = D^{-1} (D-A) = I - D^{-1}A
-=
+On remarque que $D^{-1} (E+F) = D^{-1} (D-A) = I - D^{-1}A$
+
+$D^{-1} (E+F) =
 \begin{pmatrix}
   0 & -a_{1,2}/a_{1,1} & -a_{1,3}/a_{1,1} & \cdots & -a_{1,n-1}/a_{1,1} & -a_{1,n}/a_{1,1}\\
   -a_{2,1}/a_{2,2} & 0 & -a_{2,3}/a_{2,2} & \cdots & -a_{2,n-1}/a_{2,2} & -a_{2,n}/a_{2,2}\\
@@ -2489,8 +2490,7 @@ $x^{(k+1)} = (D-E)^{-1} F x^{(k)} + (D-E)^{-1} b$
 
 On remarque que : $(D-E) x^{(k+1)} = F x_{(k)} + b$ avec
 
-$D-E
-=
+$D-E =
 \begin{pmatrix}
   0 & 0 & 0 & 0 & \cdots & 0 & 0 & 0\\
   -a_{2,1} & 0 & 0 & 0 & \cdots & 0 & 0 & 0\\
