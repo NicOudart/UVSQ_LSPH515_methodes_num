@@ -74,7 +74,7 @@ def jacobi(A,b,x_0,n_max,e):
         
         #Mettre à jour le résidu :
         r_n = np.dot(A,x_n)-b
-                    
+                            
     #Renvoyer l'estimation de la solution du système et le résidu :
     return x_n,r_n
 

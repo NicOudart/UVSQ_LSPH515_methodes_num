@@ -60,9 +60,9 @@ def gauss_seidel(A,b,x_0,n_max,e):
     x_n_old = np.copy(x_0) #Estimation de la solution à l'itération n-1
     x_n = np.copy(x_0) #Estimation de la solution à l'itération n
     for i in range(len(b)):
-        x_n[i] = (b[i]-np.dot(A[i,:i],x_n[:i])-np.dot(A[i,i+1:],x_n[i+1:]))/A[i,i]
+        x_n[i] = (b[i]-np.dot(A[i,:i],x_n[:i])-np.dot(A[i,i+1:],x_n_old[i+1:]))/A[i,i]
     r_n = np.dot(A,x_n)-b #Résidu
-        
+            
     #Itérations de l'algorithme de Gauss-Seidel
 	#tant qu'une des conditions d'arrêt n'est pas atteinte :
     while (n<n_max)and(np.linalg.norm(x_n-x_n_old,ord=2)>e)and(np.linalg.norm(r_n,ord=2)>e):
@@ -70,14 +70,14 @@ def gauss_seidel(A,b,x_0,n_max,e):
         #Mettre à jour l'estimation de la solution :
         x_n_old = np.copy(x_n) #Itération n
         for i in range(len(b)):
-            x_n[i] = (b[i]-np.dot(A[i,:i],x_n[:i])-np.dot(A[i,i+1:],x_n[i+1:]))/A[i,i] #Iteration n+1
+            x_n[i] = (b[i]-np.dot(A[i,:i],x_n[:i])-np.dot(A[i,i+1:],x_n_old[i+1:]))/A[i,i] #Iteration n+1
         
         #Incrémenter le nombre d'itérations :
         n+=1
         
         #Renvoyer l'estimation de la solution du système et le résidu :
         r_n = np.dot(A,x_n)-b
-                                    
+                                            
     #Renvoyer l'estimation de la solution du système et le résidu :
     return x_n,r_n
 

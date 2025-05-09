@@ -251,17 +251,23 @@ Admettons que le récepteur GPS se trouve aux coordonnées ECEF $(x_r,y_r,z_r) =
 
 Si la position des 4 satellites est :
 
-$(x_{s1},y_{s1},z_{s1}) = (14000,4000,25000)$
-$(x_{s2},y_{s2},z_{s2}) = (9000,-14000,21000)$
-$(x_{s3},y_{s3},z_{s3}) = (24000,6000,15000)$
-$(x_{s4},y_{s4},z_{s4}) = (10000,16000,19000)$
+- $(x_{s1},y_{s1},z_{s1}) = (14000,4000,25000)$
+
+- $(x_{s2},y_{s2},z_{s2}) = (9000,-14000,21000)$
+
+- $(x_{s3},y_{s3},z_{s3}) = (24000,6000,15000)$
+
+- $(x_{s4},y_{s4},z_{s4}) = (10000,16000,19000)$
 
 Alors le temps de retard associé à chaque satellite sera approximativement :
 
-$t_1 = 0.0759878 s$
-$t_2 = 0.0735321 s$
-$t_3 = 0.0767739 s$
-$t_4 = 0.0735485 s$
+- $t_1 = 0.0759878 s$
+
+- $t_2 = 0.0735321 s$
+
+- $t_3 = 0.0767739 s$
+
+- $t_4 = 0.0735485 s$
 
 (Il est à noter que les positions des satellites ont été choisies pour être réalistes des satellites GPS).
 
@@ -2313,23 +2319,26 @@ $A =
  
 Cette matrice n'est pas à diagonale strictement dominante :
 
-- $\mid -5000 \mid leq \mid -18000 \mid + \mid -4000 \mid
+- $\mid -5000 \mid leq \mid -18000 \mid + \mid -4000 \mid$
 
-- $\mid 2000 \mid leq \mid 10000 \mid + \mid -10000 \mid
+- $\mid 2000 \mid leq \mid 10000 \mid + \mid -10000 \mid$
 
-- $\mid -6000 \mid leq \mid -4000 \mid + \mid 12000 \mid
+- $\mid -6000 \mid leq \mid -4000 \mid + \mid 12000 \mid$
 
-La convergence de la méthode n'est donc pas assurée pour une initialisation quelconque.
+La convergence de la méthode de Jacobi n'est donc pas assurée pour une initialisation quelconque.
 Et en effet, en appliquant l'algorithme de Jacobi à notre système, on observe que la suite diverge.
 
 Ceci illustre bien la limite des méthodes itératives : leurs conditions de convergence.
 
 Mais admettons que notre récepteur situé à l'UFR des Sciences de l'UVSQ utilise les signaux provenant de 4 autres satellites, de positions ECEF :
 
-$(x_{s1},y_{s1},z_{s1}) = (15000,13000,18000)$
-$(x_{s2},y_{s2},z_{s2}) = (1000,6000,24000)$
-$(x_{s3},y_{s3},z_{s3}) = (19000,2000,19000)$
-$(x_{s4},y_{s4},z_{s4}) = (12000,12000,26000)$
+- $(x_{s1},y_{s1},z_{s1}) = (15000,13000,18000)$
+
+- $(x_{s2},y_{s2},z_{s2}) = (1000,6000,24000)$
+
+- $(x_{s3},y_{s3},z_{s3}) = (19000,2000,19000)$
+
+- $(x_{s4},y_{s4},z_{s4}) = (12000,12000,26000)$
 
 Le système à résoudre devient alors :
 
@@ -2352,13 +2361,15 @@ $\begin{pmatrix}
  
 Cette fois-ci, $A$ est à diagonale strictement dominante :
 
-- $\mid -14000 \mid > \mid -7000 \mid + \mid 6000 \mid
+- $\mid -14000 \mid > \mid -7000 \mid + \mid 6000 \mid$
 
-- $\mid -11000 \mid > \mid 4000 \mid + \mid 1000 \mid
+- $\mid -11000 \mid > \mid 4000 \mid + \mid 1000 \mid$
 
-- $\mid 8000 \mid > \mid -3000 \mid + \mid -1000 \mid
+- $\mid 8000 \mid > \mid -3000 \mid + \mid -1000 \mid$
 
-La convergence de la méthode est donc assurée pour une initialisation quelconque.
+La convergence de la méthode de Jacobi est donc assurée pour une initialisation quelconque.
+Nous allons donc appliquer la méthode à ce système.
+
 Nous choisirons :
 
 $x^{(0)}
@@ -2393,11 +2404,27 @@ $F =
  
 On a donc :
 
+$D^{-1} =
+\begin{pmatrix}
+  \frac{1}{-14000} & 0 & 0 \\
+  0 & \frac{1}{-11000} & 0 \\
+  0 & 0 & \frac{1}{8000}
+ \end{pmatrix}$
+
 $E+F =
 \begin{pmatrix}
   0 & -7000 & 6000 \\
   4000 & 0 & 1000 \\
   -3000 & -1000 & 0
+ \end{pmatrix}$
+ 
+Soit :
+
+$D^{(-1)}(E+F) =
+\begin{pmatrix}
+  0 & \frac{-7000}{-14000} & \frac{6000}{-14000} \\
+  \frac{4000}{-10000} & 0 & \frac{1000}{-10000} \\
+  \frac{-3000}{8000} & \frac{-1000}{8000} & 0
  \end{pmatrix}$
  
 La suite de la méthode de Jacobi convergeant vers la solution est alors :
@@ -2424,9 +2451,12 @@ Pour atteindre une précision de $10^{-3}$, on a besoin d'itérer 10 fois la mé
 |9            |4205.0005  |157.9997   |4776.9995  |
 |10           |4204.9999  |158.0001   |4777.0001  |
 
+On obtient bien la solution recherchée avec la précision attendue.
+
 **Exercice :**
 
-
+Calculez la matrice de Jacobi correspondant à notre problème exemple.
+Est-il attendu que la méthode ne converge pas pour ce système ? Démontrez-le.
 
 ### Méthode de Gauss-Seidel
 
@@ -2553,6 +2583,85 @@ def gauss_seidel(A,b,x_0,n_max,e):
 
 #### Exemple
 
+Nous allons cette fois-ci appliquer la méthode de Gauss-Seidel au système :
+
+$\begin{pmatrix}
+  -14000 & -7000 & 6000 \\
+  4000 & -11000 & 1000 \\
+  -3000 & -1000 & 8000
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -31314000\\
+  19859000\\
+  25443000
+ \end{pmatrix}$
+
+Comme montré précédemment, la matrice $A$ est à diagonale strictement dominante.
+
+La convergence de la méthode de Gauss-Seidel est donc assurée pour une initialisation quelconque.
+Nous allons donc appliquer la méthode à ce système.
+
+Nous choisirons :
+
+$x^{(0)}
+=\begin{pmatrix}
+  0\\
+  0\\
+  0
+ \end{pmatrix}$
+ 
+On décompose la matrice $A = D-(E+F)$ avec :
+
+$D =
+\begin{pmatrix}
+  -14000 & 0 & 0 \\
+  0 & -11000 & 0 \\
+  0 & 0 & 8000
+ \end{pmatrix}$
+ 
+$E =
+\begin{pmatrix}
+  0 & 0 & 0 \\
+  4000 & 0 & 0 \\
+  -3000 & -1000 & 0
+ \end{pmatrix}$
+ 
+$F =
+\begin{pmatrix}
+  0 & -7000 & 6000 \\
+  0 & 0 & 1000 \\
+  0 & 0 & 0
+ \end{pmatrix}$
+ 
+On a donc :
+
+$D-E =
+\begin{pmatrix}
+  -14000 & 0 & 0 \\
+  -4000 & -11000 & 0 \\
+  3000 & 1000 & 8000
+ \end{pmatrix}$
+ 
+Soit :
+
+
+ 
+La suite de la méthode de Gauss-Seidel convergeant vers la solution est alors :
+
+$\begin{cases}
+x_r^{(k+1)} = \\
+y_r^{(k+1)} = \\
+z_r^{(k+1)} = 
+\end{cases}$
+
+Pour atteindre une précision de $10^{-3}$, on a besoin d'itérer 9 fois la méthode de Gauss-Seidel :
+
 |Itération $k$|$x_r^{(k)}$|$y_r^{(k)}$|$z_r^{(k)}$|
 |:------------|:---------:|:---------:|:---------:|
 |0            |0.0000     |0.0000     |0.0000     |
@@ -2565,6 +2674,10 @@ def gauss_seidel(A,b,x_0,n_max,e):
 |7            |4205.0112  |158.0055   |4777.0049  |
 |8            |4204.9993  |158.0002   |4776.9998  |
 |9            |4204.9998  |157.9999   |4776.9999  |
+
+On obtient bien la solution recherchée avec la précision attendue.
+
+**Exercice :**
 
 ### Méthode de relaxation
 
