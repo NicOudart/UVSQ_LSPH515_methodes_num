@@ -2171,7 +2171,7 @@ La **méthode de Jacobi** décompose la matrice $A$ en $A = M-N$ et calcule la s
 
 - $M = D$ avec $D$ la **matrice des éléments diagonaux de $A$**.
 
-- $N = E+F$ avec $E$ la **matrice des éléments sous-diagonaux** de $A$, et $F$ la **matrice des éléments sur-diagonaux** de $A$.
+- $N = E+F$ avec $-E$ la **matrice des éléments sous-diagonaux** de $A$, et $-F$ la **matrice des éléments sur-diagonaux** de $A$.
 
 On décompose donc $A$ en $A = D-E-F$ avec $D$ **diagonale**, avec $E$ **triangulaire inférieure**, et avec $F$ **triangulaire supérieure**.
 
@@ -2185,7 +2185,7 @@ $D =
   0 & 0 & 0 & 0 & \cdots & 0 & 0 & a_{n,n}
  \end{pmatrix}$
  
-$E =
+$-E =
  \begin{pmatrix}
   0 & 0 & 0 & 0 & \cdots & 0 & 0 & 0\\
   a_{2,1} & 0 & 0 & 0 & \cdots & 0 & 0 & 0\\
@@ -2196,7 +2196,7 @@ $E =
   a_{n,1} & a_{n,2} & a_{n,3} & a_{n,4} & \cdots & a_{n,n-2} & a_{n,n-1} & 0
  \end{pmatrix}$
  
-$F =
+$-F =
  \begin{pmatrix}
   0 & a_{1,2} & a_{1,3} & a_{1,4} & \cdots & a_{1,n-2} & a_{1,n-1} & a_{1,n}\\
   0 & 0 & a_{2,3} & a_{2,4} & \cdots & a_{2,n-2} & a_{2,n-1} & a_{2,n}\\
@@ -2216,6 +2216,18 @@ La suite dont on cherche la limite est alors :
 $x^{(k+1)} = D^{-1} (E+F) x^{(k)} + D^{-1} b$
 
 On remarque que $D^{-1} (E+F) = D^{-1} (D-A) = I - D^{-1}A$
+
+$D^{-1} =
+ \begin{pmatrix}
+  1/a_{1,1} & 0 & 0 & 0 & \cdots & 0 & 0 & 0\\
+  0 & 1/a_{2,2} & 0 & 0 & \cdots & 0 & 0 & 0\\
+  0 & 0 & 1/a_{3,3} & 0 & \cdots & 0 & 0 & 0\\
+  \vdots  & \vdots  & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots\\
+  0 & 0 & 0 & 0 & \cdots & 0 & 1/a_{n-1,n-1} & 0\\
+  0 & 0 & 0 & 0 & \cdots & 0 & 0 & 1/a_{n,n}
+ \end{pmatrix}$
+ 
+et
 
 $D^{-1} (E+F) =
 \begin{pmatrix}
@@ -2393,7 +2405,7 @@ $x^{(0)}
   0
  \end{pmatrix}$
  
-On décompose la matrice $A = D-(E+F)$ avec :
+On décompose la matrice $A = D-E-F$ avec :
 
 $D =
 \begin{pmatrix}
@@ -2402,14 +2414,14 @@ $D =
   0 & 0 & 8000
  \end{pmatrix}$
  
-$E =
+$-E =
 \begin{pmatrix}
   0 & 0 & 0 \\
   4000 & 0 & 0 \\
   -3000 & -1000 & 0
  \end{pmatrix}$
  
-$F =
+$-F =
 \begin{pmatrix}
   0 & -7000 & 6000 \\
   0 & 0 & 1000 \\
@@ -2427,18 +2439,18 @@ $D^{-1} =
 
 $E+F =
 \begin{pmatrix}
-  0 & -7000 & 6000 \\
-  4000 & 0 & 1000 \\
-  -3000 & -1000 & 0
+  0 & 7000 & -6000 \\
+  -4000 & 0 & -1000 \\
+  3000 & 1000 & 0
  \end{pmatrix}$
  
 Soit :
 
 $D^{(-1)}(E+F) =
 \begin{pmatrix}
-  0 & \frac{-7000}{-14000} & \frac{6000}{-14000} \\
-  \frac{4000}{-10000} & 0 & \frac{1000}{-10000} \\
-  \frac{-3000}{8000} & \frac{-1000}{8000} & 0
+  0 & \frac{7000}{-14000} & \frac{-6000}{-14000} \\
+  \frac{-4000}{-10000} & 0 & \frac{-1000}{-10000} \\
+  \frac{3000}{8000} & \frac{1000}{8000} & 0
  \end{pmatrix}$
  
 La suite de la méthode de Jacobi convergeant vers la solution est alors :
@@ -2478,9 +2490,9 @@ Est-il attendu que la méthode ne converge pas pour ce système ? Démontrez-le.
 
 La **méthode de Gauss-Seidel** décompose la matrice $A$ en $A = M-N$ et calcule la suite $x^{(k+1)} = M^{-1} N x^{(k)} + M^{-1} b$ avec :
 
-- $M = D-E$ avec $D$ la **matrice des éléments diagonaux de $A$**, et $E$ la **matrice des éléments sous-diagonaux** de $A$.
+- $M = D-E$ avec $D$ la **matrice des éléments diagonaux de $A$**, et $-E$ la **matrice des éléments sous-diagonaux** de $A$.
 
-- $N = F$ avec $F$ la **matrice des éléments sur-diagonaux** de $A$.
+- $N = F$ avec $-F$ la **matrice des éléments sur-diagonaux** de $A$.
 
 On appelle **matrice de Gauss-Seidel** :
 
@@ -2494,17 +2506,29 @@ On remarque que : $(D-E) x^{(k+1)} = F x_{(k)} + b$ avec
 
 $D-E =
 \begin{pmatrix}
-  0 & 0 & 0 & \cdots & 0 & 0 & 0\\
-  -a_{2,1} & 0 & 0 & \cdots & 0 & 0 & 0\\
-  -a_{3,1} & -a_{3,2} & 0 & \cdots & 0 & 0 & 0\\
+  a_{1,1} & 0 & 0 & \cdots & 0 & 0 & 0\\
+  a_{2,1} & a_{2,2} & 0 & \cdots & 0 & 0 & 0\\
+  a_{3,1} & a_{3,2} & a_{3,3} & \cdots & 0 & 0 & 0\\
   \vdots  & \vdots  & \vdots & \vdots & \vdots & \vdots & \vdots\\
-  -a_{n-1,1} & -a_{n-1,2} & -a_{n-1,3} & \cdots & -a_{n-1,n-2} & 0 & 0\\
-  -a_{n,1} & -a_{n,2} & -a_{n,3} & \cdots & -a_{n,n-2} & -a_{n,n-1} & 0
+  a_{n-1,1} & a_{n-1,2} & a_{n-1,3} & \cdots & a_{n-1,n-2} & a_{n-1,n-1} & 0\\
+  a_{n,1} & a_{n,2} & a_{n,3} & \cdots & a_{n,n-2} & a_{n,n-1} & a_{n,n}
+ \end{pmatrix}$
+ 
+et 
+
+$F =
+ \begin{pmatrix}
+  0 & -a_{1,2} & -a_{1,3} & -a_{1,4} & \cdots & -a_{1,n-2} & -a_{1,n-1} & -a_{1,n}\\
+  0 & 0 & -a_{2,3} & -a_{2,4} & \cdots & -a_{2,n-2} & -a_{2,n-1} & -a_{2,n}\\
+  \vdots  & \vdots  & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots\\
+  0 & 0 & 0 & 0 & \cdots & 0 & -a_{n-2,n-1} & -a_{n-2,n}\\
+  0 & 0 & 0 & 0 & \cdots & 0 & 0 & -a_{n-1,n}\\
+  0 & 0 & 0 & 0 & \cdots & 0 & 0 & 0
  \end{pmatrix}$
 
 On peut facilement en déduire qu'à l'itération $k$, et pour chaque ligne $i$ :
 
-$(D-E) x_i^{(k+1)} = \displaystyle\sum_{j=1}^{i} a_{i,j} x_j^{(k+1)} = a_{i,i} x_i^{(k+1)} + \displaystyle\sum_{j=1}^{i-1} a_{i,j} x_j^{(k+1)}$ et $F x_i^{(k)} = \displaystyle\sum_{j=i+1}^{n} a_{i,j} x_j^{(k)}$
+$(D-E) x_i^{(k+1)} = \displaystyle\sum_{j=1}^{i} a_{i,j} x_j^{(k+1)} = a_{i,i} x_i^{(k+1)} + \displaystyle\sum_{j=1}^{i-1} a_{i,j} x_j^{(k+1)}$ et $F x_i^{(k)} = -\displaystyle\sum_{j=i+1}^{n} a_{i,j} x_j^{(k)}$
 
 D'où $x_i^{(k)} = \frac{1}{a_{i,i}} (b_i - \displaystyle\sum_{j=1}^{i-1} a_{i,j} x_j^{(k)} - \displaystyle\sum_{j=i+1}^{n} a_{i,j} x_j^{(k-1)})$
 
@@ -2644,7 +2668,7 @@ $x^{(0)}
   0
  \end{pmatrix}$
  
-On décompose la matrice $A = D-(E+F)$ avec :
+On décompose la matrice $A = D-E-F$ avec :
 
 $D =
 \begin{pmatrix}
@@ -2653,14 +2677,14 @@ $D =
   0 & 0 & 8000
  \end{pmatrix}$
  
-$E =
+$-E =
 \begin{pmatrix}
   0 & 0 & 0 \\
   4000 & 0 & 0 \\
   -3000 & -1000 & 0
  \end{pmatrix}$
  
-$F =
+$-F =
 \begin{pmatrix}
   0 & -7000 & 6000 \\
   0 & 0 & 1000 \\
@@ -2672,8 +2696,8 @@ On a donc :
 $D-E =
 \begin{pmatrix}
   -14000 & 0 & 0 \\
-  -4000 & -11000 & 0 \\
-  3000 & 1000 & 8000
+  4000 & -11000 & 0 \\
+  -3000 & -1000 & 8000
  \end{pmatrix}$
  
 La suite de la méthode de Gauss-Seidel convergeant vers la solution est alors :
@@ -2754,6 +2778,9 @@ Voici un théorème utile pour vérifier la convergence de la méthode :
 
 #### Algorithme
 
+~~~
+~~~
+
 #### Exemple
 
 Considérons à nouveau le système :
@@ -2774,6 +2801,31 @@ $\begin{pmatrix}
   19859000\\
   25443000
  \end{pmatrix}$
+ 
+On a montré précédemment que dans ce cas on peut décomposer la matrice $A = D-E-F$ avec :
+
+$D =
+\begin{pmatrix}
+  -14000 & 0 & 0 \\
+  0 & -11000 & 0 \\
+  0 & 0 & 8000
+ \end{pmatrix}$
+ 
+$-E =
+\begin{pmatrix}
+  0 & 0 & 0 \\
+  4000 & 0 & 0 \\
+  -3000 & -1000 & 0
+ \end{pmatrix}$
+ 
+$-F =
+\begin{pmatrix}
+  0 & -7000 & 6000 \\
+  0 & 0 & 1000 \\
+  0 & 0 & 0
+ \end{pmatrix}
+ 
+On peut alors déterminer pour différentes valeurs du paramètre de relaxation $\omega$ sur $]0,2]$ le rayon spectrale de la matrice d'itération $C = (D - \omega E)^{-1} ((1-\omega) D + \omega F)$ :
 
 ![Optimisation du paramètre de relaxation pour x_s1 = 15000](img/Chap5_exemple_relaxation_optimale_xs1_15000.png)
 
