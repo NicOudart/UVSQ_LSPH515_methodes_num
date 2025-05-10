@@ -2191,8 +2191,9 @@ $E =
   a_{2,1} & 0 & 0 & 0 & \cdots & 0 & 0 & 0\\
   a_{3,1} & a_{3,2} & 0 & 0 & \cdots & 0 & 0 & 0\\
   \vdots  & \vdots  & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots\\
-  a_{n-1,1} & a_{n-1,2} & a_{n-1,3} & a_{n-1,4} & \cdots a_{n-1,n-2} & 0 & 0\\
-  a_{n,1} & a_{n,2} & a_{n,3} & a_{n,4} & \cdots & 0 & a_{n,n-1} & 0
+  a_{n-2,1} & a_{n-2,2} & a_{n-2,3} & a_{n-2,4} & \cdots & 0 & 0 & 0\\
+  a_{n-1,1} & a_{n-1,2} & a_{n-1,3} & a_{n-1,4} & \cdots & a_{n-1,n-2} & 0 & 0\\
+  a_{n,1} & a_{n,2} & a_{n,3} & a_{n,4} & \cdots & a_{n,n-2} & a_{n,n-1} & 0
  \end{pmatrix}$
  
 $F =
@@ -2201,6 +2202,7 @@ $F =
   0 & 0 & a_{2,3} & a_{2,4} & \cdots & a_{2,n-2} & a_{2,n-1} & a_{2,n}\\
   0 & 0 & 0 & a_{3,4} & \cdots & a_{3,n-2} & a_{3,n-1} & a_{3,n}\\
   \vdots  & \vdots  & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots\\
+  0 & 0 & 0 & 0 & \cdots & 0 & a_{n-2,n-1} & a_{n-2,n}\\
   0 & 0 & 0 & 0 & \cdots & 0 & 0 & a_{n-1,n}\\
   0 & 0 & 0 & 0 & \cdots & 0 & 0 & 0
  \end{pmatrix}$
@@ -2492,12 +2494,12 @@ On remarque que : $(D-E) x^{(k+1)} = F x_{(k)} + b$ avec
 
 $D-E =
 \begin{pmatrix}
-  0 & 0 & 0 & 0 & \cdots & 0 & 0 & 0\\
-  -a_{2,1} & 0 & 0 & 0 & \cdots & 0 & 0 & 0\\
-  -a_{3,1} & -a_{3,2} & 0 & 0 & \cdots & 0 & 0 & 0\\
-  \vdots  & \vdots  & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots\\
-  -a_{n-1,1} & -a_{n-1,2} & a_{n-1,3} & a_{n-1,4} & \cdots a_{n-1,n-2} & 0 & 0\\
-  a_{n,1} & a_{n,2} & a_{n,3} & a_{n,4} & \cdots & 0 & a_{n,n-1} & 0
+  0 & 0 & 0 & \cdots & 0 & 0 & 0\\
+  -a_{2,1} & 0 & 0 & \cdots & 0 & 0 & 0\\
+  -a_{3,1} & -a_{3,2} & 0 & \cdots & 0 & 0 & 0\\
+  \vdots  & \vdots  & \vdots & \vdots & \vdots & \vdots & \vdots\\
+  -a_{n-1,1} & -a_{n-1,2} & -a_{n-1,3} & \cdots & -a_{n-1,n-2} & 0 & 0\\
+  -a_{n,1} & -a_{n,2} & -a_{n,3} & \cdots & -a_{n,n-2} & -a_{n,n-1} & 0
  \end{pmatrix}$
 
 On peut facilement en déduire qu'à l'itération $k$, et pour chaque ligne $i$ :
@@ -2742,7 +2744,13 @@ On peut donc en déduire que :
 
 $x_i^{(k)} = \frac{\omega}{a_{i,i}} (b_i - \displaystyle\sum_{j=1}^{i-1} a_{i,j} x_j^{(k)} - \displaystyle\sum_{j=i+1}^{n} a_{i,j} x_j^{(k-1)} - (\frac{1}{\omega}-1) a_{i,i} x_i^{(k-1)})$
 
+Voici un théorème utile pour vérifier la convergence de la méthode :
 
+|Théorème|
+|:-|
+|- Si la méthode de la relaxation converge, alors $0 < \omega < 2$.|
+|- Si $A$ est à diagonale strictement dominante, la méthode de la relaxation converge pour tout vecteur de départ $x^{(0)}$ si $0 < \omega \leq 1$.|
+|- Si $A$ est symétrique définie positive, la méthode de relaxation converge pour tout vecteur de départ $x^{(0)}$ si $0 < \omega < 2$.|
 
 #### Algorithme
 
