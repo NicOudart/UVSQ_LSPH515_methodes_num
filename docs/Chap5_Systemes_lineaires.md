@@ -2756,4 +2756,27 @@ Voici un théorème utile pour vérifier la convergence de la méthode :
 
 #### Exemple
 
+Considérons à nouveau le système :
+
+$\begin{pmatrix}
+  -14000 & -7000 & 6000 \\
+  4000 & -11000 & 1000 \\
+  -3000 & -1000 & 8000
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -31314000\\
+  19859000\\
+  25443000
+ \end{pmatrix}$
+
+![Optimisation du paramètre de relaxation pour x_s1 = 15000](img/Chap5_exemple_relaxation_optimale_xs1_15000.png)
+
+![Optimisation du paramètre de relaxation pour x_s1 = 22250](img/Chap5_exemple_relaxation_optimale_xs1_22250.png)
+
 ## Conclusion
