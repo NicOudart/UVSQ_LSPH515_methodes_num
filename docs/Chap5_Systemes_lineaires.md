@@ -2297,7 +2297,7 @@ def jacobi(A,b,x_0,n_max,e):
     #Créer la matrice diagonale D, ayant les mêmes valeurs que la diagonale de A :
     D = np.diag(A_diag)
     
-    #Créer la matrice E+F, ayant des zéros sur sa diagonale et les mêmes valeurs
+    #Créer la matrice EF, ayant des zéros sur sa diagonale et les mêmes valeurs
     #que A partout ailleurs :
     EF = A-D
     
@@ -2555,7 +2555,7 @@ Contrairement à la méthode de Jacobi, la mise à jour des composantes de $x^{(
 Ceci rend la convergence de la méthode de Gauss-Seidel **plus rapide** que celle de Jacobi.
 
 Cependant, la méthode de Gauss-Seidel peut **osciller** autour de la solution.
-Pour limiter ce phénomène, on peut utiliser les **méthodes de relaxation**, décrite dans la suite de ce chapitre.
+Pour limiter ce phénomène et donc accélérer la convergence, on peut utiliser les **méthodes de relaxation**, décrite dans la suite de ce chapitre.
 
 #### Algorithme
 
@@ -2726,6 +2726,7 @@ Pour atteindre une précision de $10^{-3}$, on a besoin d'itérer 9 fois la mét
 On obtient bien la solution recherchée avec la précision attendue, pour une itération de moins que la méthode de Jacobi.
 
 **Exercice :**
+
 Essayez d'appliquer la méthode Gauss-Seidel au système définit dans le problème exemple.
 La méthode converge-t-elle ? Ce résultat était-il prévisible ? Prouvez-le.
 
@@ -2778,12 +2779,87 @@ Voici un théorème utile pour vérifier la convergence de la méthode :
 
 #### Algorithme
 
+Voici sous la forme d'une fonction Python l'algorithme de la méthode de la relaxation.
+
+Elle prend en entrée :
+
+* `A` et `b` les matrices du système linéaire à résoudre.
+
+* `omega` le paramètre de relaxation.
+
+* `x_0` la valeur initiale de la suite convergeant vers la solution.
+
+* `n_max` le nombre maximum d'itérations.
+
+* `e` la précision désirée.
+
+On notera les variables à l'itération `n` : 
+
+* `x_n` l'estimation de la solution du système.
+
+* `r_n` le résidu.
+
 ~~~
+def relaxation(A,b,omega,x_0,n_max,e):
+    
+    #Récupérer les dimensions de la matrice A :
+    m,n = np.shape(A)
+    
+    #Vérification des dimensions de A (nxn) et b (n) :
+    if (m!=n)or(len(b)!=n):
+        
+        raise ValueError("Le système n'est pas de Cramer")
+        
+    #Récupérer les valeurs sur la diagonale de A :
+    A_diag = np.diag(A)
+    
+    #Créer la matrice diagonale D, ayant les mêmes valeurs que la diagonale de A :
+    D = np.diag(A_diag)
+    
+    #Créer la matrice A-D, ayant des zéros sur sa diagonale et les mêmes valeurs
+    #que A partout ailleurs :
+    AD = A-D
+        
+    #Vérifier si la matrice A est à diagonale strictement dominante :
+    for i in range(n):
+        
+        if sum(abs(AD[:,i]))>=abs(A_diag[i]):
+            
+            print("Attention : la matrice A n'est pas à diagonale strictement dominante")
+            break
+        
+    #Initialisation des variables :
+    n = 0 #Nombre d'itérations
+    x_n_old = np.copy(x_0) #Estimation de la solution à l'itération n-1
+    x_n = np.copy(x_0) #Estimation de la solution à l'itération n
+    for i in range(len(b)):
+        x_n[i] = omega*(b[i]-np.dot(A[i,:i],x_n[:i])-np.dot(A[i,i+1:],x_n_old[i+1:]))/A[i,i] + (1-omega)*x_n_old[i]
+    r_n = np.dot(A,x_n)-b #Résidu
+            
+    #Itérations de l'algorithme de la relaxation
+	#tant qu'une des conditions d'arrêt n'est pas atteinte :
+    while (n<n_max)and(np.linalg.norm(x_n-x_n_old,ord=2)>e)and(np.linalg.norm(r_n,ord=2)>e):
+        
+        #Mettre à jour l'estimation de la solution :
+        x_n_old = np.copy(x_n) #Itération n
+        for i in range(len(b)):
+            x_n[i] = omega*(b[i]-np.dot(A[i,:i],x_n[:i])-np.dot(A[i,i+1:],x_n_old[i+1:]))/A[i,i] + (1-omega)*x_n_old[i] #Iteration n+1
+        
+        #Incrémenter le nombre d'itérations :
+        n+=1
+        
+        #Renvoyer l'estimation de la solution du système et le résidu :
+        r_n = np.dot(A,x_n)-b
+                                                    
+    #Renvoyer l'estimation de la solution du système et le résidu :
+    return x_n,r_n
 ~~~
 
 #### Exemple
 
-Considérons à nouveau le système :
+On peut démontrer que pour le système de notre problème-exemple, la méthode de la relaxation diverge pour tout paramètre $\omega$ dans $]0,2]$.
+
+Considérons donc à nouveau le système :
 
 $\begin{pmatrix}
   -14000 & -7000 & 6000 \\
@@ -2827,19 +2903,19 @@ $-F =
  
 On peut alors déterminer pour différentes valeurs du paramètre de relaxation $\omega$ sur $]0,2]$ le rayon spectral de la matrice d'itération $C = (D - \omega E)^{-1} ((1-\omega) D + \omega F)$ :
 
-![Optimisation du paramètre de relaxation pour x_s1 = 15000](img/Chap5_exemple_relaxation_optimale_xs1_15000.png)
+![Optimisation du paramètre de relaxation pour le 1er cas](img/Chap5_exemple_relaxation_optimale_1.png)
 
 On observe que le rayon spectral est minimal pour $\omega \approx 1$.
 On en déduit que la méthode de Gauss-Seidel est optimale pour la résolution de ce système.
 
 Mais ce n'est pas toujours le cas.
-Mettons que la position ECEF sur l'axe $x$ du satellite 1 ne soit pas $x_{s1} = 15000$, mais plutôt $x_{s1} = 22250$.
+Mettons que la position ECEF du satellite 1 ne soit pas $(x_{s1},y_{s1},z_{s1}) = (15000,13000,18000)$, mais plutôt $(x_{s1},y_{s1},z_{s1}) = (23000,7000,20000)$.
 Le système à résoudre devient alors :
 
 $\begin{pmatrix}
-  -21250 & -7000 & 6000 \\
-  -3250 & -11000 & 1000 \\
-  -10250 & -1000 & 8000
+  -22000 & -1000 & 4000 \\
+  -4000 & -5000 & -1000 \\
+  -11000 & 5000 & 6000
  \end{pmatrix}
  \begin{pmatrix}
   x_r\\
@@ -2848,15 +2924,98 @@ $\begin{pmatrix}
  \end{pmatrix}
  =
  \begin{pmatrix}
-  -61800250\\
-  -10627250\\
-  -5043250
+  -73560000\\
+  -22387000\\
+  -16803000
  \end{pmatrix}$
+ 
+On remarque que $A$ n'est pas à diagonale strictement dominante.
+Il faut donc vérifier que le rayon spectral de la matrice d'itération choisie est inférieur à 1 pour assurer la convergence de la méthode de la relaxation.
 
 Si nous déterminons pour différentes valeurs de $\omega$ sur $]0,2]$ le rayon spectral de la matrice d'itération de ce système, nous obtenons :
 
-![Optimisation du paramètre de relaxation pour x_s1 = 22250](img/Chap5_exemple_relaxation_optimale_xs1_22250.png)
+![Optimisation du paramètre de relaxation pour le 2ème cas](img/Chap5_exemple_relaxation_optimale_2.png)
 
-Cette fois-ci le rayon spectral est minimal pour $\omega \approx 1.2$.
+Cette fois-ci le rayon spectral est minimal pour $\omega \approx 1.25$.
+On en déduit que la formule de récurrence optimale pour résoudre ce système est :
+
+$x^{(k+1)} = 1.25 \times x_G^{(k+1)} - 0.25 \times x^{(k)}$
+
+On peut vérifier que cette formule converge plus rapidement que la méthode de Gauss-Seidel ($\omega = 1$).
+
+Dans le cas de Gauss-Seidel, pour obtenir la solution avec une précision de $10^{-3}$, 38 itérations sont nécessaires :
+
+|Itération $k$|$x_r^{(k)}$|$y_r^{(k)}$|$z_r^{(k)}$|
+|:------------|:---------:|:---------:|:---------:|
+|0            |0.0000     |0.0000     |0.0000     |
+[3343.6364 1802.4909 1827.4242]
+[3593.9639 1236.744  2757.8138]
+[3788.8414  894.7641 3400.0725]
+[3921.1603  660.4573 3837.9128]
+[4011.4179  500.6831 4136.5302]
+[4072.9744  391.7144 4340.1911]
+[4114.9568  317.3963 4479.0906]
+[4143.5894  266.7104 4573.8218]
+[4163.1171  232.1419 4638.4298]
+[4176.4353  208.5658 4682.4933]
+[4185.5185  192.4865 4712.5452]
+[4191.7134  181.5203 4733.041 ]
+[4195.9383  174.0411 4747.0194]
+[4198.8198  168.9403 4756.5528]
+[4200.785   165.4614 4763.0547]
+[4202.1253  163.0888 4767.4892]
+[4203.0394  161.4706 4770.5135]
+[4203.6629  160.367  4772.5761]
+[4204.0881  159.6143 4773.9828]
+[4204.378   159.101  4774.9423]
+[4204.5758  158.7509 4775.5966]
+[4204.7107  158.5121 4776.0429]
+[4204.8027  158.3493 4776.3472]
+[4204.8654  158.2382 4776.5548]
+[4204.9082  158.1625 4776.6964]
+[4204.9374  158.1108 4776.7929]
+[4204.9573  158.0756 4776.8588]
+[4204.9709  158.0515 4776.9037]
+[4204.9801  158.0351 4776.9343]
+[4204.9865  158.024  4776.9552]
+[4204.9908  158.0163 4776.9694]
+[4204.9937  158.0112 4776.9792]
+[4204.9957  158.0076 4776.9858]
+[4204.9971  158.0052 4776.9903]
+[4204.998   158.0035 4776.9934]
+[4204.9986  158.0024 4776.9955]
+[4204.9991  158.0016 4776.9969]
+[4204.9994  158.0011 4776.9979]
+[4204.9996  158.0008 4776.9986]
+
+Pour atteindre la même précision sur la solution avec notre formule optimale, seules 14 itérations sont nécessaires :
+
+|Itération $k$|$x_r^{(k)}$|$y_r^{(k)}$|$z_r^{(k)}$|
+|:------------|:---------:|:---------:|:---------:|
+|0            |0.0000     |0.0000     |0.0000     |
+[4179.5455 1417.2045 4601.2453]
+[4099.8737   -7.7361 4752.666 ]
+[4235.1679  175.3496 4834.1459]
+[4209.4599  134.9162 4796.9799]
+[4209.7375  154.0385 4786.9883]
+[4206.3108  155.1825 4780.4417]
+[4205.6146  157.2294 4778.3508]
+[4205.1971  157.6578 4777.4705]
+[4205.0771  157.8908 4777.1728]
+[4205.0262  157.9579 4777.0607]
+[4205.0096  157.9857 4777.0218]
+[4205.0034  157.9948 4777.0077]
+[4205.0012  157.9982 4777.0027]
+[4205.0004  157.9993 4777.001 ]
+[4205.0002  157.9998 4777.0003]
+
+On peut vérifier pour différentes valeurs de $\omega$ qu'il s'agit bien du nombre d'itérations minimum possible.
+
+**Exercice :**
+
+Pour le dernier cas présenté dans cet exemple, calculez le rayon spectral de la matrice de convergence pour $\omega = 1$ et $\omega = 1.25$.
+Calculez le ratio entre ces 2 valeurs.
+On a trouvé que pour $\omega = 1.25$, la méthode converge environ 2.7 fois plus rapidement.
+Qu'observez-vous ?
 
 ## Conclusion

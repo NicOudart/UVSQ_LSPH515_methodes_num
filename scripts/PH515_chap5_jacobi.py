@@ -43,7 +43,7 @@ def jacobi(A,b,x_0,n_max,e):
     #Créer la matrice diagonale D, ayant les mêmes valeurs que la diagonale de A :
     D = np.diag(A_diag)
     
-    #Créer la matrice E+F, ayant des zéros sur sa diagonale et les mêmes valeurs
+    #Créer la matrice EF, ayant des zéros sur sa diagonale et les mêmes valeurs
     #que A partout ailleurs :
     EF = A-D
     
