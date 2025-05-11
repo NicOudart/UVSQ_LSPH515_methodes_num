@@ -2899,7 +2899,7 @@ $-F =
   0 & -7000 & 6000 \\
   0 & 0 & 1000 \\
   0 & 0 & 0
- \end{pmatrix}
+ \end{pmatrix}$
  
 On peut alors déterminer pour différentes valeurs du paramètre de relaxation $\omega$ sur $]0,2]$ le rayon spectral de la matrice d'itération $C = (D - \omega E)^{-1} ((1-\omega) D + \omega F)$ :
 
@@ -2908,7 +2908,8 @@ On peut alors déterminer pour différentes valeurs du paramètre de relaxation 
 On observe que le rayon spectral est minimal pour $\omega \approx 1$.
 On en déduit que la méthode de Gauss-Seidel est optimale pour la résolution de ce système.
 
-Mais ce n'est pas toujours le cas.
+Mais ce n'est pas toujours le cas !
+
 Mettons que la position ECEF du satellite 1 ne soit pas $(x_{s1},y_{s1},z_{s1}) = (15000,13000,18000)$, mais plutôt $(x_{s1},y_{s1},z_{s1}) = (23000,7000,20000)$.
 Le système à résoudre devient alors :
 
