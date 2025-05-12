@@ -1,7 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-cas = 2 #Positions possibles du satellite GPS 1 présentées dabs le cours
+#Positions possibles du satellite GPS 1 présentées dans le cours :
+cas = 2
 
 if cas==0:
     pos_sat1 = np.array([14000,4000,25000],dtype=np.float64) #Coordonnées du satellite GPS 1
@@ -38,19 +39,22 @@ b = np.array([b_row1,b_row2,b_row3])
 
 #Choix du paramètre de relaxation----------------------------------------------
 
+#Décomposition de A en D-E-F :
 D = np.diag(np.diag(A))
 E = D-np.tril(A)
 F = D-np.triu(A)
 
+#Test des paramètres de relaxation entre 0.001 et 2 avec un pas de 0.001 :
 omega = np.linspace(0.001,2,2000)
 rho = np.zeros(2000)
 
 for i in range(2000):
     
-    C = np.dot(np.linalg.inv(D-omega[i]*E),(1-omega[i])*D+omega[i]*F)
+    C = np.dot(np.linalg.inv(D-omega[i]*E),(1-omega[i])*D+omega[i]*F) #Matrice d'itération
     
-    rho[i] = np.max(abs(np.linalg.eigvals(C)))
-    
+    rho[i] = np.max(abs(np.linalg.eigvals(C))) #Rayon spectral de la matrice d'itération
+
+#Indice du paramètre de relaxation optimal
 idx_min = np.argmin(rho)
 
 plt.fill([0,0,2,2],[1,np.max(rho),np.max(rho),1],'pink')    
@@ -126,8 +130,8 @@ def relaxation(A,b,omega,x_0,n_max,e):
 
 #Application-------------------------------------------------------------------
 
-omega = 1.25
+omega_optimal = omega[idx_min] #Utilisation de la valeur optimale de omega trouvée
 
 x_0 = np.array([0,0,0],dtype=np.float64)
 
-x_n,r_n = relaxation(A,b,omega,x_0,100,1e-3)
+x_n,r_n = relaxation(A,b,omega_optimal,x_0,100,1e-3)
