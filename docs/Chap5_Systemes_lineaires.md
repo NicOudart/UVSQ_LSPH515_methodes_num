@@ -2502,7 +2502,7 @@ La suite dont on cherche la limite est alors :
 
 $x^{(k+1)} = (D-E)^{-1} F x^{(k)} + (D-E)^{-1} b$
 
-On remarque que : $(D-E) x^{(k+1)} = F x_{(k)} + b$ avec
+On remarque que : $(D-E) x^{(k+1)} = F x^{(k)} + b$ avec
 
 $D-E =
 \begin{pmatrix}
@@ -2931,9 +2931,41 @@ $\begin{pmatrix}
  \end{pmatrix}$
  
 On remarque que $A$ n'est pas à diagonale strictement dominante.
-Il faut donc vérifier que le rayon spectral de la matrice d'itération choisie est inférieur à 1 pour assurer la convergence de la méthode de la relaxation.
+Il faudra donc vérifier que le rayon spectral de la matrice d'itération choisie est inférieur à 1 pour assurer la convergence de la méthode de la relaxation.
+ 
+On décompose la matrice $A = D-E-F$ avec :
 
-Si nous déterminons pour différentes valeurs de $\omega$ sur $]0,2]$ le rayon spectral de la matrice d'itération de ce système, nous obtenons :
+$D =
+\begin{pmatrix}
+  -22000 & 0 & 0 \\
+  0 & -5000 & 0 \\
+  0 & 0 & 6000
+ \end{pmatrix}$
+ 
+$-E =
+\begin{pmatrix}
+  0 & 0 & 0 \\
+  -4000 & 0 & 0 \\
+  -11000 & 5000 & 0
+ \end{pmatrix}$
+ 
+$-F =
+\begin{pmatrix}
+  0 & -1000 & 4000 \\
+  0 & 0 & -1000 \\
+  0 & 0 & 0
+ \end{pmatrix}$
+ 
+On a donc :
+
+$D-E =
+\begin{pmatrix}
+  -22000 & 0 & 0 \\
+  -4000 & -5000 & 0 \\
+  -11000 & 5000 & 6000
+ \end{pmatrix}$
+
+Si nous déterminons pour différentes valeurs de $\omega$ sur $]0,2]$ le rayon spectral de la matrice d'itération $C = (D - \omega E)^{-1} ((1-\omega) D + \omega F)$  de ce système, nous obtenons :
 
 ![Optimisation du paramètre de relaxation pour le 2ème cas](img/Chap5_exemple_relaxation_optimale_2.png)
 
@@ -2942,9 +2974,26 @@ On en déduit que la formule de récurrence optimale pour résoudre ce système 
 
 $x^{(k+1)} = 1.25 \times x_G^{(k+1)} - 0.25 \times x^{(k)}$
 
+Ce qui donne :
+
+$\begin{cases}
+x_r^{(k+1)} = \frac{1.25}{-22000} (-73560000 + 1000 y_r^{(k)} - 4000 z_r^{(k)}) - 0.25 x_r^{(k)}\\
+y_r^{(k+1)} = \frac{1.25}{-4000} (-22387000 + 4000 x_r^{(k+1)} + 1000 z_r^{(k)}) - 0.25 y_r^{(k)}\\
+z_r^{(k+1)} = \frac{1.25}{-11000} (-16803000 + 11000 x_r^{(k+1)} - 5000 y_r^{(k+1)}) - 0.25 z_r^{(k)}
+\end{cases}$
+
 On peut vérifier que cette formule converge plus rapidement que la méthode de Gauss-Seidel ($\omega = 1$).
 
-Dans le cas de Gauss-Seidel, pour obtenir la solution avec une précision de $10^{-3}$, 39 itérations sont nécessaires :
+Nous choisirons encore :
+
+$x^{(0)}
+=\begin{pmatrix}
+  0\\
+  0\\
+  0
+ \end{pmatrix}$
+
+Dans le cas de Gauss-Seidel ($\omega = 1$), pour obtenir la solution avec une précision de $10^{-3}$, 39 itérations sont nécessaires :
 
 |Itération $k$|$x_r^{(k)}$|$y_r^{(k)}$|$z_r^{(k)}$|
 |:------------|:---------:|:---------:|:---------:|
