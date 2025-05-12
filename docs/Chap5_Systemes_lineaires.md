@@ -3020,3 +3020,19 @@ On a trouvé précédemment que pour $\omega = 1.25$, la méthode converge envir
 Qu'en concluez vous ?
 
 ## Conclusion
+
+- En fonction du **rang**, et du **déterminant** de la matrice $A$, un système linéaire $A x = b$ admet une **unique, zéro ou une infinité de solutions**.
+
+- Même si un système admet une solution, elle peut-être très **sensible aux perturbations** de $A$ ou $b$. La stabilité d'une solution peut être estimée en calculant le **conditionnement** de $A$.
+
+- La **règle de Cramer** donne une **expression de explicite** de la solution d'un système, mais elle est inapplicable au-delà de 4 inconnues.
+
+- Les **méthodes directes d'élimination** transforment la matrice $A$ par une **suite d'opérations arithmétiques** afin de se ramener à un système plus simple à résoudre : **triangulaire** ou **diagonal**.
+
+- Les **méthodes directes de factorisation** décomposent la matrice $A$ en le produit d'une **matrice triangulaire supérieure** et une **matrice triangulaire inférieure**, afin de rendre la résolution plus simple.
+
+- Les **méthodes itératives** construisent une **suite convergeant vers la solution** $x$ à partir de $A$ et $b$ pour n'importe quelle initialisation.
+
+- Les méthodes directes donnent une solution pour tout système de Cramer, mais sont lourdes en calculs / mémoire et les erreurs peuvent être amplifiées à chaque opération.
+
+- Les méthodes itératives requièrent un nombre fini d'opérations, mais elles sont donc soumises aux erreurs de troncature, et les conditions de leur convergence ne sont pas évidentes.
