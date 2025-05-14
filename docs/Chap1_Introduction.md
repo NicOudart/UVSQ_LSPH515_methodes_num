@@ -12,7 +12,7 @@ _Un groupe d'étudiants de l'UVSQ réalise un projet de ballon sonde pour mesure
 _On considère qu'après une phase d'ascension, leur ballon a atteint une altitude stable dans la stratosphère, et que son déplacement est uniquement lié au vent_.
 _La nacelle de leur ballon contient une balise GPS, qui leur permet de mesurer le déplacement du ballon au cours du temps_.
 
-Ceci est le **problème physique** auquel les étudiants sont confrontés.
+Le **problème physique** auquel les étudiants sont confrontés est le suivant : estimer la vitesse du vent dans la stratosphère au cours du temps à partir de leurs mesures.
 
 ## Modélisation du problème
 
@@ -50,7 +50,7 @@ Pour approcher la dérivée  décident d'employer une méthode de "_différences
 
 $W(t_i) \approx \frac{p(t_{i+1})-p(t_i)}{h}$ avec $t_{i+1} = t_i + h$ et $i = 0, 1, ..., N-2$
 
-Lorsque l'on choisi une méthode numérique pour répondre à un problème, il convient de se poser les questions suivantes :
+Lorsque l'on choisi une méthode numérique pour répondre à un problème, il convient de se poser les questions suivantes.
 
 ### La méthode est-elle **applicable** ? 
 
