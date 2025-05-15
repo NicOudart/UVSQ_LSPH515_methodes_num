@@ -104,9 +104,23 @@ Dans le cas du projet de ballon des étudiants de l'UVSQ, nous avons :
 
 - Les mesures du déplacement du ballon par GPS, qui seront entachées d'erreurs de mesures.
 
-#### Erreurs de discrétisation
+#### Erreurs de troncature
+
+La **discrétisation** d'un problème physique par une méthode numérique induit des erreurs.
+Par exemple, la troncature d'une série infinie convergeant vers la solution, ou l'arrêt au bout d'un nombre d'itérations finies d'une suite convergeant vers la solution sont inévitables, car un ordinateur ne peut effectuer qu'un **nombre fini d'opérations**.
+
+On parle alors d'**erreurs de troncature**.
+Il s'agit donc d'erreurs directement liées à la méthode choisie.
+
+La méthode choisie par nos étudiants de l'UVSQ est basée sur le développement de Taylor suivant :
+
+$$
+
+
 
 #### Erreurs d'arrondi
+
+
 
 #### Erreurs de représentation des nombres
 
@@ -116,7 +130,7 @@ Une méthode numérique est dites **convergente** si l'écart entre la solution 
 
 Si de plus, l'erreur absolue 
 
-Dans notre exemple, on peut montrer que pour chaque intervalle $[t_i,t_{i+1}]$, l'erreur est majorée par $\frac{h}{2} sup_{t \in [t_i,t_{i+1}]} \mid \frac{d^2}{dt^2} p(t)\mid$. 
+Dans notre exemple, on peut montrer que pour chaque $W(t_i)$, l'erreur est majorée par $\frac{h}{2} sup_{t \in [t_i,t_{i+1}]} \mid \frac{d^2}{dt^2} p(t)\mid$. 
 La méthode converge donc vers la solution lorsque que le pas de discrétisation $h$ diminue.
 Nous verrons dans la suite que cette convergence est dite "d'ordre 1".
 
