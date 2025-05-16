@@ -34,13 +34,13 @@ Un ordinateur ne pouvant gérer des objets continus, l'application d'une méthod
 
 Dans le cas des étudiants de l'UVSQ, la discrétisation est réalisée au moment de l'échantillonnage :
 
-_Les étudiants décident d'enregistrer une mesure de déplacement toutes les 10 s._
+_Les étudiants décident d'enregistrer une mesure de déplacement toutes les $h$ secondes._
 
-Ils n'ont donc pas accès à toutes les valeurs possibles de $p(t)$, mais à des valeurs discrètes régulièrement espacées $p(t_i)$ avec $t_i = 0, 10, 20, 30, ... 10 \times (N-1)$ et $N$ le nombre d'échantillons.
+Ils n'ont donc pas accès à toutes les valeurs possibles de $p(t)$, mais à des valeurs discrètes régulièrement espacées $p(t_i)$ avec $t_i = 0, h, 2 \times h, 3 \times h, ... (N-1) \times h$ et $N$ le nombre d'échantillons.
 
 De même, ils n'estimeront pas toutes les valeurs de $W(t)$, mais des valeurs discrètes $W(t_i)$.
 
-On notera $h = 10 s$ le pas de discrétisation du problème.
+On nomme $h$ le **pas de discrétisation** du problème.
 
 ## Choix d'une méthode numérique
 
@@ -110,17 +110,48 @@ La **discrétisation** d'un problème physique par une méthode numérique indui
 Par exemple, la troncature d'une série infinie convergeant vers la solution, ou l'arrêt au bout d'un nombre d'itérations finies d'une suite convergeant vers la solution, sont inévitables. En effet, un ordinateur ne peut effectuer qu'un **nombre fini d'opérations**.
 
 On parle alors d'**erreurs de troncature**.
-Il s'agit donc d'erreurs directement liées à la méthode choisie.
+Il s'agit donc ici d'erreurs directement liées à la méthode choisie.
 
-La méthode choisie par nos étudiants de l'UVSQ est basée sur le développement de Taylor suivant :
+La méthode choisie par nos étudiants de l'UVSQ est basée sur le développement de Taylor d'ordre 2 suivant :
 
 $\frac{d}{dt} p(t_i) = \frac{p(t_i+h)-p(t_i)}{h} - \frac{d^2}{dt^2} p(\tau) \frac{h}{2}$ avec $\tau \in [t_i,t_i+h]$
 
 Dans ce cas, l'erreur de troncature est donc : $\mid \frac{d^2}{dt^2} p(\tau) \mid \frac{h}{2}$.
 
+On note alors qu'il y a 2 moyens de réduire cette erreur :
+
+- Diminuer le pas de discrétisation $h$ (dans notre cas, augmenter la fréquence d'échantillonnage).
+
+- Modifier la méthode en réalisant un développement de Taylor d'ordre supérieur.
+
 #### Erreurs d'arrondi
 
+Un ordinateur ne peut manipuler que des nombres en **précision finie** : il y a un nombre fini de réels qui peuvent être représentés par la machine.
+Il y a donc un arrondi sur toutes les valeurs représentées par un ordinateur.
 
+On parle alors d'**erreurs d'arrondi**.
+Il s'agit donc ici d'erreurs directement liées à la précision de la machine.
+
+Ces erreurs se propagent à mesure que l'on applique des opérations lors de la résolution d'un problème numérique.
+
+Si nos étudiants de l'UVSQ choisissent une machine représentant les réels avec une précision $\delta$, alors :
+
+- Pour chaque $t_i$ l'évaluation de $f(t_i)$ sera connue avec une précision $\delta$.
+
+- Donc l'évaluation de $f(t_i+h)-f(t_i)$ sera connue avec une précision $2 \delta$.
+
+- Et par conséquent l'évaluation de $\frac{p(t_i+h)-p(t_i)}{h}$ sera connue avec une précision $\frac{2 \delta}{h}$.
+
+On en déduit que l'erreur d'arrondi dans notre exemple est : $2 \delta \frac{p(t_i)}{h}$.
+
+On remarque que l'erreur d'arrondi sur $f(t_i)$ a été propagée par les différentes opérations, avec en particulier un facteur 2 dû à l'opération de soustraction.
+
+|Nota Bene|
+|:-|
+|On observe que l'erreur d'arrondi est inversement proportionnelle à $h$, alors que l'erreur de troncature est proportionnelle à $h$.|
+|Le choix du pas de discrétisation $h$ a donc des effets antagonistes sur ces 2 erreurs : un compromis est nécessaire.|
+|Dans le cas de notre exemple, on peut montrer que la valeur de $h$ minimisant la somme de ces 2 erreurs est :|
+|$h = 2 \sqrt{\delta \mid \frac{p(t_i)}{frac{d^2}{dt^2} p(\tau)} \mid}$ avec $\tau \in [t_i,t_i+h]$.|
 
 #### Erreurs de représentation des nombres
 
