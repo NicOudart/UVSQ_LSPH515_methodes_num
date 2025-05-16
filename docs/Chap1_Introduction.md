@@ -114,9 +114,9 @@ Il s'agit donc ici d'erreurs directement liées à la méthode choisie.
 
 La méthode choisie par nos étudiants de l'UVSQ est basée sur le développement de Taylor d'ordre 2 suivant :
 
-$\frac{d}{dt} p(t_i) = \frac{p(t_i+h)-p(t_i)}{h} - \frac{d^2}{dt^2} p(\tau) \frac{h}{2}$ avec $\tau \in [t_i,t_i+h]$
+$\frac{d}{dt} p(t_i) = \frac{p(t_i+h)-p(t_i)}{h} - \frac{h}{2} \frac{d^2}{dt^2} p(\tau)$ avec $\tau \in [t_i,t_i+h]$
 
-Dans ce cas, l'erreur de troncature est donc : $\mid \frac{d^2}{dt^2} p(\tau) \mid \frac{h}{2}$.
+Dans ce cas, l'erreur de troncature est donc : $\frac{h}{2} \mid \frac{d^2}{dt^2} p(\tau) \mid$.
 
 On note alors qu'il y a 2 moyens de réduire cette erreur :
 
@@ -151,7 +151,7 @@ On remarque que l'erreur d'arrondi sur $f(t_i)$ a été propagée par les diffé
 |On observe que l'erreur d'arrondi est inversement proportionnelle à $h$, alors que l'erreur de troncature est proportionnelle à $h$.|
 |Le choix du pas de discrétisation $h$ a donc des effets antagonistes sur ces 2 erreurs : un compromis est nécessaire.|
 |Dans le cas de notre exemple, on peut montrer que la valeur de $h$ minimisant la somme de ces 2 erreurs est :|
-|$h = 2 \sqrt{\delta \mid \frac{p(t_i)}{frac{d^2}{dt^2} p(\tau)} \mid}$ avec $\tau \in [t_i,t_i+h]$.|
+|$h = 2 \sqrt{\delta \mid \frac{p(t_i)}{\frac{d^2}{dt^2} p(\tau)} \mid}$ avec $\tau \in [t_i,t_i+h]$.|
 
 #### Erreurs de représentation des nombres
 
