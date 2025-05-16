@@ -155,6 +155,8 @@ On remarque que l'erreur d'arrondi sur $f(t_i)$ a été propagée par les diffé
 
 #### Erreurs de représentation des nombres
 
+
+
 ### La méthode **converge**-t-elle vers la solution ? Avec quelle vitesse ?
 
 Une méthode numérique est dites **convergente** si l'écart entre la solution approchée et la solution exacte tend vers 0 quand le pas de discrétisation $h$ tend vers 0.
@@ -165,10 +167,45 @@ Dans notre exemple, on peut montrer que pour chaque $W(t_i)$, l'erreur est major
 La méthode converge donc vers la solution lorsque que le pas de discrétisation $h$ diminue.
 Nous verrons dans la suite que cette convergence est dite "d'ordre 1".
 
-### La méthode est-elle stable ?
+### La solution est-elle stable ?
+
+Lors de la résolution numérique d'un problème, il convient de se poser la question de la **stabilité** de la solution.
+Cette notion de stabilité peut s'appliquer à 3 niveaux :
+
+#### Stabilité du problème physique
+
+Certains problèmes en Physique sont par nature **chaotiques** : une petite variation des conditions initiales entraine une variation tellement importante des résultats qu'elle rend toute approximation de la solution impossible.
+
+Ce n'est pas le cas du problème auquels nos étudiants de l'UVSQ sont confrontés, mais on peut citer des phénomènes chaotiques célèbres en Physique : le double-pendule, le problème à N corps, et la turbulence des fluides.
+
+Cette instabilité étant directement liée au problème, et donc indépendante de nos choix de modèle ou de méthode, nous n'avons aucun moyen d'y remédier.
+
+#### Stabilité du modèle mathématique
+
+Il est possible qu'un modèle mathématique soit **mal conditionné** : une petite variation des entrées ou des paramètres du modèle entraine une grande variation du résultat.
+
+Pour mesurer cette sensibilité du modèle aux entrées / paramètres, on introduit souvent un indicateur numérique appellé **conditionnement** (noté $\kappa$), qu'il convient d'évaluer.
+Nous verrons dans ce cours que cette notion est particulièrement utilisée pour la résolution de systèmes d'équations linéaires.
+
+Si le modèle mathématique proposé s'avère être mal conditionné, il vaut mieux essayer d'en trouver un autre, bien conditionné.
+
+#### Stabilité de la méthode numérique
+
+Pour une méthode numérique, on parle d'**instabilité** lorsque les erreurs de troncature et d'arrondi sont propagées et amplifiées par les différentes opérations de l'algorithme.
+Cette instabilité va dépendre du nombre et de la nature des opérations réalisées par une méthode donnée.
+
+Dans le cas de la méthode employée par nos étudiants de l'UVSQ, nous avons vu que l'erreur d'arrondi est propagée par l'opération de soustraction $f(x_i+h)-f(x_i)$.
+
+Cette instabilité étant directement liée à la méthode numérique choisie, il convient de choisir la méthode la plus stable possible pour résoudre un problème donné.
 
 ### Quelles sont les demandes de ressources informatique de la méthode : temps de calcul et mémoire ?
 
 ## Implémentation de l'algorithme
+
+On appelle **algorithme** une 
+
+On appelle **programme** un 
+
+Les méthodes numériques présentées dans ce cours seront toutes implémentées sous forme de programmes Python.
 
 ## Execution et analyse du résultat
