@@ -202,10 +202,48 @@ Cette instabilité étant directement liée à la méthode numérique choisie, i
 
 ## Implémentation de l'algorithme
 
-On appelle **algorithme** une 
+### Algorithmique
 
-On appelle **programme** un 
+On appelle **algorithme** l'énoncé d'une suite d'instructions / d'opérations élémentaires permettant de résoudre un problème mathématique.
 
-Les méthodes numériques présentées dans ce cours seront toutes implémentées sous forme de programmes Python.
+La notion d'algorithme remonte au moins au Moyen-Age, bien avant l'invention de l'ordinateur.
+Il n'y a pas unicité d'algorithme pour résoudre un problème donné.
+L'algorithme peut effectuer des tâches en les unes après les autres ou simultanément, on dira alors qu'il est respectivement **séquentiel** ou **parallèle**.
+
+Voici par exemple un algorithme écrit par nos étudiants de l'UVSQ par estimer la dérivée d'une fonction :
+
+~~~
+~~~
+
+### Programmation
+
+On appelle **programme** la traduction d'un algorithme dans un **langage de programmation**, dans le but d'être interprété puis executé par un ordinateur.
+
+La notion de programmation remonte au XIXème siècle, bien qu'elle ne soit formellement théorisée que dans les années 1930 par Alan Turing.
+Il existe aujourd'hui une grande variété de **langages** et de **paradigmes** de programmation suivant les applications. 
+
+Les méthodes numériques présentées dans ce cours seront toutes implémentées sous forme de programmes en langage **Python**.
+Python est un langage interprété, multi-paradigmes, et multi-plateforme, inventé en 1991.
+Ce langage est un des plus populaires au monde, probablement parce que :
+
+- Il s'agit d'un langage de haut niveau (loin du langage machine), proposant des outils avancés.
+
+- Sa syntaxe est plutôt simple, et son typage dynamique fort (le type des variables est assigné automatiquement).
+
+- Sa licence est libre, et il dispose d'une grande communauté open-source, développant des bibliothèques pour de nombreuses applications.
+
+Concernant les "**bibliothèques**", il s'agit d'un ensemble de fonctionnalités déjà programmées par d'autres que vous pouvez importer et utiliser dans votre propre programme.
+Nous utiliserons lors de ce cours les bibliothèques :
+
+- Numpy : pour la manipulation de vecteurs et de matrices.
+
+- Matplotlib : pour l'affichage graphique de figures.
+
+- Scipy : pour certaines méthodes numériques de référence.
+
+Voici le programme Python écrit par les étudiants de l'UVSQ à partir de leur algorithme :
+
+~~~
+~~~
 
 ## Execution et analyse du résultat
