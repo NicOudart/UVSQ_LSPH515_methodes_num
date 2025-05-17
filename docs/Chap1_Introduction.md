@@ -253,22 +253,29 @@ Nous utiliserons lors de ce cours les bibliothèques :
 Voici le programme Python écrit par les étudiants de l'UVSQ à partir de leur algorithme :
 
 ~~~
+#Importer la librairie Numpy sous le nom "np" :
 import numpy as np
 
-def difference_decentree_droite(p,dt):
+#Définition de la méthode sous la forme d'une fonction qui prend en entrée :
+#- Un vecteur Numpy de valeurs de la fonction f supposés régulièrement espacés
+#- Un scalaire h correspondant au pas de discrétisation de f
+def difference_decentree_droite(f,h):
 
-	p.astype(dtype=np.float64)
-	t.astype(dtype=np.float64)
+	#On s'assure que f contient des réels encodés sur 64 bits :
+	f.astype(dtype=np.float64)
 
-	N = len(t)
+	#On récupère le nombre d'éléments N de f :
+	N = len(f)
 	
-	W = np.zeros(N-1,dtype=np.float64)
+	#On initialise un vecteur df de taille N-1 ne contenant que des zéros :
+	df = np.zeros(N-1,dtype=np.float64)
 	
 	for i in range(N-1):
 	
-		W[i] = (p[i+1]-p[i])/dt
-		
-	return W
+		df[i] = (f[i+1]-f[i])/h
+	
+	#Renvoyer
+	return df
 ~~~
 
 Il s'agit d'une "fonction" réalisant 
