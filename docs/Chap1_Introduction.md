@@ -60,7 +60,7 @@ Dans notre exemple, il faut que la fonction $p(t)$ soit doublement dérivable su
 
 ### La solution est-elle **unique** ? 
 
-Dans notre exemple, l'unicité est évidente, mais ce n'est pas toujours le cas.
+Dans notre exemple, l'**unicité** est évidente, mais ce n'est pas toujours le cas.
 
 Par exemple, pour un problème impliquant la recherche de la racine d'une fonction sur un intervalle, nous verrons que l'unicité n'est pas évidente et doit être montrée.
 
