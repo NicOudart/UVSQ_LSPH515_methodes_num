@@ -231,6 +231,7 @@ La notion de programmation remonte au XIXème siècle, bien qu'elle ne soit form
 Il existe aujourd'hui une grande variété de **langages** et de **paradigmes** de programmation suivant les applications. 
 
 Les méthodes numériques présentées dans ce cours seront toutes implémentées sous forme de programmes en langage **Python**.
+
 Python est un langage interprété, multi-paradigmes, et multi-plateforme, inventé en 1991.
 Ce langage est un des plus populaires au monde, probablement parce que :
 
@@ -252,6 +253,24 @@ Nous utiliserons lors de ce cours les bibliothèques :
 Voici le programme Python écrit par les étudiants de l'UVSQ à partir de leur algorithme :
 
 ~~~
+import numpy as np
+
+def difference_decentree_droite(p,dt):
+
+	p.astype(dtype=np.float64)
+	t.astype(dtype=np.float64)
+
+	N = len(t)
+	
+	W = np.zeros(N-1,dtype=np.float64)
+	
+	for i in range(N-1):
+	
+		W[i] = (p[i+1]-p[i])/dt
+		
+	return W
 ~~~
+
+Il s'agit d'une "fonction" réalisant 
 
 ## Execution et analyse du résultat
