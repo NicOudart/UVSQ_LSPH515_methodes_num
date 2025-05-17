@@ -155,7 +155,15 @@ On remarque que l'erreur d'arrondi sur $f(t_i)$ a été propagée par les diffé
 
 #### Erreurs de représentation des nombres
 
+**Représentation des entiers :**
 
+**Représentation des entiers signés :**
+
+**Dépassement de capacité (overflow) :**
+
+**Représentation des réels :**
+
+**Norme IEEE 754 et erreurs :**
 
 ### La méthode **converge**-t-elle vers la solution ? Avec quelle vitesse ?
 
