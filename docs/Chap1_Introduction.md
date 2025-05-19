@@ -155,23 +155,48 @@ On remarque que l'erreur d'arrondi sur $f(t_i)$ a été propagée par les diffé
 
 #### Erreurs de représentation des nombres
 
-- Représentation des entiers :
+Afin de stocker et manipuler des nombres, une machine va généralement les représenter en **binaire** (dans la base de 2).
 
-- Représentation des entiers signés :
+Les nombres sont physiquement rangés en mémoire dans un nombre prédifini de cellules-mémoires appelées **bits** ("binary digits").
+Un bit ne peut prendre que 2 valeurs : **0 ou 1**. Les nombres sont alors représentés par une combinaison binaire de 0 et de 1.
 
-- Dépassement de capacité (overflow) :
+Nous allons voir que cette représentation des nombres par la machine peut aussi être source d'erreurs en analyse numérique.
 
-- Représentation des réels :
+- Représentation des **entiers** :
 
-- Norme IEEE 754 et erreurs :
+Un entier naturel $I$ est représenté en binaire par :
+
+$I = a_{p-1} 2^{p-1} + a_{p-2} 2^{p-2} + ... + a_1 2^1 + a_0 2^0$ avec $a_i$ pour $0 \leq i < p$ les $p$ bits, égaux à 0 ou 1.
+
+$p$ bits permettent donc de représenter **exactement** les entiers naturels entre **$0$ et $2^p-1$**.
+
+Des opérations élémentaires telles que l'addition peuvent être appliquées sur le binaires **bit à bit**.
+
+- Représentation des **entiers signés** :
+
+Pour représenter les entiers signés, on veut : (1) pouvoir identifier le signe avec un bit dédié nommé **bit de poids fort**, (2) que les règles d'addition soient toujours valides.
+
+La représentation couramment utilisée est celle du **complément à 2**.
+
+
+
+- **Dépassement de capacité** (overflow) :
+
+- Représentation des **réels** :
+
+- **Norme IEEE 754** et erreurs :
 
 ### La méthode **converge**-t-elle vers la solution ? Avec quelle vitesse ?
 
 Une méthode numérique est dites **convergente** si l'écart entre la solution approchée et la solution exacte tend vers 0 quand le pas de discrétisation $h$ tend vers 0.
 
-Si de plus, l'erreur absolue 
+Si de plus, l'erreur absolue $e$ peut être majorée : 
 
+$e \leq C h^p$ avec $h$ le pas de discrétisation, $p$ un nombre positif et $C$ une constante
 
+alors la méthode est dite **convergente d'ordre $p$**.
+
+Si $p = 2, 3$ ou $4$, on dit la convergence quadratique, cubique ou quartique.
 
 Dans notre exemple, on peut montrer que pour chaque $W(t_i)$, l'erreur est majorée par $\frac{h}{2} sup_{t \in [t_i,t_i+h]} \mid \frac{d^2}{dt^2} p(t)\mid$. 
 La méthode converge donc vers la solution lorsque que le pas de discrétisation $h$ diminue.
@@ -242,9 +267,8 @@ Il s'agit de calculer la **quantité maximale de mémoire** utilisée au cours d
 
 Comme nous l'avons vu, les variables sont stockées en binaire, on exprimer en général la complexité en espace d'un algorithme en **octets** (multiplet de 8 bits).
 
-Dans le cas des étudiants de l'UVSQ, on doit stocker 
-
-
+Dans le cas des étudiants de l'UVSQ, on doit stocker les entrées, un vecteur de taille $N-1$ et un scalaire, et la sortie, un vecteur de taille $N-1$.
+Au total, on doit donc stocker $2N-1$ valeurs. Si ces valeurs sont encodées sur 32 bits, un espace mémoire de maximum $64N-32$ bits sera alors nécessaire pour faire tourner l'algorithme, soit $8N-4$ octets.
 
 ## Implémentation de l'algorithme
 
