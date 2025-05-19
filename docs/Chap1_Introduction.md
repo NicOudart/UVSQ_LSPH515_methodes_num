@@ -219,10 +219,10 @@ Il y a 2 types de complexités :
 
 #### La **complexité en temps**
 
-Il s'agit de décompter le nombre d'opérations élémentaires réalisées par l'algorithme afin d'estimer le temps de calcul qu'il nécessite sur une machine donnée.
+Il s'agit de décompter le **nombre d'opérations élémentaires** réalisées par l'algorithme afin d'estimer le temps de calcul qu'il nécessite sur une machine donnée.
 
 Il est parfois difficile d'estimer le nombre exact d'opérations d'un algorithme dans tous les cas.
-On utilise donc souvent la notation $O$ de Landau pour donner une majoration du nombre d'opérations :
+On utilise donc souvent la notation $O$ de Landau pour donner une **majoration du nombre d'opérations** :
 
 |Nom           |Complexité   |
 |:-------------|:-----------:|
@@ -238,7 +238,11 @@ Dans le cas de la méthode choisie par nos étudiants de l'UVSQ, on va réaliser
 
 #### La **complexité en espace**
 
-Il s'agit de calculer la quantité maximale de mémoire utilisée au cours de l'algorithme pour stocker les variables nécessaire à son exécution.
+Il s'agit de calculer la **quantité maximale de mémoire** utilisée au cours de l'algorithme pour stocker les variables nécessaire à son exécution.
+
+Comme nous l'avons vu, les variables sont stockées en binaire, on exprimer en général la complexité en espace d'un algorithme en **octets** (multiplet de 8 bits).
+
+Dans le cas des étudiants de l'UVSQ, on doit stocker 
 
 
 
