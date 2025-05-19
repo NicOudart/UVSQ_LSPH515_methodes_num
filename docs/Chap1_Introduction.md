@@ -171,6 +171,8 @@ Une méthode numérique est dites **convergente** si l'écart entre la solution 
 
 Si de plus, l'erreur absolue 
 
+
+
 Dans notre exemple, on peut montrer que pour chaque $W(t_i)$, l'erreur est majorée par $\frac{h}{2} sup_{t \in [t_i,t_i+h]} \mid \frac{d^2}{dt^2} p(t)\mid$. 
 La méthode converge donc vers la solution lorsque que le pas de discrétisation $h$ diminue.
 Nous verrons dans la suite que cette convergence est dite "d'ordre 1".
@@ -207,6 +209,38 @@ Dans le cas de la méthode employée par nos étudiants de l'UVSQ, nous avons vu
 Cette instabilité étant directement liée à la méthode numérique choisie, il convient de choisir la méthode la plus stable possible pour résoudre un problème donné.
 
 ### Quelles sont les demandes de ressources informatique de la méthode : temps de calcul et mémoire ?
+
+L'analyse de la quantité de ressources informatique nécessaire pour faire tourner un algorithme est essentiel dans le choix d'une méthode d'analyse numérique.
+Il est en effet important de choisir une méthode qui peut tourner sur une machine donnée, et de savoir en combien de temps elle devra tourner pour donner un résultat.
+
+On parle d'"analyse de la **complexité**" d'un algorithme.
+
+Il y a 2 types de complexités :
+
+#### La **complexité en temps**
+
+Il s'agit de décompter le nombre d'opérations élémentaires réalisées par l'algorithme afin d'estimer le temps de calcul qu'il nécessite sur une machine donnée.
+
+Il est parfois difficile d'estimer le nombre exact d'opérations d'un algorithme dans tous les cas.
+On utilise donc souvent la notation $O$ de Landau pour donner une majoration du nombre d'opérations :
+
+|Nom           |Complexité   |
+|:-------------|:-----------:|
+|Constant      |$O(1)$       |
+|Logarithmique |$O(log(n))$  |
+|Linéaire      |$O(n)$       |
+|Linéarithmique|$O(n log(n))$|
+|Quadratique   |$O(n^2)$     |
+|Cubique       |$O(n^3)$     |
+|Exponentiel   |$2^{O(n)}$   |
+
+Dans le cas de la méthode choisie par nos étudiants de l'UVSQ, on va réaliser $N-1$ soustractions, et $N-1$ divisions, soit $2(N-1)$ opérations arithmétiques au total.
+
+#### La **complexité en espace**
+
+Il s'agit de calculer la quantité maximale de mémoire utilisée au cours de l'algorithme pour stocker les variables nécessaire à son exécution.
+
+
 
 ## Implémentation de l'algorithme
 
