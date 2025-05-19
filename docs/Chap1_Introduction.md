@@ -218,10 +218,29 @@ La notion d'algorithme remonte au moins au Moyen-Age, bien avant l'invention de 
 Il n'y a pas unicité d'algorithme pour résoudre un problème donné.
 L'algorithme peut effectuer des tâches en les unes après les autres ou simultanément, on dira alors qu'il est respectivement **séquentiel** ou **parallèle**.
 
-Voici par exemple un algorithme écrit par nos étudiants de l'UVSQ par estimer la dérivée d'une fonction :
+Voici par exemple un algorithme en "pseudo-code" écrit par nos étudiants de l'UVSQ par estimer la dérivée d'une fonction :
 
 ~~~
+FONCTION difference_decentree_droite(VECTEUR REELS f, REEL h)
+
+	ENTIER n <- LONGUEUR(f)
+	
+	VECTEUR REELS df
+	
+	POUR i DE 0 à n-1 FAIRE
+	
+		df[i] <- (f[i+1]-f[i])/h
+	
+	FIN_POUR
+	
+	RETOURNER df
+	
+FIN_FONCTION
 ~~~
+
+Le pseudo-code est une manière d'écrire un algorithme en langage naturel, mais sa syntaxe ne fait pas l'objet d'un consensus.
+
+Ecrire un algorithme en langage naturel avant implémentation sur ordinateur est souvent une bonne aide pour structurer ses idées.
 
 ### Programmation
 
@@ -256,9 +275,7 @@ Voici le programme Python écrit par les étudiants de l'UVSQ à partir de leur 
 #Importer la librairie Numpy sous le nom "np" :
 import numpy as np
 
-#Définition de la méthode sous la forme d'une fonction qui prend en entrée :
-#- Un vecteur Numpy de valeurs de la fonction f supposés régulièrement espacés
-#- Un scalaire h correspondant au pas de discrétisation de f
+#Définition de la méthode sous la forme d'une fonction :
 def difference_decentree_droite(f,h):
 
 	#On s'assure que f contient des réels encodés sur 64 bits :
@@ -267,17 +284,31 @@ def difference_decentree_droite(f,h):
 	#On récupère le nombre d'éléments N de f :
 	N = len(f)
 	
-	#On initialise un vecteur df de taille N-1 ne contenant que des zéros :
+	#On initialise un vecteur df de taille N-1 ne contenant que des zéros,
+	#qui contiendra les valeurs de la dérivée de f :
 	df = np.zeros(N-1,dtype=np.float64)
 	
+	#On fait une boucle sur les différentes valeurs de dérivée à calculer :
 	for i in range(N-1):
 	
+		#On approxime la dérivée en un point par la formule de la différence décentrée à droite :
 		df[i] = (f[i+1]-f[i])/h
 	
-	#Renvoyer
+	#Renvoyer le vecteur des valeurs de la dérivée de f :
 	return df
 ~~~
 
-Il s'agit d'une "fonction" réalisant 
+Il s'agit d'une "fonction" Python prenant en entrée :
+
+* `f` : un vecteur Numpy contenant les valeurs de la fonction mathématique à dériver, supposés régulièrement espacés.
+
+* `h` : un nombre réel $h$ correspondant au pas de discrétisation de $f$.
+
+Et retournant en sortie :
+
+* `df` : un vecteur Numpy correspondant aux valeurs de la dérivée de $f$.
+
+Les étudiants pourront appeller cette fonction, avec en entrée : leurs points de mesures du déplacement dans $f$, et leur pas de discrétisation dans $h$.
+Ils obtiendront alors les valeurs estimées de la vitesse du vent en sortie. 
 
 ## Execution et analyse du résultat
