@@ -226,8 +226,10 @@ On peut avec cette norme représenter les réels compris entre $2^{-126}$ et env
 En **double précision**, un réel sera représenté sur 64 bits : 1 bit pour le **signe**, 11 bits pour l'**exposant**, et 52 bits pour la **mantisse**.
 On peut avec cette norme représenter les réels compris entre $2^{-1022}$ et environ $2^{1024}$.
 
-On appelle **epsilon machine** (ou "macheps") le nombre positif $\epsilon$ le plus petit tel que $1 + \epsilon > 1$.
-On peut montrer que **l'erreur absolue relative** sur la représentation virgule flottante d'un nombre est **majorée par $\epsilon$**.
+|Définition : le epsilon machine|
+|:-|
+|On appelle **epsilon machine** (ou "macheps") le nombre positif $\epsilon$ le plus petit tel que $1 + \epsilon > 1$.|
+|On peut montrer que **l'erreur relative** sur la représentation virgule flottante d'un nombre est **majorée par $\epsilon$**.|
 
 Pour la norme IEEE 754 : en simple précision $\epsilon = 2^{-23}$, en double précision $\epsilon = 2^{-52}$.
 
@@ -238,7 +240,10 @@ Pour la norme IEEE 754 : en simple précision $\epsilon = 2^{-23}$, en double pr
 
 - Les bonnes pratiques :
 
-Lors de la résolution de leur problème, on recommande à nos étudiants de l'UVSQ de suivre les 3 conseils suivants : (1) choisir une **précision pertinente** pour la représentation des entiers et des réels, (2) **arrondir** les nombres aux nombre de décimales requis par le calcul, (3) **normaliser** les valeurs pour éviter les problèmes d'overflow.
+Lors de la résolution de leur problème, on recommande à nos étudiants de l'UVSQ de suivre les 3 conseils suivants : 
+(1) choisir une **précision pertinente** pour la représentation des entiers et des réels, 
+(2) **arrondir** les nombres aux nombre de décimales requis par le calcul, 
+(3) **normaliser** les valeurs pour éviter les problèmes d'overflow.
 
 ### La méthode **converge**-t-elle vers la solution ? Avec quelle vitesse ?
 
@@ -429,4 +434,11 @@ Ils obtiendront alors les valeurs estimées de la vitesse du vent en sortie.
 
 ## Execution et analyse du résultat
 
+Admentons que nos étudiants aient choisi de mesurer le déplacement de leur ballon dans la stratosphère toutes les 10 secondes ($h = 10 s$), pendant 100 secondes ($N = 10$).
+
+Voici l'application de la méthode des différences décentrées à droite aux données mesurées par le ballon, afin d'estimer la vitesse du vent dans la stratosphère :
+
 ![Exemple de dérivation numérique](img/Chap1_exemple_derivation.gif)
+
+(Les courbes théoriques du déplacement du ballon et de la vitesse du vent sont en pointillés. On part bien entendu du principe que les étudiants n'ont pas accès à ces informations).
+
