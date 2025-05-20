@@ -226,7 +226,10 @@ On peut avec cette norme représenter les réels compris entre $2^{-126}$ et env
 En **double précision**, un réel sera représenté sur 64 bits : 1 bit pour le **signe**, 11 bits pour l'**exposant**, et 52 bits pour la **mantisse**.
 On peut avec cette norme représenter les réels compris entre $2^{-1022}$ et environ $2^{1024}$.
 
+On appelle **epsilon machine** (ou "macheps") le nombre positif $\epsilon$ le plus petit tel que $1 + \epsilon > 1$.
+On peut montrer que **l'erreur absolue relative** sur la représentation virgule flottante d'un nombre est **majorée par $\epsilon$**.
 
+Pour la norme IEEE 754 : en simple précision $\epsilon = 2^{-23}$, en double précision $\epsilon = 2^{-52}$.
 
 |Nota Bene|
 |:-|
