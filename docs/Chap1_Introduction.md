@@ -238,7 +238,7 @@ Pour la norme IEEE 754 : en simple précision $\epsilon = 2^{-23}$, en double pr
 
 - Les bonnes pratiques :
 
-Lors de la résolution d'un problème, on recommande de suivre les 3 conseils suivants : (1) choisir une précision pertinente pour la représentation des entiers et des réels, (2) arrondir les nombres aux nombre de décimales requis par le calcul, (3) normaliser les valeurs pour éviter les problèmes d'overflow.
+Lors de la résolution de leur problème, on recommande à nos étudiants de l'UVSQ de suivre les 3 conseils suivants : (1) choisir une **précision pertinente** pour la représentation des entiers et des réels, (2) **arrondir** les nombres aux nombre de décimales requis par le calcul, (3) **normaliser** les valeurs pour éviter les problèmes d'overflow.
 
 ### La méthode **converge**-t-elle vers la solution ? Avec quelle vitesse ?
 
@@ -294,7 +294,7 @@ Il est en effet important de choisir une méthode qui peut tourner sur une machi
 
 On parle d'"analyse de la **complexité**" d'un algorithme.
 
-Il y a 2 types de complexités :
+Il y a 2 types de complexité :
 
 #### La **complexité en temps**
 
@@ -428,3 +428,5 @@ Les étudiants pourront appeller cette fonction, avec en entrée : leurs points 
 Ils obtiendront alors les valeurs estimées de la vitesse du vent en sortie. 
 
 ## Execution et analyse du résultat
+
+![Exemple de dérivation numérique](img/Chap1_exemple_derivation.gif)
