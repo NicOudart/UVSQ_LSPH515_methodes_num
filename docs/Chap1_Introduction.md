@@ -164,11 +164,11 @@ Nous allons voir que cette représentation des nombres par la machine peut aussi
 
 - Représentation des **entiers** :
 
-Un entier naturel $I$ est représenté en binaire par :
+Un entier naturel $n$ est représenté en binaire par :
 
-$I = a_{p-1} 2^{p-1} + a_{p-2} 2^{p-2} + ... + a_1 2^1 + a_0 2^0$ avec $a_i$ pour $0 \leq i < p$ les $p$ bits, égaux à 0 ou 1.
+$n = a_{p-1} 2^{p-1} + a_{p-2} 2^{p-2} + ... + a_1 2^1 + a_0 2^0$ avec $a_i$ pour $0 \leq i < p$ les $p$ bits, égaux à 0 ou 1.
 
-$p$ bits permettent donc de représenter **exactement** les entiers naturels entre **$0$ et $2^p-1$**.
+$p$ bits permettent alors de représenter **exactement** les entiers naturels entre **$0$ et $2^p-1$**.
 
 Des opérations élémentaires telles que l'addition peuvent être appliquées sur le binaires **bit à bit**.
 
@@ -176,15 +176,66 @@ Des opérations élémentaires telles que l'addition peuvent être appliquées s
 
 Pour représenter les entiers signés, on veut : (1) pouvoir identifier le signe avec un bit dédié nommé **bit de poids fort**, (2) que les règles d'addition soient toujours valides.
 
-La représentation couramment utilisée est celle du **complément à 2**.
+La représentation couramment utilisée est celle du **complément à 2** : on code le binaire par $(2^p - |x|)_2$.
 
+Avec cette convention, un entier signé $n$ est représenté par :
 
+$n = -a_{p-1} 2^{p-1} + a_{p-2} 2^{p-2} + ... + a_1 2^1 + a_0 2^0$ avec $a_i$ pour $0 \leq i < p$ les $p$ bits, égaux à 0 ou 1.
+
+$p$ bits permettent alors de représenter **exactement** les entiers signés entre **$-2^{p-1}$ et $2^{p-1}-1$**.
 
 - **Dépassement de capacité** (overflow) :
 
+Soient 2 entiers signés $n_1$ et $n_2$ représentés en format complément à 2 sur $p$ bits :
+
+Si $n_1 + n_2 \geq 2^{p-1}$ alors il y a un **dépassement de capacité positif**.
+
+Si $n_1 + n_2 < -2^{p-1}$ alors il y a un **dépassement de capacité négatif**.
+
+On parle en anglais de problème d'**overflow**.
+
+Les opérations arithmétiques sur des entiers s'effectuent donc exactement, mais **à condition que le résultat soit représentable par la machine**.
+Sinon, la valeur de sortie sera érronée.
+
+|Nota Bene|
+|:-|
+|- Lorsque $p=8$ on parle d'**octet**.|
+|- Lorsque $p=16$ on parle de **simple précision**.|
+|- Lorsque $p=32$ on parle de **double précision**.|
+
 - Représentation des **réels** :
 
+Pour représenter des réels en machine, on a recourt à la convention de la **virgule flottante**.
+
+Avec cette convention, un réel $r$ sera représenté par :
+
+$r = (-1)^s M 2^e$ avec $s$ le signe, $M$ la mantisse (un réel positif), et $e$ l'exposant (un entier signé).
+
+Suivant le réel à représenter, et le choix de la mantisse et de l'exposant, **des problèmes d'arrondi apparaissent**.
+
+Aussi, il n'y a pas unicité de la représentation d'un nombre avec cette convention. 
+C'est pourquoi on va fixer en plus des règles sur la mantisse et l'exposant.
+
 - **Norme IEEE 754** et erreurs :
+
+La norme IEEE 754 a été introduite en 1985 pour standardiser la représentation des réels en virgule flottante.
+
+En **simple précision**, un réel sera représenté sur 32 bits : 1 bit pour le **signe**, 8 bits pour l'**exposant**, et 23 bits pour la **mantisse**.
+On peut avec cette norme représenter les réels compris entre $2^{-126}$ et environ $2^{128}$.
+
+En **double précision**, un réel sera représenté sur 64 bits : 1 bit pour le **signe**, 11 bits pour l'**exposant**, et 52 bits pour la **mantisse**.
+On peut avec cette norme représenter les réels compris entre $2^{-1022}$ et environ $2^{1024}$.
+
+
+
+|Nota Bene|
+|:-|
+|En norme IEEE 754, les situation d'overflow ne provoquent pas d'arrêt des calculs.|
+|Il faut donc être vigilant, car des valeurs erronées seront alors obtenues.|
+
+- Les bonnes pratiques :
+
+Lors de la résolution d'un problème, on recommande de suivre les 3 conseils suivants : (1) choisir une précision pertinente pour la représentation des entiers et des réels, (2) arrondir les nombres aux nombre de décimales requis par le calcul, (3) normaliser les valeurs pour éviter les problèmes d'overflow.
 
 ### La méthode **converge**-t-elle vers la solution ? Avec quelle vitesse ?
 
