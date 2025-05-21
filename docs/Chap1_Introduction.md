@@ -242,7 +242,7 @@ Pour la norme IEEE 754 : en simple précision $\epsilon = 2^{-23}$, en double pr
 
 Lors de la résolution de leur problème, on recommande à nos étudiants de l'UVSQ de suivre les 3 conseils suivants : 
 (1) choisir une **précision pertinente** pour la représentation des entiers et des réels, 
-(2) **arrondir** les nombres aux nombre de décimales requis par le calcul, 
+(2) **arrondir** les nombres au nombre de décimales requis par le calcul, 
 (3) **normaliser** les valeurs pour éviter les problèmes d'overflow.
 
 ### La méthode **converge**-t-elle vers la solution ? Avec quelle vitesse ?
@@ -434,6 +434,8 @@ Ils obtiendront alors les valeurs estimées de la vitesse du vent en sortie.
 
 ## Execution et analyse du résultat
 
+Il ne reste plus qu'à executer le programme et à analyser les résultats !
+
 Admentons que nos étudiants aient choisi de mesurer le déplacement de leur ballon dans la stratosphère toutes les 10 secondes ($h = 10 s$), pendant 100 secondes ($N = 10$).
 
 Voici l'application de la méthode des différences décentrées à droite aux données mesurées par le ballon, afin d'estimer la vitesse du vent dans la stratosphère :
@@ -442,3 +444,16 @@ Voici l'application de la méthode des différences décentrées à droite aux d
 
 (Les courbes théoriques du déplacement du ballon et de la vitesse du vent sont en pointillés. On part bien entendu du principe que les étudiants n'ont pas accès à ces informations).
 
+On voit que le résultat est entaché d'erreurs relativement importantes.
+Les axes d'amélioration possibles pour obtenir une solution plus proche de la réalité sont nombreux :
+
+- Réduire le pas de discrétisation $h$.
+
+- Tronquer plus loin le développement de Taylor de la méthode.
+
+- Passer d'une méthode "décentrée" à une méthode "centrée".
+
+- Etc.
+
+Cet exemple était très simple, voire caricatural, car il n'avait pour but que de vous faire découvrir les problématiques liées aux méthodes numériques.
+Dans la suite de ce cours, nous verrons des méthodes numériques plus poussées, sur des exemples plus complexes et réalistes.
