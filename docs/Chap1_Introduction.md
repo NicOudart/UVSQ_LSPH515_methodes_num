@@ -455,5 +455,8 @@ Les axes d'amélioration possibles pour obtenir une solution plus proche de la r
 
 - Etc.
 
+---
+
 Cet exemple était très simple, voire caricatural, car il n'avait pour but que de vous faire découvrir les problématiques liées aux méthodes numériques.
-Dans la suite de ce cours, nous verrons des méthodes numériques plus poussées, sur des exemples plus complexes et réalistes.
+Dans la suite de ce cours, nous verrons des méthodes numériques plus poussées, sur des exemples issus de la Physique plus complexes et réalistes.
+Nous irons aussi plus loin dans la description de certaines des notions introduites dans ce chapitre.

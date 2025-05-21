@@ -125,6 +125,7 @@ De manière générale, les méthodes localement convergentes on un ordre de con
 Au cours de ce chapitre, nous appliquerons les différentes méthodes numériques de recherche de racines à un même exemple : **l'estimation de $\sqrt{2}$**.
 
 $\sqrt{2}$ est un nombre irrationel, dont l'approximation est un problème depuis l'antiquité, notamment parce qu'il correspond à l'hypothénuse d'un carré de côté 1.
+En Physique, $\sqrt{2}$ est impliqué dans de nombreuses formules. Par exemple, le calcul de la valeur efficace d'une tension sinusoïdale.
 Une valeur approchée de $\sqrt{2}$ à $10^{-9}$ près est : 1.414213562.
 
 Par définition, $\sqrt{2}$ et $-\sqrt{2}$ sont les solutions de l'équation $x^2 = 2$.
