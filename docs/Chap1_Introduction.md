@@ -6,23 +6,23 @@ Ce chapitre est une introduction aux enjeux des méthodes numériques.
 
 Dans le célèbre roman de science-fiction humoristique anglais "The Hitchhiker's Guide to the Galaxy", écrit en 1978 par Douglas Adams, des extra-terrestres construisent un superordinateur du nom de "Deep Thought" et lui posent le problème suivant :
 
-> "O Deep Thought computer, [...] the task we have designed you to perform is this. We want you to tell us the Answer [...] to Life, the Universe and Everything".
+> _"O Deep Thought computer, [...] the task we have designed you to perform is this. We want you to tell us the Answer [...] to Life, the Universe and Everything"._
 >
-> L'ordinateur leur répond alors :
+> _L'ordinateur leur répond alors :_
 >
-> "I can do it [...] but I'll have to think about it. [...] Seven and half million years."
+> _"I can do it [...] but I'll have to think about it. [...] Seven and half million years."_
 >
-> 7,5 millions d'années plus tard, les descendants des créateurs de Deep Thought viennent consulter l'ordinateur pour obtenir leur réponse.
-> Deep Thought dit qu'il a bien la réponse, mais les prévient :
+> _7,5 millions d'années plus tard, les descendants des créateurs de Deep Thought viennent consulter l'ordinateur pour obtenir leur réponse._
+> _Deep Thought dit qu'il a bien la réponse, mais les prévient :_
 >
-> "I don't think [...] that you're gonna like it".
+> _"I don't think [...] that you're gonna like it"._
 >
-> Les extra-terrestres insistent pour avoir la réponse. Deep Thought s'exécute :
+> _Les extra-terrestres insistent pour avoir la réponse. Deep Thought s'exécute :_
 >
-> "The Answer to the Great Question [...] of Life, the Universe and Everything [...] is ... 42".
+> _"The Answer to the Great Question [...] of Life, the Universe and Everything [...] is ... 42"._
 >
-> Les extra-terrestres sont en colère face à cette réponse, et demandent à l'ordinateur s'il est bien sûr qu'il n'y a pas une erreur.
-> Ce à quoi Deep Thought répond qu'il est certain que la réponse est correcte, et que s'ils ne l'aiment pas, c'est parce que leur problème était mal posé.
+> _Les extra-terrestres sont en colère face à cette réponse, et demandent à l'ordinateur s'il est bien sûr qu'il n'y a pas une erreur._
+> _Ce à quoi Deep Thought répond qu'il est certain que la réponse est correcte, et que s'ils ne l'aiment pas, c'est parce que leur problème était mal posé._
 
 Cette blague aujourd'hui passée à la postérité fait écho aux enjeux des méthodes numériques que nous allons voir dans ce chapitre. 
 
@@ -32,9 +32,9 @@ Nous allons détailler dans ce chapitre  les différentes étapes de résolution
 
 ## Le problème
 
-_Un groupe d'étudiants de l'UVSQ réalise un projet de ballon sonde pour mesurer la vitesse du vent dans la stratosphère au cours du temps_.
-_On considère qu'après une phase d'ascension, leur ballon a atteint une altitude stable dans la stratosphère, et que son déplacement est uniquement lié au vent_.
-_La nacelle de leur ballon contient une balise GPS, qui leur permet de mesurer le déplacement du ballon au cours du temps_.
+> _Un groupe d'étudiants de l'UVSQ réalise un projet de ballon sonde pour mesurer la vitesse du vent dans la stratosphère au cours du temps_.
+> _On considère qu'après une phase d'ascension, leur ballon a atteint une altitude stable dans la stratosphère, et que son déplacement est uniquement lié au vent_.
+> _La nacelle de leur ballon contient une balise GPS, qui leur permet de mesurer le déplacement du ballon au cours du temps_.
 
 Le **problème physique** auquel les étudiants sont confrontés est le suivant : estimer la vitesse du vent dans la stratosphère au cours du temps à partir de leurs mesures.
 
@@ -42,7 +42,7 @@ Le **problème physique** auquel les étudiants sont confrontés est le suivant 
 
 La première étape est de **traduire ce problème physique en un modèle** par le biais d'équations mathématiques : 
 
-_Les étudiants font l'hypothèse que leur ballon stratosphérique se déplace à la vitesse du vent_.
+> _Les étudiants font l'hypothèse que leur ballon stratosphérique se déplace à la vitesse du vent_.
 
 Notons $p(t)$ la fonction associant à chaque instant $t$ en [s] à partir du début de la mesure le déplacement du ballon en [m].
 
@@ -58,7 +58,7 @@ Un ordinateur ne pouvant gérer des objets continus, l'application d'une méthod
 
 Dans le cas des étudiants de l'UVSQ, la discrétisation est réalisée au moment de l'échantillonnage :
 
-_Les étudiants décident d'enregistrer une mesure de déplacement toutes les $h$ secondes._
+> _Les étudiants décident d'enregistrer une mesure de déplacement toutes les $h$ secondes._
 
 Ils n'ont donc pas accès à toutes les valeurs possibles de $p(t)$, mais à des valeurs discrètes régulièrement espacées $p(t_i)$ avec $t_i = 0, h, 2 \times h, 3 \times h, ... (N-1) \times h$ et $N$ le nombre d'échantillons.
 
