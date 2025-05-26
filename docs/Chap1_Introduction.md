@@ -24,7 +24,7 @@ Dans le célèbre roman de science-fiction humoristique anglais "The Hitchhiker'
 > _Les extra-terrestres sont en colère face à cette réponse, et demandent à l'ordinateur s'il est bien sûr qu'il n'y a pas une erreur._
 > _Ce à quoi Deep Thought répond qu'il est certain que la réponse est correcte, et que s'ils ne l'aiment pas, c'est parce que leur problème était mal posé._
 
-Cette blague aujourd'hui passée à la postérité fait écho aux enjeux des méthodes numériques que nous allons voir dans ce chapitre. 
+Cette blague aujourd'hui passée à la postérité fait écho aux enjeux des méthodes numériques que nous allons voir dans ce chapitre...
 
 ---
 
