@@ -4,6 +4,32 @@ Ce chapitre est une introduction aux enjeux des méthodes numériques.
 
 ---
 
+Dans le célèbre roman de science-fiction humoristique anglais "The Hitchhiker's Guide to the Galaxy", écrit en 1978 par Douglas Adams, des extra-terrestres construisent un superordinateur du nom de "Deep Thought" et lui posent le problème suivant :
+
+~~~
+"O Deep Thought computer, [...] the task we have designed you to perform is this. We want you to tell us the Answer [...] to Life, the Universe and Everything".
+
+L'ordinateur leur répond alors :
+
+"I can do it [...] but I'll have to think about it. [...] Seven and half million years."
+
+7,5 millions d'années plus tard, les descendants des créateurs de Deep Thought viennent consulter l'ordinateur pour obtenir leur réponse.
+Deep Thought dit qu'il a bien la réponse, mais les prévient :
+
+"I don't think [...] that you're gonna like it".
+
+Les extra-terrestres insistent pour avoir la réponse. Deep Thought s'exécute :
+
+"The Answer to the Great Question [...] of Life, the Universe and Everything [...] is ... 42".
+
+Les extra-terrestres sont en colère face à cette réponse, et demandent à l'ordinateur s'il est bien sûr qu'il n'y a pas une erreur.
+Ce à quoi Deep Thought répond qu'il est certain que la réponse est correcte, et que s'ils ne l'aiment pas, c'est parce que leur problème était mal posé.
+~~~
+
+Cette blague aujourd'hui passée à la postérité fait écho aux enjeux des méthodes numériques que nous allons voir dans ce chapitre. 
+
+---
+
 Nous allons détailler dans ce chapitre  les différentes étapes de résolution d'un problème en Physique, avec un exemple simple.
 
 ## Le problème
