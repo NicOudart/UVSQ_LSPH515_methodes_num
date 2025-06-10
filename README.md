@@ -1,6 +1,6 @@
 # LSPH515 : Méthodes numériques
 
-![Logo](docs/img/PH515_logo.png)
+![Logo](docs/img/PH515_logo.png){width="250"}
 
 _Cours conçu pour les étudiants de L3 de l'Université de Versailles Saint-Quentin (UVSQ)_
 
