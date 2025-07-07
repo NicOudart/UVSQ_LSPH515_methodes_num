@@ -66,7 +66,9 @@ De même, ils n'estimeront pas toutes les valeurs de $W(t)$, mais des valeurs di
 
 On nomme $h$ le **pas de discrétisation** du problème.
 
-## La solution existe-t-elle ? Est-elle **unique** ? 
+## La solution existe-t-elle ? Est-elle **unique** ?
+
+Il faut toujours se poser ces questions avant d'essayer de résoudre numériquement un problème. 
 
 Dans notre exemple, l'**existence** et l'**unicité** de la solution sont évidentes, mais ce n'est pas toujours le cas.
 
