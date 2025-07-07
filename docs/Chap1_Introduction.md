@@ -70,7 +70,8 @@ On nomme $h$ le **pas de discrétisation** du problème.
 
 Il faut toujours se poser ces questions avant d'essayer de résoudre numériquement un problème. 
 
-Dans notre exemple, l'**existence** et l'**unicité** de la solution sont évidentes, mais ce n'est pas toujours le cas.
+Pour notre exemple, nous partirons du principe que la trajectoire de la nacelle $p(t)$ est dérivable, et donc que l'**existence** et l'**unicité** de la solution est triviale. 
+**Mais ce n'est pas toujours le cas**.
 
 Par exemple, pour un problème impliquant la recherche de la racine d'une fonction sur un intervalle, nous verrons que l'existence et l'unicité ne sont pas évidentes et doivent être démontrées.
 
