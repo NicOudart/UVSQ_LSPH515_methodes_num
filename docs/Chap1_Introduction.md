@@ -82,11 +82,11 @@ Chaque méthode numérique a des conditions d'**applicabilité**, qui ne sont pa
 
 Dans notre exemple, il faut que la fonction $p(t)$ soit doublement dérivable sur chaque intervalle $[t_i,t_{i+1}]$.
 
-### La solution est-elle **unique** ? 
+### La solution existe-t-elle ? Est-elle **unique** ? 
 
-Dans notre exemple, l'**unicité** est évidente, mais ce n'est pas toujours le cas.
+Dans notre exemple, l'**existence** et l'**unicité** de la solution sont évidentes, mais ce n'est pas toujours le cas.
 
-Par exemple, pour un problème impliquant la recherche de la racine d'une fonction sur un intervalle, nous verrons que l'unicité n'est pas évidente et doit être montrée.
+Par exemple, pour un problème impliquant la recherche de la racine d'une fonction sur un intervalle, nous verrons que l'existence et l'unicité ne sont pas évidentes et doivent être démontrées.
 
 ### Quelles sont les sources d'erreur, et quelle est l'erreur attendue ?
 
