@@ -66,6 +66,12 @@ De même, ils n'estimeront pas toutes les valeurs de $W(t)$, mais des valeurs di
 
 On nomme $h$ le **pas de discrétisation** du problème.
 
+## La solution existe-t-elle ? Est-elle **unique** ? 
+
+Dans notre exemple, l'**existence** et l'**unicité** de la solution sont évidentes, mais ce n'est pas toujours le cas.
+
+Par exemple, pour un problème impliquant la recherche de la racine d'une fonction sur un intervalle, nous verrons que l'existence et l'unicité ne sont pas évidentes et doivent être démontrées.
+
 ## Choix d'une méthode numérique
 
 Nos étudiants de l'UVSQ on besoin ici d'une **méthode numérique** d'estimation de la dérivée d'une fonction.
@@ -81,12 +87,6 @@ Lorsque l'on choisi une méthode numérique pour répondre à un problème, il c
 Chaque méthode numérique a des conditions d'**applicabilité**, qui ne sont pas nécessairement les mêmes pour un type de problème donné.
 
 Dans notre exemple, il faut que la fonction $p(t)$ soit doublement dérivable sur chaque intervalle $[t_i,t_{i+1}]$.
-
-### La solution existe-t-elle ? Est-elle **unique** ? 
-
-Dans notre exemple, l'**existence** et l'**unicité** de la solution sont évidentes, mais ce n'est pas toujours le cas.
-
-Par exemple, pour un problème impliquant la recherche de la racine d'une fonction sur un intervalle, nous verrons que l'existence et l'unicité ne sont pas évidentes et doivent être démontrées.
 
 ### Quelles sont les sources d'erreur, et quelle est l'erreur attendue ?
 
