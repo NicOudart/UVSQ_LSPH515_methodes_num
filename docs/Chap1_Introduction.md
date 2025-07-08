@@ -166,15 +166,15 @@ Ces erreurs se propagent à mesure que l'on applique des opérations lors de la 
 
 Si nos étudiants de l'UVSQ choisissent une machine représentant les réels avec une précision $\delta$, alors :
 
-- Pour chaque $t_i$ l'évaluation de $f(t_i)$ sera connue avec une précision $\delta$.
+- Pour chaque $t_i$ l'évaluation de $p(t_i)$ sera connue avec une précision $\delta$.
 
-- Donc l'évaluation de $f(t_i+h)-f(t_i)$ sera connue avec une précision $2 \delta$.
+- Donc l'évaluation de $p(t_i+h)-p(t_i)$ sera connue avec une précision $2 \delta$.
 
 - Et par conséquent l'évaluation de $\frac{p(t_i+h)-p(t_i)}{h}$ sera connue avec une précision $\frac{2 \delta}{h}$.
 
 On en déduit que l'erreur d'arrondi dans notre exemple est : $2 \delta \frac{p(t_i)}{h}$.
 
-On remarque que l'erreur d'arrondi sur $f(t_i)$ a été propagée par les différentes opérations, avec en particulier un facteur 2 dû à l'opération de soustraction.
+On remarque que l'erreur d'arrondi sur $p(t_i)$ a été propagée par les différentes opérations, avec en particulier un facteur 2 dû à l'opération de soustraction.
 
 |Nota Bene|
 |:-|
