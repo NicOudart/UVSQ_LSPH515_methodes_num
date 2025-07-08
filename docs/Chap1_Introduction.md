@@ -268,7 +268,7 @@ Pour la norme IEEE 754 : en simple précision $\epsilon = 2^{-23}$, en double pr
 |En norme IEEE 754, les situation d'overflow ne provoquent pas d'arrêt des calculs.|
 |Il faut donc être vigilant, car des valeurs erronées seront alors obtenues.|
 
-- Les bonnes pratiques :
+#### Les bonnes pratiques :
 
 Lors de la résolution de leur problème, on recommande à nos étudiants de l'UVSQ de suivre les 3 conseils suivants : 
 (1) choisir une **précision pertinente** pour la représentation des entiers et des réels, 
