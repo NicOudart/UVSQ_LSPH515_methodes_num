@@ -187,7 +187,7 @@ On remarque que l'erreur d'arrondi sur $p(t_i)$ a été propagée par les diffé
 
 Afin de stocker et manipuler des nombres, une machine va généralement les représenter en **binaire** (dans la base de 2).
 
-Les nombres sont physiquement rangés en mémoire dans un nombre prédifini de cellules-mémoires appelées **bits** ("binary digits").
+Les nombres sont physiquement rangés en mémoire dans un nombre prédéfini de cellules-mémoires appelées **bits** ("binary digits").
 Un bit ne peut prendre que 2 valeurs : **0 ou 1**. Les nombres sont alors représentés par une combinaison binaire de 0 et de 1.
 
 Nous allons voir que cette représentation des nombres par la machine peut aussi être source d'erreurs en analyse numérique.
