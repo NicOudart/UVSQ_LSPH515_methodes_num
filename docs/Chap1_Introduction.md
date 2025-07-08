@@ -113,6 +113,9 @@ Dans notre exemple, les étudiants de l'UVSQ ne connaissent pas la valeur exacte
 
 On peut toutefois **essayer de borner l'erreur**.
 
+Les erreurs lors de la résolution numérique d'un problème ont **différentes sources** qu'il convient d'identifier.
+**Certaines sont liées à la méthode choisie, d'autres non**.
+
 #### Erreurs de modélisation et de données
 
 Une partie de l'erreur sur la solution d'un problème physique provient toujours du modèle : 
