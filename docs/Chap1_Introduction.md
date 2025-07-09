@@ -357,7 +357,7 @@ Il s'agit de calculer la **quantité maximale de mémoire** utilisée au cours d
 Comme nous l'avons vu, les variables sont stockées en binaire, on exprimer en général la complexité en espace d'un algorithme en **octets** (multiplet de 8 bits).
 
 Dans le cas des étudiants de l'UVSQ, on doit stocker les entrées, un vecteur de taille $N-1$ et un scalaire, et la sortie, un vecteur de taille $N-1$.
-Au total, on doit donc stocker $2N-1$ valeurs. Si ces valeurs sont encodées sur 32 bits, un espace mémoire de maximum $64N-32$ bits sera alors nécessaire pour faire tourner l'algorithme, soit $8N-4$ octets.
+Au total, on doit donc stocker $2(N-1)$ valeurs. Si ces valeurs sont encodées sur 32 bits, un espace mémoire de maximum $64N-32$ bits sera alors nécessaire pour faire tourner l'algorithme, soit $8N-4$ octets.
 
 ## Implémentation de l'algorithme
 
