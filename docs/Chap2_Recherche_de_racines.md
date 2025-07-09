@@ -269,7 +269,7 @@ Combien d'itérations sont nécessaires pour obtenir cette précision ? Retrouve
 ## Avant-propos : les méthodes linéarisées
 
 Les méthodes qui seront présentées dans la suite de ce chapitre sont des **méthodes linéarisées**.
-Ce type de méthodes s'appuit sur le dévloppement de Taylor de $f$ autour de sa racine $c$ :
+Ce type de méthodes s'appuit sur le développement de Taylor de $f$ autour de sa racine $c$ :
 
 $f(c) = 0 = f(x') + (c-x')f'(\xi)$ où $\xi \in [x',c]$ et $f(x') \neq 0$
 
