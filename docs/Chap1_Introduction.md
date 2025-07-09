@@ -289,7 +289,7 @@ Si $p = 2, 3$ ou $4$, on dit la convergence quadratique, cubique ou quartique.
 
 Dans notre exemple, on peut montrer que pour chaque $W(t_i)$, l'erreur est majorée par $\frac{h}{2} sup_{t \in [t_i,t_i+h]} \mid \frac{d^2}{dt^2} p(t)\mid$. 
 La méthode converge donc vers la solution lorsque que le pas de discrétisation $h$ diminue.
-Nous verrons dans la suite que cette convergence est dite "d'ordre 1".
+Cette convergence est "d'ordre 1".
 
 ### La solution est-elle stable ?
 
