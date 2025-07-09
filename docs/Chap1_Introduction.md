@@ -378,7 +378,7 @@ FONCTION difference_decentree_droite(VECTEUR REELS f, REEL h)
 	
 	VECTEUR REELS df
 	
-	POUR i DE 0 à n-1 FAIRE
+	POUR i DE 0 JUSQUE n-1 FAIRE
 	
 		df[i] <- (f[i+1]-f[i])/h
 	
