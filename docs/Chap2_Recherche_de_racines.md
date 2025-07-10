@@ -383,8 +383,9 @@ def secante(f,a,b,n_max,e):
 
 La méthode de la sécante est **convergente localement**.
 
-Si les données initiales sont assez proches de la racine $c$, et que $f'(c) \neq 0$, alors on peut démontrer qu'elle converge avec un ordre $p = \frac{1+\sqrt(5)}{2}$.
+Si $f'(c) \neq 0$, alors on peut démontrer qu'elle converge avec un ordre $p = \frac{1+\sqrt(5)}{2}$.
 Cette valeur est connue sous le nom de "nombre d'or".
+On en déduit que sous ces conditions, la convergence de la méthode est **linéaire**.
 
 ### Exemple
 
@@ -406,9 +407,9 @@ Combien d'itérations sont nécessaires pour obtenir cette précision ? Comparez
 
 La **méthode de la fausse position** est une méthode linéarisée pour laquelle :
 
-$q_n = \frac{f(x_n)-f(x_n')}{x_n-x_n'}$
+$q_n = \frac{f(x_n)-f(x_m)}{x_n-x_m}$
 
-Cette suite correspond à la droite passant par les points $(x_n,f(x_n))$ et $(x_n',f(x_n'))$, où $n'$ est le plus grand indice inférieur à $n$ tel que $f(x_n)f(x_n')<0$.
+Cette suite correspond à la droite passant par les points $(x_n,f(x_n))$ et $(x_m,f(x_m))$, où $m$ est le plus grand indice inférieur à $n$ tel que $f(x_n)f(x_m)<0$.
 
 Il s'agit d'un mélange entre la méthode de la dichotomie et la méthode de la sécante.
 On l'appelle aussi **méthode de regula falsi** ou **méthode de Lagrange**.
