@@ -88,7 +88,7 @@ La performance de ces méthodes est évaluée par leur **vitesse de convergence*
 |:-|
 |Soit $c$ la racine recherchée. Posons $e_n = x_n - c$ l'**erreur absolue** à l'itération $n$.|
 |La suite est dite **convergente d'ordre $p \geq 1$** si|
-|il existe une constante $K>0$ et un indice $n_0 \geq 1$ tels que $\forall n \geq n_0$ :| 
+|il existe une constante $K>0$ tel que :| 
 |$\lim\limits_{n \to \infty} \frac{\mid e_{n+1} \mid}{\mid e_n \mid^p} \leq K$|
 
 La convergence est d'autant plus rapide que la valeur de $p$ est grande.
@@ -104,7 +104,7 @@ Voici comment on qualifie la convergence en fonction de $p$ et $K$ :
 |$1$          |$>1$         |Sous-linéaire (non-convergence) |
 |$2$          |             |Quadratique                     |
 |$3$          |             |Cubique                         |
-|$4$          |             |Quadratique                     |
+|$4$          |             |Quartique                       |
 
 Dans la pratique, la racine étant inconnue, **nous ne pouvons pas calculer l'erreur** $e_n$.
 
@@ -167,6 +167,17 @@ Elle est aussi connue sous le nom de **"méthode de la bissection"**.
 
 Soit $f$ une fonction continue de $[a,b]$ dans $\mathbb{R}$.
 On suppose que $f$ admet une unique racine dans $]a,b[$ et que $f(a)f(b)<0$.
+
+L'idée va être de découper l'intervalle en 2, de chercher dans quelle moitié la racine se trouve, puis de définir le nouvel intervalle comme étant cette moitié.
+Et ainsi de suite pour converger vers la racine.
+
+On appelle $[a_n,b_n]$ l'intervalle de centre $x_n$ à l'itération $n$ :
+
+- Si $f(a_n)f(x_n)<0$ alors la racine se trouve dans $]a_n,x_n[$.
+
+- Si $f(x_n)f(b_n)<0$ alors la racine se trouve dans $]x_n,b_n[$.
+
+On récupère $x_n$ à la fin de l'algorithme.
 
 Voici l'algorithme sous la forme d'une fonction Python.
 
@@ -297,9 +308,9 @@ où $q_n$ est une approximation de $f'(\xi)$.
 
 L'idée des méthodes linéarisées est donc :
 
-* D'approcher une fonction non-linéaire par une droite.
+* D'approcher à chaque itération la fonction par une droite de pente $q_n$ passant par le point $(x_n,f(x_n))$.
 
-* Déterminer à chaque itération $x_{n+1}$ comme l'intersection entre l'axe $(Ox)$ et la droite de pente $q_n$ passant par le point $(x_n,f(x_n))$.
+* Déterminer à chaque itération $x_{n+1}$ comme l'intersection entre l'axe $(Ox)$ et cette droite.
 
 Les méthodes linéarisées (méthode de la sécante, méthode de la fausse position, méthode de Newton, etc.) se différentient par **le choix de $q_n$**.
 
