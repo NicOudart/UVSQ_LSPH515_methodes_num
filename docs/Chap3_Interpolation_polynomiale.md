@@ -260,8 +260,8 @@ Les $c_i$ sont les solutions du système linéaire (triangulaire inférieur) sui
 
 $\begin{cases}
 f(x_0) = c_0 v_0(x_0) = c_0\\
-f(x_1) = c_0 + c_1 v_1(x_1) = f(x_0) + c_1 (x_1-x_0)\\
-f(x_2) = c_0 + c_1 v_1(x_2) + c_2 v_2(x_2) = f(x_0) + c_1 (x_2-x_0) + c_2 (x_2-x_0)(x_2-x_1)\\
+f(x_1) = c_0 + c_1 v_1(x_1) = c_0 + c_1 (x_1-x_0)\\
+f(x_2) = c_0 + c_1 v_1(x_2) + c_2 v_2(x_2) = c_0 + c_1 (x_2-x_0) + c_2 (x_2-x_0)(x_2-x_1)\\
 ...\\
 f(x_n) = c_0 + \displaystyle\sum_{i=1}^{n} c_i v_i(x_n)
 \end{cases}$
