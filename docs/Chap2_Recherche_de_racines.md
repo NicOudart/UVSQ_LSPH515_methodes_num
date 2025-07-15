@@ -717,13 +717,13 @@ def point_fixe(f,g,x_0,n_max,e):
 |et la suite $x_{n+1}=g(x_n)$ converge vers $c$ **pour toute valeur de départ $x_0$ dans $[a,b]$**.|
 |On appelle alors $c$ un **point attracteur**.|
 
-Une règle pratique pour vérifier **l'hypothèse de contraction** :
-Soit $g$ une fonction dérivable sur $[a,b]$, si $g'(x)$ vérifie $max_{[a,b]} \mid g'(x) \mid =k<1$ alors $g$ est strictement contractante sur $[a,b]$. 
+2 règles pratiques pour vérifier **l'hypothèse de contraction** :
 
 |Théorème|
 |:-|
 |Soit $g$ une fonction continue et dérivable de $[a,b]$ dans $\mathbb{R}$.|
-|Si $\forall x\in [a,b]$, $\mid g'(x) \mid >1$ alors la suite **diverge** si $x_0 \neq c$.|
+|Si $\forall x\in [a,b]$, $\mid g'(x) \mid <1$ alors $g$ est strictement contractante sur $[a,b]$.|
+|Si $\forall x\in [a,b]$, $\mid g'(x) \mid >1$ alors la suite **diverge** si $x_0 \neq c$. On parle alors de **point répulsif**|
 
 En pratique, il est souvent difficile de montrer la convergence globale.
 D'où l'utilité d'une étude de convergence locale :
@@ -732,8 +732,8 @@ D'où l'utilité d'une étude de convergence locale :
 |:-|
 |Soit $c$ un point fixe d'une fonction $g$ dérivable au voisinage de $c$.|
 |Si $\mid g'(c) \mid < 1$ alors il existe $\delta >0$ tel que la suite $x_{n+1}=g(x_n)$ converge vers $c$ pour tout $x_0$ tel que $\mid x_0-c \mid < \delta$.|
-|Si $\mid g'(a) \mid > 1$ la convergence est impossible.|
-|Si $\mid g'(a) \mid = 1$ on peut avoir convergence ou divergence.|
+|Si $\mid g'(c) \mid > 1$ la convergence est impossible.|
+|Si $\mid g'(c) \mid = 1$ on peut avoir convergence ou divergence.|
 
 ![Illustration de la convergence du point fixe](img/Chap2_point_fixe_convergence.png)
 
