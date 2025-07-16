@@ -36,6 +36,8 @@ En 1948, Marshall et Palmer ont proposé un modèle du facteur de réflectivité
 
 $Z = \int_{D_{min}}^{D_{max}} N_0 e^{- \Lambda D} D^6 dD$
 
+avec $D$ le diamètre des gouttes supposées sphériques.
+
 Les paramètres de ce modèle sont :
 
 - $D_{min}$ la plus petite taille de goutte, que nous fixerons à $1 mm$.
