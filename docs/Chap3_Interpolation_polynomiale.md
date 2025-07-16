@@ -280,7 +280,7 @@ C'est pourquoi on fait appel aux **différences divisées** pour exprimer les co
 
 Les coefficients $c_i$ peuvent être calculés par récurrence à partir des différences divisées de la manière suivante :
 
-$c_i = f[x_0 x_1 x_i] = \frac{f[x_0 x_1 ... x_{i-1}]-f[x_1 x_2 ... x_i]}{x_0-x_i}$
+$c_i = f[x_0 x_1 ... x_i] = \frac{f[x_0 x_1 ... x_{i-1}]-f[x_1 x_2 ... x_i]}{x_0-x_i}$
 
 C'est ce que l'on appelle la **différence divisée d'ordre i**.
 
@@ -309,7 +309,7 @@ Pour déterminer les valeurs de ce tableau, on applique la méthode ici illustr�
 ![Différences divisées](img/Chap3_differences_divisees.gif)
 
 Une fois les coefficients calculés, on utilise la stratégie de l'**algorithme de Horner** pour le calcul effectif du polynôme interpolateur de Newton.
-Cette stratégie se base sur le schéma suivant, ici illustré pour 4 points :
+Cette stratégie se base sur le schéma suivant, ici illustré pour 3 points :
 
 $p(x) = c_0 + c_1 (x-x_0) + c_2 (x-x_0) (x-x_1) + c_3 (x-x_0) (x-x_1) (x-x_2)$
 $= c_0 + (x-x_0) (c_1 + (c_2 (x-x_1) + c_3 (x-x_1) (x-x_2)))$
@@ -502,7 +502,9 @@ On trouve une valeur interpolée en $x = 210$ d'environ 13.50.
 L'inconvénient de l'interpolation affine est que l'approximation de la fonction $f$ manque de régularité : la fonction $g$ n'est pas dérivable.
 
 Dans le cadre de l'interpolation par splines cubiques, on va choisir une fonction vérifiant les critères suivants :
-- Sur chaque sous-intervalle $[x_i,x_{i+1}]$ avec $i=0,1,...,n$, la fonction est un polynôme de degré $\leq 3$ qui interpole les points $(x_i,f(x_i))$ pour $j=i,i+1$ : $g_i(x) = a_i x^3 + b_i x^2 + c_i x + d_i$
+
+- Sur chaque sous-intervalle $[x_i,x_{i+1}]$ avec $i=0,1,...,n$, la fonction est un polynôme de degré $\leq 3$ qui interpole les points $(x_i,f(x_i))$ et $(x_{i+1},f(x_{i+1}))$ : $g_i(x) = a_i x^3 + b_i x^2 + c_i x + d_i$
+
 - $g$ est 2 fois continument dérivable aux points intérieurs $x_i$ avec $i=0,1,...,n$.
 
 La fonction $g$ obtenue en reliant les différents $g_i$ est ainsi 2 fois dérivable.
