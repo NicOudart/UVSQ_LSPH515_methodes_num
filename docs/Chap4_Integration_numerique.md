@@ -95,7 +95,7 @@ Les méthodes de Newton-Cotes et de Gauss s'appuient sur cette idée en utilisan
 
 On cherche donc une valeur approchée de $I$ au moyen d'une somme finie :
 
-$I = \int_{a}^{b} f(x) dx \approx I_n = \sum_{a}^{b} w_i f(x_i)$
+$I = \int_{a}^{b} f(x) dx \approx I_n = \sum_{i=0}^{n} w_i f(x_i)$
 
 On dit que $I_n$ est une **formule de quadrature de type interpolation à $n+1$ points**
 
