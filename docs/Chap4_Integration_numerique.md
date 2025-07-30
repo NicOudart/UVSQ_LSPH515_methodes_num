@@ -251,7 +251,7 @@ Si $f$ est continue et 4 fois dérivable sur $[a,b]$, alors il existe $\xi \in ]
 
 $E(f) = - \frac{h^5}{90} f^{(4)}(\xi)$
 
-La méthode de Simpson est exacte sur l'espace des polynômes de degré $\leq 2$ donc de **degré de précision 3**.
+La méthode de Simpson est exacte sur l'espace des polynômes de degré $\leq 2$, et on peut même montrer qu'elle est de **degré de précision 3**.
 
 Elle nécessite l'évaluation de $f$ en 3 points, mais l'erreur diminue rapidement, en $h^5$.
 
