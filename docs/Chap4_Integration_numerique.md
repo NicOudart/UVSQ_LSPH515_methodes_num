@@ -477,7 +477,7 @@ Pour faciliter l'écriture, on définira pour la méthode de Simpson composite $
 
 Sur chaque sous-intervalle $[x_j,x_{j+2}]$ :
 
-$\int_{x_{j+2}}^{x_j} f(x) dx \approx \frac{h}{3} (f(x_{j})+4f(x_{j+1})+f(x_{j+2}))$
+$\int_{x_j}^{x_{j+2}} f(x) dx \approx \frac{h}{3} (f(x_{j})+4f(x_{j+1})+f(x_{j+2}))$
 
 D'où la formule composite de Simpson :
 
