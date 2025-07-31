@@ -811,7 +811,7 @@ $\int_{a}^{b} x^k dx = \displaystyle\sum_{i=0}^{n} w_i x_i^k$ avec $k=0,1,...,2n
 
 ### Méthode à 1 point (n=0)
 
-A l'ordre le plus bas ($n=0$), on a 2 inconnues à ajuster : le point $x_0$ et le coefficient $w_0$.
+A l'ordre 1 ($n=0$), on a 2 inconnues à ajuster : le point $x_0$ et le coefficient $w_0$.
 
 Soit $I_0 = w_0 f(x_0)$
 
