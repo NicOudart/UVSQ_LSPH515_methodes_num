@@ -811,15 +811,28 @@ $\int_{a}^{b} x^k dx = \displaystyle\sum_{i=0}^{n} w_i x_i^k$ avec $k=0,1,...,2n
 
 ### Méthode à 1 point (n=0)
 
-A l'ordre le plus bas ($n=0$), on cherche la position de l'unique point $x_0$ et de l'unique coefficient $w_0$ tel que $I_0 = w_0 f(x_0)$ soit exacte pour tous les polynômes de degré $\leq 2n+1 = 1$.
+A l'ordre le plus bas ($n=0$), on a 2 inconnues à ajuster : le point $x_0$ et le coefficient $w_0$.
 
-Il faut donc qu'elle soit exacte pour les polynômes $p_0(x)=1$ et $p_1(x)=x$.
+Soit $I_0 = w_0 f(x_0)$
 
-On trouve que l'unique point de quadrature correspond au point milieu : cette méthode correspond en fait à la **méthode du point milieu** de Newton-Cotes.
+On va ajuster ces paramètres pour que la méthode soit exacte dans l'ensemble des polynômes de degré $\leq 1$.
+
+On résout donc le système de 2 équations à 2 inconnues :
+
+$\begin{cases}
+\int_{a}^{b} 1 dx = w_0\\
+\int_{a}^{b} x dx = w_0 x_0\\
+\end{cases}$
+
+On obtient la **formule optimale de Gauss** :
+
+$I_0 = (b-a) f(\frac{a+b}{2})$
+
+On retrouve alors la **méthode du point milieu** de Newton-Cotes.
 
 ### Méthode à 2 points (n=1)
 
-A l'ordre 2 ($n=1$), on a 4 inconnues à ajuster : les 2 points $x_0$ et $x_1$, et les 2 points $w_0$ et $w_1$.
+A l'ordre 2 ($n=1$), on a 4 inconnues à ajuster : les 2 points $x_0$ et $x_1$, et les 2 coefficients $w_0$ et $w_1$.
 
 Soit $I_1 = w_0 f(x_0) + w_1 f(x_1)$
 
