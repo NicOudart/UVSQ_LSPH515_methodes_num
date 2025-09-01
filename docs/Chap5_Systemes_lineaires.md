@@ -103,7 +103,7 @@ Le **système homogène** $A x = 0$ admet toujours le vecteur nul comme solution
 
 Dans le cas d'un **système non homogène** ($b \neq 0$), si $det(A) = 0$ :
 
-- Soit $rang(A) = rang([A \ mid b])$ alors il y a une infinité de solutions.
+- Soit $rang(A) = rang([A \mid b])$ alors il y a une infinité de solutions.
 
 - Soit $rang(A) \neq rang([A \mid b])$ alors il n'y a pas de solution.
 
