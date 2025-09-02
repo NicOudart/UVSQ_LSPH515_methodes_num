@@ -66,7 +66,7 @@ On peut savoir dans quel cas on se trouve avec le **rang de la matrice $A$**.
 
 |Définition|
 |:-|
-|Le **rang** d'une matrice $A$ est le nombre de vecteurs lignes ou colonnes linéairement indépendants.|
+|Le **rang** d'une matrice $A$ est son nombre de vecteurs lignes ou colonnes linéairement indépendants.|
 
 Si $A$ est de dimensions $m \times n$, alors $rang(A) \leq min(m,n)$.
 
@@ -371,7 +371,7 @@ La **règle de Cramer** (ou méthode de Cramer) est un théorème d'algèbre lin
 
 Lorsque le système n'est pas de Cramer (donc si $det(A)=0$) :
 
-- Si le déterminant d'une des racines $A_i$ est nul alors le système n'a pas de solution.
+- Si le déterminant d'une des matrices $A_i$ est nul alors le système n'a pas de solution.
 
 - La réciproque est fausse : il peut arriver qu'un système n'ait pas de solution alors que tous les $det(A_i)$ sont non-nuls.
 
