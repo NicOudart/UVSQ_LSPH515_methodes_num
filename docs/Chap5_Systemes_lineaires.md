@@ -532,7 +532,7 @@ Une fois la matrice triangularisée, le système à résoudre devient :
 
 $\begin{cases}
 a_{1,1}^* x_1 + a_{1,2}^* x_2 + ... + a_{1,n}^* x_n = b_1^*\\
-a_{2,2}^* x_2 + a_{2,3}^* x_2 + ... + a_{2,n}^* x_n = b_2^*\\
+a_{2,2}^* x_2 + a_{2,3}^* x_3 + ... + a_{2,n}^* x_n = b_2^*\\
 ...\\
 a_{n-1,n-1}^* x_{n-1} + a_{n-1,n}^* x_n = b_{n-1}^*\\
 a_{n,n}^* x_n = b_n^*
@@ -563,7 +563,7 @@ Pour triangulariser la matrice $A$, on répète ces opérations pour chaque colo
 
 Pour **réduire les erreurs** liées aux arrondis, on peut adopter plusieurs stratégies pour le choix du pivot :
 
-- **Sans pivotage** : on ne réalise ni permutations de lignes, ni permutations de colonnes. Le pivot es toujours séléctionné sur la diagonale de la matrice.
+- **Sans pivotage** : on ne réalise ni permutations de lignes, ni permutations de colonnes. Le pivot est toujours séléctionné sur la diagonale de la matrice.
 
 - Le **pivot partiel** : on choisi le pivot comme étant l'élément de valeur absolue maximale de la colonne sur ou sous la diagonale. Cette stratégie n'implique que des permutations de lignes.
 
@@ -1383,7 +1383,7 @@ Vérifiez que vous retrouvez bien le résultat attendu.
 
 - **Les opérations d'élimination :**
 
-On remarque qu'appliquer l'opération $L_2 = l_2 - \frac{a_{2,1}}{a_{1,1}} L_1$ à un système $A x = b$ de dimensions $n \times n$ revient à multiplier $A$ et $b$ par la matrice :
+On remarque qu'appliquer l'opération $L_2 = L_2 - \frac{a_{2,1}}{a_{1,1}} L_1$ à un système $A x = b$ de dimensions $n \times n$ revient à multiplier $A$ et $b$ par la matrice :
 
 $M = 
  \begin{pmatrix}
@@ -1439,7 +1439,7 @@ A la 1ère étape on a $A^{(1)}=A$, et à la dernière étape on a $A^{(n)}=U$.
 
 On en déduit que l'on peut exprimer $U$ comme :
 
-$U = A^{(n)} = M_{n-1} A^{(n-1)} = M_{n-1} M_{n-2} A^{(n-2)} = M_{n-1} M_{n-2} ... M_1 A^{(1)} = M A$
+$U = A^{(n)} = M_{n-1} A^{(n-1)} = M_{n-1} M_{n-2} A^{(n-2)} = ... = M_{n-1} M_{n-2} ... M_1 A^{(1)} = M A$
 
 en notant $M = M_{n-1} M_{n-2} ... M_1$
 
