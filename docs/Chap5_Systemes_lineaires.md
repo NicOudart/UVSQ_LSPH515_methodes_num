@@ -1510,7 +1510,7 @@ La décomposition LU (sans pivotage) **n'existe pas toujours**, même si $A$ est
 |Existence de la décomposition LU|
 |:-|
 |La décomposition LU existe si et seulement si :|
-|toutes les sous-matrices principales $A_k = (a_{i,j})_{1 \leq i,j \leq k}$ de $A$ sont inversibles.|
+|toutes les sous-matrices principales $A_k = (a_{i,j})_{1 \leq i,j \leq k}$ d'ordre 1 à $n-1$ sont inversibles.|
 |Si toutes les sous-matrices principales d'ordre 1 à $n$ sont inversibles, elle est même **unique**.|
 
 Il est à noter que le fait qu'une sous-matrice principale de $A$ ne soit pas inversible ne signifie pas nécessairement que $A$ n'est pas inversible.
