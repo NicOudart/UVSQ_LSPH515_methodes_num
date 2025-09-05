@@ -2046,7 +2046,7 @@ Nous présenterons rapidement ici les décompositions QR et de Cholesky.
 |Théorème|
 |:-|
 |Si $A$ est une matrice réelle **inversible**,|
-|il existe une unique couple $(Q,R)$ avec $Q$ une matrice **orthogonale**|
+|il existe un unique couple $(Q,R)$ avec $Q$ une matrice **orthogonale**|
 |(c'est-à-dire $QQ^T=Q^TQ=I$)|
 |et $R$ une matrice **triangulaire supérieure** dont les éléments diagonaux sont positifs,|
 |tel que $A = QR$|
@@ -2159,7 +2159,7 @@ Voici alors 2 **critères d'arrêt** possibles :
 
 $\|r^{(k)}\| \leq \epsilon \|b\|$ ou $\|x^{(k)}-x^{(k-1)}\| \leq \epsilon \|x^{(k-1)}\|$
 
-L'avantage des méthodes itératives est leur **coût** : de l'ordre de $n^2$ pour chaque itération, à comparer au $\frac{2}{3} n^3$ des méthodes directes.
+L'avantage des méthodes itératives est leur **coût** : de l'ordre de $n^2$, à comparer au $\frac{2}{3} n^3$ des méthodes directes.
 
 Toute la difficulté des méthodes itérative est dans leurs conditions de **convergence**, qui restreignent leur application à certains systèmes.
 
