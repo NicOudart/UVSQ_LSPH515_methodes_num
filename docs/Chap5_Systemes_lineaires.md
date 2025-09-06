@@ -2,6 +2,8 @@
 
 Ce chapitre porte sur les méthodes numériques pour la résolution d'un système linéaire d'équations.
 
+![En-tête chapitre V](img/Chap5_header.png)
+
 ---
 
 ## Position du problème

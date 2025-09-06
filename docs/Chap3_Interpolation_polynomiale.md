@@ -2,6 +2,8 @@
 
 Ce chapitre porte sur les méthodes numériques pour l'approximation de valeures inconnues d'une fonction à partir des valeurs connues, par interpolation avec un polynôme.
 
+![En-tête chapitre III](img/Chap3_header.png)
+
 ---
 
 ## Position du problème

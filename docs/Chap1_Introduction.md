@@ -2,6 +2,8 @@
 
 Ce chapitre est une introduction aux enjeux des méthodes numériques.
 
+![En-tête chapitre I](img/Chap1_header.png)
+
 ---
 
 Dans le célèbre roman de science-fiction humoristique anglais "The Hitchhiker's Guide to the Galaxy", écrit en 1978 par Douglas Adams, des extra-terrestres construisent un superordinateur du nom de "Deep Thought" et lui posent le problème suivant :

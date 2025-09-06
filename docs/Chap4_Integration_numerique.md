@@ -2,6 +2,8 @@
 
 Ce chapitre porte sur les méthodes numériques pour l'approximation de l'intégrale d'une fonction.
 
+![En-tête chapitre IV](img/Chap4_header.png)
+
 ---
 
 ## Position du problème

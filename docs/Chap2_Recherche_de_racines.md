@@ -2,6 +2,8 @@
 
 Ce chapitre porte sur les méthodes numériques pour la recherche de racines d'une fonction.
 
+![En-tête chapitre II](img/Chap2_header.png)
+
 ---
 
 ## Position du problème
