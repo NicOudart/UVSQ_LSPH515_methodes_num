@@ -81,7 +81,7 @@ Par exemple, pour un problème impliquant la recherche de la racine d'une foncti
 
 Nos étudiants de l'UVSQ on besoin ici d'une **méthode numérique** d'estimation de la dérivée d'une fonction.
 
-Pour approcher la dérivée  décident d'employer une méthode de "_différences décentrées à droite_" :
+Pour approcher la dérivée ils décident d'employer une méthode de "_différences décentrées à droite_" :
 
 $W(t_i) = \frac{d}{dt} p(t_i) \approx \frac{p(t_{i+1})-p(t_i)}{h}$ avec $t_{i+1} = t_i + h$ et $i = 0, 1, ..., N-2$
 
@@ -124,7 +124,7 @@ Une partie de l'erreur sur la solution d'un problème physique provient toujours
 
 - Pour commencer, tout modèle fait des hypothèses simplificatrices, négligeant certains phénomènes physiques.
 
-- Ensuite, modèle peut aussi avoir un domaine de validité limité, qui ne soit pas respecté pendant une partie de l'étude.
+- Ensuite, notre modèle peut aussi avoir un domaine de validité limité, qui ne soit pas respecté pendant une partie de l'étude.
 
 - Et enfin, si notre modèle s'appuie sur des données mesurées, ou sur des paramètres physiques estimés, alors ces valeurs seront forcément inexactes.
 
@@ -208,7 +208,7 @@ Des opérations élémentaires telles que l'addition peuvent être appliquées s
 
 Pour représenter les entiers signés, on veut : (1) pouvoir identifier le signe avec un bit dédié nommé **bit de poids fort**, (2) que les règles d'addition soient toujours valides.
 
-La représentation couramment utilisée est celle du **complément à 2** : on code le binaire par $(2^p - |x|)_2$.
+La représentation couramment utilisée est celle du **complément à 2** : on code un nombre **négatif** en binaire par $(2^p - |x|)_2$.
 
 Avec cette convention, un entier signé $n$ est représenté par :
 
