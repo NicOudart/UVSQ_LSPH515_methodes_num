@@ -480,9 +480,9 @@ def fausse_position(f,a,b,n_max,e):
 
 La méthode de la fausse position est **globalement convergente** :
 
-* Si $f$ est à concavité constante avec $f"<0$ (concave), la suite converge vers la racine en croissant.
+* Si $f$ est à concavité constante avec $f"<0$ (concave), la suite converge vers la racine avec $f(x_n)$ croissant.
 
-* Si $f$ est à concavité constante avec $f">0$ (convexe), la suite converge vers la racine en décroissant.
+* Si $f$ est à concavité constante avec $f">0$ (convexe), la suite converge vers la racine avec $f(x_n)$ décroissant.
 
 Elle converge avec un ordre $p$ d'au moins 1 de façon **super-linéaire**.
 
