@@ -150,9 +150,9 @@ Cette fonction est continue et dérivable sur $\mathbb{R}$, et sa dérivée est 
 
 ![Tableau de variations de f](img/Chap2_exemple_tab_var.png)
 
-* Théorème de la bijection : $f$ est continue et strictement monotone sur $I=[1,2]$, donc $f$ induit une bijection de $I$ dans $f(I)$.
-
 * Théorème des valeurs intermédiaires : $f(1)=-1$ et $f(2)=2$, d'où $f(1)f(2)<0$.
+
+* Théorème de la bijection : $f$ est continue et strictement monotone sur $I=[1,2]$, donc $f$ induit une bijection de $I$ dans $f(I)$.
 
 Donc, il existe une seule racine de $f$ dans $]1,2[$, et nous savons que cette racine est $\sqrt{2}$.
 
