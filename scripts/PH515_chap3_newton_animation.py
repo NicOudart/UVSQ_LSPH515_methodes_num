@@ -37,7 +37,6 @@ titre = 'p(x) = c0'
 plt.figure(0,figsize=(10, 5))
 plt.scatter(x,f(x),color='k',marker='o')
 plt.plot(xp,yp,'g-')
-plt.scatter(np.delete(x,0),np.zeros(n-1),color='g',marker='o')
 plt.scatter(x[0],f(x[0]),color='g',marker='o')
 plt.xlim([0,365])
 plt.ylim([-2,17])
