@@ -48,7 +48,7 @@ La durée du jour (temps entre le lever et le coucher du soleil) en heures peut 
 
 $f(x) = \frac{48}{2 \pi} \arccos(\tan(\lambda) \tan(\arcsin(\sin(\frac{2 \pi x}{365}) \sin(\delta))))$
 
-avec $x$ le jour depuis l'équinoxe de printemps, $\lambda$ la latitude du lieu, et $\delta$ la latitude des tropiques.
+avec $x$ le jour depuis l'équinoxe d'automne, $\lambda$ la latitude du lieu, et $\delta$ la latitude des tropiques.
 
 On sait que $\delta \approx 23.438403°$.
 On prendra ici l'exemple de l'UFR des sciences de l'UVSQ, dont la latitude est $\lambda \approx 48.81094°$.
@@ -58,11 +58,11 @@ D'où l'intérêt de n'évaluer la fonction qu'en un nombre limité de points, e
 
 Nous choisirons ici d'évaluer la fonction pour les 10 valeurs de $x$ suivantes :
 
-|x = jours depuis l'équinoxe de printemps|30   |60  |90  |120 |150  |180  |240  |270  |300  |330  |
+|x = jours depuis l'équinoxe d'automne|30   |60  |90  |120 |150  |180  |240  |270  |300  |330  |
 |:---------------------------------------|:---:|:--:|:--:|:--:|:---:|:---:|:---:|:---:|:---:|:---:|
 |f(x) = durée du jour en heures          |10.24|8.73|8.04|8.63|10.09|11.84|15.16|15.95|15.47|14.06|
 
-Et nous essayerons d'estimer la valeur de $f$ pour $x = 210$ (i.e. la durée du jour en heures pour le 210ème jour depuis l'équinoxe de printemps) par interpolation polynomiale.
+Et nous essayerons d'estimer la valeur de $f$ pour $x = 210$ (i.e. la durée du jour en heures pour le 210ème jour depuis l'équinoxe d'automne) par interpolation polynomiale.
 
 ![Graphique de f](img/Chap3_exemple_fonction.gif)
 
