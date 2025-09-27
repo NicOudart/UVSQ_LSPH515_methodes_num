@@ -311,7 +311,7 @@ Pour déterminer les valeurs de ce tableau, on applique la méthode ici illustr�
 ![Différences divisées](img/Chap3_differences_divisees.gif)
 
 Une fois les coefficients calculés, on utilise la stratégie de l'**algorithme de Horner** pour le calcul effectif du polynôme interpolateur de Newton.
-Cette stratégie se base sur le schéma suivant, ici illustré pour 3 points :
+Cette stratégie se base sur le schéma suivant, ici illustré pour 4 points :
 
 $p(x) = c_0 + c_1 (x-x_0) + c_2 (x-x_0) (x-x_1) + c_3 (x-x_0) (x-x_1) (x-x_2)$
 $= c_0 + (x-x_0) (c_1 + (c_2 (x-x_1) + c_3 (x-x_1) (x-x_2)))$
