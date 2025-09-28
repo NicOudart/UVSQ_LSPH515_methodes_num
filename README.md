@@ -14,7 +14,7 @@ Une **méthode numérique** est une suite de procédures calculatoires ou d'**al
 
 Vous trouverez dans ce cours des méthodes numériques pour résoudre différent problèmes classiques en Physique :
 
-* [Chapitre I : Introduction](Chap1_Introduction.md) : une introduction aux méthodes numériques.
+* Chapitre I : Introduction : une introduction aux méthodes numériques.
 
 * Chapitre II : Recherche de racines : un panel de méthodes pour approximer les racines d'une fonction.
 
