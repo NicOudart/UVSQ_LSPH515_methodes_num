@@ -804,7 +804,7 @@ $e_{n+1} = x_{n+1}-c = g(x_n)-g(c) = g'(c)e_n + g"(c)\frac{e_n^2}{2!} + ... + g^
 |La méthode du point fixe est d'ordre $p>1$ si et seulement si :|
 |$g^{(i)}(c)=0$ $\forall 1 \leq i \leq p-1$ et $g^{(p)}(c) \neq 0$|
 
-La méthode est convergente du 1er ordre (i.e. **linéaire**) si $g'(c) \neq 0$ et $\lim\limits_{n \to \infty} \frac{\mid e_{n+1} \mid}{\mid e_n \mid} < 1$.
+La méthode est convergente du 1er ordre (i.e. **linéaire**) si $g'(c) \neq 0$ et $\lim\limits_{n \to \infty} \frac{\mid e_{n+1} \mid}{\mid e_n \mid} = \mid g'(c) \mid < 1$.
 (C'est ce que l'on appelle le "facteur de réduction" de l'erreur).
 
 La méthode est convergente d'ordre 2 (i.e. **quadratique**) si $g'(c)=0$ et $g"(c) \neq 0$ et $\lim\limits_{n \to \infty} \frac{\mid e_{n+1} \mid}{\mid e_n \mid^2} = \frac{1}{2} \mid g"(c) \mid$.
