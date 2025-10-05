@@ -483,7 +483,7 @@ $\int_{x_j}^{x_{j+2}} f(x) dx \approx \frac{h}{3} (f(x_{j})+4f(x_{j+1})+f(x_{j+2
 
 D'où la formule composite de Simpson :
 
-$\int_{a}^{b} f(x) dx \approx \frac{h}{3} (f(a) + 2 \displaystyle\sum_{j=1}^{M} f(x_{2j}) + 4 \displaystyle\sum_{j=0}^{M-1} f(x_{2j+1}) + f(b))$
+$\int_{a}^{b} f(x) dx \approx \frac{h}{3} (f(a) + 2 \displaystyle\sum_{j=1}^{M-1} f(x_{2j}) + 4 \displaystyle\sum_{j=0}^{M-1} f(x_{2j+1}) + f(b))$
 
 Voici une illustration pour notre exemple, avec $M=5$ :
 
