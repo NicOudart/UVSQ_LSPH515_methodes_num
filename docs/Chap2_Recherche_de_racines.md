@@ -851,4 +851,4 @@ Si $f"(c) = 0$, la convergence est **d'ordre supérieur à 2**.
 
 * La méthode de **Newton** est **convergente d'ordre au moins 2** mais nécessite le **calcul de dérivées** et un **bon choix d'initialisation**.
 
-* Les méthodes **d'itérations de point fixe** convergent sous des conditions portant sur la **fonction d'itération** $g$ et sa dérivée $g'$. Leur convergence est généralement **linéaire**, mais devient **quadratique** quand $g(c)=0$.
+* Les méthodes **d'itérations de point fixe** convergent sous des conditions portant sur la **fonction d'itération** $g$ et sa dérivée $g'$. Leur convergence est généralement **linéaire**, mais devient **quadratique** quand $g'(c)=0$.
