@@ -1,0 +1,3706 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Nicolas OUDART" /><link rel="canonical" href="https://nicoudart.github.io/UVSQ_LSPH515_methodes_num/Chap5_Systemes_lineaires/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>V. Systèmes linéaires - UVSQ_LSPH515_methodes_num</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "V. Syst\u00e8mes lin\u00e9aires";
+        var mkdocs_page_input_path = "Chap5_Systemes_lineaires.md";
+        var mkdocs_page_url = "/UVSQ_LSPH515_methodes_num/Chap5_Systemes_lineaires/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> UVSQ_LSPH515_methodes_num
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Accueil</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Chap1_Introduction/">I. Introduction</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Chap2_Recherche_de_racines/">II. Recherche de racines</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Chap3_Interpolation_polynomiale/">III. Interpolation polynomiale</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Chap4_Integration_numerique/">IV. Intégration numérique</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">V. Systèmes linéaires</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#position-du-probleme">Position du problème</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#motivation">Motivation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#solution-rang-et-determinant">Solution, rang et déterminant</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#conditionnement">Conditionnement</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exemple-de-probleme">Exemple de problème</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#la-regle-de-cramer">La règle de Cramer</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#theoreme">Théorème</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#algorithme-n3">Algorithme (n=3)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exemple">Exemple</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#methodes-directes-delimination">Méthodes directes d'élimination</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#proprietes-des-systemes-lineaires">Propriétés des systèmes linéaires</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#pivot-de-gauss">Pivot de Gauss</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#idee">Idée</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#algorithmes">Algorithmes</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#exemple_1">Exemple</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#elimination-de-gauss-jordan">Elimination de Gauss-Jordan</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#idee_1">Idée</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#algorithme">Algorithme</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#exemple_2">Exemple</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#methodes-directes-de-factorisation-decomposition">Méthodes directes de factorisation / décomposition</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#equivalence-elimination-factorisation">Equivalence élimination - factorisation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#decomposition-lu-et-plu">Décomposition LU et PLU</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#idee_2">Idée</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#algorithme_1">Algorithme</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#exemple_3">Exemple</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#autres-decompositions-qr-et-cholesky">Autres décompositions (QR et Cholesky)</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#decomposition-qr">Décomposition QR</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#decomposition-de-cholesky">Décomposition de Cholesky</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#methodes-iteratives">Méthodes itératives</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#principe-et-convergence">Principe et convergence</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#methode-de-jacobi">Méthode de Jacobi</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#idee_3">Idée</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#algorithme_2">Algorithme</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#exemple_4">Exemple</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#methode-de-gauss-seidel">Méthode de Gauss-Seidel</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#idee_4">Idée</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#algorithme_3">Algorithme</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#exemple_5">Exemple</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#methode-de-relaxation">Méthode de relaxation</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#idee_5">Idée</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#algorithme_4">Algorithme</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#exemple_6">Exemple</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#conclusion">Conclusion</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">UVSQ_LSPH515_methodes_num</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">V. Systèmes linéaires</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="chapitre-v-resolution-de-systemes-dequations-lineaires">Chapitre V : Résolution de systèmes d'équations linéaires</h1>
+<p>Ce chapitre porte sur les méthodes numériques pour la résolution d'un système linéaire d'équations.</p>
+<p><img alt="En-tête chapitre V" src="../img/Chap5_header.png" /></p>
+<hr />
+<h2 id="position-du-probleme">Position du problème</h2>
+<h3 id="motivation">Motivation</h3>
+<p>Notre but est de résoudre un <strong>système linéaire</strong> : un ensemble d'équations portant sur les mêmes inconnues.</p>
+<p>Un système de <span class="arithmatex">\(m\)</span> équations linéaires à <span class="arithmatex">\(n\)</span> inconnues peut s'écrire sous la forme suivante :</p>
+<p><span class="arithmatex">\(\begin{cases}
+a_{1,1} x_1 + a_{1,2} x_2 + ... + a_{1,n} x_n = b_1\\
+a_{2,1} x_1 + a_{2,2} x_2 + ... + a_{2,n} x_n = b_2\\
+...\\
+a_{m,1} x_1 + a_{m,2} x_2 + ... + a_{m,n} x_n = b_m
+\end{cases}\)</span></p>
+<p>avec <span class="arithmatex">\(x_1,x_2,...,x_n\)</span> les <strong>inconnues</strong> et <span class="arithmatex">\(a_{i,j}\)</span> les <strong>coefficients</strong> du système.</p>
+<p>On peut également écrire ce système sous forme matricielle :</p>
+<p><span class="arithmatex">\(A x = b\)</span></p>
+<p>avec <span class="arithmatex">\(A\)</span> une matrice de coefficients réels de taille <span class="arithmatex">\(m \times n\)</span>, <span class="arithmatex">\(x\)</span> est un vecteur de taille <span class="arithmatex">\(n\)</span> contenant les variables réelles recherchées, et <span class="arithmatex">\(b\)</span> est un vecteur contenant <span class="arithmatex">\(m\)</span> réels.</p>
+<p><span class="arithmatex">\(A = 
+ \begin{pmatrix}
+  a_{1,1} &amp; a_{1,2} &amp; \cdots &amp; a_{1,n} \\
+  a_{2,1} &amp; a_{2,2} &amp; \cdots &amp; a_{2,n} \\
+  \vdots  &amp; \vdots  &amp; \ddots &amp; \vdots  \\
+  a_{m,1} &amp; a_{m,2} &amp;\cdots &amp; a_{m,n} 
+ \end{pmatrix}\)</span></p>
+<p><span class="arithmatex">\(x =
+ \begin{pmatrix}
+  x_1\\
+  x_2\\
+  \vdots\\
+  x_n 
+ \end{pmatrix}\)</span></p>
+<p><span class="arithmatex">\(b =
+ \begin{pmatrix}
+  b_1\\
+  b_2\\
+  \vdots\\
+  b_n 
+ \end{pmatrix}\)</span></p>
+<p>Si <span class="arithmatex">\(m&gt;n\)</span>, on dit le système <strong>sur-déterminé</strong>.
+Si <span class="arithmatex">\(m&lt;n\)</span>, on dit le système <strong>sous-déterminé</strong>.</p>
+<h3 id="solution-rang-et-determinant">Solution, rang et déterminant</h3>
+<p>Face à un système linéaire, il y a 3 cas possibles :</p>
+<ul>
+<li>Le système n'a pas de solution.</li>
+<li>Le système a une infinité de solution.</li>
+<li>Le système a une solution unique.</li>
+</ul>
+<p>On peut savoir dans quel cas on se trouve avec le <strong>rang de la matrice <span class="arithmatex">\(A\)</span></strong>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Définition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Le <strong>rang</strong> d'une matrice <span class="arithmatex">\(A\)</span> est son nombre de vecteurs lignes ou colonnes linéairement indépendants.</td>
+</tr>
+</tbody>
+</table>
+<p>Si <span class="arithmatex">\(A\)</span> est de dimensions <span class="arithmatex">\(m \times n\)</span>, alors <span class="arithmatex">\(rang(A) \leq min(m,n)\)</span>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Théorème de Rouché-Fontené</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Le système linéaire <span class="arithmatex">\(A x = b\)</span> avec</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(A\)</span> une matrice de taille <span class="arithmatex">\(m \times n\)</span>,</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(x\)</span> un vecteur de taille <span class="arithmatex">\(n\)</span>,</td>
+</tr>
+<tr>
+<td style="text-align: left;">et <span class="arithmatex">\(b\)</span> un vecteur de taille <span class="arithmatex">\(m\)</span>,</td>
+</tr>
+<tr>
+<td style="text-align: left;">admet une solution <strong>si et seulement si</strong> :</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(rang(A) = rang([A \mid b])\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Si de plus, <span class="arithmatex">\(rang(A) = n\)</span>, alors le système admet une <strong>unique solution</strong>.</td>
+</tr>
+<tr>
+<td style="text-align: left;">Sinon, le système admet une infinité de solutions.</td>
+</tr>
+</tbody>
+</table>
+<p>Dans le cas où la matrice <span class="arithmatex">\(A\)</span> est carrée, on a même le théorème suivant :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Théorème</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Lorsque la matrice <span class="arithmatex">\(A\)</span> est carrée de dimension <span class="arithmatex">\(n \times n\)</span>,</td>
+</tr>
+<tr>
+<td style="text-align: left;">avec <span class="arithmatex">\(n\)</span> la taille du vecteur <span class="arithmatex">\(x\)</span>,</td>
+</tr>
+<tr>
+<td style="text-align: left;">le système linéaire <span class="arithmatex">\(A x = b\)</span> admet une <strong>unique solution</strong> si et seulement si :</td>
+</tr>
+<tr>
+<td style="text-align: left;">le <strong>déterminant de <span class="arithmatex">\(A\)</span></strong> noté <span class="arithmatex">\(det(A)\)</span> est non nul.</td>
+</tr>
+<tr>
+<td style="text-align: left;">(<span class="arithmatex">\(A\)</span> est alors inversible, et on note <span class="arithmatex">\(A^{-1}\)</span> son inverse)</td>
+</tr>
+</tbody>
+</table>
+<p>On dit alors que le <strong>système est de Cramer</strong> et on peut écrire :</p>
+<p><span class="arithmatex">\(x = A^{-1} b\)</span></p>
+<p>Le <strong>système homogène</strong> <span class="arithmatex">\(A x = 0\)</span> admet toujours le vecteur nul comme solution :</p>
+<ul>
+<li>
+<p>Si <span class="arithmatex">\(det(A) \neq 0\)</span> c'est l'unique solution. </p>
+</li>
+<li>
+<p>Sinon il y en a une infinité.</p>
+</li>
+</ul>
+<p>Dans le cas d'un <strong>système non homogène</strong> (<span class="arithmatex">\(b \neq 0\)</span>), si <span class="arithmatex">\(det(A) = 0\)</span> :</p>
+<ul>
+<li>
+<p>Soit <span class="arithmatex">\(rang(A) = rang([A \mid b])\)</span> alors il y a une infinité de solutions.</p>
+</li>
+<li>
+<p>Soit <span class="arithmatex">\(rang(A) \neq rang([A \mid b])\)</span> alors il n'y a pas de solution.</p>
+</li>
+</ul>
+<h3 id="conditionnement">Conditionnement</h3>
+<p>Même quand un système linéaire admet une solution unique, cette solution peut ne pas être "stable".</p>
+<p>Un système est dit "<strong>mal conditionné</strong>" si la solution est extrêmement sensible aux perturbations des coefficients <span class="arithmatex">\(A + \Delta A\)</span> et des seconds membres <span class="arithmatex">\(b + \Delta b\)</span>.</p>
+<p>Un déterminant petit est souvent indicateur d'un mauvais conditionnement.</p>
+<p>Pour quantifier la sensibilité de l'erreur relative sur la solution du système linéaire <span class="arithmatex">\(A x = b\)</span> aux variation de <span class="arithmatex">\(A\)</span> et <span class="arithmatex">\(b\)</span>, on peut estimer le <strong>conditionnement de la matrice A</strong> :</p>
+<p><span class="arithmatex">\(\kappa(A) = \|A\| \|A^{-1}\|\)</span></p>
+<p>avec une norme matricielle à définir.</p>
+<p>L'erreur relative sur la solution est inférieure à l'erreur relative sur les données multiplisée par <span class="arithmatex">\(\kappa(A)\)</span> :</p>
+<ul>
+<li>
+<p>Si <span class="arithmatex">\(\kappa(A)\)</span> est petit (de l'ordre de l'unité) on dit que le conditionnement est bon.</p>
+</li>
+<li>
+<p>Si <span class="arithmatex">\(\kappa(A) &gt;&gt; 1\)</span> le système est dit mal conditionné.</p>
+</li>
+</ul>
+<p>Le calcul du conditionnement dépend du choix de la norme :</p>
+<ul>
+<li>
+<p>La <strong>norme infinie</strong> : <span class="arithmatex">\(\|A\|_{\infty} = max_{1 \leq i \leq n} \displaystyle\sum_{j=1}^{n} |a_{i,j}|\)</span></p>
+</li>
+<li>
+<p>La <strong>norme 1</strong> : <span class="arithmatex">\(\|A\|_1 = max_{1 \leq j \leq n} \displaystyle\sum_{i=1}^{n} |a_{i,j}|\)</span></p>
+</li>
+<li>
+<p>La <strong>norme 2</strong> : <span class="arithmatex">\(\|A\|_2 = \|A^T\|_2 = \sqrt{\rho(A A^T)} = \sqrt{\rho(A^T A)}\)</span></p>
+</li>
+</ul>
+<p><span class="arithmatex">\(\rho(A)\)</span> est le <strong>rayon spectral</strong> de <span class="arithmatex">\(A\)</span>, que l'on définit comme : 
+<span class="arithmatex">\(\rho(A) = max_{1 \leq i \leq n} |\lambda_i|\)</span>
+avec <span class="arithmatex">\(\lambda_i\)</span> les <strong>valeurs propres</strong> de <span class="arithmatex">\(A\)</span>.</p>
+<p>On utilisera surtout le conditionnement de <span class="arithmatex">\(A\)</span> au sens de la norme 1 et de la norme 2 :</p>
+<p><span class="arithmatex">\(\kappa_1(A) = \|A\|_1 \|A^{-1}\|_1\)</span></p>
+<p><span class="arithmatex">\(\kappa_2(A) = \|A\|_2 \|A^{-1}\|_2\)</span></p>
+<p>Pour une matrice carrée <span class="arithmatex">\(A\)</span> d'ordre <span class="arithmatex">\(n\)</span> inversible, le conditionnement vérifie les propriétés suivantes :</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(\kappa(A) \geq 1\)</span></p>
+</li>
+<li>
+<p><span class="arithmatex">\(\forall \alpha \in \mathbb{R}\)</span>, <span class="arithmatex">\(\kappa(\alpha A) = \kappa(A)\)</span></p>
+</li>
+<li>
+<p><span class="arithmatex">\(\kappa(A) = \kappa(A^{-1})\)</span></p>
+</li>
+<li>
+<p>Si on note <span class="arithmatex">\(\sigma_{min}^2\)</span> et <span class="arithmatex">\(\sigma_{max}^2\)</span> la plus petite et la plus grande valeur propre de <span class="arithmatex">\(A A^T\)</span> : <span class="arithmatex">\(\kappa_2(A) = \frac{\sigma_{max}}{\sigma_{min}}\)</span></p>
+</li>
+<li>
+<p>Si <span class="arithmatex">\(A\)</span> est une matrice <strong>réelle symétrique</strong> (<span class="arithmatex">\(A = A^T\)</span>), si <span class="arithmatex">\(\lambda_{min}\)</span> et <span class="arithmatex">\(\lambda_{max}\)</span> sont la plus petite et la plus grande valeur propre de <span class="arithmatex">\(A\)</span> en valeur absolue, on a : <span class="arithmatex">\(\kappa_2(A) = \mid \frac{\lambda_{max}}{\lambda_{min}} \mid\)</span></p>
+</li>
+<li>
+<p>Si <span class="arithmatex">\(A\)</span> est une matrice <strong>orthogonale</strong> (<span class="arithmatex">\(A A^T = A^T A = I\)</span>) alors <span class="arithmatex">\(\kappa_2(A) = 1\)</span></p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Effet d'une perturbation de <span class="arithmatex">\(b\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Si on a une perturbation <span class="arithmatex">\(\Delta b\)</span> sur <span class="arithmatex">\(b\)</span> induisant une erreur <span class="arithmatex">\(\Delta x\)</span> sur <span class="arithmatex">\(x\)</span>, alors on aura la majoration :</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(\frac{\Vert \Delta x \Vert}{\Vert x \Vert} \leq \kappa(A) \frac{\Vert \Delta b \Vert}{\Vert b \Vert}\)</span></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Effet d'une perturbation de <span class="arithmatex">\(A\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Si on a une perturbation <span class="arithmatex">\(\Delta A\)</span> sur <span class="arithmatex">\(A\)</span> induisant une erreur <span class="arithmatex">\(\Delta x\)</span> sur <span class="arithmatex">\(x\)</span>, alors on aura la majoration :</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(\frac{\Vert \Delta x \Vert}{\Vert x + \Delta x \Vert} \leq \kappa(A) \frac{\Vert \Delta A \Vert}{\Vert A \Vert}\)</span></td>
+</tr>
+</tbody>
+</table>
+<h3 id="exemple-de-probleme">Exemple de problème</h3>
+<p>Au cours de ce chapitre, nous appliquerons les différentes méthodes d'intégration à un même exemple : <strong>Le positionnement par satellites GPS</strong>.</p>
+<p>Nous exprimerons ici les positions en km, avec des coordonnées dans le repère cartésien ECEF (Earth-Centered Earth-Fixed), ayant pour origine le centre de la Terre.</p>
+<ul>
+<li>
+<p>Soit un récepteur au sol dont on veut connaitre la position <span class="arithmatex">\((x_r,y_r,z_r)\)</span> dans ce repère cartésien.</p>
+</li>
+<li>
+<p>Soient 4 satellites de la constellation GPS, dont la position est connue dans ce même repère : <span class="arithmatex">\((x_{s1},y_{s1},z_{s1})\)</span>, <span class="arithmatex">\((x_{s2},y_{s2},z_{s2})\)</span>, <span class="arithmatex">\((x_{s3},y_{s3},z_{s3})\)</span> and <span class="arithmatex">\((x_{s4},y_{s4},z_{s4})\)</span>.</p>
+</li>
+<li>
+<p>Chaque satellite émet un signal, qui est reçu avec un certain temps de retard par le récepteur. Ces temps de retard <span class="arithmatex">\((t_1,t_2,t_3,t_4)\)</span> sont mesurés par le récepteur.</p>
+</li>
+<li>
+<p>On admet que les signaux émis par chaque satellite se déplacent à vitesse constante jusqu'au récepteur : <span class="arithmatex">\(c = 3.10^5 km/s\)</span>.</p>
+</li>
+</ul>
+<p>La distance euclidienne entre chaque satellite et le récepteur doit être égale au temps de retard du signal multiplié par sa vitesse.
+On en déduit facilement que les différentes variables sont liées par le système de 4 équations suivant :</p>
+<p><span class="arithmatex">\(\begin{cases}
+(x_r-x_{s1})^2 + (y_r-y_{s1})^2 + (z_r-z_{s1})^2 = (c t_1)^2\\
+(x_r-x_{s2})^2 + (y_r-y_{s2})^2 + (z_r-z_{s2})^2 = (c t_2)^2\\
+(x_r-x_{s3})^2 + (y_r-y_{s3})^2 + (z_r-z_{s3})^2 = (c t_3)^2\\
+(x_r-x_{s4})^2 + (y_r-y_{s4})^2 + (z_r-z_{s4})^2 = (c t_4)^2
+\end{cases}\)</span></p>
+<p>Que l'on peut développer :</p>
+<p><span class="arithmatex">\(\begin{cases}
+x_r^2 - 2 x_{s1} x_r + x_{s1}^2 + y_r^2 - 2 y_{s1} y_r + y_{s1}^2 + z_r^2 - 2 z_{s1} z_r + z_{s1}^2 = (c t_1)^2\\
+x_r^2 - 2 x_{s2} x_r + x_{s2}^2 + y_r^2 - 2 y_{s2} y_r + y_{s2}^2 + z_r^2 - 2 z_{s2} z_r + z_{s2}^2 = (c t_2)^2\\
+x_r^2 - 2 x_{s3} x_r + x_{s3}^2 + y_r^2 - 2 y_{s3} y_r + y_{s3}^2 + z_r^2 - 2 z_{s3} z_r + z_{s3}^2 = (c t_3)^2\\
+x_r^2 - 2 x_{s4} x_r + x_{s4}^2 + y_r^2 - 2 y_{s4} y_r + y_{s4}^2 + z_r^2 - 2 z_{s4} z_r + z_{s4}^2 = (c t_4)^2
+\end{cases}\)</span></p>
+<p>En soustrayant la 1ère équation aux 3 autres, on réduit le système à 3 équations :</p>
+<p><span class="arithmatex">\(\begin{cases}
+x_{s2}^2 + y_{s2}^2 + z_{s2}^2 - 2 x_{s2} x_r - 2 y_{s2} y_r - 2 z_{s2} z_r - x_{s1}^2 - y_{s1}^2 - z_{s1}^2 + 2 x_{s1} x_r + 2 y_{s1} y_r + 2 z_{s1} z_r = (c t_2)^2-(c t_1)^2\\
+x_{s3}^2 + y_{s3}^2 + z_{s3}^2 - 2 x_{s3} x_r - 2 y_{s3} y_r - 2 z_{s3} z_r - x_{s1}^2 - y_{s1}^2 - z_{s1}^2 + 2 x_{s1} x_r + 2 y_{s1} y_r + 2 z_{s1} z_r = (c t_3)^2-(c t_1)^2\\
+x_{s4}^2 + y_{s4}^2 + z_{s4}^2 - 2 x_{s4} x_r - 2 y_{s4} y_r - 2 z_{s4} z_r - x_{s1}^2 - y_{s1}^2 - z_{s1}^2 + 2 x_{s1} x_r + 2 y_{s1} y_r + 2 z_{s1} z_r = (c t_4)^2-(c t_1)^2
+\end{cases}\)</span></p>
+<p>Qui revient en regroupant les termes :</p>
+<p><span class="arithmatex">\(\begin{cases}
+x_{s2}^2 - x_{s1}^2 + y_{s2}^2 - y_{s1}^2 + z_{s2}^2 - z_{s1}^2 - 2 (x_{s2}-x_{s1}) x_r - 2 (y_{s2}-y_{s1}) y_r - 2 (z_{s2}-z_{s1}) z_r = (c t_2)^2-(c t_1)^2\\
+x_{s3}^2 - x_{s1}^2 + y_{s3}^2 - y_{s1}^2 + z_{s3}^2 - z_{s1}^2 - 2 (x_{s3}-x_{s1}) x_r - 2 (y_{s3}-y_{s1}) y_r - 2 (z_{s3}-z_{s1}) z_r = (c t_3)^2-(c t_1)^2\\
+x_{s4}^2 - x_{s1}^2 + y_{s4}^2 - y_{s1}^2 + z_{s4}^2 - z_{s1}^2 - 2 (x_{s4}-x_{s1}) x_r - 2 (y_{s4}-y_{s1}) y_r - 2 (z_{s4}-z_{s1}) z_r = (c t_4)^2-(c t_1)^2
+\end{cases}\)</span></p>
+<p>Et en réarrangeant on obtient finalement le système linéaire :</p>
+<p><span class="arithmatex">\(\begin{cases}
+(x_{s2}-x_{s1}) x_r + (y_{s2}-y_{s1}) y_r + (z_{s2}-z_{s1}) z_r = \frac{1}{2} (x_{s2}^2 - x_{s1}^2 + y_{s2}^2 - y_{s1}^2 + z_{s2}^2 - z_{s1}^2 - (c t_2)^2 + (c t_1)^2)\\
+(x_{s3}-x_{s1}) x_r + (y_{s3}-y_{s1}) y_r + (z_{s3}-z_{s1}) z_r = \frac{1}{2} (x_{s3}^2 - x_{s1}^2 + y_{s3}^2 - y_{s1}^2 + z_{s3}^2 - z_{s1}^2 - (c t_3)^2 + (c t_1)^2)\\
+(x_{s4}-x_{s1}) x_r + (y_{s4}-y_{s1}) y_r + (z_{s4}-z_{s1}) z_r = \frac{1}{2} (x_{s4}^2 - x_{s1}^2 + y_{s4}^2 - y_{s1}^2 + z_{s4}^2 - z_{s1}^2 - (c t_4)^2 + (c t_1)^2)
+\end{cases}\)</span></p>
+<p>avec 3 équations et 3 inconnues <span class="arithmatex">\((x_r,y_r,z_r)\)</span>.</p>
+<p>On peut écrire ce système sous la forme matricielle <span class="arithmatex">\(A x = b\)</span> :</p>
+<p><span class="arithmatex">\(\begin{pmatrix}
+  x_{s2}-x_{s1} &amp; y_{s2}-y_{s1} &amp; z_{s2}-z_{s1} \\
+  x_{s3}-x_{s1} &amp; y_{s3}-y_{s1} &amp; z_{s3}-z_{s1} \\
+  x_{s4}-x_{s1} &amp; y_{s4}-y_{s1} &amp; z_{s4}-z_{s1}
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  \frac{1}{2} (x_{s2}^2 - x_{s1}^2 + y_{s2}^2 - y_{s1}^2 + z_{s2}^2 - z_{s1}^2 - (c t_2)^2 + (c t_1)^2)\\
+  \frac{1}{2} (x_{s3}^2 - x_{s1}^2 + y_{s3}^2 - y_{s1}^2 + z_{s3}^2 - z_{s1}^2 - (c t_3)^2 + (c t_1)^2)\\
+  \frac{1}{2} (x_{s4}^2 - x_{s1}^2 + y_{s4}^2 - y_{s1}^2 + z_{s4}^2 - z_{s1}^2 - (c t_4)^2 + (c t_1)^2)
+ \end{pmatrix}\)</span> </p>
+<p>Admettons que le récepteur GPS se trouve aux coordonnées ECEF <span class="arithmatex">\((x_r,y_r,z_r) = (4205,158,4777)\)</span>, correspondant approximativement à la position de l'UFR des Sciences de l'UVSQ.</p>
+<p>Si la position des 4 satellites est :</p>
+<ul>
+<li>
+<p><span class="arithmatex">\((x_{s1},y_{s1},z_{s1}) = (14000,4000,25000)\)</span></p>
+</li>
+<li>
+<p><span class="arithmatex">\((x_{s2},y_{s2},z_{s2}) = (9000,-14000,21000)\)</span></p>
+</li>
+<li>
+<p><span class="arithmatex">\((x_{s3},y_{s3},z_{s3}) = (24000,6000,15000)\)</span></p>
+</li>
+<li>
+<p><span class="arithmatex">\((x_{s4},y_{s4},z_{s4}) = (10000,16000,19000)\)</span></p>
+</li>
+</ul>
+<p>Alors le temps de retard associé à chaque satellite sera approximativement :</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(t_1 = 0.0759878 s\)</span></p>
+</li>
+<li>
+<p><span class="arithmatex">\(t_2 = 0.0735321 s\)</span></p>
+</li>
+<li>
+<p><span class="arithmatex">\(t_3 = 0.0767739 s\)</span></p>
+</li>
+<li>
+<p><span class="arithmatex">\(t_4 = 0.0735485 s\)</span></p>
+</li>
+</ul>
+<p>(Il est à noter que les positions des satellites ont été choisies pour être réalistes des satellites GPS).</p>
+<p>Le système devient alors :</p>
+<p><span class="arithmatex">\(\begin{pmatrix}
+  -5000 &amp; -18000 &amp; -4000 \\
+  10000 &amp; 2000 &amp; -10000 \\
+  -4000 &amp; 12000 &amp; -6000
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -42977000\\
+  -5404000\\
+  -43586000
+ \end{pmatrix}\)</span> </p>
+<p>C'est ce système d'équations linéaires que nous chercherons à résoudre pour essayer de retrouver la position <span class="arithmatex">\((x_r,y_r,z_r)\)</span> du récepteur.</p>
+<p>On peut déjà vérifier que ce système a bien une unique racine :</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(A\)</span> est carrée de dimensions <span class="arithmatex">\(3 \times 3\)</span>, <span class="arithmatex">\(x\)</span> et <span class="arithmatex">\(b\)</span> sont de taille 3.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(det(A) = (-5000 \times 2000 \times -6000) + (10000 \times 12000 \times -4000) + (-18000 \times -10000 \times -4000)\)</span> 
+<span class="arithmatex">\(- (-4000 \times 2000 \times -4000) - (-5000 \times 12000 \times -10000) - (10000 \times -18000 \times -6000)\)</span>
+<span class="arithmatex">\(= -2852000000000 \neq 0\)</span></p>
+</li>
+</ul>
+<p>Il s'agit donc d'un <strong>système de Cramer</strong> : on a bien <strong>unicité de la solution</strong>.</p>
+<p>On peut également vérifier si le système est bien conditionné :</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(\kappa_1(A) \approx 5.03\)</span></p>
+</li>
+<li>
+<p><span class="arithmatex">\(\kappa_2(A) \approx 2.36\)</span></p>
+</li>
+</ul>
+<p>Dans les 2 cas, le conditionnement est de l'ordre de l'unité : un a donc un <strong>bon conditionnement</strong>.</p>
+<p>Dans la suite de ce chapitre, on utilisera Numpy sous Python pour définir / manipuler les matrices <span class="arithmatex">\(A\)</span> et <span class="arithmatex">\(b\)</span> :</p>
+<pre><code>import numpy as np
+</code></pre>
+<p>On définira le vecteur de la position du récepteur GPS à retrouver avec :</p>
+<pre><code>pos_rec = np.array([4205,158,4777],dtype=np.float64)
+</code></pre>
+<p>On définira ensuite les vecteurs de positions des satellites GPS avec :</p>
+<pre><code>pos_sat1 = np.array([14000,4000,25000],dtype=np.float64) #Coordonnées du satellite GPS 1
+pos_sat2 = np.array([9000,-14000,21000],dtype=np.float64) #Coordonnées du satellite GPS 2
+pos_sat3 = np.array([24000,6000,15000],dtype=np.float64) #Coordonnées du satellite GPS 3
+pos_sat4 = np.array([10000,16000,19000],dtype=np.float64) #Coordonnées du satellite GPS 4
+</code></pre>
+<p>On pourra alors en déduire les temps de retard associés :</p>
+<pre><code>t1 = ((sum((pos_rec-pos_sat1)**2))**0.5)/3e5 #Temps de retard associé au satellite GPS 1
+t2 = ((sum((pos_rec-pos_sat2)**2))**0.5)/3e5 #Temps de retard associé au satellite GPS 2
+t3 = ((sum((pos_rec-pos_sat3)**2))**0.5)/3e5 #Temps de retard associé au satellite GPS 3
+t4 = ((sum((pos_rec-pos_sat4)**2))**0.5)/3e5 #Temps de retard associé au satellite GPS 4
+</code></pre>
+<p>Et pour finir, on pourra définir les matrices <span class="arithmatex">\(A\)</span> et <span class="arithmatex">\(b\)</span> du système linéaire à résoudre :</p>
+<pre><code>A = np.vstack((pos_sat2-pos_sat1,pos_sat3-pos_sat1,pos_sat4-pos_sat1))
+
+b_row1 = 0.5*(sum(pos_sat2**2)-sum(pos_sat1**2)-(3e5*t2)**2+(3e5*t1)**2)
+b_row2 = 0.5*(sum(pos_sat3**2)-sum(pos_sat1**2)-(3e5*t3)**2+(3e5*t1)**2)
+b_row3 = 0.5*(sum(pos_sat4**2)-sum(pos_sat1**2)-(3e5*t4)**2+(3e5*t1)**2)
+
+b = np.array([b_row1,b_row2,b_row3])
+</code></pre>
+<h2 id="la-regle-de-cramer">La règle de Cramer</h2>
+<h3 id="theoreme">Théorème</h3>
+<p>La <strong>règle de Cramer</strong> (ou méthode de Cramer) est un théorème d'algèbre linéaire qui donne la solution d'un système de Cramer :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Théorème de la règle de Cramer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Le système de Cramer <span class="arithmatex">\(A x = b\)</span> avec</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(A\)</span> matrice carrée de taille <span class="arithmatex">\(n \times n\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(x\)</span> vecteur de taille <span class="arithmatex">\(n\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(b\)</span> vecteur de taille <span class="arithmatex">\(n\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">admet une solution <strong>si et seulement si</strong> <span class="arithmatex">\(A\)</span> est inversible.</td>
+</tr>
+<tr>
+<td style="text-align: left;">Cette solution est donnée par :</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(x_i = \frac{det(A_i)}{det(A)}\)</span> pour <span class="arithmatex">\(i=1,...,n\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">où <span class="arithmatex">\(A_i\)</span> est la matrice carrée formée en remplaçant la i-ème colonne de <span class="arithmatex">\(A\)</span> par le vecteur <span class="arithmatex">\(b\)</span>.</td>
+</tr>
+</tbody>
+</table>
+<p>Lorsque le système n'est pas de Cramer (donc si <span class="arithmatex">\(det(A)=0\)</span>) :</p>
+<ul>
+<li>
+<p>Si le déterminant d'une des matrices <span class="arithmatex">\(A_i\)</span> est nul alors le système n'a pas de solution.</p>
+</li>
+<li>
+<p>La réciproque est fausse : il peut arriver qu'un système n'ait pas de solution alors que tous les <span class="arithmatex">\(det(A_i)\)</span> sont non-nuls.</p>
+</li>
+</ul>
+<p>Cette méthode est très couteuse en nombre d'opérations et devient donc inapplicable à de grands systèmes (plus de 4 équations).</p>
+<h3 id="algorithme-n3">Algorithme (n=3)</h3>
+<p>Dans cette section, nous présenterons les algorithmes permettant d'appliquer la méthode de Cramer dans le cas d'une matrice de dimensions <span class="arithmatex">\((3 \times 3)\)</span> : 3 équations et 3 inconnues.</p>
+<p>Le déterminant d'une matrice de dimensions <span class="arithmatex">\(3 \times 3\)</span> peut être calculé à l'aide de la fonction Python suivante.</p>
+<p>Cette fonction prend en entrée :</p>
+<ul>
+<li><code>A</code> la matrice de dimensions <span class="arithmatex">\(3 \times 3\)</span> dont on veut trouver le déterminant.</li>
+</ul>
+<p>Elle se base simplement sur la formule du déterminant d'une matrice <span class="arithmatex">\(3 \times 3\)</span>.</p>
+<pre><code>def det_3(A):
+
+    return A[0,0]*A[1,1]*A[2,2]+A[0,1]*A[1,2]*A[2,0]+A[0,2]*A[1,0]*A[2,1]-A[0,2]*A[1,1]*A[2,0]-A[0,1]*A[1,0]*A[2,2]-A[0,0]*A[1,2]*A[2,1]
+</code></pre>
+<p>Voici l'algorithme de Cramer pour une matrice de dimensions <span class="arithmatex">\(3 \times 3\)</span> sous la forme d'une fonction Python.</p>
+<p>Cette fonction prend en entrée :</p>
+<ul>
+<li>
+<p><code>A</code> la matrice de dimensions <span class="arithmatex">\(3 \times 3\)</span> des coefficients du système.</p>
+</li>
+<li>
+<p><code>b</code> le vecteur de dimension 3 du second membre du système.</p>
+</li>
+</ul>
+<pre><code>def cramer_3(A,b):
+
+    #Vérification des dimensions de A (3x3) et b (3) :
+    if (np.shape(A)!=(3,3))or(len(b)!=3):
+
+        raise ValueError(&quot;Le système n'est pas de Cramer&quot;)
+
+    #Calculer le déterminant de A :
+    det_A = det_3(A)
+
+    #Vérifier que le système admet bien une unique solution :
+    if det_A==0:
+
+        raise ValueError(&quot;Le système n'admet pas une solution unique !&quot;)
+
+    #Initialiser le vecteur qui contiendra les 3 solutions du système :
+    x = np.array([0,0,0],dtype=np.float64)
+
+    #Boucle sur les 3 colonnes de la matrice A :
+    for i in range(3):
+
+        #Remplir la matrice A_i avec les éléments de A :
+        A_i = np.copy(A)
+
+        #Remplacer la i-ème colonne de A_i avec les éléments de b :
+        A_i[:,i] = b
+
+        #Calculer la valeur de la i-ème inconnue du système :
+        x[i] = det_3(A_i)/det_A
+
+    #Renvoyer le vecteur contenant les 3 solutions du système :
+    return x
+</code></pre>
+<h3 id="exemple">Exemple</h3>
+<p>Avant d'appliquer la méthode Cramer à notre problème exemple, il convient de vérifier que celle-ci est bien applicable.</p>
+<p>On rappelle que nous avons montré précédemment que nous avons ici affaire à un système de Cramer car :</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(A\)</span> est carrée de dimensions <span class="arithmatex">\(3 \times 3\)</span>, <span class="arithmatex">\(x\)</span> et <span class="arithmatex">\(b\)</span> sont de taille 3.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(det(A) = -2852000000000 \neq 0\)</span></p>
+</li>
+</ul>
+<p>La solution est par conséquent unique, et nous pouvons appliquer la méthode de Cramer.</p>
+<p>Tout d'abord, nous construisons <span class="arithmatex">\(A_1\)</span>, <span class="arithmatex">\(A_2\)</span> et <span class="arithmatex">\(A_3\)</span> :</p>
+<p><span class="arithmatex">\(A_1 =
+ \begin{pmatrix}
+  -42977000 &amp; -18000 &amp; -4000 \\
+  -5404000 &amp; 2000 &amp; -10000 \\
+  -43586000 &amp; 12000 &amp; -6000
+ \end{pmatrix}\)</span></p>
+<p><span class="arithmatex">\(A_2 =
+ \begin{pmatrix}
+  -5000 &amp; -42977000 &amp; -4000 \\
+  10000 &amp; -5404000 &amp; -10000 \\
+  -4000 &amp; -43586000 &amp; -6000
+ \end{pmatrix}\)</span></p>
+<p><span class="arithmatex">\(A_3 =
+ \begin{pmatrix}
+  -5000 &amp; -18000 &amp; -42977000 \\
+  10000 &amp; 2000 &amp; -5404000 \\
+  -4000 &amp; 12000 &amp; -43586000
+ \end{pmatrix}\)</span></p>
+<p>On peut alors calculer que :</p>
+<p><span class="arithmatex">\(det(A_1) = -11992660000000000\)</span></p>
+<p><span class="arithmatex">\(det(A_2) = -450616000000000\)</span></p>
+<p><span class="arithmatex">\(det(A_3) = -13624004000000000\)</span></p>
+<p>On en déduit que :</p>
+<p><span class="arithmatex">\(x_r = \frac{det(A_1)}{det(A)} = \frac{-11992660000000000}{-2852000000000} = 4205\)</span></p>
+<p><span class="arithmatex">\(y_r = \frac{det(A_2)}{det(A)} = \frac{-450616000000000}{-2852000000000} = 158\)</span></p>
+<p><span class="arithmatex">\(z_r = \frac{det(A_3)}{det(A)} = \frac{-13624004000000000}{-2852000000000} = 4777\)</span></p>
+<p><strong>Exercice :</strong></p>
+<p>Introduisez une erreur de 10 km dans les valeurs de <span class="arithmatex">\(A\)</span>, et appliquez de nouveau la méthode de Cramer au système.
+Comment ces erreurs se répercutent-elles sur l'estimation de <span class="arithmatex">\((x_r,y_r,z_r)\)</span> ?
+Ce résultat était-il attendu d'après le conditionnement de <span class="arithmatex">\(A\)</span> ?</p>
+<h2 id="methodes-directes-delimination">Méthodes directes d'élimination</h2>
+<h3 id="proprietes-des-systemes-lineaires">Propriétés des systèmes linéaires</h3>
+<p>Les méthodes dites "d'<strong>élimination</strong>" pour la résolution de systèmes linéaires se basent sur 4 grandes propriétés de ces systèmes.</p>
+<p>La solution d'un système linéaire <span class="arithmatex">\(A x = b\)</span> <strong>reste inchangée</strong> lorsque l'on applique les opérations suivantes :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Permutation de lignes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Permuter 2 lignes de <span class="arithmatex">\(A\)</span> et les éléments correspondants de <span class="arithmatex">\(b\)</span> revient à permuter 2 équations.</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Permutation de colonnes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Permuter 2 colonnes de <span class="arithmatex">\(A\)</span> et les éléments correspondants de <span class="arithmatex">\(x\)</span> revient à permuter 2 inconnues.</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Addition d'une ligne à une autre</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Ajouter une ligne de <span class="arithmatex">\(A\)</span> à une autre, et ajouter les éléments correspondants de <span class="arithmatex">\(b\)</span>, revient à additionner une équation à une autre.</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Multiplication d'une ligne par un réel non nul</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Multiplier une ligne de <span class="arithmatex">\(A\)</span> et les éléments correspondants de <span class="arithmatex">\(b\)</span> par un réel non nul revient à multipler une équation par ce réel.</td>
+</tr>
+</tbody>
+</table>
+<p>L'idée derrière les méthodes d'élimination est d'utiliser ces opération pour construire une matrice <span class="arithmatex">\(A^*\)</span> modifiée, <strong>triangulaire</strong> ou <strong>diagonale</strong>, afin de se ramener à un système <strong>simple à résoudre</strong>.</p>
+<h3 id="pivot-de-gauss">Pivot de Gauss</h3>
+<h4 id="idee">Idée</h4>
+<p>L'algorithme du <strong>pivot de Gauss</strong> a pour but de transformer le système en un <strong>système triangulaire</strong> à l'aide d'opérations sur les lignes (et éventuellement sur les colonnes).
+Il s'agit donc d'une <strong>méthode de triangularisation</strong>.</p>
+<p>Une fois la matrice triangularisée, le système à résoudre devient :</p>
+<p><span class="arithmatex">\(\begin{cases}
+a_{1,1}^* x_1 + a_{1,2}^* x_2 + ... + a_{1,n}^* x_n = b_1^*\\
+a_{2,2}^* x_2 + a_{2,3}^* x_3 + ... + a_{2,n}^* x_n = b_2^*\\
+...\\
+a_{n-1,n-1}^* x_{n-1} + a_{n-1,n}^* x_n = b_{n-1}^*\\
+a_{n,n}^* x_n = b_n^*
+\end{cases}\)</span></p>
+<p>où les <span class="arithmatex">\(a_{i,j}*\)</span> sont les coefficients de la matrice modifiée <span class="arithmatex">\(A^*\)</span>, et les <span class="arithmatex">\(b_i^*\)</span> les éléments du vecteur modifié <span class="arithmatex">\(b^*\)</span>.</p>
+<p>Pour résoudre ce système, il suffit alors d'effectuer les calculs de "<strong>remontée</strong>" suivants :</p>
+<p><span class="arithmatex">\(\begin{cases}
+x_n = \frac{b_n^*}{a_{n,n}^*}\\
+x_{n-1} = \frac{1}{a_{n-1,n-1}^*} (b_{n-1}^* - a_{n-1,n}^* x_n)\\
+...\\
+x_i = \frac{1}{a_{i,i}^*} (b_i^* - \displaystyle\sum_{j=i+1}^{n} a_{i,j}^* x_j)\\
+...\\
+x_1 = \frac{1}{a_{1,1}^*} (b_1^* - \displaystyle\sum_{j=2}^{n} a_{1,j}^* x_j)
+\end{cases}\)</span></p>
+<p>Pour triangulariser la matrice <span class="arithmatex">\(A\)</span>, on répète ces opérations pour chaque colonne <span class="arithmatex">\(j\)</span> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Opérations du pivot de Gauss</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">- On choisit une valeur non-nulle dans la colonne <span class="arithmatex">\(j\)</span>, d'indice supérieur ou égal à <span class="arithmatex">\(j\)</span>, que l'on appellera <strong>pivot</strong>.</td>
+</tr>
+<tr>
+<td style="text-align: left;">- On ramène le pivot sur la ligne <span class="arithmatex">\(j\)</span> en effectuant si nécessaire un changement de ligne.</td>
+</tr>
+<tr>
+<td style="text-align: left;">- On effectue les opérations suivantes sur les lignes d'indice <span class="arithmatex">\(j &lt; k \leq n\)</span> :</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(L_k = L_k - \frac{a_{k,j}}{a_{jj}} L_j\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">On passe à la colonne suivante, jusqu'à l'avant-dernière.</td>
+</tr>
+</tbody>
+</table>
+<p>Pour <strong>réduire les erreurs</strong> liées aux arrondis, on peut adopter plusieurs stratégies pour le choix du pivot :</p>
+<ul>
+<li>
+<p><strong>Sans pivotage</strong> : on ne réalise ni permutations de lignes, ni permutations de colonnes. Le pivot est toujours séléctionné sur la diagonale de la matrice.</p>
+</li>
+<li>
+<p>Le <strong>pivot partiel</strong> : on choisi le pivot comme étant l'élément de valeur absolue maximale de la colonne sur ou sous la diagonale. Cette stratégie n'implique que des permutations de lignes.</p>
+</li>
+<li>
+<p>Le <strong>pivot total</strong> : on choisi le pivot comme étant l'élément de valeur absolue maximale sur toute la portion de matrice non-triangularisée. Cette stratégie implique des permutations de lignes et de colonnes.</p>
+</li>
+</ul>
+<p>Choisir <strong>le pivot le plus grand possible</strong> assure que les coefficients de <span class="arithmatex">\(A\)</span> et <span class="arithmatex">\(A^*\)</span> soient de <strong>même magnitude relative</strong>, réduisant ainsi la propagation des erreurs d'arrondis. </p>
+<p>L'algorithme du pivot partiel est le plus communément utilisé.</p>
+<p>La triangularisation d'une matrice <span class="arithmatex">\(A\)</span> de dimensions <span class="arithmatex">\(n \times n\)</span> requiert de l'ordre de <span class="arithmatex">\(\frac{2 n^3}{3}\)</span> opérations.</p>
+<p>La remontée requiert de l'ordre de <span class="arithmatex">\(n^2\)</span> opérations.</p>
+<h4 id="algorithmes">Algorithmes</h4>
+<p>Voici sous la forme de fonctions Python les algorithmes d'élimination de Gauss sans pivotage, avec pivot partiel et avec pivot total.</p>
+<p>Toutes ces fonctions prennent en entrée un système de Cramer :</p>
+<ul>
+<li>
+<p><code>A</code> la matrice des coefficients du système.</p>
+</li>
+<li>
+<p><code>b</code> le vecteur du second membre du système.</p>
+</li>
+</ul>
+<p>Voici l'algorithme d'élimination de Gauss sans pivotage : </p>
+<pre><code>def gauss_sans_pivot(A,b):
+
+    #Récupérer les dimensions de la matrice A :
+    m,n = np.shape(A)
+
+    #Vérification des dimensions de A (nxn) et b (n) :
+    if (m!=n)or(len(b)!=n):
+
+        raise ValueError(&quot;Le système n'est pas de Cramer&quot;)
+
+    #Copier A et b pour ne pas modifier les matrices originales :
+    A_2 = np.copy(A)
+    b_2 = np.copy(b)
+
+    #Boucle sur les colonnes de la matrice A, jusqu'à l'avant-dernière :
+    for j in range(n-1):
+
+        #Sélection du pivot comme étant la valeur sur la diagonale de la j-ème colonne :
+        pivot = A_2[j,j]
+
+        #On vérifie que le pivot n'est pas nul :
+        if pivot!=0:
+
+            #Boucle sur les lignes sous le pivot :
+            for k in range(j+1,n):
+
+                #Opérations sur les lignes de A et b en utilisant le pivot :
+                b_2[k] = b_2[k] - b_2[j]*A_2[k,j]/pivot
+                A_2[k,:] = A_2[k,:] - A_2[j,:]*A_2[k,j]/pivot
+
+    #Renvoyer les matrices A et b modifiées :
+    return A_2,b_2
+</code></pre>
+<p>Voici l'algorithme d'élimination de Gauss avec pivot partiel : </p>
+<pre><code>def gauss_pivot_partiel(A,b):
+
+    #Récupérer les dimensions de la matrice A :
+    m,n = np.shape(A)
+
+    #Vérification des dimensions de A (nxn) et b (n) :
+    if (m!=n)or(len(b)!=n):
+
+        raise ValueError(&quot;Le système n'est pas de Cramer&quot;)
+
+    #Copier A et b pour ne pas modifier les matrices originales :
+    A_2 = np.copy(A)
+    b_2 = np.copy(b)
+
+    #Boucle sur les colonnes de la matrice A, jusqu'à l'avant-dernière :
+    for j in range(n-1):
+
+        #Sélection du pivot comme étant la valeur maximale en absolu sur la colonne, 
+        #sur la j-ième ligne ou en dessous :
+        idx_pivot = np.argmax(abs(A_2[j:,j]))+j #Indice de la ligne du pivot
+        pivot = A_2[idx_pivot,j] #Valeur du pivot
+
+        #On vérifie que le pivot n'est pas nul :
+        if pivot!=0:
+
+            #Si le pivot n'est pas sur la j-ième ligne, échanger la j-ième et la
+            #ligne du pivot :
+            if idx_pivot!=j:
+                A_2[[j,idx_pivot]] = A_2[[idx_pivot,j]] #Pour la matrice A
+                b_2[[j,idx_pivot]] = b_2[[idx_pivot,j]] #Pour le vecteur b
+
+            #Boucle sur les lignes sous le pivot :
+            for k in range(j+1,n):
+
+                #Opérations sur les lignes de A et b en utilisant le pivot :
+                b_2[k] = b_2[k] - b_2[j]*A_2[k,j]/pivot
+                A_2[k,:] = A_2[k,:] - A_2[j,:]*A_2[k,j]/pivot
+
+    #Renvoyer les matrices A et b modifiées :
+    return A_2,b_2
+</code></pre>
+<p>Voici l'algorithme d'élimination de Gauss avec pivot total :</p>
+<pre><code>def gauss_pivot_total(A,b):
+
+    #Récupérer les dimensions de la matrice A :
+    m,n = np.shape(A)
+
+    #Vérification des dimensions de A (nxn) et b (n) :
+    if (m!=n)or(len(b)!=n):
+
+        raise ValueError(&quot;Le système n'est pas de Cramer&quot;)
+
+    #Copier A et b pour ne pas modifier les matrices originales :
+    A_2 = np.copy(A)
+    b_2 = np.copy(b)
+
+    #Créer un vecteur contenant l'ordre des inconnues dans x (de 0 à n-1) :
+    idx_x = np.arange(n)
+
+    #Boucle sur les colonnes de la matrice A, jusqu'à l'avant-dernière :
+    for j in range(n-1):
+
+        #Sélection du pivot comme étant la valeur maximale en absolu sur la 
+        #portion de matrice non-triangularisée :
+        idx_pivot = np.argmax(abs(A_2[j:,j:])) #Indice du pivot
+        ligne_pivot = idx_pivot//(n-j)+j
+        colonne_pivot = idx_pivot%(n-j)+j
+        pivot = A_2[ligne_pivot,colonne_pivot] #Valeur du pivot
+
+        #On vérifie que le pivot n'est pas nul :
+        if pivot!=0:
+
+            #Si le pivot n'est pas sur la j-ième ligne, échanger la j-ième et la
+            #ligne du pivot :
+            if ligne_pivot!=j:
+                A_2[[j,ligne_pivot]] = A_2[[ligne_pivot,j]] #Pour la matrice A
+                b_2[[j,ligne_pivot]] = b_2[[ligne_pivot,j]] #Pour le vecteur b
+
+            #Si le pivot n'est pas sur la j-ième colonne, échanger la j-ième et la
+            #colonne du pivot :
+            if colonne_pivot!=j:
+                A_2[:,[j,colonne_pivot]] = A_2[:,[colonne_pivot,j]] #Pour la matrice A
+                idx_x[[j,colonne_pivot]] = idx_x[[colonne_pivot,j]] #Pour les éléments de x
+
+            #Boucle sur les lignes sous le pivot :
+            for k in range(j+1,n):
+
+                #Opérations sur les lignes de A et b en utilisant le pivot :
+                b_2[k] = b_2[k] - b_2[j]*A_2[k,j]/pivot
+                A_2[k,:] = A_2[k,:] - A_2[j,:]*A_2[k,j]/pivot
+
+    #Déterminer les indices de x permettant d'obtenir les inconnues dans l'ordre :
+    ordre_x = np.argsort(idx_x)
+
+    #Renvoyer les matrices A et b modifiées, et l'ordre des inconnues :
+    return A_2,b_2,ordre_x
+</code></pre>
+<p>Une fois, le système triangularisé par une des méthodes d'élimination de Gauss, il faut lui appliquer l'algorithme de remontée pour le résoudre.
+Voici l'algorithme de remontée sous la forme d'une fonction Python :</p>
+<pre><code>def remontee(A,b):
+
+    #Récupérer le nombre n d'équations / inconnues du système :
+    n = len(A)
+
+    #Initialiser le vecteur qui contiendra les solutions du système :
+    x = np.zeros(n,dtype=np.float64)
+
+    #Boucle sur les lignes de la matrice A, de n à 1 :
+    for i in range(n-1,-1,-1):
+
+        #Détermination de la i-ème inconnue :
+        x[i] = (b[i]-sum(A[i,i+1:n]*x[i+1:n]))/A[i,i]
+
+    #Renvoyer le vecteur contenant les solutions du système :
+    return x
+</code></pre>
+<p>Dans le cas du pivot total, pour récupérer les inconnues dans l'ordre, il faudra utiliser le vecteur retourné par la fonction "gauss_pivot_total" :</p>
+<pre><code>A_2,b_2,ordre_x = gauss_pivot_total(A,b)
+x_2 = remontee(A_2,b_2)
+x_2 = x_2[ordre_x]
+</code></pre>
+<h4 id="exemple_1">Exemple</h4>
+<p>Nous allons appliquer chacun des 3 algorithmes d'élimination de Gauss (sans pivotage, avec pivot partiel, avec pivot total) à notre problème exemple.
+On rappelle que nous avons initialement le système de Cramer <span class="arithmatex">\(A x = b\)</span> suivant :</p>
+<p><span class="arithmatex">\(\begin{pmatrix}
+  -5000 &amp; -18000 &amp; -4000 \\
+  10000 &amp; 2000 &amp; -10000 \\
+  -4000 &amp; 12000 &amp; -6000
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -42977000\\
+  -5404000\\
+  -43586000
+ \end{pmatrix}\)</span> </p>
+<p><strong>Sans pivotage :</strong></p>
+<ul>
+<li>
+<p>1ère itération : nous commençons par la colonne 1.</p>
+</li>
+<li>
+<p>On sélectionne le pivot comme étant sur la diagonale : -5000.</p>
+</li>
+<li>
+<p>On réalise les opérations suivantes : </p>
+</li>
+</ul>
+<p><span class="arithmatex">\(L_2 = L_2 - L_1 \times \frac{10000}{-5000}\)</span></p>
+<p><span class="arithmatex">\(L_3 = L_3 - L_1 \times \frac{-4000}{-5000}\)</span></p>
+<p>Le système devient alors :</p>
+<p><span class="arithmatex">\(\begin{pmatrix}
+  -5000 &amp; -18000 &amp; -4000 \\
+  0 &amp; -34000 &amp; -18000 \\
+  0 &amp; 26400 &amp; -2800
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -42977000\\
+  -91358000\\
+  -9204400
+ \end{pmatrix}\)</span></p>
+<ul>
+<li>
+<p>2nde itération : nous continuons avec la colonne 2.</p>
+</li>
+<li>
+<p>On séléctionne le pivot comme étant sur la diagonale : -34000.</p>
+</li>
+<li>
+<p>On réalise l'opération suivante :</p>
+</li>
+</ul>
+<p><span class="arithmatex">\(L_3 = L_3 - L_2 \times \frac{26400}{-34000}\)</span></p>
+<p>Le système devient alors :</p>
+<p><span class="arithmatex">\(\begin{pmatrix}
+  -5000 &amp; -18000 &amp; -4000 \\
+  0 &amp; -34000 &amp; -18000 \\
+  0 &amp; 0 &amp; -16776.47
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -42977000\\
+  -91358000\\
+  -80141200
+ \end{pmatrix}\)</span></p>
+<p>On obtient bien un système triangulaire auquel on peut appliquer l'algorithme de remontée.</p>
+<p>Voici un résumé des différentes étapes de l'algorithme sous la forme d'une animation :</p>
+<p><img alt="Elimination de Gauss sans pivotage" src="../img/Chap5_exemple_gauss_sans_pivotage.gif" /></p>
+<p>On en déduit alors les solutions par l'algorithme de remontée :</p>
+<p><span class="arithmatex">\(\begin{cases}
+z_r = \frac{-80141200}{-16776.47} = 4777\\
+y_r = \frac{1}{-34000} (-91358000 - (-18000 \times z_r)) = 158\\
+x_r = \frac{1}{-5000} (-42977000 - (-18000 \times y_r) - (-4000 \times z_r)) = 4205
+\end{cases}\)</span></p>
+<p><strong>Pivot partiel :</strong></p>
+<ul>
+<li>
+<p>1ère itération : nous commençons par la colonne 1.</p>
+</li>
+<li>
+<p>On sélectionne le pivot comme étant le maximum en valeur absolue sur la colonne, sur ou sous la diagonale : 10000.</p>
+</li>
+<li>
+<p>On échange la ligne 1 et la ligne 2 pour faire passer le pivot sur la diagonale.</p>
+</li>
+</ul>
+<p>Le système devient alors :</p>
+<p><span class="arithmatex">\(\begin{pmatrix}
+  10000 &amp; 2000 &amp; -10000 \\
+  -5000 &amp; -18000 &amp; -4000 \\
+  -4000 &amp; 12000 &amp; -6000
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -5404000\\
+  -42977000\\
+  -43586000
+ \end{pmatrix}\)</span></p>
+<ul>
+<li>On réalise les opérations suivantes : </li>
+</ul>
+<p><span class="arithmatex">\(L_2 = L_2 - L_1 \times \frac{-5000}{10000}\)</span></p>
+<p><span class="arithmatex">\(L_3 = L_3 - L_1 \times \frac{-4000}{10000}\)</span></p>
+<p>Le système devient alors :</p>
+<p><span class="arithmatex">\(\begin{pmatrix}
+  10000 &amp; 2000 &amp; -10000 \\
+  0 &amp; -17000 &amp; -9000 \\
+  0 &amp; 12800 &amp; -10000
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -5404000\\
+  -45679000\\
+  -45747600
+ \end{pmatrix}\)</span></p>
+<ul>
+<li>
+<p>2nde itération : nous continuons avec la colonne 2.</p>
+</li>
+<li>
+<p>On sélectionne le pivot comme étant le maximum en valeur absolue sur la colonne, sur ou sous la diagonale : -17000.</p>
+</li>
+<li>
+<p>On réalise l'opération suivante :</p>
+</li>
+</ul>
+<p><span class="arithmatex">\(L_3 = L_3 - L_2 \times \frac{12800}{-17000}\)</span></p>
+<p>Le système devient alors :</p>
+<p><span class="arithmatex">\(\begin{pmatrix}
+  10000 &amp; 2000 &amp; -10000 \\
+  0 &amp; -17000 &amp; -9000 \\
+  0 &amp; 0 &amp; -16776.47
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -5404000\\
+  -45679000\\
+  -80141200
+ \end{pmatrix}\)</span></p>
+<p>On obtient bien un système triangulaire auquel on peut appliquer l'algorithme de remontée.</p>
+<p>Voici un résumé des différentes étapes de l'algorithme sous la forme d'une animation :</p>
+<p><img alt="Elimination de Gauss avec pivot partiel" src="../img/Chap5_exemple_gauss_pivot_partiel.gif" /></p>
+<p>On en déduit alors les solutions par l'algorithme de remontée :</p>
+<p><span class="arithmatex">\(\begin{cases}
+z_r = \frac{-80141200}{-16776.47} = 4777\\
+y_r = \frac{1}{-17000} (-45679000 - (-9000 \times z_r)) = 158\\
+x_r = \frac{1}{10000} (-5404000 - (2000 \times y_r) - (-10000 \times z_r)) = 4205
+\end{cases}\)</span></p>
+<p><strong>Pivot total :</strong></p>
+<ul>
+<li>
+<p>1ère itération : nous commençons par la colonne 1.</p>
+</li>
+<li>
+<p>On sélectionne le pivot comme étant le maximum en valeur absolue sur la portion de matrice non-triangularisée : -18000.</p>
+</li>
+<li>
+<p>On échange la colonne 1 et la colonne 2 pour faire passer le pivot sur la diagonale.</p>
+</li>
+</ul>
+<p>Le système devient alors :</p>
+<p><span class="arithmatex">\(\begin{pmatrix}
+  -18000 &amp; -5000 &amp; -4000 \\
+  2000 &amp; 10000 &amp; -10000 \\
+  12000 &amp; -4000 &amp; -6000
+ \end{pmatrix}
+ \begin{pmatrix}
+  y_r\\
+  x_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -42977000\\
+  -5404000\\
+  -43586000
+ \end{pmatrix}\)</span> </p>
+<ul>
+<li>On réalise les opérations suivantes : </li>
+</ul>
+<p><span class="arithmatex">\(L_2 = L_2 - L_1 \times \frac{2000}{-18000}\)</span></p>
+<p><span class="arithmatex">\(L_3 = L_3 - L_1 \times \frac{12000}{-18000}\)</span></p>
+<p><span class="arithmatex">\(\begin{pmatrix}
+  -18000 &amp; -5000 &amp; -4000 \\
+  0 &amp; 9444.44 &amp; -10444.44 \\
+  0 &amp; -7333.33 &amp; -8666.67
+ \end{pmatrix}
+ \begin{pmatrix}
+  y_r\\
+  x_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -42977000\\
+  -10179222.22\\
+  -72237333.33
+ \end{pmatrix}\)</span></p>
+<ul>
+<li>
+<p>2nde itération : nous continuons avec la colonne 2.</p>
+</li>
+<li>
+<p>On sélectionne le pivot comme étant le maximum en valeur absolue sur la portion de matrice non-triangularisée : -10444.44.</p>
+</li>
+<li>
+<p>On échange la colonne 2 et la colonne 3 pour faire passer le pivot sur la diagonale.</p>
+</li>
+</ul>
+<p>Le système devient alors :</p>
+<p><span class="arithmatex">\(\begin{pmatrix}
+  -18000 &amp; -4000 &amp; -5000 \\
+  0 &amp; -10444.44 &amp; 9444.44 \\
+  0 &amp; -8666.67 &amp; -7333.33
+ \end{pmatrix}
+ \begin{pmatrix}
+  y_r\\
+  z_r\\
+  x_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -42977000\\
+  -10179222.22\\
+  -72237333.33
+ \end{pmatrix}\)</span></p>
+<ul>
+<li>On réalise l'opération suivante :</li>
+</ul>
+<p><span class="arithmatex">\(L_3 = L_3 - L_2 \times \frac{-8666.67}{-10444.44}\)</span></p>
+<p>Le système devient alors :</p>
+<p><span class="arithmatex">\(\begin{pmatrix}
+  -18000 &amp; -4000 &amp; -5000 \\
+  0 &amp; -10444.44 &amp; 9444.44 \\
+  0 &amp; 0 &amp; -15170.21
+ \end{pmatrix}
+ \begin{pmatrix}
+  y_r\\
+  z_r\\
+  x_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -42977000\\
+  -10179222.22\\
+  -63790744.68
+ \end{pmatrix}\)</span></p>
+<p>On obtient bien un système triangulaire auquel on peut appliquer l'algorithme de remontée.</p>
+<p>Voici un résumé des différentes étapes de l'algorithme sous la forme d'une animation :</p>
+<p><img alt="Elimination de Gauss avec pivot total" src="../img/Chap5_exemple_gauss_pivot_total.gif" /></p>
+<p>On en déduit alors les solutions par l'algorithme de remontée :</p>
+<p><span class="arithmatex">\(\begin{cases}
+x_r = \frac{-63790744.68}{-15170.21} = 4205\\
+z_r = \frac{1}{-10444.44} (-10179222.22 - (9444.44 \times x_r)) = 4777\\
+y_r = \frac{1}{-18000} (-63790744.68 - (-4000 \times z_r) - (-5000 \times x_r)) = 158
+\end{cases}\)</span></p>
+<p><strong>Exercice :</strong></p>
+<p>Pourquoi choisir le pivot le plus grand possible ?</p>
+<p>Dans le cas de notre problème exemple, les coefficients de <span class="arithmatex">\(A\)</span> sont tous du même ordre de grandeur, et nous n'avons pas de gros problèmes d'arrondis.
+Le résutat obtenu est donc le même pour les 3 méthodes d'élimination de Gauss (sans pivotage, avec pivot partiel, avec pivot total).</p>
+<p>Essayez à la main d'appliquer au système suivant l'élimination de Gauss sans pivotage puis avec pivot partiel, pour 4 chiffres significatifs sur tous les calculs :</p>
+<p><span class="arithmatex">\(\begin{cases}
+1.308 x_1 + 4.951 x_2 = 6.259\\
+27.05 x_1 + 1.020 x_2 = 28.07
+\end{cases}\)</span></p>
+<p>La solution de ce système est évidente : <span class="arithmatex">\(x_1 = 1.000\)</span> et <span class="arithmatex">\(x_2 = 1.000\)</span>.</p>
+<p>Retrouvez-vous ce résultat avec la méthode sans pivotage ? Avec pivot partiel ?
+Quelle est la cause de cette différence ?</p>
+<h3 id="elimination-de-gauss-jordan">Elimination de Gauss-Jordan</h3>
+<h4 id="idee_1">Idée</h4>
+<p>L'algorithme de <strong>Gauss-Jordan</strong> a pour but de transformer le système en un <strong>système échelonné réduit</strong> à l'aide d'opérations élémentaires sur les lignes (et éventuellement sur les colonnes). 
+L'idée est de pousser plus loin les éliminations que la méthode de Gauss, pour construire une matrice <span class="arithmatex">\(A^*\)</span> de la forme :</p>
+<p><span class="arithmatex">\(\begin{pmatrix}
+  1 &amp; * &amp; 0 &amp; 0 &amp; * &amp; 0\\
+  0 &amp; 0 &amp; 1 &amp; 0 &amp; * &amp; 0\\
+  0 &amp; 0 &amp; 0 &amp; 1 &amp; * &amp; 0\\
+  0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1\\
+  0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0\\
+ \end{pmatrix}\)</span></p>
+<p>Il faut donc ajouter à l'élimination de Gauss vue précédemment :</p>
+<ul>
+<li>
+<p>Une division de la ligne du pivot par le pivot, pour que le pivot soit égal à 1.</p>
+</li>
+<li>
+<p>Des opérations sur les lignes au-dessus de la ligne du pivot.</p>
+</li>
+</ul>
+<p>Il s'agit d'une <strong>méthode de diagonalisation</strong>.</p>
+<p>Si la matrice <span class="arithmatex">\(A\)</span> est <strong>carrée inversible</strong> de taille <span class="arithmatex">\(n \times n\)</span>, sa forme échelonnée réduite est la <strong>matrice identité</strong> de taille <span class="arithmatex">\(n \times n\)</span>.</p>
+<p>Le nombre d'opérations de l'algorithme de Gauss-Jordan est de l'ordre de <span class="arithmatex">\(n^3\)</span> au lieu de <span class="arithmatex">\(\frac{2}{3} n^3\)</span> pour l'élimination de Gauss.
+Mais avec l'élimination de Gauss-Jordan, <strong>la résolution du système est immédiate</strong> : la solution est directement <span class="arithmatex">\(x = b^*\)</span>.</p>
+<h4 id="algorithme">Algorithme</h4>
+<p>Comme pour l'élimination de Gauss, l'élimination de Gauss-Jordan peut se décliner sous 3 formes suivant la stratégie choix du pivot : sans pivotage, avec pivot partiel, avec pivot total.</p>
+<p>Nous donnerons ici l'algorithme de l'élimination de Gauss-Jordan avec pivot partiel, qui est le plus communément utilisé.</p>
+<p>Le voici sous la forme d'une fonction Python, qui prend en entrée un système de Cramer :</p>
+<ul>
+<li>
+<p><code>A</code> la matrice des coefficients du système.</p>
+</li>
+<li>
+<p><code>b</code> le vecteur du second membre du système.</p>
+</li>
+</ul>
+<pre><code>def gauss_jordan(A,b):
+
+    #Récupérer les dimensions de la matrice A :
+    m,n = np.shape(A)
+
+    #Vérification des dimensions de A (nxn) et b (n) :
+    if (m!=n)or(len(b)!=n):
+
+        raise ValueError(&quot;Le système n'est pas de Cramer&quot;)
+
+    #Copier A et b pour ne pas modifier les matrices originales :
+    A_2 = np.copy(A)
+    b_2 = np.copy(b)
+
+    #Boucle sur les colonnes de la matrice A :
+    for j in range(n):
+
+        #Sélection du pivot comme étant la valeur maximale en absolu sur la colonne, 
+        #sur la j-ième ligne ou en dessous :
+        idx_pivot = np.argmax(abs(A_2[j:,j]))+j #Indice de la ligne du pivot
+        pivot = A_2[idx_pivot,j] #Valeur du pivot
+
+        #On vérifie que le pivot n'est pas nul :
+        if pivot!=0:
+
+            #Division de la ligne du pivot par le pivot, pour que le pivot soit égal à 1 :
+            A_2[idx_pivot,:] = A_2[idx_pivot,:]/pivot #Pour la matrice A
+            b_2[idx_pivot] = b_2[idx_pivot]/pivot #Pour le vecteur b
+
+            #Si le pivot n'est pas sur la j-ième ligne, échanger la j-ième et la
+            #ligne du pivot :
+            if idx_pivot!=j:
+                A_2[[j,idx_pivot]] = A_2[[idx_pivot,j]] #Pour la matrice A
+                b_2[[j,idx_pivot]] = b_2[[idx_pivot,j]] #Pour le vecteur b
+
+            #Boucle sur toutes les lignes sauf celle du pivot :
+            for k in range(n):
+                if k!=j:
+
+                    #Opérations sur les lignes de A et b :
+                    b_2[k] = b_2[k] - b_2[j]*A_2[k,j]
+                    A_2[k,:] = A_2[k,:] - A_2[j,:]*A_2[k,j]
+
+    #Renvoyer les matrices A et b modifiées :
+    return A_2,b_2
+</code></pre>
+<p>Il n'y a pas besoin d'un algorithme de remontée ici, puisque les solutions seront directement les valeurs du vecteur "b_2" en sortie.</p>
+<h4 id="exemple_2">Exemple</h4>
+<p>Nous allons appliquer l'algorithme d'élimination de Gauss-Jordan (avec pivot partiel) à notre problème exemple.
+On rappelle que nous avons initialement le système de Cramer <span class="arithmatex">\(A x = b\)</span> suivant :</p>
+<p><span class="arithmatex">\(\begin{pmatrix}
+  -5000 &amp; -18000 &amp; -4000 \\
+  10000 &amp; 2000 &amp; -10000 \\
+  -4000 &amp; 12000 &amp; -6000
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -42977000\\
+  -5404000\\
+  -43586000
+ \end{pmatrix}\)</span> </p>
+<ul>
+<li>
+<p>1ère itération : nous commençons par la colonne 1.</p>
+</li>
+<li>
+<p>On sélectionne le pivot comme étant le maximum en valeur absolue sur la colonne, sur ou sous la diagonale : 10000.</p>
+</li>
+<li>
+<p>On divise la ligne du pivot par le pivot : <span class="arithmatex">\(L_2 = \frac{L_2}{10000}\)</span></p>
+</li>
+</ul>
+<p>Le système devient alors :</p>
+<p><span class="arithmatex">\(\begin{pmatrix}
+  -5000 &amp; -18000 &amp; -4000 \\
+  1 &amp; 0.2 &amp; -1 \\
+  -4000 &amp; 12000 &amp; -6000
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -42977000\\
+  -540.4\\
+  -43586000
+ \end{pmatrix}\)</span></p>
+<ul>
+<li>On échange la ligne 1 et la ligne 2 pour faire passer le pivot sur la diagonale.</li>
+</ul>
+<p>Le système devient alors :</p>
+<p><span class="arithmatex">\(\begin{pmatrix}
+  1 &amp; 0.2 &amp; -1 \\
+  -5000 &amp; -18000 &amp; -4000 \\
+  -4000 &amp; 12000 &amp; -6000
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -540.4\\
+  -42977000\\
+  -43586000
+ \end{pmatrix}\)</span></p>
+<ul>
+<li>On réalise les opérations suivantes : </li>
+</ul>
+<p><span class="arithmatex">\(L_2 = L_2 - L_1 \times -5000\)</span></p>
+<p><span class="arithmatex">\(L_3 = L_3 - L_1 \times -4000\)</span></p>
+<p>Le système devient alors :</p>
+<p><span class="arithmatex">\(\begin{pmatrix}
+  1 &amp; 0.2 &amp; -1 \\
+  0 &amp; -17000 &amp; -9000 \\
+  0 &amp; 12800 &amp; -10000
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -540.4\\
+  -45679000\\
+  -45747600
+ \end{pmatrix}\)</span></p>
+<ul>
+<li>
+<p>2nde itération : nous continuons avec la colonne 2.</p>
+</li>
+<li>
+<p>On sélectionne le pivot comme étant le maximum en valeur absolue sur la colonne, sur ou sous la diagonale : -17000.</p>
+</li>
+<li>
+<p>On divise la ligne du pivot par le pivot : <span class="arithmatex">\(L_2 = \frac{L_2}{-17000}\)</span></p>
+</li>
+</ul>
+<p>Le système devient alors :</p>
+<p><span class="arithmatex">\(\begin{pmatrix}
+  1 &amp; 0.2 &amp; -1 \\
+  0 &amp; 1 &amp; 0.5294 \\
+  0 &amp; 12800 &amp; -10000
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -540.4\\
+  2687\\
+  -45747600
+ \end{pmatrix}\)</span></p>
+<ul>
+<li>On réalise les opérations suivantes : </li>
+</ul>
+<p><span class="arithmatex">\(L_1 = L_1 - L_2 \times 0.2\)</span></p>
+<p><span class="arithmatex">\(L_3 = L_3 - L_2 \times 12800\)</span></p>
+<p>Le système devient alors :</p>
+<p><span class="arithmatex">\(\begin{pmatrix}
+  1 &amp; 0 &amp; -1.1059 \\
+  0 &amp; 1 &amp; 0.5294 \\
+  0 &amp; 0 &amp; -16776.47
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -1077.8\\
+  2687\\
+  -80141200
+ \end{pmatrix}\)</span></p>
+<ul>
+<li>
+<p>3ème itération : nous continuons avec la colonne 3.</p>
+</li>
+<li>
+<p>On sélectionne le pivot comme étant le maximum en valeur absolue sur la colonne, sur ou sous la diagonale : -16776.47.</p>
+</li>
+<li>
+<p>On divise la ligne du pivot par le pivot : <span class="arithmatex">\(L_3 = \frac{L_3}{-16776.47}\)</span></p>
+</li>
+</ul>
+<p>Le système devient alors :</p>
+<p><span class="arithmatex">\(\begin{pmatrix}
+  1 &amp; 0 &amp; -1.1059 \\
+  0 &amp; 1 &amp; 0.5294 \\
+  0 &amp; 0 &amp; 1
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -1077.8\\
+  2687\\
+  4777
+ \end{pmatrix}\)</span></p>
+<ul>
+<li>On réalise les opérations suivantes : </li>
+</ul>
+<p><span class="arithmatex">\(L_1 = L_1 - L_3 \times -1.1059\)</span></p>
+<p><span class="arithmatex">\(L_2 = L_2 - L_3 \times 0.5294\)</span></p>
+<p>Le système devient alors :</p>
+<p><span class="arithmatex">\(\begin{pmatrix}
+  1 &amp; 0 &amp; 0 \\
+  0 &amp; 1 &amp; 0 \\
+  0 &amp; 0 &amp; 1
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  4205\\
+  158\\
+  4777
+ \end{pmatrix}\)</span></p>
+<ul>
+<li>On trouve alors directement la solution du système :</li>
+</ul>
+<p><span class="arithmatex">\(x = 
+ \begin{pmatrix}
+  4205\\
+  158\\
+  4777 
+ \end{pmatrix}\)</span></p>
+<p>Voici un résumé des différentes étapes de l'algorithme sous la forme d'une animation :</p>
+<p><img alt="Elimination de Gauss-Jordan avec pivot partiel" src="../img/Chap5_exemple_gauss_jordan.gif" /></p>
+<p><strong>Exercice :</strong></p>
+<p>En vous inspirant des fonctions Python précédentes, implémentez la méthode de Gauss-Jordan avec pivot total, puis appliquez-la à notre problème exemple.
+Vérifiez que vous retrouvez bien le résultat attendu.</p>
+<h2 id="methodes-directes-de-factorisation-decomposition">Méthodes directes de factorisation / décomposition</h2>
+<h3 id="equivalence-elimination-factorisation">Equivalence élimination - factorisation</h3>
+<ul>
+<li><strong>Les opérations d'élimination :</strong></li>
+</ul>
+<p>On remarque qu'appliquer l'opération <span class="arithmatex">\(L_2 = L_2 - \frac{a_{2,1}}{a_{1,1}} L_1\)</span> à un système <span class="arithmatex">\(A x = b\)</span> de dimensions <span class="arithmatex">\(n \times n\)</span> revient à multiplier <span class="arithmatex">\(A\)</span> et <span class="arithmatex">\(b\)</span> par la matrice :</p>
+<p><span class="arithmatex">\(M = 
+ \begin{pmatrix}
+  1 &amp; 0 &amp; 0 \\
+  -a_{2,1}/a_{1,1} &amp; 1 &amp; 0 \\
+  0 &amp; 0 &amp; 1
+ \end{pmatrix}\)</span></p>
+<p>Si on notre <span class="arithmatex">\(A^{(k)}\)</span> et <span class="arithmatex">\(b^{(k)}\)</span> les matrices avant l'opération, et <span class="arithmatex">\(A^{(k+1)}\)</span> et <span class="arithmatex">\(b^{(k+1)}\)</span> les matrices après l'opération, on a :</p>
+<p><span class="arithmatex">\(A^{(k+1)} = M A^{(k)}\)</span> et <span class="arithmatex">\(b^{(k+1)} = M b^{(k)}\)</span></p>
+<ul>
+<li><strong>Les permutations :</strong></li>
+</ul>
+<p>On remarque que permutter les lignes <span class="arithmatex">\(L_2\)</span> et <span class="arithmatex">\(L_3\)</span> d'un système <span class="arithmatex">\(A x = b\)</span> de dimension <span class="arithmatex">\(n \times n\)</span> revient à multiplier <span class="arithmatex">\(A\)</span> et <span class="arithmatex">\(b\)</span> par la matrice :</p>
+<p><span class="arithmatex">\(P = 
+ \begin{pmatrix}
+  1 &amp; 0 &amp; 0 \\
+  0 &amp; 0 &amp; 1 \\
+  0 &amp; 1 &amp; 0
+ \end{pmatrix}\)</span></p>
+<p>Si on notre <span class="arithmatex">\(A^{(k)}\)</span> et <span class="arithmatex">\(b^{(k)}\)</span> les matrices avant l'opération, et <span class="arithmatex">\(A^{(k+1)}\)</span> et <span class="arithmatex">\(b^{(k+1)}\)</span> les matrices après l'opération, on a :</p>
+<p><span class="arithmatex">\(A^{(k+1)} = P A^{(k)}\)</span> et <span class="arithmatex">\(b^{(k+1)} = P b^{(k)}\)</span></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Equivalence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Les algorithmes d'élimination de Gauss peuvent donc s'écrire comme une succession de <strong>multiplications</strong> par :</td>
+</tr>
+<tr>
+<td style="text-align: left;">- Des matrices <strong>triangulaires</strong> <span class="arithmatex">\(M\)</span>.</td>
+</tr>
+<tr>
+<td style="text-align: left;">- Des matrices de <strong>permutation</strong> <span class="arithmatex">\(P\)</span>.</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>La représentation matricelle de l'élimation de Gauss :</strong></li>
+</ul>
+<p>On peut voir l'algorithme de l'élimination de Gauss comme la transformation d'un système <span class="arithmatex">\(A x = b\)</span> en un système <span class="arithmatex">\(U x = c\)</span> avec <span class="arithmatex">\(U\)</span> une matrice <strong>triangulaire supérieure</strong>.</p>
+<p>On a vu qu'à chaque étape <span class="arithmatex">\(k\)</span>, les opérations de l'algorithme sont équivalentes à multiplier <span class="arithmatex">\(A^{(k)}\)</span> et <span class="arithmatex">\(b^{(k)}\)</span> par une matrice du type :</p>
+<p><span class="arithmatex">\(M_k =
+ \begin{pmatrix}
+  1 &amp; 0 &amp; 0 &amp; 0 &amp; \cdots &amp; 0 &amp; 0\\
+  0 &amp; 1 &amp; 0 &amp; 0 &amp; \cdots &amp; 0 &amp; 0\\
+  0 &amp; 0 &amp; 1 &amp; 0 &amp; \cdots &amp; 0 &amp; 0\\
+  0 &amp; 0 &amp; m_{k+1,k} &amp; 0 &amp; \cdots &amp; 0 &amp; 0\\
+  \vdots  &amp; \vdots  &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots\\
+  0 &amp; 0 &amp; m_{n,k} &amp; 0 &amp; \cdots &amp; 0 &amp; 1
+ \end{pmatrix}\)</span></p>
+<p>avec les <span class="arithmatex">\(m_{i,k} = - \frac{a_{i,k}}{a_{k,k}}\)</span> pour <span class="arithmatex">\(i&gt;k\)</span>.</p>
+<p>A la 1ère étape on a <span class="arithmatex">\(A^{(1)}=A\)</span>, et à la dernière étape on a <span class="arithmatex">\(A^{(n)}=U\)</span>.</p>
+<p>On en déduit que l'on peut exprimer <span class="arithmatex">\(U\)</span> comme :</p>
+<p><span class="arithmatex">\(U = A^{(n)} = M_{n-1} A^{(n-1)} = M_{n-1} M_{n-2} A^{(n-2)} = ... = M_{n-1} M_{n-2} ... M_1 A^{(1)} = M A\)</span></p>
+<p>en notant <span class="arithmatex">\(M = M_{n-1} M_{n-2} ... M_1\)</span></p>
+<p>Si on pose <span class="arithmatex">\(L = M^{-1}\)</span>, alors on peut écrire <span class="arithmatex">\(A = L U\)</span> avec <span class="arithmatex">\(L\)</span> et <span class="arithmatex">\(U\)</span> des matrices <strong>triangulaires inférieure (L) et supérieure (U)</strong>.</p>
+<p>Les matrices <span class="arithmatex">\(M_k\)</span> sont inversibles, et leurs inverses sont les matrices triangulaires inférieures :</p>
+<p><span class="arithmatex">\(L_k =
+ \begin{pmatrix}
+  1 &amp; 0 &amp; 0 &amp; 0 &amp; \cdots &amp; 0 &amp; 0\\
+  0 &amp; 1 &amp; 0 &amp; 0 &amp; \cdots &amp; 0 &amp; 0\\
+  0 &amp; 0 &amp; 1 &amp; 0 &amp; \cdots &amp; 0 &amp; 0\\
+  0 &amp; 0 &amp; -m_{k+1,k} &amp; 0 &amp; \cdots &amp; 0 &amp; 0\\
+  \vdots  &amp; \vdots  &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots\\
+  0 &amp; 0 &amp; -m_{n,k} &amp; 0 &amp; \cdots &amp; 0 &amp; 1
+ \end{pmatrix}\)</span></p>
+<p>Il en résulte que <span class="arithmatex">\(L = M^{-1} = L_{n-1} L_{n-2} ... L_1\)</span>.</p>
+<p>Dans le cadre des stratégies avec pivot partiel ou total, on ajoute les permutations : <span class="arithmatex">\(A = P L U\)</span>.</p>
+<p>D'où les décompositions "LU" et "PLU" présentées dans la section suivante.</p>
+<h3 id="decomposition-lu-et-plu">Décomposition LU et PLU</h3>
+<h4 id="idee_2">Idée</h4>
+<p><strong>Décomposition LU :</strong></p>
+<p>On appelle <strong>décomposition LU</strong> (ou factorisation LU) d'une matrice carrée <span class="arithmatex">\(A\)</span> la recherche d'une matrice <strong>triangulaire inférieure</strong> <span class="arithmatex">\(L\)</span> et d'une matrice <strong>triangulaire supérieure</strong> <span class="arithmatex">\(U\)</span> telles que :</p>
+<p><span class="arithmatex">\(A = L U\)</span></p>
+<p>Si <span class="arithmatex">\(A\)</span> est inversible, alors <span class="arithmatex">\(L\)</span> et <span class="arithmatex">\(U\)</span> le sont aussi, et leurs termes diagonaux sont non-nuls.</p>
+<p>Alors, résoudre <span class="arithmatex">\(A x = b\)</span> revient à résoudre <span class="arithmatex">\(L U x = b\)</span>, soit <strong>2 systèmes triangulaires</strong> :</p>
+<p><span class="arithmatex">\(L y = b\)</span> et <span class="arithmatex">\(U x = y\)</span></p>
+<p>Ces 2 systèmes sont faciles à résoudre :</p>
+<ul>
+<li><span class="arithmatex">\(L y = b\)</span> peut être résolu avec un <strong>algorithme de descente</strong> :</li>
+</ul>
+<p><span class="arithmatex">\(\begin{cases}
+y_1 = \frac{1}{l_{1,1}} b_1\\
+y_i = \frac{1}{l_{i,i}} (b_i - \displaystyle\sum_{j=1}^{i-1} l_{i,j} y_j), i=2,...,n
+\end{cases}\)</span></p>
+<ul>
+<li><span class="arithmatex">\(U x = y\)</span> peut être résolu avec un <strong>algorithme de remontée</strong> :</li>
+</ul>
+<p><span class="arithmatex">\(\begin{cases}
+x_n = \frac{1}{u_{n,n}} y_n\\
+x_i = \frac{1}{u_{i,i}} (y_i - \displaystyle\sum_{j=i+1}^{n} u_{i,j} x_j), i=n-1,...,1
+\end{cases}\)</span></p>
+<p>Chacun de ces algorithmes nécessite <span class="arithmatex">\(n^2\)</span> opérations.
+On devine alors un des grands avantages de la décomposition LU comparée l'élimination de Gauss : si on a <span class="arithmatex">\(n\)</span> systèmes <span class="arithmatex">\(A x_1 = b_1\)</span>, <span class="arithmatex">\(A x_2 = b_2\)</span>, ... , <span class="arithmatex">\(A x_n = b_n\)</span> à résoudre, il est inutile d'appliquer <span class="arithmatex">\(n\)</span> fois l'élimination de Gauss.
+Une fois la décomposition LU obtenue pour un système, il suffit d'appliquer les algorithmes de descente / remontée aux autres, ce qui est <strong>beaucoup moins coûteux en calculs</strong>. </p>
+<p>La factorisation <span class="arithmatex">\(L U\)</span>, quand elle existe, <strong>n'est pas unique</strong> : le système <span class="arithmatex">\(A = L U\)</span> est sous-déterminé.</p>
+<p>On peut rendre la solution unique en donnant des conditions supplémentaires.
+Par exemple, on peut fixer les éléments diagonaux de <span class="arithmatex">\(L\)</span> à 1.
+C'est que l'on appelle la <strong>factorisation de Gauss</strong>.</p>
+<p>La décomposition LU (sans pivotage) <strong>n'existe pas toujours</strong>, même si <span class="arithmatex">\(A\)</span> est inversible.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Existence de la décomposition LU</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">La décomposition LU existe si et seulement si :</td>
+</tr>
+<tr>
+<td style="text-align: left;">toutes les sous-matrices principales <span class="arithmatex">\(A_k = (a_{i,j})_{1 \leq i,j \leq k}\)</span> d'ordre 1 à <span class="arithmatex">\(n-1\)</span> sont inversibles.</td>
+</tr>
+<tr>
+<td style="text-align: left;">Si toutes les sous-matrices principales d'ordre 1 à <span class="arithmatex">\(n\)</span> sont inversibles, elle est même <strong>unique</strong>.</td>
+</tr>
+</tbody>
+</table>
+<p>Il est à noter que le fait qu'une sous-matrice principale de <span class="arithmatex">\(A\)</span> ne soit pas inversible ne signifie pas nécessairement que <span class="arithmatex">\(A\)</span> n'est pas inversible.</p>
+<p>Pour les matrice inversibles pour lesquelles il n'existe pas de décomposition LU, d'autres méthodes de triangularisation existent, comme la <strong>décomposition PLU</strong>.</p>
+<p><strong>Décomposition PLU :</strong></p>
+<p>Elle ajoute à la décomposition LU les permutations (pivot partiel ou total), avec une matrice de permutation <span class="arithmatex">\(P\)</span> : </p>
+<p><span class="arithmatex">\(P A = L U\)</span></p>
+<p>Cette fois-ci, résoudre <span class="arithmatex">\(A x = b\)</span> revient à résoudre <span class="arithmatex">\(P^{-1} L U x = b\)</span>, soit <span class="arithmatex">\(L U x = P b\)</span>.
+On doit donc appliquer les algorithmes de descente et de remontée aux systèmes triangulaires :</p>
+<p><span class="arithmatex">\(L y = P b\)</span> et <span class="arithmatex">\(U x = y\)</span></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Existence de la décomposition PLU</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">La décomposition PLU <strong>existe toujours</strong> si <span class="arithmatex">\(A\)</span> est carrée et régulière (inversible).</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Autres intérêts de la décomposition LU :</strong></p>
+<p>En plus de permettre la résolution du système d'équation, les décompositions LU et PLU permettent de <strong>calculer le déterminant de <span class="arithmatex">\(A\)</span></strong> rapidement :</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(det(A) = det(LU) =  \displaystyle\prod_{k=1}^{n} u_{k,k}\)</span></p>
+</li>
+<li>
+<p><span class="arithmatex">\(det(A) = det(P^{-1}LU) = (-1)^p \displaystyle\prod_{k=1}^{n} u_{k,k}\)</span> avec <span class="arithmatex">\(p\)</span> permutations</p>
+</li>
+</ul>
+<p>La décomposition LU facilite aussi le calcul de <strong>l'inverse de <span class="arithmatex">\(A\)</span></strong> :</p>
+<p>En effet, recherche <span class="arithmatex">\(X = A^{-1}\)</span> revient à résoudre <span class="arithmatex">\(A X = I\)</span>, et donc à résoudre <span class="arithmatex">\(L U X = I\)</span>.
+On peut alors trouver <span class="arithmatex">\(A^{-1}\)</span> en résolvant le système :</p>
+<p><span class="arithmatex">\(\begin{cases}
+L Y = I\\
+U X = Y
+\end{cases}\)</span></p>
+<p>Déterminer les éléments de <span class="arithmatex">\(L\)</span> et <span class="arithmatex">\(U\)</span> par la factorisation de Gauss requiert <span class="arithmatex">\(2 n^3/2\)</span> opérations (sans compter les permutations).
+Il faut ensuite de l'ordre de <span class="arithmatex">\(2 n^2\)</span> opérations pour les algorithmes de remontée et de descente.</p>
+<h4 id="algorithme_1">Algorithme</h4>
+<p>Nous donnerons dans cette section les algorithmes pour les décompositions LU puis PLU.</p>
+<p>Voici sous la forme d'une fonction Python l'algorithme de la décomposition LU.</p>
+<p>Cette fonction prend en entrée un système de Cramer :</p>
+<ul>
+<li>
+<p><code>A</code> la matrice des coefficients du système.</p>
+</li>
+<li>
+<p><code>b</code> le vecteur du second membre du système.</p>
+</li>
+</ul>
+<pre><code>def decomposition_LU(A):
+
+    #Récupérer les dimensions de la matrice A :
+    m,n = np.shape(A)
+
+    #Vérification des dimensions de A (nxn) :
+    if (m!=n):
+
+        raise ValueError(&quot;La matrice A n'est pas carrée&quot;)
+
+    #Copier A pour ne pas modifier la matrice originale :
+    U = np.copy(A)
+
+    #Initialiser la matrice L comme la matrice identité (nxn) :
+    L = np.eye(n)
+
+    #Boucle sur les colonnes de la matrice A, jusqu'à l'avant-dernière :
+    for j in range(n-1):
+
+        #Sélection du pivot comme étant la valeur sur la diagonale de la j-ème colonne :
+        pivot = U[j,j]
+
+        #On vérifie que le pivot n'est pas nul :
+        if pivot!=0:
+
+            #Boucle sur les lignes sous le pivot :
+            for k in range(j+1,n):
+
+                #Sauvegarde du coefficient d'élimination de Gauss dans L :
+                L[k,j] = U[k,j]/pivot
+
+                #Opérations d'élimination de Gauss sur les lignes de A en 
+                #utilisant le pivot :
+                U[k,:] = U[k,:] - U[j,:]*L[k,j]
+
+    #Renvoyer les matrices L et U :
+    return L,U
+</code></pre>
+<p>Voici sous la forme d'une fonction Python l'algorithme de descente liée à la décomposition LU.</p>
+<p>Cette fonction prend en entrée :</p>
+<ul>
+<li>
+<p><code>L</code> la matrice <span class="arithmatex">\(L\)</span> obtenue par la décomposition LU de <span class="arithmatex">\(A\)</span>.</p>
+</li>
+<li>
+<p><code>b</code> le vecteur du second membre du système.</p>
+</li>
+</ul>
+<pre><code>def descente(L,b):
+
+    #Récupérer le nombre n d'équations / inconnues du système Ly=b :
+    n = len(L)
+
+    #Initialiser le vecteur qui contiendra les solutions du système Ly=b :
+    y = np.zeros(n,dtype=np.float64)
+
+    #Boucle sur les lignes de la matrice L, de 1 à n :
+    for i in range(n):
+
+        #Détermination de la i-ème inconnue :
+        y[i] = (b[i]-sum(L[i,:i]*y[:i]))/L[i,i]
+
+    #Renvoyer le vecteur contenant les solutions du système Ly=b :
+    return y
+</code></pre>
+<p>Voici sous la forme d'une fonction Python l'algorithme de remontée liée à la décomposition LU.</p>
+<p>Cette fonction prend en entrée :</p>
+<ul>
+<li>
+<p><code>U</code> la matrice <span class="arithmatex">\(U\)</span> obtenue par la décomposition LU de <span class="arithmatex">\(A\)</span>.</p>
+</li>
+<li>
+<p><code>y</code> le vecteur des solution du système <span class="arithmatex">\(L y = b\)</span> obtenue par l'algorithme de descente.</p>
+</li>
+</ul>
+<pre><code>def remontee(U,y):
+
+    #Récupérer le nombre n d'équations / inconnues du système Ux=y :
+    n = len(U)
+
+    #Initialiser le vecteur qui contiendra les solutions du système Ux=y :
+    x = np.zeros(n,dtype=np.float64)
+
+    #Boucle sur les lignes de la matrice U, de n à 1 :
+    for i in range(n-1,-1,-1):
+
+        #Détermination de la i-ème inconnue :
+        x[i] = (y[i]-sum(U[i,i+1:n]*x[i+1:n]))/U[i,i]
+
+    #Renvoyer le vecteur contenant les solutions du système Ux=y :
+    return x
+</code></pre>
+<p>Voici maintenant sous la forme d'une fonction Python l'algorithme de la décomposition PLU.</p>
+<p>Comme pour la décomposition LU, cette fonction prend en entrée un système de Cramer :</p>
+<ul>
+<li>
+<p><code>A</code> la matrice des coefficients du système.</p>
+</li>
+<li>
+<p><code>b</code> le vecteur du second membre du système.</p>
+</li>
+</ul>
+<pre><code>def decomposition_PLU(A):
+
+    #Récupérer les dimensions de la matrice A :
+    m,n = np.shape(A)
+
+    #Vérification des dimensions de A (nxn) :
+    if (m!=n):
+
+        raise ValueError(&quot;La matrice A n'est pas carrée&quot;)
+
+    #Copier A pour ne pas modifier la matrice originale :
+    U = np.copy(A)
+
+    #Initialiser la matrice L comme la matrice identité (nxn) :
+    L = np.eye(n)
+
+    #Initialiser la matrice de permutation P comme la matrice identité (nxn) :
+    P = np.eye(n)
+
+    #Boucle sur les colonnes de la matrice A, jusqu'à l'avant-dernière :
+    for j in range(n-1):
+
+        #Sélection du pivot comme étant la valeur maximale en absolu sur la colonne, 
+        #sur la j-ième ligne ou en dessous :
+        idx_pivot = np.argmax(abs(U[j:,j]))+j #Indice de la ligne du pivot
+        pivot = U[idx_pivot,j] #Valeur du pivot
+
+        #On vérifie que le pivot n'est pas nul :
+        if pivot!=0:
+
+            #Si le pivot n'est pas sur la j-ième ligne, échanger la j-ième et la
+            #ligne du pivot :
+            if idx_pivot!=j:
+                U[[j,idx_pivot]] = U[[idx_pivot,j]] #Pour la matrice A
+                P[[j,idx_pivot]] = P[[idx_pivot,j]] #Pour la matrice P
+
+            #Boucle sur les lignes sous le pivot :
+            for k in range(j+1,n):
+
+                #Sauvegarde du coefficient d'élimination de Gauss dans L :
+                L[k,j] = U[k,j]/pivot
+
+                #Opérations d'élimination de Gauss sur les lignes de A en 
+                #utilisant le pivot :
+                U[k,:] = U[k,:] - U[j,:]*L[k,j]
+
+    #Renvoyer les matrices P, L et U :
+    return P,L,U
+</code></pre>
+<p>Après une décomposition PLU, il ne faudra pas oublier d'appliquer l'algorithme de descente à <span class="arithmatex">\(P b\)</span> au lieu de <span class="arithmatex">\(b\)</span>.</p>
+<h4 id="exemple_3">Exemple</h4>
+<p>Nous allons appliquer l'algorithme de décomposion LU, puis PLU à notre problème exemple</p>
+<p><strong>Décomposition LU :</strong></p>
+<p>Appliquons d'abord l'algorithme de décomposion LU.
+On rappelle que nous avons initialement le système de Cramer <span class="arithmatex">\(A x = b\)</span> suivant :</p>
+<p><span class="arithmatex">\(\begin{pmatrix}
+  -5000 &amp; -18000 &amp; -4000 \\
+  10000 &amp; 2000 &amp; -10000 \\
+  -4000 &amp; 12000 &amp; -6000
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -42977000\\
+  -5404000\\
+  -43586000
+ \end{pmatrix}\)</span> </p>
+<p>Nous initialisons <span class="arithmatex">\(L\)</span> et <span class="arithmatex">\(U\)</span> de la manière suivante :</p>
+<p><span class="arithmatex">\(L = 
+ \begin{pmatrix}
+  1 &amp; 0 &amp; 0 \\
+  0 &amp; 1 &amp; 0 \\
+  0 &amp; 0 &amp; 1
+ \end{pmatrix}\)</span></p>
+<p><span class="arithmatex">\(U = 
+ \begin{pmatrix}
+  -5000 &amp; -18000 &amp; -4000 \\
+  10000 &amp; 2000 &amp; -10000 \\
+  -4000 &amp; 12000 &amp; -6000
+ \end{pmatrix}\)</span></p>
+<ul>
+<li>
+<p>1ère itération : nous commençons par la colonne 1.</p>
+</li>
+<li>
+<p>On sélectionne le pivot comme étant sur la diagonale de <span class="arithmatex">\(U\)</span> : -5000.</p>
+</li>
+<li>
+<p>On réalise les opérations suivantes : </p>
+</li>
+</ul>
+<p>On ajoute <span class="arithmatex">\(\frac{10000}{-5000} = -2\)</span> en ligne 2 dans <span class="arithmatex">\(L\)</span>.</p>
+<p>On applique <span class="arithmatex">\(L_2 = L_2 - L_1 \times -2\)</span> sur <span class="arithmatex">\(U\)</span>.</p>
+<p>On ajoute <span class="arithmatex">\(\frac{-4000}{-5000} = 0.8\)</span> en ligne 3 dans <span class="arithmatex">\(L\)</span>.</p>
+<p>On applique <span class="arithmatex">\(L_3 = L_3 - L_1 \times 0.8\)</span> sur <span class="arithmatex">\(U\)</span>.</p>
+<p><span class="arithmatex">\(L\)</span> et <span class="arithmatex">\(U\)</span> deviennent alors :</p>
+<p><span class="arithmatex">\(L = 
+ \begin{pmatrix}
+  1 &amp; 0 &amp; 0 \\
+  -2 &amp; 1 &amp; 0 \\
+  0.8 &amp; 0 &amp; 1
+ \end{pmatrix}\)</span></p>
+<p><span class="arithmatex">\(U = 
+ \begin{pmatrix}
+  -5000 &amp; -18000 &amp; -4000 \\
+  0 &amp; -34000 &amp; -18000 \\
+  0 &amp; 26400 &amp; -2800
+ \end{pmatrix}\)</span></p>
+<ul>
+<li>
+<p>2nde itération : nous continuons avec la colonne 2.</p>
+</li>
+<li>
+<p>On séléctionne le pivot comme étant sur la diagonale de <span class="arithmatex">\(U\)</span> : -34000.</p>
+</li>
+<li>
+<p>On réalise les opérations suivantes : </p>
+</li>
+</ul>
+<p>On ajoute <span class="arithmatex">\(\frac{26400}{-34000} = -0.7765\)</span> en ligne 3 dans <span class="arithmatex">\(L\)</span>.</p>
+<p>On applique <span class="arithmatex">\(L_3 = L_3 - L_2 \times -0.7765\)</span> sur <span class="arithmatex">\(U\)</span>.</p>
+<p><span class="arithmatex">\(L\)</span> et <span class="arithmatex">\(U\)</span> deviennent alors :</p>
+<p><span class="arithmatex">\(L = 
+ \begin{pmatrix}
+  1 &amp; 0 &amp; 0 \\
+  -2 &amp; 1 &amp; 0 \\
+  0.8 &amp; -0.7764 &amp; 1
+ \end{pmatrix}\)</span></p>
+<p><span class="arithmatex">\(U = 
+ \begin{pmatrix}
+  -5000 &amp; -18000 &amp; -4000 \\
+  0 &amp; -34000 &amp; -18000 \\
+  0 &amp; 0 &amp; -16776.47
+ \end{pmatrix}\)</span></p>
+<p>On retrouve bien pour <span class="arithmatex">\(U\)</span> la matrice triangulaire obtenue avec l'élimination de Gauss sans pivotage, et pour <span class="arithmatex">\(L\)</span> les coefficients ayant servi à l'élimination.</p>
+<p>Voici un résumé des différentes étapes de l'algorithme sous la forme d'une animation :</p>
+<p><img alt="Factorisation LU" src="../img/Chap5_exemple_LU.gif" /></p>
+<p>On peut vérifier que <span class="arithmatex">\(det(A) = -5000 \times -34000 \times -16776.47 \approx -2852000000000\)</span></p>
+<p>On déduit les solutions du système par les algorithmes : </p>
+<p>de descente pour <span class="arithmatex">\(L y = b\)</span></p>
+<p><span class="arithmatex">\(\begin{cases}
+-42977000\\
+-5404000 - (-2 \times -42977000) = -91358000\\
+-43586000 - (0.8 \times -42977000) - (-0.7764 \times -91358000) = -80141200
+\end{cases}\)</span></p>
+<p>puis de remontée pour <span class="arithmatex">\(U x = y\)</span></p>
+<p><span class="arithmatex">\(\begin{cases}
+z_r = \frac{-80141200}{-16776.47} = 4777\\
+y_r = \frac{1}{-34000} (-91358000 - (-18000 \times z_r)) = 158\\
+x_r = \frac{1}{-5000} (-42977000 - (-4000 \times y_r) - (-18000 \times z_r)) = 4205
+\end{cases}\)</span></p>
+<p><strong>Ré-utilisation de la décomposition LU :</strong></p>
+<p>Imaginons maintenant qu'un récepteur situé au Beffroi de Lille, de coordonnées ECEF approximatives <span class="arithmatex">\((x_r,y_r,z_r) = (4048,217,4908)\)</span>, utilise les mêmes satellites GPS de mêmes coordonnées ECEF pour se positionner.</p>
+<p>Le vecteur <span class="arithmatex">\(b\)</span> devient alors :</p>
+<p><span class="arithmatex">\(\begin{pmatrix}
+  -43778000\\
+  -8166000\\
+  -43036000
+ \end{pmatrix}\)</span> </p>
+<p>Les coefficients de la matrice <span class="arithmatex">\(A\)</span> ne dépendant que de la position des satellites GPS, ils restent inchangés.</p>
+<p>On peut donc ré-utiliser la décomposition LU précédente pour résoudre ce système :</p>
+<p><span class="arithmatex">\(\begin{cases}
+-43778000\\
+-8166000 - (-2 \times -43778000) = -95722000\\
+-43036000 - (0.8 \times -43778000) - (-0.7764 \times -95722000) = -82338917.65
+\end{cases}\)</span></p>
+<p>puis </p>
+<p><span class="arithmatex">\(\begin{cases}
+z_r = \frac{-82338917.65}{-16776.47} = 4048\\
+y_r = \frac{1}{-34000} (-95722000 - (-18000 \times z_r)) = 217\\
+x_r = \frac{1}{-5000} (-43778000 - (-4000 \times y_r) - (-18000 \times z_r)) = 4908
+\end{cases}\)</span></p>
+<p>On retrouve bien la position de notre récepteur lillois.</p>
+<p><strong>Décomposition PLU :</strong></p>
+<p>Appliquons à présent au système l'algorithme de décomposion PLU.
+On rappelle que nous avons initialement le système de Cramer <span class="arithmatex">\(A x = b\)</span> suivant :</p>
+<p><span class="arithmatex">\(\begin{pmatrix}
+  -5000 &amp; -18000 &amp; -4000 \\
+  10000 &amp; 2000 &amp; -10000 \\
+  -4000 &amp; 12000 &amp; -6000
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -42977000\\
+  -5404000\\
+  -43586000
+ \end{pmatrix}\)</span> </p>
+<p>Nous initialisons <span class="arithmatex">\(P\)</span>, <span class="arithmatex">\(L\)</span> et <span class="arithmatex">\(U\)</span> de la manière suivante :</p>
+<p><span class="arithmatex">\(P = 
+ \begin{pmatrix}
+  1 &amp; 0 &amp; 0 \\
+  0 &amp; 1 &amp; 0 \\
+  0 &amp; 0 &amp; 1
+ \end{pmatrix}\)</span></p>
+<p><span class="arithmatex">\(L = 
+ \begin{pmatrix}
+  1 &amp; 0 &amp; 0 \\
+  0 &amp; 1 &amp; 0 \\
+  0 &amp; 0 &amp; 1
+ \end{pmatrix}\)</span></p>
+<p><span class="arithmatex">\(U = 
+ \begin{pmatrix}
+  -5000 &amp; -18000 &amp; -4000 \\
+  10000 &amp; 2000 &amp; -10000 \\
+  -4000 &amp; 12000 &amp; -6000
+ \end{pmatrix}\)</span></p>
+<ul>
+<li>
+<p>1ère itération : nous commençons par la colonne 1.</p>
+</li>
+<li>
+<p>On sélectionne le pivot comme étant le maximum en valeur absolue sur la colonne, sur ou sous la diagonale de <span class="arithmatex">\(U\)</span> : 10000.</p>
+</li>
+<li>
+<p>On échange la ligne 1 et la ligne 2 pour faire passer le pivot sur la diagonale.</p>
+</li>
+</ul>
+<p><span class="arithmatex">\(U\)</span> et <span class="arithmatex">\(P\)</span> deviennent alors :</p>
+<p><span class="arithmatex">\(P = 
+ \begin{pmatrix}
+  0 &amp; 1 &amp; 0 \\
+  1 &amp; 0 &amp; 0 \\
+  0 &amp; 0 &amp; 1
+ \end{pmatrix}\)</span></p>
+<p><span class="arithmatex">\(U = 
+ \begin{pmatrix}
+  10000 &amp; 2000 &amp; -10000 \\
+  -5000 &amp; -18000 &amp; -4000 \\
+  -4000 &amp; 12000 &amp; -6000
+ \end{pmatrix}\)</span></p>
+<ul>
+<li>On réalise les opérations suivantes : </li>
+</ul>
+<p>On ajoute <span class="arithmatex">\(\frac{-5000}{10000} = -0.5\)</span> en ligne 2 dans <span class="arithmatex">\(L\)</span>.</p>
+<p>On applique <span class="arithmatex">\(L_2 = L_2 - L_1 \times -0.5\)</span> sur <span class="arithmatex">\(U\)</span>.</p>
+<p>On ajoute <span class="arithmatex">\(\frac{-5000}{10000} = -0.4\)</span> en ligne 3 dans <span class="arithmatex">\(L\)</span>.</p>
+<p>On applique <span class="arithmatex">\(L_3 = L_3 - L_1 \times -0.4\)</span> sur <span class="arithmatex">\(U\)</span>.</p>
+<p><span class="arithmatex">\(L\)</span> et <span class="arithmatex">\(U\)</span> deviennent alors :</p>
+<p><span class="arithmatex">\(L = 
+ \begin{pmatrix}
+  1 &amp; 0 &amp; 0 \\
+  -0.5 &amp; 1 &amp; 0 \\
+  -0.4 &amp; 0 &amp; 1
+ \end{pmatrix}\)</span></p>
+<p><span class="arithmatex">\(U = 
+ \begin{pmatrix}
+  10000 &amp; 2000 &amp; -10000 \\
+  0 &amp; -17000 &amp; -9000 \\
+  0 &amp; 12800 &amp; -10000
+ \end{pmatrix}\)</span></p>
+<ul>
+<li>
+<p>2nde itération : nous continuons avec la colonne 2.</p>
+</li>
+<li>
+<p>On sélectionne le pivot comme étant le maximum en valeur absolue sur la colonne, sur ou sous la diagonale de <span class="arithmatex">\(U\)</span> : -17000.</p>
+</li>
+<li>
+<p>On réalise les opérations suivantes : </p>
+</li>
+</ul>
+<p>On ajoute <span class="arithmatex">\(\frac{12800}{-17000} = -0.7529\)</span> en ligne 3 dans <span class="arithmatex">\(L\)</span>.</p>
+<p>On applique <span class="arithmatex">\(L_3 = L_3 - L_2 \times -0.7529\)</span> sur <span class="arithmatex">\(U\)</span>.</p>
+<p><span class="arithmatex">\(L\)</span> et <span class="arithmatex">\(U\)</span> deviennent alors :</p>
+<p><span class="arithmatex">\(L = 
+ \begin{pmatrix}
+  1 &amp; 0 &amp; 0 \\
+  -0.5 &amp; 1 &amp; 0 \\
+  -0.4 &amp; -0.7529 &amp; 1
+ \end{pmatrix}\)</span></p>
+<p><span class="arithmatex">\(U = 
+ \begin{pmatrix}
+  10000 &amp; 2000 &amp; -10000 \\
+  0 &amp; -17000 &amp; -9000 \\
+  0 &amp; 0 &amp; -16776.47
+ \end{pmatrix}\)</span></p>
+<p>On retrouve bien pour <span class="arithmatex">\(U\)</span> la matrice triangulaire obtenue avec l'élimination de Gauss avec pivot partiel, et pour <span class="arithmatex">\(L\)</span> les coefficients ayant servi à l'élimination.</p>
+<p>Voici un résumé des différentes étapes de l'algorithme sous la forme d'une animation :</p>
+<p><img alt="Factorisation PLU" src="../img/Chap5_exemple_PLU.gif" /></p>
+<p>On peut vérifier que <span class="arithmatex">\(det(A) = (-1)^1 \times 10000 \times -17000 \times -16776.47 \approx -2852000000000\)</span></p>
+<p>On déduit les solutions du système :</p>
+<p>Tout d'abord, on calcule</p>
+<p><span class="arithmatex">\(P b =
+ \begin{pmatrix}
+  -5404000\\
+  -42977000\\
+  -43586000
+ \end{pmatrix}\)</span></p>
+<p>puis on applique à <span class="arithmatex">\(L y = P b\)</span> l' algorithme de descente</p>
+<p><span class="arithmatex">\(\begin{cases}
+-5404000\\
+-42977000 - (-0.5 \times -5404000) = -45679000\\
+-43586000 - (-0.4 \times -5404000) - (-0.7529 \times -45679000) = -80141200
+\end{cases}\)</span></p>
+<p>et on applique l'algorithme de remontée à <span class="arithmatex">\(U x =y\)</span></p>
+<p><span class="arithmatex">\(\begin{cases}
+z_r = \frac{-80141200}{-16776.47} = 4777\\
+y_r = \frac{1}{-17000} (-45679000 - (-9000 \times z_r)) = 158\\
+x_r = \frac{1}{10000} (-5404000 - (2000 \times y_r) - (-10000 \times z_r)) = 4205
+\end{cases}\)</span></p>
+<p><strong>Exercice :</strong></p>
+<p>Imaginons maintenant qu'un récepteur situé au Cirque de Gavarnie, de coordonnées ECEF approximatives <span class="arithmatex">\((x_r,y_r,z_r) = (4695,0,4303)\)</span>, utilise les mêmes satellites GPS de mêmes coordonnées ECEF pour se positionner.
+En vous servant des programmes Python précédents, déterminez les nouvelles valeurs de <span class="arithmatex">\(b\)</span>, puis utilisez la décomposition PLU obtenue précédemment pour estimer la position du récepteur.
+Vous devriez retrouver la position ECEF du Cirque de Gavarnie.</p>
+<h3 id="autres-decompositions-qr-et-cholesky">Autres décompositions (QR et Cholesky)</h3>
+<p>Il existe d'autres types de décomposition moins coûteux en temps de calcul, qui peuvent s'appliquer à des systèmes particulier.
+Nous présenterons rapidement ici les décompositions QR et de Cholesky.</p>
+<h4 id="decomposition-qr">Décomposition QR</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Théorème</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Si <span class="arithmatex">\(A\)</span> est une matrice réelle <strong>inversible</strong>,</td>
+</tr>
+<tr>
+<td style="text-align: left;">il existe un unique couple <span class="arithmatex">\((Q,R)\)</span> avec <span class="arithmatex">\(Q\)</span> une matrice <strong>orthogonale</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">(c'est-à-dire <span class="arithmatex">\(QQ^T=Q^TQ=I\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">et <span class="arithmatex">\(R\)</span> une matrice <strong>triangulaire supérieure</strong> dont les éléments diagonaux sont positifs,</td>
+</tr>
+<tr>
+<td style="text-align: left;">tel que <span class="arithmatex">\(A = QR\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>La <strong>décomposition QR</strong> consiste à décomposer la matrice <span class="arithmatex">\(A\)</span> de cette façon : <span class="arithmatex">\(A = QR\)</span>.</p>
+<p>Résoudre le système <span class="arithmatex">\(A x = b\)</span> revient alors à résoudre :</p>
+<p><span class="arithmatex">\(\begin{cases}
+Q y = b\\
+R x = y
+\end{cases}\)</span></p>
+<p>soit
+<span class="arithmatex">\(\begin{cases}
+y = Q^{-1} b = Q^T b\\
+R x = y
+\end{cases}\)</span></p>
+<h4 id="decomposition-de-cholesky">Décomposition de Cholesky</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Théorème</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Si <span class="arithmatex">\(A\)</span> est <strong>symétrique définie positive</strong>,</td>
+</tr>
+<tr>
+<td style="text-align: left;">(c'est-à-dire une matrice carrée égale à sa transposée, positive et inversible)</td>
+</tr>
+<tr>
+<td style="text-align: left;">il existe une <strong>matrice triangulaire inférieure</strong> <span class="arithmatex">\(L\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">telle que <span class="arithmatex">\(A = LL^T\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>La <strong>décomposition de Cholesky</strong> consiste à décomposer la matrice <span class="arithmatex">\(A\)</span> de cette façon : <span class="arithmatex">\(A = LL^T\)</span>.</p>
+<p>On peut imposer que les éléments diagonaux de <span class="arithmatex">\(L\)</span> soient positifs, pour obtenir l'<strong>unicité</strong> de la factorisation.</p>
+<p>Résoudre le système <span class="arithmatex">\(A x = b\)</span> revient alors à appliquer les algorithmes de remontée et de descente pour résoudre <span class="arithmatex">\(LL^T x = b\)</span>.</p>
+<h2 id="methodes-iteratives">Méthodes itératives</h2>
+<p>Les méthodes directes donnent la solution du système <span class="arithmatex">\(A x = b\)</span> en un nombre fini d'opérations, <strong>mais</strong> :</p>
+<ul>
+<li>
+<p>Si la taille du système est élevée, le nombre d'opérations est important, ce qui augmente les erreurs.</p>
+</li>
+<li>
+<p>Si la taille du système est élevée, le nombre de coefficients à mettre en mémoire l'est aussi.</p>
+</li>
+<li>
+<p>Elles utilisent des propriétés mathématiques nécessitant un calcul exact : il est donc difficile de tenir compte des erreurs de calculs.</p>
+</li>
+</ul>
+<p>Les <strong>méthodes itératives</strong> sont généralement plus rapides et nécessitent moins de mémoire.</p>
+<p>L'idée est de construire une suite <span class="arithmatex">\((x^{(n)})_{n \geq 0}\)</span> qui converge vers la solution <span class="arithmatex">\(x\)</span>.</p>
+<p>Pour construire une telle suite, on va s'appuyer sur la linéarité du problème en décomposant <span class="arithmatex">\(A\)</span> en une matrice <strong>facilement inversible</strong> et un <strong>reste</strong>.</p>
+<h3 id="principe-et-convergence">Principe et convergence</h3>
+<p>Les <strong>méthodes itératives</strong> vont donc décomposer la matrice <span class="arithmatex">\(A\)</span> du système d'équations de la manière suivante :</p>
+<p><span class="arithmatex">\(A = M-(M-A) = M-N\)</span></p>
+<p>avec <span class="arithmatex">\(M\)</span> <strong>facilement inversible</strong>.</p>
+<p>Alors, résoudre <span class="arithmatex">\(A x = b\)</span> revient à résoudre <span class="arithmatex">\(M x = N x + b\)</span>.</p>
+<p>On calcule la suite de vecteurs <span class="arithmatex">\((x^{(k)})_k\)</span> à partir d'un vecteur de départ <span class="arithmatex">\(x^{(0)}\)</span> et de la relation de récurrence :</p>
+<p><span class="arithmatex">\(M x^{(k+1)} = N x^{(k)} + b\)</span></p>
+<p>soit <span class="arithmatex">\(x^{(k+1)} = M^{-1} N x^{(k)} + M^{-1} b\)</span></p>
+<p>En posant <span class="arithmatex">\(C = M^{-1} N\)</span> et <span class="arithmatex">\(d = M^{-1} b\)</span>, la suite devient :</p>
+<p><span class="arithmatex">\(x^{(k+1)} = C x^{(k)} + d\)</span></p>
+<p>La solution <span class="arithmatex">\(x\)</span> est alors le <strong>point fixe</strong> de la fonction linéaire <span class="arithmatex">\(g(x) = C x + d\)</span>.
+Reste alors à vérifier sa convergence.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Théorème</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Soit <span class="arithmatex">\(C\)</span> une matrice carrée de taille <span class="arithmatex">\(n \times n\)</span>,</td>
+</tr>
+<tr>
+<td style="text-align: left;">s'il existe une norme matricielle telle que <span class="arithmatex">\(\lVert C \lVert &lt; 1\)</span>, alors :</td>
+</tr>
+<tr>
+<td style="text-align: left;">- <span class="arithmatex">\(g(x) = C x + d\)</span> admet un point fixe <strong>unique</strong> <span class="arithmatex">\(x\)</span>.</td>
+</tr>
+<tr>
+<td style="text-align: left;">- La suite <span class="arithmatex">\((x^{(k)})_k\)</span> telle que <span class="arithmatex">\(x^{(k+1)} = g(x^{(k)})\)</span> <strong>converge</strong> vers ce point fixe quel que soit vecteur de départ <span class="arithmatex">\(x^{(0)}\)</span>.</td>
+</tr>
+</tbody>
+</table>
+<p><span class="arithmatex">\(C\)</span> est appelée <strong>matrice d'itération</strong>.</p>
+<p>Le <strong>vecteur d'erreur absolue</strong> à l'itération <span class="arithmatex">\(k\)</span> est : <span class="arithmatex">\(e^{(k)} = x^{(k)} - x\)</span></p>
+<p>On en déduit que :</p>
+<p><span class="arithmatex">\(e^{(k)} = x^{(k)} - x = (C x^{k-1} + d) - x = C x^{(k-1)} - C x = C (x^{(k-1)} - x) = C e^{(k-1)}\)</span></p>
+<p>d'où <span class="arithmatex">\(e^{(k)} = C^k e^{(0)}\)</span></p>
+<p>On peut donc majorer l'erreur de la manière suivante :</p>
+<p><span class="arithmatex">\(\|e^{(k)}\| \leq \|C\|^k \|e^{(0)}\|\)</span> d'où <span class="arithmatex">\(\lim\limits_{k \to \infty} e^{(k)} = 0\)</span> et donc <span class="arithmatex">\(\lim\limits_{k \to \infty} x^{(k)} = x\)</span>.</p>
+<p>Plus <span class="arithmatex">\(\|C\|\)</span> est petit, moins il est nécessaire d'effectuer des itérations pour réduire l'erreur initiale d'un facteur donné.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Convergence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Pour établir la convergence de <span class="arithmatex">\(x^{(k+1)} = C x^{(k)} + d\)</span>,</td>
+</tr>
+<tr>
+<td style="text-align: left;">il suffit de montrer que <span class="arithmatex">\(C\)</span> vérifie :</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(\rho(C) = max_{1 \leq i \leq n} \lVert \lambda_i \lVert &lt; 1\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Cette condition suffisante <strong>est aussi nécessaire</strong>, car on a toujours <span class="arithmatex">\(\rho(C) \leq \|C\|\)</span>.</p>
+<p>On peut calculer à chaque itération le <strong>vecteur résidu</strong> :</p>
+<p><span class="arithmatex">\(r^{(k)} = b - A x^{(k)}\)</span></p>
+<p>Voici alors 2 <strong>critères d'arrêt</strong> possibles :</p>
+<p><span class="arithmatex">\(\|r^{(k)}\| \leq \epsilon \|b\|\)</span> ou <span class="arithmatex">\(\|x^{(k)}-x^{(k-1)}\| \leq \epsilon \|x^{(k-1)}\|\)</span></p>
+<p>L'avantage des méthodes itératives est leur <strong>coût</strong> : de l'ordre de <span class="arithmatex">\(n^2\)</span>, à comparer au <span class="arithmatex">\(\frac{2}{3} n^3\)</span> des méthodes directes.</p>
+<p>Toute la difficulté des méthodes itérative est dans leurs conditions de <strong>convergence</strong>, qui restreignent leur application à certains systèmes.</p>
+<h3 id="methode-de-jacobi">Méthode de Jacobi</h3>
+<h4 id="idee_3">Idée</h4>
+<p>La <strong>méthode de Jacobi</strong> décompose la matrice <span class="arithmatex">\(A\)</span> en <span class="arithmatex">\(A = M-N\)</span> et calcule la suite <span class="arithmatex">\(x^{(k+1)} = M^{-1} N x^{(k)} + M^{-1} b\)</span> avec :</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(M = D\)</span> avec <span class="arithmatex">\(D\)</span> la <strong>matrice des éléments diagonaux de <span class="arithmatex">\(A\)</span></strong>.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(N = E+F\)</span> avec <span class="arithmatex">\(-E\)</span> la <strong>matrice des éléments sous-diagonaux</strong> de <span class="arithmatex">\(A\)</span>, et <span class="arithmatex">\(-F\)</span> la <strong>matrice des éléments sur-diagonaux</strong> de <span class="arithmatex">\(A\)</span>.</p>
+</li>
+</ul>
+<p>On décompose donc <span class="arithmatex">\(A\)</span> en <span class="arithmatex">\(A = D-E-F\)</span> avec <span class="arithmatex">\(D\)</span> <strong>diagonale</strong>, avec <span class="arithmatex">\(E\)</span> <strong>triangulaire inférieure</strong>, et avec <span class="arithmatex">\(F\)</span> <strong>triangulaire supérieure</strong>.</p>
+<p><span class="arithmatex">\(D =
+ \begin{pmatrix}
+  a_{1,1} &amp; 0 &amp; 0 &amp; \cdots &amp; 0 &amp; 0\\
+  0 &amp; a_{2,2} &amp; 0 &amp; \cdots &amp; 0 &amp; 0\\
+  0 &amp; 0 &amp; a_{3,3} &amp; \cdots &amp; 0 &amp; 0\\
+  \vdots  &amp; \vdots  &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots\\
+  0 &amp; 0 &amp; 0 &amp; \cdots &amp; a_{n-1,n-1} &amp; 0\\
+  0 &amp; 0 &amp; 0 &amp; \cdots &amp; 0 &amp; a_{n,n}
+ \end{pmatrix}\)</span></p>
+<p><span class="arithmatex">\(-E =
+ \begin{pmatrix}
+  0 &amp; 0 &amp; 0 &amp; \cdots &amp; 0 &amp; 0 &amp; 0\\
+  a_{2,1} &amp; 0 &amp; 0 &amp; \cdots &amp; 0 &amp; 0 &amp; 0\\
+  a_{3,1} &amp; a_{3,2} &amp; 0 &amp; \cdots &amp; 0 &amp; 0 &amp; 0\\
+  \vdots  &amp; \vdots  &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots\\
+  a_{n-2,1} &amp; a_{n-2,2} &amp; a_{n-2,3} &amp; \cdots &amp; 0 &amp; 0 &amp; 0\\
+  a_{n-1,1} &amp; a_{n-1,2} &amp; a_{n-1,3} &amp; \cdots &amp; a_{n-1,n-2} &amp; 0 &amp; 0\\
+  a_{n,1} &amp; a_{n,2} &amp; a_{n,3} &amp; \cdots &amp; a_{n,n-2} &amp; a_{n,n-1} &amp; 0
+ \end{pmatrix}\)</span></p>
+<p><span class="arithmatex">\(-F =
+ \begin{pmatrix}
+  0 &amp; a_{1,2} &amp; a_{1,3} &amp; a_{1,4} &amp; \cdots &amp; a_{1,n-1} &amp; a_{1,n}\\
+  0 &amp; 0 &amp; a_{2,3} &amp; a_{2,4} &amp; \cdots &amp; a_{2,n-1} &amp; a_{2,n}\\
+  0 &amp; 0 &amp; 0 &amp; a_{3,4} &amp; \cdots &amp; a_{3,n-1} &amp; a_{3,n}\\
+  \vdots  &amp; \vdots  &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots\\
+  0 &amp; 0 &amp; 0 &amp; 0 &amp; \cdots &amp; a_{n-2,n-1} &amp; a_{n-2,n}\\
+  0 &amp; 0 &amp; 0 &amp; 0 &amp; \cdots &amp; 0 &amp; a_{n-1,n}\\
+  0 &amp; 0 &amp; 0 &amp; 0 &amp; \cdots &amp; 0 &amp; 0
+ \end{pmatrix}\)</span></p>
+<p>On appelle <strong>matrice de Jacobi</strong> :</p>
+<p><span class="arithmatex">\(J = M^{-1} N = D^{-1} (E+F)\)</span> </p>
+<p>La suite dont on cherche la limite est alors :</p>
+<p><span class="arithmatex">\(x^{(k+1)} = D^{-1} (E+F) x^{(k)} + D^{-1} b\)</span></p>
+<p>On remarque que <span class="arithmatex">\(D^{-1} (E+F) = D^{-1} (D-A) = I - D^{-1}A\)</span></p>
+<p><span class="arithmatex">\(D^{-1} =
+ \begin{pmatrix}
+  1/a_{1,1} &amp; 0 &amp; 0 &amp; \cdots &amp; 0 &amp; 0\\
+  0 &amp; 1/a_{2,2} &amp; 0 &amp; \cdots &amp; 0 &amp; 0\\
+  0 &amp; 0 &amp; 1/a_{3,3} &amp; \cdots &amp; 0 &amp; 0\\
+  \vdots  &amp; \vdots  &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots\\
+  0 &amp; 0 &amp; 0 &amp; \cdots &amp; 1/a_{n-1,n-1} &amp; 0\\
+  0 &amp; 0 &amp; 0 &amp; \cdots &amp; 0 &amp; 1/a_{n,n}
+ \end{pmatrix}\)</span></p>
+<p>et</p>
+<p><span class="arithmatex">\(D^{-1} (E+F) =
+\begin{pmatrix}
+  0 &amp; -a_{1,2}/a_{1,1} &amp; -a_{1,3}/a_{1,1} &amp; \cdots &amp; -a_{1,n-1}/a_{1,1} &amp; -a_{1,n}/a_{1,1}\\
+  -a_{2,1}/a_{2,2} &amp; 0 &amp; -a_{2,3}/a_{2,2} &amp; \cdots &amp; -a_{2,n-1}/a_{2,2} &amp; -a_{2,n}/a_{2,2}\\
+  -a_{3,1}/a_{3,3} &amp; -a_{3,2}/a_{3,3} &amp; 0 &amp; \cdots &amp; -a_{3,n-1}/a_{3,3} &amp; -a_{3,n}/a_{3,3}\\
+  \vdots  &amp; \vdots  &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots\\
+  -a_{n-1,1}/a_{n-1,n-1} &amp; -a_{n-1,2}/a_{n-1,n-1} &amp; -a_{n-1,3}/a_{n-1,n-1} &amp; \cdots &amp; 0 &amp; -a_{n-1,n}/a_{n-1,n-1}\\
+  -a_{n,1}/a_{n,n} &amp; -a_{n,2}/a_{n,n} &amp; -a_{n,3}/a_{n,n} &amp; \cdots &amp; -a_{n,n-1}/a_{n,n} &amp; 0
+ \end{pmatrix}\)</span></p>
+<p>On peut facilement en déduire qu'à l'itération <span class="arithmatex">\(k\)</span>, et pour chaque ligne <span class="arithmatex">\(i\)</span> :</p>
+<p><span class="arithmatex">\(D^{-1} (E+F) x_i^{(k)} = - \frac{\displaystyle\sum_{j=1,j \neq i}^{n} a_{i,j} x_j^{(k)}}{a_{i,i}}\)</span> et <span class="arithmatex">\(D^{-1} b_i = \frac{b_i}{a_{i,i}}\)</span></p>
+<p>D'où <span class="arithmatex">\(x_i^{(k)} = \frac{1}{a_{i,i}} (b_i - \displaystyle\sum_{j=1,j \neq i}^{n} a_{i,j} x_j^{(k-1)})\)</span></p>
+<p>Une condition nécessaire et suffisante de convergence :</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(D\)</span> doit être <strong>inversible</strong> (tous les éléments diagonaux de <span class="arithmatex">\(A\)</span> doivent être non-nuls).</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\rho(J) &lt; 1\)</span> (la valeur propre de <span class="arithmatex">\(J\)</span> de plus grand module est &lt; 1).</p>
+</li>
+</ul>
+<p>Dans la pratique, on peut utiliser le théorème suivant :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Théorème de convergence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">La méthode de Jacobi converge quelque soit <span class="arithmatex">\(x^{(0)}\)</span> pour les systèmes linéaires dont</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(A\)</span> est à <strong>diagonale strictement dominante</strong>, c'est-à-dire :</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(\forall 1 \leq i \leq n\)</span>, <span class="arithmatex">\(\mid a_{i,i} \mid &gt; \displaystyle\sum_{j=1,j \neq i}^{n} \mid a_{i,j} \mid\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>La méthode de Jacobi <strong>converge lentement</strong>, mais on peut facilement la rendre plus rapide :
+c'est l'idée de la méthode de Gauss-Seidel, présentée dans la suite de ce chapitre.</p>
+<h4 id="algorithme_2">Algorithme</h4>
+<p>Voici sous la forme d'une fonction Python l'algorithme de la méthode de Jacobi.</p>
+<p>Elle prend en entrée :</p>
+<ul>
+<li>
+<p><code>A</code> et <code>b</code> les matrices du système linéaire à résoudre.</p>
+</li>
+<li>
+<p><code>x_0</code> la valeur initiale de la suite convergeant vers la solution.</p>
+</li>
+<li>
+<p><code>n_max</code> le nombre maximum d'itérations.</p>
+</li>
+<li>
+<p><code>e</code> la précision désirée.</p>
+</li>
+</ul>
+<p>On notera les variables à l'itération <code>n</code> : </p>
+<ul>
+<li>
+<p><code>x_n</code> l'estimation de la solution du système.</p>
+</li>
+<li>
+<p><code>r_n</code> le résidu.</p>
+</li>
+</ul>
+<pre><code>def jacobi(A,b,x_0,n_max,e):
+
+    #Récupérer les dimensions de la matrice A :
+    m,n = np.shape(A)
+
+    #Vérification des dimensions de A (nxn) et b (n) :
+    if (m!=n)or(len(b)!=n):
+
+        raise ValueError(&quot;Le système n'est pas de Cramer&quot;)
+
+    #Récupérer les valeurs sur la diagonale de A :
+    A_diag = np.diag(A)
+
+    #Créer la matrice diagonale D, ayant les mêmes valeurs que la diagonale de A :
+    D = np.diag(A_diag)
+
+    #Créer la matrice EF, ayant des zéros sur sa diagonale et les mêmes valeurs
+    #que A partout ailleurs :
+    EF = A-D
+
+    #Vérifier si la matrice A est à diagonale strictement dominante :
+    for i in range(n):
+
+        if sum(abs(EF[:,i]))&gt;=abs(A_diag[i]):
+
+            print(&quot;Attention : la matrice A n'est pas à diagonale strictement dominante&quot;)
+
+    #Initialisation des variables :
+    n = 0 #Nombre d'itérations
+    x_n_old = np.copy(x_0) #Estimation de la solution à l'itération n-1
+    x_n = (b-np.dot(EF,x_n_old))/A_diag #Estimation de la solution à l'itération n
+    r_n = np.dot(A,x_n)-b #Résidu
+
+    #Itérations de l'algorithme de Jacobi
+    #tant qu'une des conditions d'arrêt n'est pas atteinte :
+    while (n&lt;n_max)and(np.linalg.norm(x_n-x_n_old,ord=2)&gt;e)and(np.linalg.norm(r_n,ord=2)&gt;e):
+
+        #Mettre à jour l'estimation de la solution :
+        x_n_old = np.copy(x_n) #Itération n
+        x_n = (b-np.dot(EF,x_n_old))/A_diag #Iteration n+1
+
+        #Incrémenter le nombre d'itérations :
+        n+=1
+
+        #Mettre à jour le résidu :
+        r_n = np.dot(A,x_n)-b
+
+    #Renvoyer l'estimation de la solution du système et le résidu :
+    return x_n,r_n
+</code></pre>
+<h4 id="exemple_4">Exemple</h4>
+<p>On rappelle que la matrice <span class="arithmatex">\(A\)</span> de notre problème exemple est :</p>
+<p><span class="arithmatex">\(A =
+\begin{pmatrix}
+  -5000 &amp; -18000 &amp; -4000 \\
+  10000 &amp; 2000 &amp; -10000 \\
+  -4000 &amp; 12000 &amp; -6000
+ \end{pmatrix}\)</span></p>
+<p>Cette matrice n'est pas à diagonale strictement dominante :</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(\mid -5000 \mid \leq \mid -18000 \mid + \mid -4000 \mid\)</span></p>
+</li>
+<li>
+<p><span class="arithmatex">\(\mid 2000 \mid \leq \mid 10000 \mid + \mid -10000 \mid\)</span></p>
+</li>
+<li>
+<p><span class="arithmatex">\(\mid -6000 \mid \leq \mid -4000 \mid + \mid 12000 \mid\)</span></p>
+</li>
+</ul>
+<p>La convergence de la méthode de Jacobi n'est donc pas assurée pour une initialisation quelconque.
+Et en effet, en appliquant l'algorithme de Jacobi à notre système, on observe que la suite diverge.</p>
+<p>Ceci illustre bien la limite des méthodes itératives : leurs conditions de convergence.</p>
+<p>Mais admettons que notre récepteur situé à l'UFR des Sciences de l'UVSQ utilise les signaux provenant de 4 autres satellites, de positions ECEF :</p>
+<ul>
+<li>
+<p><span class="arithmatex">\((x_{s1},y_{s1},z_{s1}) = (15000,13000,18000)\)</span></p>
+</li>
+<li>
+<p><span class="arithmatex">\((x_{s2},y_{s2},z_{s2}) = (1000,6000,24000)\)</span></p>
+</li>
+<li>
+<p><span class="arithmatex">\((x_{s3},y_{s3},z_{s3}) = (19000,2000,19000)\)</span></p>
+</li>
+<li>
+<p><span class="arithmatex">\((x_{s4},y_{s4},z_{s4}) = (12000,12000,26000)\)</span></p>
+</li>
+</ul>
+<p>Le système à résoudre devient alors :</p>
+<p><span class="arithmatex">\(\begin{pmatrix}
+  -14000 &amp; -7000 &amp; 6000 \\
+  4000 &amp; -11000 &amp; 1000 \\
+  -3000 &amp; -1000 &amp; 8000
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -31314000\\
+  19859000\\
+  25443000
+ \end{pmatrix}\)</span></p>
+<p>Cette fois-ci, <span class="arithmatex">\(A\)</span> est à diagonale strictement dominante :</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(\mid -14000 \mid &gt; \mid -7000 \mid + \mid 6000 \mid\)</span></p>
+</li>
+<li>
+<p><span class="arithmatex">\(\mid -11000 \mid &gt; \mid 4000 \mid + \mid 1000 \mid\)</span></p>
+</li>
+<li>
+<p><span class="arithmatex">\(\mid 8000 \mid &gt; \mid -3000 \mid + \mid -1000 \mid\)</span></p>
+</li>
+</ul>
+<p>La convergence de la méthode de Jacobi est donc assurée pour une initialisation quelconque.
+Nous allons donc appliquer la méthode à ce système.</p>
+<p>Nous choisirons :</p>
+<p><span class="arithmatex">\(x^{(0)}
+=\begin{pmatrix}
+  0\\
+  0\\
+  0
+ \end{pmatrix}\)</span></p>
+<p>On décompose la matrice <span class="arithmatex">\(A = D-E-F\)</span> avec :</p>
+<p><span class="arithmatex">\(D =
+\begin{pmatrix}
+  -14000 &amp; 0 &amp; 0 \\
+  0 &amp; -11000 &amp; 0 \\
+  0 &amp; 0 &amp; 8000
+ \end{pmatrix}\)</span></p>
+<p><span class="arithmatex">\(-E =
+\begin{pmatrix}
+  0 &amp; 0 &amp; 0 \\
+  4000 &amp; 0 &amp; 0 \\
+  -3000 &amp; -1000 &amp; 0
+ \end{pmatrix}\)</span></p>
+<p><span class="arithmatex">\(-F =
+\begin{pmatrix}
+  0 &amp; -7000 &amp; 6000 \\
+  0 &amp; 0 &amp; 1000 \\
+  0 &amp; 0 &amp; 0
+ \end{pmatrix}\)</span></p>
+<p>On a donc :</p>
+<p><span class="arithmatex">\(D^{-1} =
+\begin{pmatrix}
+  \frac{1}{-14000} &amp; 0 &amp; 0 \\
+  0 &amp; \frac{1}{-11000} &amp; 0 \\
+  0 &amp; 0 &amp; \frac{1}{8000}
+ \end{pmatrix}\)</span></p>
+<p><span class="arithmatex">\(E+F =
+\begin{pmatrix}
+  0 &amp; 7000 &amp; -6000 \\
+  -4000 &amp; 0 &amp; -1000 \\
+  3000 &amp; 1000 &amp; 0
+ \end{pmatrix}\)</span></p>
+<p>Soit :</p>
+<p><span class="arithmatex">\(D^{(-1)}(E+F) =
+\begin{pmatrix}
+  0 &amp; \frac{7000}{-14000} &amp; \frac{-6000}{-14000} \\
+  \frac{-4000}{-10000} &amp; 0 &amp; \frac{-1000}{-10000} \\
+  \frac{3000}{8000} &amp; \frac{1000}{8000} &amp; 0
+ \end{pmatrix}\)</span></p>
+<p>La suite de la méthode de Jacobi convergeant vers la solution est alors :</p>
+<p><span class="arithmatex">\(\begin{cases}
+x_r^{(k+1)} = \frac{1}{-14000} (-31314000 + 7000 y_r^{(k)} - 6000 z_r^{(k)})\\
+y_r^{(k+1)} = \frac{1}{-11000} (19859000 - 4000 x_r^{(k)} - 1000 z_r^{(k)})\\
+z_r^{(k+1)} = \frac{1}{8000} (25443000 + 3000 x_r^{(k)} + 1000 y_r^{(k)})
+\end{cases}\)</span></p>
+<p>Pour atteindre une précision de <span class="arithmatex">\(10^{-3}\)</span>, on a besoin d'itérer 10 fois la méthode de Jacobi :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Itération <span class="arithmatex">\(k\)</span></th>
+<th style="text-align: center;"><span class="arithmatex">\(x_r^{(k)}\)</span></th>
+<th style="text-align: center;"><span class="arithmatex">\(y_r^{(k)}\)</span></th>
+<th style="text-align: center;"><span class="arithmatex">\(z_r^{(k)}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">0</td>
+<td style="text-align: center;">0.0000</td>
+<td style="text-align: center;">0.0000</td>
+<td style="text-align: center;">0.0000</td>
+</tr>
+<tr>
+<td style="text-align: left;">1</td>
+<td style="text-align: center;">2236.7143</td>
+<td style="text-align: center;">-1805.3636</td>
+<td style="text-align: center;">3180.3750</td>
+</tr>
+<tr>
+<td style="text-align: left;">2</td>
+<td style="text-align: center;">4502.4140</td>
+<td style="text-align: center;">-702.8880</td>
+<td style="text-align: center;">3793.4724</td>
+</tr>
+<tr>
+<td style="text-align: left;">3</td>
+<td style="text-align: center;">4213.9322</td>
+<td style="text-align: center;">176.7389</td>
+<td style="text-align: center;">4780.9192</td>
+</tr>
+<tr>
+<td style="text-align: left;">4</td>
+<td style="text-align: center;">4197.3102</td>
+<td style="text-align: center;">161.6044</td>
+<td style="text-align: center;">4782.6919</td>
+</tr>
+<tr>
+<td style="text-align: left;">5</td>
+<td style="text-align: center;">4205.6372</td>
+<td style="text-align: center;">155.7212</td>
+<td style="text-align: center;">4774.5669</td>
+</tr>
+<tr>
+<td style="text-align: left;">6</td>
+<td style="text-align: center;">4205.0967</td>
+<td style="text-align: center;">158.0105</td>
+<td style="text-align: center;">4776.9541</td>
+</tr>
+<tr>
+<td style="text-align: left;">7</td>
+<td style="text-align: center;">4204.9751</td>
+<td style="text-align: center;">158.0310</td>
+<td style="text-align: center;">4777.0376</td>
+</tr>
+<tr>
+<td style="text-align: left;">8</td>
+<td style="text-align: center;">4205.0006</td>
+<td style="text-align: center;">157.9943</td>
+<td style="text-align: center;">4776.9945</td>
+</tr>
+<tr>
+<td style="text-align: left;">9</td>
+<td style="text-align: center;">4205.0005</td>
+<td style="text-align: center;">157.9997</td>
+<td style="text-align: center;">4776.9995</td>
+</tr>
+<tr>
+<td style="text-align: left;">10</td>
+<td style="text-align: center;">4204.9999</td>
+<td style="text-align: center;">158.0001</td>
+<td style="text-align: center;">4777.0001</td>
+</tr>
+</tbody>
+</table>
+<p>On obtient bien la solution recherchée avec la précision attendue.</p>
+<p><strong>Exercice :</strong></p>
+<p>Calculez la matrice de Jacobi correspondant à notre problème exemple.
+Est-il attendu que la méthode ne converge pas pour ce système ? Démontrez-le.</p>
+<h3 id="methode-de-gauss-seidel">Méthode de Gauss-Seidel</h3>
+<h4 id="idee_4">Idée</h4>
+<p>La <strong>méthode de Gauss-Seidel</strong> décompose la matrice <span class="arithmatex">\(A\)</span> en <span class="arithmatex">\(A = M-N\)</span> et calcule la suite <span class="arithmatex">\(x^{(k+1)} = M^{-1} N x^{(k)} + M^{-1} b\)</span> avec :</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(M = D-E\)</span> avec <span class="arithmatex">\(D\)</span> la <strong>matrice des éléments diagonaux de <span class="arithmatex">\(A\)</span></strong>, et <span class="arithmatex">\(-E\)</span> la <strong>matrice des éléments sous-diagonaux</strong> de <span class="arithmatex">\(A\)</span>.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(N = F\)</span> avec <span class="arithmatex">\(-F\)</span> la <strong>matrice des éléments sur-diagonaux</strong> de <span class="arithmatex">\(A\)</span>.</p>
+</li>
+</ul>
+<p>On appelle <strong>matrice de Gauss-Seidel</strong> :</p>
+<p><span class="arithmatex">\(G = (D-E)^{-1} F = M^{-1}N\)</span></p>
+<p>La suite dont on cherche la limite est alors :</p>
+<p><span class="arithmatex">\(x^{(k+1)} = (D-E)^{-1} F x^{(k)} + (D-E)^{-1} b\)</span></p>
+<p>On remarque que : <span class="arithmatex">\((D-E) x^{(k+1)} = F x^{(k)} + b\)</span> avec</p>
+<p><span class="arithmatex">\(D-E =
+\begin{pmatrix}
+  a_{1,1} &amp; 0 &amp; 0 &amp; \cdots &amp; 0 &amp; 0\\
+  a_{2,1} &amp; a_{2,2} &amp; 0 &amp; \cdots &amp; 0 &amp; 0\\
+  a_{3,1} &amp; a_{3,2} &amp; a_{3,3} &amp; \cdots &amp; 0 &amp; 0\\
+  \vdots  &amp; \vdots  &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots\\
+  a_{n-1,1} &amp; a_{n-1,2} &amp; a_{n-1,3} &amp; \cdots &amp; a_{n-1,n-1} &amp; 0\\
+  a_{n,1} &amp; a_{n,2} &amp; a_{n,3} &amp; \cdots &amp; a_{n,n-1} &amp; a_{n,n}
+ \end{pmatrix}\)</span></p>
+<p>et </p>
+<p><span class="arithmatex">\(F =
+ \begin{pmatrix}
+  0 &amp; -a_{1,2} &amp; -a_{1,3} &amp; \cdots &amp; -a_{1,n-1} &amp; -a_{1,n}\\
+  0 &amp; 0 &amp; -a_{2,3} &amp; \cdots &amp; -a_{2,n-1} &amp; -a_{2,n}\\
+  \vdots  &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots\\
+  0 &amp; 0 &amp; 0 &amp; \cdots &amp; -a_{n-2,n-1} &amp; -a_{n-2,n}\\
+  0 &amp; 0 &amp; 0 &amp; \cdots &amp; 0 &amp; -a_{n-1,n}\\
+  0 &amp; 0 &amp; 0 &amp; \cdots &amp; 0 &amp; 0
+ \end{pmatrix}\)</span></p>
+<p>On peut facilement en déduire qu'à l'itération <span class="arithmatex">\(k\)</span>, et pour chaque ligne <span class="arithmatex">\(i\)</span> :</p>
+<p><span class="arithmatex">\((D-E) x_i^{(k+1)} = \displaystyle\sum_{j=1}^{i} a_{i,j} x_j^{(k+1)} = a_{i,i} x_i^{(k+1)} + \displaystyle\sum_{j=1}^{i-1} a_{i,j} x_j^{(k+1)}\)</span> et <span class="arithmatex">\(F x_i^{(k)} = -\displaystyle\sum_{j=i+1}^{n} a_{i,j} x_j^{(k)}\)</span></p>
+<p>D'où <span class="arithmatex">\(x_i^{(k)} = \frac{1}{a_{i,i}} (b_i - \displaystyle\sum_{j=1}^{i-1} a_{i,j} x_j^{(k)} - \displaystyle\sum_{j=i+1}^{n} a_{i,j} x_j^{(k-1)})\)</span></p>
+<p>Une condition nécessaire et suffisante de convergence :</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(D-E\)</span> doit être <strong>inversible</strong> (tous les éléments diagonaux de <span class="arithmatex">\(A\)</span> doivent être non-nuls).</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\rho(G) &lt; 1\)</span> (la valeur propre de <span class="arithmatex">\(G\)</span> de plus grand module est &lt; 1).</p>
+</li>
+</ul>
+<p>Dans la pratique, on peut utiliser les théorèmes suivant :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Théorème de convergence 1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">La méthode de Gauss-Seidel converge quelque soit <span class="arithmatex">\(x^{(0)}\)</span> pour les systèmes linéaires dont</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(A\)</span> est à <strong>diagonale strictement dominante</strong>, c'est-à-dire :</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(\forall 1 \leq i \leq n\)</span>, <span class="arithmatex">\(\mid a_{i,i} \mid &gt; \displaystyle\sum_{j=1,j \neq i}^{n} \mid a_{i,j} \mid\)</span></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Théorème de convergence 2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Si <span class="arithmatex">\(A\)</span> est une matrice <strong>symétrique définie positive</strong> alors</td>
+</tr>
+<tr>
+<td style="text-align: left;">la méthode de Gauss-Seidel converge.</td>
+</tr>
+</tbody>
+</table>
+<p>Contrairement à la méthode de Jacobi, la mise à jour des composantes de <span class="arithmatex">\(x^{(k)}\)</span> se fait de manière <strong>séquentielle</strong> et non en parallèle.
+Ceci rend la convergence de la méthode de Gauss-Seidel <strong>plus rapide</strong> que celle de Jacobi.</p>
+<p>Cependant, la méthode de Gauss-Seidel peut <strong>osciller</strong> autour de la solution.
+Pour limiter ce phénomène et donc accélérer la convergence, on peut utiliser les <strong>méthodes de relaxation</strong>, décrite dans la suite de ce chapitre.</p>
+<h4 id="algorithme_3">Algorithme</h4>
+<p>Voici sous la forme d'une fonction Python l'algorithme de la méthode de Gauss-Seidel.</p>
+<p>Elle prend en entrée :</p>
+<ul>
+<li>
+<p><code>A</code> et <code>b</code> les matrices du système linéaire à résoudre.</p>
+</li>
+<li>
+<p><code>x_0</code> la valeur initiale de la suite convergeant vers la solution.</p>
+</li>
+<li>
+<p><code>n_max</code> le nombre maximum d'itérations.</p>
+</li>
+<li>
+<p><code>e</code> la précision désirée.</p>
+</li>
+</ul>
+<p>On notera les variables à l'itération <code>n</code> : </p>
+<ul>
+<li>
+<p><code>x_n</code> l'estimation de la solution du système.</p>
+</li>
+<li>
+<p><code>r_n</code> le résidu.</p>
+</li>
+</ul>
+<pre><code>def gauss_seidel(A,b,x_0,n_max,e):
+
+    #Récupérer les dimensions de la matrice A :
+    m,n = np.shape(A)
+
+    #Vérification des dimensions de A (nxn) et b (n) :
+    if (m!=n)or(len(b)!=n):
+
+        raise ValueError(&quot;Le système n'est pas de Cramer&quot;)
+
+    #Récupérer les valeurs sur la diagonale de A :
+    A_diag = np.diag(A)
+
+    #Créer la matrice diagonale D, ayant les mêmes valeurs que la diagonale de A :
+    D = np.diag(A_diag)
+
+    #Créer la matrice A-D, ayant des zéros sur sa diagonale et les mêmes valeurs
+    #que A partout ailleurs :
+    AD = A-D
+
+    #Vérifier si la matrice A est à diagonale strictement dominante :
+    for i in range(n):
+
+        if sum(abs(AD[:,i]))&gt;=abs(A_diag[i]):
+
+            print(&quot;Attention : la matrice A n'est pas à diagonale strictement dominante&quot;)
+            break
+
+    #Initialisation des variables :
+    n = 0 #Nombre d'itérations
+    x_n_old = np.copy(x_0) #Estimation de la solution à l'itération n-1
+    x_n = np.copy(x_0) #Estimation de la solution à l'itération n
+    for i in range(len(b)):
+        x_n[i] = (b[i]-np.dot(A[i,:i],x_n[:i])-np.dot(A[i,i+1:],x_n[i+1:]))/A[i,i]
+    r_n = np.dot(A,x_n)-b #Résidu
+
+    #Itérations de l'algorithme de Gauss-Seidel
+    #tant qu'une des conditions d'arrêt n'est pas atteinte :
+    while (n&lt;n_max)and(np.linalg.norm(x_n-x_n_old,ord=2)&gt;e)and(np.linalg.norm(r_n,ord=2)&gt;e):
+
+        #Mettre à jour l'estimation de la solution :
+        x_n_old = np.copy(x_n) #Itération n
+        for i in range(len(b)):
+            x_n[i] = (b[i]-np.dot(A[i,:i],x_n[:i])-np.dot(A[i,i+1:],x_n[i+1:]))/A[i,i] #Iteration n+1
+
+        #Incrémenter le nombre d'itérations :
+        n+=1
+
+        #Renvoyer l'estimation de la solution du système et le résidu :
+        r_n = np.dot(A,x_n)-b
+
+    #Renvoyer l'estimation de la solution du système et le résidu :
+    return x_n,r_n
+</code></pre>
+<h4 id="exemple_5">Exemple</h4>
+<p>Nous allons cette fois-ci appliquer la méthode de Gauss-Seidel au système :</p>
+<p><span class="arithmatex">\(\begin{pmatrix}
+  -14000 &amp; -7000 &amp; 6000 \\
+  4000 &amp; -11000 &amp; 1000 \\
+  -3000 &amp; -1000 &amp; 8000
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -31314000\\
+  19859000\\
+  25443000
+ \end{pmatrix}\)</span></p>
+<p>Comme montré précédemment, la matrice <span class="arithmatex">\(A\)</span> est à diagonale strictement dominante.</p>
+<p>La convergence de la méthode de Gauss-Seidel est donc assurée pour une initialisation quelconque.
+Nous allons donc appliquer la méthode à ce système.</p>
+<p>Nous choisirons :</p>
+<p><span class="arithmatex">\(x^{(0)}
+=\begin{pmatrix}
+  0\\
+  0\\
+  0
+ \end{pmatrix}\)</span></p>
+<p>On décompose la matrice <span class="arithmatex">\(A = D-E-F\)</span> avec :</p>
+<p><span class="arithmatex">\(D =
+\begin{pmatrix}
+  -14000 &amp; 0 &amp; 0 \\
+  0 &amp; -11000 &amp; 0 \\
+  0 &amp; 0 &amp; 8000
+ \end{pmatrix}\)</span></p>
+<p><span class="arithmatex">\(-E =
+\begin{pmatrix}
+  0 &amp; 0 &amp; 0 \\
+  4000 &amp; 0 &amp; 0 \\
+  -3000 &amp; -1000 &amp; 0
+ \end{pmatrix}\)</span></p>
+<p><span class="arithmatex">\(-F =
+\begin{pmatrix}
+  0 &amp; -7000 &amp; 6000 \\
+  0 &amp; 0 &amp; 1000 \\
+  0 &amp; 0 &amp; 0
+ \end{pmatrix}\)</span></p>
+<p>On a donc :</p>
+<p><span class="arithmatex">\(D-E =
+\begin{pmatrix}
+  -14000 &amp; 0 &amp; 0 \\
+  4000 &amp; -11000 &amp; 0 \\
+  -3000 &amp; -1000 &amp; 8000
+ \end{pmatrix}\)</span></p>
+<p>La suite de la méthode de Gauss-Seidel convergeant vers la solution est alors :</p>
+<p><span class="arithmatex">\(\begin{cases}
+x_r^{(k+1)} = \frac{1}{-14000} (-31314000 + 7000 y_r^{(k)} - 6000 z_r^{(k)})\\
+y_r^{(k+1)} = \frac{1}{-11000} (19859000 - 4000 x_r^{(k+1)} - 1000 z_r^{(k)})\\
+z_r^{(k+1)} = \frac{1}{8000} (25443000 + 3000 x_r^{(k+1)} + 1000 y_r^{(k+1)})
+\end{cases}\)</span></p>
+<p>Pour atteindre une précision de <span class="arithmatex">\(10^{-3}\)</span>, on a besoin d'itérer 9 fois la méthode de Gauss-Seidel :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Itération <span class="arithmatex">\(k\)</span></th>
+<th style="text-align: center;"><span class="arithmatex">\(x_r^{(k)}\)</span></th>
+<th style="text-align: center;"><span class="arithmatex">\(y_r^{(k)}\)</span></th>
+<th style="text-align: center;"><span class="arithmatex">\(z_r^{(k)}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">0</td>
+<td style="text-align: center;">0.0000</td>
+<td style="text-align: center;">0.0000</td>
+<td style="text-align: center;">0.0000</td>
+</tr>
+<tr>
+<td style="text-align: left;">1</td>
+<td style="text-align: center;">2236.7143</td>
+<td style="text-align: center;">-992.0130</td>
+<td style="text-align: center;">3895.1412</td>
+</tr>
+<tr>
+<td style="text-align: left;">2</td>
+<td style="text-align: center;">4402.0670</td>
+<td style="text-align: center;">149.4918</td>
+<td style="text-align: center;">4849.8366</td>
+</tr>
+<tr>
+<td style="text-align: left;">3</td>
+<td style="text-align: center;">4240.4698</td>
+<td style="text-align: center;">177.5196</td>
+<td style="text-align: center;">4792.7411</td>
+</tr>
+<tr>
+<td style="text-align: left;">4</td>
+<td style="text-align: center;">4201.9864</td>
+<td style="text-align: center;">158.3352</td>
+<td style="text-align: center;">4775.9118</td>
+</tr>
+<tr>
+<td style="text-align: left;">5</td>
+<td style="text-align: center;">4204.3660</td>
+<td style="text-align: center;">157.6705</td>
+<td style="text-align: center;">4776.7211</td>
+</tr>
+<tr>
+<td style="text-align: left;">6</td>
+<td style="text-align: center;">4205.0452</td>
+<td style="text-align: center;">157.9911</td>
+<td style="text-align: center;">4777.0158</td>
+</tr>
+<tr>
+<td style="text-align: left;">7</td>
+<td style="text-align: center;">4205.0112</td>
+<td style="text-align: center;">158.0055</td>
+<td style="text-align: center;">4777.0049</td>
+</tr>
+<tr>
+<td style="text-align: left;">8</td>
+<td style="text-align: center;">4204.9993</td>
+<td style="text-align: center;">158.0002</td>
+<td style="text-align: center;">4776.9998</td>
+</tr>
+<tr>
+<td style="text-align: left;">9</td>
+<td style="text-align: center;">4204.9998</td>
+<td style="text-align: center;">157.9999</td>
+<td style="text-align: center;">4776.9999</td>
+</tr>
+</tbody>
+</table>
+<p>On obtient bien la solution recherchée avec la précision attendue, pour une itération de moins que la méthode de Jacobi.</p>
+<p><strong>Exercice :</strong></p>
+<p>Essayez d'appliquer la méthode Gauss-Seidel au système définit dans le problème exemple.
+La méthode converge-t-elle ? Ce résultat était-il prévisible ? Prouvez-le.</p>
+<h3 id="methode-de-relaxation">Méthode de relaxation</h3>
+<h4 id="idee_5">Idée</h4>
+<p>La <strong>méthode de la relaxation</strong> est une variante de l'algorithme de Gauss-Seidel.
+L'idée est de calculer un vecteur <span class="arithmatex">\(x_G^{(k+1)}\)</span> à l'aide de de la méthode de Gauss-Seidel, puis de calculer <span class="arithmatex">\(x^{(k+1)}\)</span> comme la moyenne pondérée :</p>
+<p><span class="arithmatex">\(x^{(k+1)} = \omega x_G^{(k+1)} + (1-\omega) x^{(k)}\)</span> avec <span class="arithmatex">\(\omega &gt; 0\)</span></p>
+<p>L'algorithme de relaxation décompose donc la matrice <span class="arithmatex">\(A = M-N\)</span> et calcule la suite <span class="arithmatex">\(x^{(k+1)} = M^{-1} N x^{(k)} + M^{-1} b\)</span> avec :</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(M = \frac{1}{\omega} D - E\)</span> avec <span class="arithmatex">\(D\)</span> la <strong>matrice des éléments diagonaux de <span class="arithmatex">\(A\)</span></strong> et <span class="arithmatex">\(E\)</span> la <strong>matrice des éléments sous-diagonaux</strong> de <span class="arithmatex">\(A\)</span>.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(N = (\frac{1}{\omega}-1) D + F\)</span> avec <span class="arithmatex">\(D\)</span> la <strong>matrice des éléments diagonaux</strong> de <span class="arithmatex">\(A\)</span> et <span class="arithmatex">\(F\)</span> la <strong>matrice des éléments sur-diagonaux</strong> de <span class="arithmatex">\(A\)</span>.</p>
+</li>
+</ul>
+<p>On appelle <span class="arithmatex">\(\omega\)</span> le <strong>paramètre de relaxation</strong>.</p>
+<p>Il y a différents cas de figure suivant la valeur de <span class="arithmatex">\(\omega\)</span> choisie :</p>
+<ul>
+<li>
+<p>Si <span class="arithmatex">\(\omega &lt; 1\)</span> on parle de <strong>sous-relaxation</strong> : la méthode est plus "prudente" que Gauss-Seidel.</p>
+</li>
+<li>
+<p>Si <span class="arithmatex">\(\omega &gt; 1\)</span> on parle de <strong>sur-relaxation</strong> : la méthode est plus "plus ambitieuse" que Gauss-Seidel.</p>
+</li>
+<li>
+<p>Si <span class="arithmatex">\(\omega = 1\)</span> on retrouve la méthode de Gauss-Seidel.</p>
+</li>
+</ul>
+<p>La matrice d'itération est ici :</p>
+<p><span class="arithmatex">\(C = (D - \omega E)^{-1} ((1-\omega) D + \omega F)\)</span></p>
+<p>On cherche à <strong>optimiser <span class="arithmatex">\(\omega\)</span></strong> pour que <span class="arithmatex">\(\rho(C)\)</span> soit minimal.</p>
+<p>On sait qu'à l'itération <span class="arithmatex">\(k\)</span>, et pour chaque ligne <span class="arithmatex">\(i\)</span> :</p>
+<p><span class="arithmatex">\(x_i^{(k)} = \omega x_Gi^{(k)} + (1-\omega) x_i^{(k-1)}\)</span></p>
+<p>On peut donc en déduire que :</p>
+<p><span class="arithmatex">\(x_i^{(k)} = \frac{\omega}{a_{i,i}} (b_i - \displaystyle\sum_{j=1}^{i-1} a_{i,j} x_j^{(k)} - \displaystyle\sum_{j=i+1}^{n} a_{i,j} x_j^{(k-1)} - (\frac{1}{\omega}-1) a_{i,i} x_i^{(k-1)})\)</span></p>
+<p>Voici un théorème utile pour vérifier la convergence de la méthode :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Théorème</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">- Si la méthode de la relaxation converge, alors <span class="arithmatex">\(0 &lt; \omega &lt; 2\)</span>.</td>
+</tr>
+<tr>
+<td style="text-align: left;">- Si <span class="arithmatex">\(A\)</span> est à diagonale strictement dominante, la méthode de la relaxation converge pour tout vecteur de départ <span class="arithmatex">\(x^{(0)}\)</span> si <span class="arithmatex">\(0 &lt; \omega \leq 1\)</span>.</td>
+</tr>
+<tr>
+<td style="text-align: left;">- Si <span class="arithmatex">\(A\)</span> est symétrique définie positive, la méthode de relaxation converge pour tout vecteur de départ <span class="arithmatex">\(x^{(0)}\)</span> si <span class="arithmatex">\(0 &lt; \omega &lt; 2\)</span>.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="algorithme_4">Algorithme</h4>
+<p>Voici sous la forme d'une fonction Python l'algorithme de la méthode de la relaxation.</p>
+<p>Elle prend en entrée :</p>
+<ul>
+<li>
+<p><code>A</code> et <code>b</code> les matrices du système linéaire à résoudre.</p>
+</li>
+<li>
+<p><code>omega</code> le paramètre de relaxation.</p>
+</li>
+<li>
+<p><code>x_0</code> la valeur initiale de la suite convergeant vers la solution.</p>
+</li>
+<li>
+<p><code>n_max</code> le nombre maximum d'itérations.</p>
+</li>
+<li>
+<p><code>e</code> la précision désirée.</p>
+</li>
+</ul>
+<p>On notera les variables à l'itération <code>n</code> : </p>
+<ul>
+<li>
+<p><code>x_n</code> l'estimation de la solution du système.</p>
+</li>
+<li>
+<p><code>r_n</code> le résidu.</p>
+</li>
+</ul>
+<pre><code>def relaxation(A,b,omega,x_0,n_max,e):
+
+    #Récupérer les dimensions de la matrice A :
+    m,n = np.shape(A)
+
+    #Vérification des dimensions de A (nxn) et b (n) :
+    if (m!=n)or(len(b)!=n):
+
+        raise ValueError(&quot;Le système n'est pas de Cramer&quot;)
+
+    #Récupérer les valeurs sur la diagonale de A :
+    A_diag = np.diag(A)
+
+    #Créer la matrice diagonale D, ayant les mêmes valeurs que la diagonale de A :
+    D = np.diag(A_diag)
+
+    #Créer la matrice A-D, ayant des zéros sur sa diagonale et les mêmes valeurs
+    #que A partout ailleurs :
+    AD = A-D
+
+    #Vérifier si la matrice A est à diagonale strictement dominante :
+    for i in range(n):
+
+        if sum(abs(AD[:,i]))&gt;=abs(A_diag[i]):
+
+            print(&quot;Attention : la matrice A n'est pas à diagonale strictement dominante&quot;)
+            break
+
+    #Initialisation des variables :
+    n = 0 #Nombre d'itérations
+    x_n_old = np.copy(x_0) #Estimation de la solution à l'itération n-1
+    x_n = np.copy(x_0) #Estimation de la solution à l'itération n
+    for i in range(len(b)):
+        x_n[i] = omega*(b[i]-np.dot(A[i,:i],x_n[:i])-np.dot(A[i,i+1:],x_n_old[i+1:]))/A[i,i] + (1-omega)*x_n_old[i]
+    r_n = np.dot(A,x_n)-b #Résidu
+
+    #Itérations de l'algorithme de la relaxation
+    #tant qu'une des conditions d'arrêt n'est pas atteinte :
+    while (n&lt;n_max)and(np.linalg.norm(x_n-x_n_old,ord=2)&gt;e)and(np.linalg.norm(r_n,ord=2)&gt;e):
+
+        #Mettre à jour l'estimation de la solution :
+        x_n_old = np.copy(x_n) #Itération n
+        for i in range(len(b)):
+            x_n[i] = omega*(b[i]-np.dot(A[i,:i],x_n[:i])-np.dot(A[i,i+1:],x_n_old[i+1:]))/A[i,i] + (1-omega)*x_n_old[i] #Iteration n+1
+
+        #Incrémenter le nombre d'itérations :
+        n+=1
+
+        #Renvoyer l'estimation de la solution du système et le résidu :
+        r_n = np.dot(A,x_n)-b
+
+    #Renvoyer l'estimation de la solution du système et le résidu :
+    return x_n,r_n
+</code></pre>
+<h4 id="exemple_6">Exemple</h4>
+<p>On peut démontrer que pour le système de notre problème-exemple, la méthode de la relaxation diverge pour tout paramètre <span class="arithmatex">\(\omega\)</span> dans <span class="arithmatex">\(]0,2]\)</span>.</p>
+<p>Considérons donc à nouveau le système :</p>
+<p><span class="arithmatex">\(\begin{pmatrix}
+  -14000 &amp; -7000 &amp; 6000 \\
+  4000 &amp; -11000 &amp; 1000 \\
+  -3000 &amp; -1000 &amp; 8000
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -31314000\\
+  19859000\\
+  25443000
+ \end{pmatrix}\)</span></p>
+<p>On a montré précédemment que dans ce cas on peut décomposer la matrice <span class="arithmatex">\(A = D-E-F\)</span> avec :</p>
+<p><span class="arithmatex">\(D =
+\begin{pmatrix}
+  -14000 &amp; 0 &amp; 0 \\
+  0 &amp; -11000 &amp; 0 \\
+  0 &amp; 0 &amp; 8000
+ \end{pmatrix}\)</span></p>
+<p><span class="arithmatex">\(-E =
+\begin{pmatrix}
+  0 &amp; 0 &amp; 0 \\
+  4000 &amp; 0 &amp; 0 \\
+  -3000 &amp; -1000 &amp; 0
+ \end{pmatrix}\)</span></p>
+<p><span class="arithmatex">\(-F =
+\begin{pmatrix}
+  0 &amp; -7000 &amp; 6000 \\
+  0 &amp; 0 &amp; 1000 \\
+  0 &amp; 0 &amp; 0
+ \end{pmatrix}\)</span></p>
+<p>On peut alors déterminer pour différentes valeurs du paramètre de relaxation <span class="arithmatex">\(\omega\)</span> sur <span class="arithmatex">\(]0,2]\)</span> le rayon spectral de la matrice d'itération <span class="arithmatex">\(C = (D - \omega E)^{-1} ((1-\omega) D + \omega F)\)</span> :</p>
+<p><img alt="Optimisation du paramètre de relaxation pour le 1er cas" src="../img/Chap5_exemple_relaxation_optimale_1.png" /></p>
+<p>On observe que le rayon spectral est minimal pour <span class="arithmatex">\(\omega \approx 1\)</span>.
+On en déduit que la méthode de Gauss-Seidel est optimale pour la résolution de ce système.</p>
+<p>Mais ce n'est pas toujours le cas !</p>
+<p>Mettons que la position ECEF du satellite 1 ne soit pas <span class="arithmatex">\((x_{s1},y_{s1},z_{s1}) = (15000,13000,18000)\)</span>, mais plutôt <span class="arithmatex">\((x_{s1},y_{s1},z_{s1}) = (23000,7000,20000)\)</span>.
+Le système à résoudre devient alors :</p>
+<p><span class="arithmatex">\(\begin{pmatrix}
+  -22000 &amp; -1000 &amp; 4000 \\
+  -4000 &amp; -5000 &amp; -1000 \\
+  -11000 &amp; 5000 &amp; 6000
+ \end{pmatrix}
+ \begin{pmatrix}
+  x_r\\
+  y_r\\
+  z_r 
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  -73560000\\
+  -22387000\\
+  -16803000
+ \end{pmatrix}\)</span></p>
+<p>On remarque que <span class="arithmatex">\(A\)</span> n'est pas à diagonale strictement dominante.
+Il faudra donc vérifier que le rayon spectral de la matrice d'itération choisie est inférieur à 1 pour assurer la convergence de la méthode de la relaxation.</p>
+<p>On décompose la matrice <span class="arithmatex">\(A = D-E-F\)</span> avec :</p>
+<p><span class="arithmatex">\(D =
+\begin{pmatrix}
+  -22000 &amp; 0 &amp; 0 \\
+  0 &amp; -5000 &amp; 0 \\
+  0 &amp; 0 &amp; 6000
+ \end{pmatrix}\)</span></p>
+<p><span class="arithmatex">\(-E =
+\begin{pmatrix}
+  0 &amp; 0 &amp; 0 \\
+  -4000 &amp; 0 &amp; 0 \\
+  -11000 &amp; 5000 &amp; 0
+ \end{pmatrix}\)</span></p>
+<p><span class="arithmatex">\(-F =
+\begin{pmatrix}
+  0 &amp; -1000 &amp; 4000 \\
+  0 &amp; 0 &amp; -1000 \\
+  0 &amp; 0 &amp; 0
+ \end{pmatrix}\)</span></p>
+<p>On a donc :</p>
+<p><span class="arithmatex">\(D-E =
+\begin{pmatrix}
+  -22000 &amp; 0 &amp; 0 \\
+  -4000 &amp; -5000 &amp; 0 \\
+  -11000 &amp; 5000 &amp; 6000
+ \end{pmatrix}\)</span></p>
+<p>Si nous déterminons pour différentes valeurs de <span class="arithmatex">\(\omega\)</span> sur <span class="arithmatex">\(]0,2]\)</span> le rayon spectral de la matrice d'itération <span class="arithmatex">\(C = (D - \omega E)^{-1} ((1-\omega) D + \omega F)\)</span>  de ce système, nous obtenons :</p>
+<p><img alt="Optimisation du paramètre de relaxation pour le 2ème cas" src="../img/Chap5_exemple_relaxation_optimale_2.png" /></p>
+<p>Cette fois-ci le rayon spectral est minimal pour <span class="arithmatex">\(\omega \approx 1.25\)</span>.
+On en déduit que la formule de récurrence optimale pour résoudre ce système est :</p>
+<p><span class="arithmatex">\(x^{(k+1)} = 1.25 \times x_G^{(k+1)} - 0.25 \times x^{(k)}\)</span></p>
+<p>Ce qui donne :</p>
+<p><span class="arithmatex">\(\begin{cases}
+x_r^{(k+1)} = \frac{1.25}{-22000} (-73560000 + 1000 y_r^{(k)} - 4000 z_r^{(k)}) - 0.25 x_r^{(k)}\\
+y_r^{(k+1)} = \frac{1.25}{-4000} (-22387000 + 4000 x_r^{(k+1)} + 1000 z_r^{(k)}) - 0.25 y_r^{(k)}\\
+z_r^{(k+1)} = \frac{1.25}{-11000} (-16803000 + 11000 x_r^{(k+1)} - 5000 y_r^{(k+1)}) - 0.25 z_r^{(k)}
+\end{cases}\)</span></p>
+<p>On peut vérifier que cette formule converge plus rapidement que la méthode de Gauss-Seidel (<span class="arithmatex">\(\omega = 1\)</span>).</p>
+<p>Nous choisirons encore :</p>
+<p><span class="arithmatex">\(x^{(0)}
+=\begin{pmatrix}
+  0\\
+  0\\
+  0
+ \end{pmatrix}\)</span></p>
+<p>Dans le cas de Gauss-Seidel (<span class="arithmatex">\(\omega = 1\)</span>), pour obtenir la solution avec une précision de <span class="arithmatex">\(10^{-3}\)</span>, 39 itérations sont nécessaires :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Itération <span class="arithmatex">\(k\)</span></th>
+<th style="text-align: center;"><span class="arithmatex">\(x_r^{(k)}\)</span></th>
+<th style="text-align: center;"><span class="arithmatex">\(y_r^{(k)}\)</span></th>
+<th style="text-align: center;"><span class="arithmatex">\(z_r^{(k)}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">0</td>
+<td style="text-align: center;">0.0000</td>
+<td style="text-align: center;">0.0000</td>
+<td style="text-align: center;">0.0000</td>
+</tr>
+<tr>
+<td style="text-align: left;">1</td>
+<td style="text-align: center;">3343.6364</td>
+<td style="text-align: center;">1802.4909</td>
+<td style="text-align: center;">1827.4242</td>
+</tr>
+<tr>
+<td style="text-align: left;">2</td>
+<td style="text-align: center;">3593.9639</td>
+<td style="text-align: center;">1236.7440</td>
+<td style="text-align: center;">2757.8138</td>
+</tr>
+<tr>
+<td style="text-align: left;">3</td>
+<td style="text-align: center;">3788.8414</td>
+<td style="text-align: center;">894.7641</td>
+<td style="text-align: center;">3400.0725</td>
+</tr>
+<tr>
+<td style="text-align: left;">4</td>
+<td style="text-align: center;">3921.1603</td>
+<td style="text-align: center;">660.4573</td>
+<td style="text-align: center;">3837.9128</td>
+</tr>
+<tr>
+<td style="text-align: left;">5</td>
+<td style="text-align: center;">4011.4179</td>
+<td style="text-align: center;">500.6831</td>
+<td style="text-align: center;">4136.5302</td>
+</tr>
+<tr>
+<td style="text-align: left;">6</td>
+<td style="text-align: center;">4072.9744</td>
+<td style="text-align: center;">391.7144</td>
+<td style="text-align: center;">4340.1911</td>
+</tr>
+<tr>
+<td style="text-align: left;">7</td>
+<td style="text-align: center;">4114.9568</td>
+<td style="text-align: center;">317.3963</td>
+<td style="text-align: center;">4479.0906</td>
+</tr>
+<tr>
+<td style="text-align: left;">8</td>
+<td style="text-align: center;">4143.5894</td>
+<td style="text-align: center;">266.7104</td>
+<td style="text-align: center;">4573.8218</td>
+</tr>
+<tr>
+<td style="text-align: left;">9</td>
+<td style="text-align: center;">4163.1171</td>
+<td style="text-align: center;">232.1419</td>
+<td style="text-align: center;">4638.4298</td>
+</tr>
+<tr>
+<td style="text-align: left;">10</td>
+<td style="text-align: center;">4176.4353</td>
+<td style="text-align: center;">208.5658</td>
+<td style="text-align: center;">4682.4933</td>
+</tr>
+<tr>
+<td style="text-align: left;">11</td>
+<td style="text-align: center;">4185.5185</td>
+<td style="text-align: center;">192.4865</td>
+<td style="text-align: center;">4712.5452</td>
+</tr>
+<tr>
+<td style="text-align: left;">12</td>
+<td style="text-align: center;">4191.7134</td>
+<td style="text-align: center;">181.5203</td>
+<td style="text-align: center;">4733.0410</td>
+</tr>
+<tr>
+<td style="text-align: left;">13</td>
+<td style="text-align: center;">4195.9383</td>
+<td style="text-align: center;">174.0411</td>
+<td style="text-align: center;">4747.0194</td>
+</tr>
+<tr>
+<td style="text-align: left;">14</td>
+<td style="text-align: center;">4198.8198</td>
+<td style="text-align: center;">168.9403</td>
+<td style="text-align: center;">4756.5528</td>
+</tr>
+<tr>
+<td style="text-align: left;">15</td>
+<td style="text-align: center;">4200.7850</td>
+<td style="text-align: center;">165.4614</td>
+<td style="text-align: center;">4763.0547</td>
+</tr>
+<tr>
+<td style="text-align: left;">16</td>
+<td style="text-align: center;">4202.1253</td>
+<td style="text-align: center;">163.0888</td>
+<td style="text-align: center;">4767.4892</td>
+</tr>
+<tr>
+<td style="text-align: left;">17</td>
+<td style="text-align: center;">4203.0394</td>
+<td style="text-align: center;">161.4706</td>
+<td style="text-align: center;">4770.5135</td>
+</tr>
+<tr>
+<td style="text-align: left;">18</td>
+<td style="text-align: center;">4203.6629</td>
+<td style="text-align: center;">160.3670</td>
+<td style="text-align: center;">4772.5761</td>
+</tr>
+<tr>
+<td style="text-align: left;">19</td>
+<td style="text-align: center;">4204.0881</td>
+<td style="text-align: center;">159.6143</td>
+<td style="text-align: center;">4773.9828</td>
+</tr>
+<tr>
+<td style="text-align: left;">20</td>
+<td style="text-align: center;">4204.3780</td>
+<td style="text-align: center;">159.1010</td>
+<td style="text-align: center;">4774.9423</td>
+</tr>
+<tr>
+<td style="text-align: left;">21</td>
+<td style="text-align: center;">4204.5758</td>
+<td style="text-align: center;">158.7509</td>
+<td style="text-align: center;">4775.5966</td>
+</tr>
+<tr>
+<td style="text-align: left;">22</td>
+<td style="text-align: center;">4204.7107</td>
+<td style="text-align: center;">158.5121</td>
+<td style="text-align: center;">4776.0429</td>
+</tr>
+<tr>
+<td style="text-align: left;">23</td>
+<td style="text-align: center;">4204.8027</td>
+<td style="text-align: center;">158.3493</td>
+<td style="text-align: center;">4776.3472</td>
+</tr>
+<tr>
+<td style="text-align: left;">24</td>
+<td style="text-align: center;">4204.8654</td>
+<td style="text-align: center;">158.2382</td>
+<td style="text-align: center;">4776.5548</td>
+</tr>
+<tr>
+<td style="text-align: left;">25</td>
+<td style="text-align: center;">4204.9082</td>
+<td style="text-align: center;">158.1625</td>
+<td style="text-align: center;">4776.6964</td>
+</tr>
+<tr>
+<td style="text-align: left;">26</td>
+<td style="text-align: center;">4204.9374</td>
+<td style="text-align: center;">158.1108</td>
+<td style="text-align: center;">4776.7929</td>
+</tr>
+<tr>
+<td style="text-align: left;">27</td>
+<td style="text-align: center;">4204.9573</td>
+<td style="text-align: center;">158.0756</td>
+<td style="text-align: center;">4776.8588</td>
+</tr>
+<tr>
+<td style="text-align: left;">28</td>
+<td style="text-align: center;">4204.9709</td>
+<td style="text-align: center;">158.0515</td>
+<td style="text-align: center;">4776.9037</td>
+</tr>
+<tr>
+<td style="text-align: left;">29</td>
+<td style="text-align: center;">4204.9801</td>
+<td style="text-align: center;">158.0351</td>
+<td style="text-align: center;">4776.9343</td>
+</tr>
+<tr>
+<td style="text-align: left;">30</td>
+<td style="text-align: center;">4204.9865</td>
+<td style="text-align: center;">158.0240</td>
+<td style="text-align: center;">4776.9552</td>
+</tr>
+<tr>
+<td style="text-align: left;">31</td>
+<td style="text-align: center;">4204.9908</td>
+<td style="text-align: center;">158.0163</td>
+<td style="text-align: center;">4776.9694</td>
+</tr>
+<tr>
+<td style="text-align: left;">32</td>
+<td style="text-align: center;">4204.9937</td>
+<td style="text-align: center;">158.0112</td>
+<td style="text-align: center;">4776.9792</td>
+</tr>
+<tr>
+<td style="text-align: left;">33</td>
+<td style="text-align: center;">4204.9957</td>
+<td style="text-align: center;">158.0076</td>
+<td style="text-align: center;">4776.9858</td>
+</tr>
+<tr>
+<td style="text-align: left;">34</td>
+<td style="text-align: center;">4204.9971</td>
+<td style="text-align: center;">158.0052</td>
+<td style="text-align: center;">4776.9903</td>
+</tr>
+<tr>
+<td style="text-align: left;">35</td>
+<td style="text-align: center;">4204.9980</td>
+<td style="text-align: center;">158.0035</td>
+<td style="text-align: center;">4776.9934</td>
+</tr>
+<tr>
+<td style="text-align: left;">36</td>
+<td style="text-align: center;">4204.9986</td>
+<td style="text-align: center;">158.0024</td>
+<td style="text-align: center;">4776.9955</td>
+</tr>
+<tr>
+<td style="text-align: left;">37</td>
+<td style="text-align: center;">4204.9991</td>
+<td style="text-align: center;">158.0016</td>
+<td style="text-align: center;">4776.9969</td>
+</tr>
+<tr>
+<td style="text-align: left;">38</td>
+<td style="text-align: center;">4204.9994</td>
+<td style="text-align: center;">158.0011</td>
+<td style="text-align: center;">4776.9979</td>
+</tr>
+<tr>
+<td style="text-align: left;">39</td>
+<td style="text-align: center;">4204.9996</td>
+<td style="text-align: center;">158.0008</td>
+<td style="text-align: center;">4776.9986</td>
+</tr>
+</tbody>
+</table>
+<p>Pour atteindre la même précision sur la solution avec notre formule optimale, seules 15 itérations sont nécessaires :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Itération <span class="arithmatex">\(k\)</span></th>
+<th style="text-align: center;"><span class="arithmatex">\(x_r^{(k)}\)</span></th>
+<th style="text-align: center;"><span class="arithmatex">\(y_r^{(k)}\)</span></th>
+<th style="text-align: center;"><span class="arithmatex">\(z_r^{(k)}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">0</td>
+<td style="text-align: center;">0.0000</td>
+<td style="text-align: center;">0.0000</td>
+<td style="text-align: center;">0.0000</td>
+</tr>
+<tr>
+<td style="text-align: left;">1</td>
+<td style="text-align: center;">4179.5455</td>
+<td style="text-align: center;">1417.2045</td>
+<td style="text-align: center;">4601.2453</td>
+</tr>
+<tr>
+<td style="text-align: left;">2</td>
+<td style="text-align: center;">4099.8737</td>
+<td style="text-align: center;">-7.7361</td>
+<td style="text-align: center;">4752.6660</td>
+</tr>
+<tr>
+<td style="text-align: left;">3</td>
+<td style="text-align: center;">4235.1679</td>
+<td style="text-align: center;">175.3496</td>
+<td style="text-align: center;">4834.1459</td>
+</tr>
+<tr>
+<td style="text-align: left;">4</td>
+<td style="text-align: center;">4209.4599</td>
+<td style="text-align: center;">134.9162</td>
+<td style="text-align: center;">4796.9799</td>
+</tr>
+<tr>
+<td style="text-align: left;">5</td>
+<td style="text-align: center;">4209.7375</td>
+<td style="text-align: center;">154.0385</td>
+<td style="text-align: center;">4786.9883</td>
+</tr>
+<tr>
+<td style="text-align: left;">6</td>
+<td style="text-align: center;">4206.3108</td>
+<td style="text-align: center;">155.1825</td>
+<td style="text-align: center;">4780.4417</td>
+</tr>
+<tr>
+<td style="text-align: left;">7</td>
+<td style="text-align: center;">4205.6146</td>
+<td style="text-align: center;">157.2294</td>
+<td style="text-align: center;">4778.3508</td>
+</tr>
+<tr>
+<td style="text-align: left;">8</td>
+<td style="text-align: center;">4205.1971</td>
+<td style="text-align: center;">157.6578</td>
+<td style="text-align: center;">4777.4705</td>
+</tr>
+<tr>
+<td style="text-align: left;">9</td>
+<td style="text-align: center;">4205.0771</td>
+<td style="text-align: center;">157.8908</td>
+<td style="text-align: center;">4777.1728</td>
+</tr>
+<tr>
+<td style="text-align: left;">10</td>
+<td style="text-align: center;">4205.0262</td>
+<td style="text-align: center;">157.9579</td>
+<td style="text-align: center;">4777.0607</td>
+</tr>
+<tr>
+<td style="text-align: left;">11</td>
+<td style="text-align: center;">4205.0096</td>
+<td style="text-align: center;">157.9857</td>
+<td style="text-align: center;">4777.0218</td>
+</tr>
+<tr>
+<td style="text-align: left;">12</td>
+<td style="text-align: center;">4205.0034</td>
+<td style="text-align: center;">157.9948</td>
+<td style="text-align: center;">4777.0077</td>
+</tr>
+<tr>
+<td style="text-align: left;">13</td>
+<td style="text-align: center;">4205.0012</td>
+<td style="text-align: center;">157.9982</td>
+<td style="text-align: center;">4777.0027</td>
+</tr>
+<tr>
+<td style="text-align: left;">14</td>
+<td style="text-align: center;">4205.0004</td>
+<td style="text-align: center;">157.9993</td>
+<td style="text-align: center;">4777.0010</td>
+</tr>
+<tr>
+<td style="text-align: left;">15</td>
+<td style="text-align: center;">4205.0002</td>
+<td style="text-align: center;">157.9998</td>
+<td style="text-align: center;">4777.0003</td>
+</tr>
+</tbody>
+</table>
+<p>On peut vérifier pour différentes valeurs de <span class="arithmatex">\(\omega\)</span> qu'il s'agit bien du nombre d'itérations minimum possible.</p>
+<p><strong>Exercice :</strong></p>
+<p>Pour le dernier cas présenté dans cet exemple, calculez le rayon spectral de la matrice de convergence pour <span class="arithmatex">\(\omega = 1\)</span> et <span class="arithmatex">\(\omega = 1.25\)</span>.
+Calculez le ratio entre ces 2 valeurs.
+On a trouvé précédemment que pour <span class="arithmatex">\(\omega = 1.25\)</span>, la méthode converge environ 2.7 fois plus rapidement que pour Gauss-Seidel.
+Qu'en concluez vous ?</p>
+<h2 id="conclusion">Conclusion</h2>
+<ul>
+<li>
+<p>En fonction du <strong>rang</strong>, et du <strong>déterminant</strong> de la matrice <span class="arithmatex">\(A\)</span>, un système linéaire <span class="arithmatex">\(A x = b\)</span> admet une <strong>unique, zéro ou une infinité de solutions</strong>.</p>
+</li>
+<li>
+<p>Même si un système admet une solution, elle peut-être très <strong>sensible aux perturbations</strong> de <span class="arithmatex">\(A\)</span> ou <span class="arithmatex">\(b\)</span>. La stabilité d'une solution peut être estimée en calculant le <strong>conditionnement</strong> de <span class="arithmatex">\(A\)</span>.</p>
+</li>
+<li>
+<p>La <strong>règle de Cramer</strong> donne une <strong>expression de explicite</strong> de la solution d'un système, mais elle est inapplicable au-delà de 4 inconnues.</p>
+</li>
+<li>
+<p>Les <strong>méthodes directes d'élimination</strong> transforment la matrice <span class="arithmatex">\(A\)</span> par une <strong>suite d'opérations arithmétiques</strong> afin de se ramener à un système plus simple à résoudre : <strong>triangulaire</strong> ou <strong>diagonal</strong>.</p>
+</li>
+<li>
+<p>Les <strong>méthodes directes de factorisation</strong> décomposent la matrice <span class="arithmatex">\(A\)</span> en le produit d'une <strong>matrice triangulaire supérieure</strong> et une <strong>matrice triangulaire inférieure</strong>, afin de rendre la résolution plus simple.</p>
+</li>
+<li>
+<p>Les <strong>méthodes itératives</strong> construisent une <strong>suite convergeant vers la solution</strong> <span class="arithmatex">\(x\)</span> à partir de <span class="arithmatex">\(A\)</span> et <span class="arithmatex">\(b\)</span> pour n'importe quelle initialisation.</p>
+</li>
+<li>
+<p>Les méthodes directes donnent une solution pour tout système de Cramer, mais sont lourdes en calculs / mémoire et les erreurs peuvent être amplifiées à chaque opération.</p>
+</li>
+<li>
+<p>Les méthodes itératives requièrent un nombre fini d'opérations, mais elles sont donc soumises aux erreurs de troncature, et les conditions de leur convergence ne sont pas évidentes.</p>
+</li>
+</ul>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../Chap4_Integration_numerique/" class="btn btn-neutral float-left" title="IV. Intégration numérique"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../Chap4_Integration_numerique/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../javascripts/mathjax.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

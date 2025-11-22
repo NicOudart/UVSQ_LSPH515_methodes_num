@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://nicoudart.github.io/UVSQ_LSPH515_methodes_num/</loc>
+         <lastmod>2025-11-22</lastmod>
+    </url>
+    <url>
+         <loc>https://nicoudart.github.io/UVSQ_LSPH515_methodes_num/Chap1_Introduction/</loc>
+         <lastmod>2025-11-22</lastmod>
+    </url>
+    <url>
+         <loc>https://nicoudart.github.io/UVSQ_LSPH515_methodes_num/Chap2_Recherche_de_racines/</loc>
+         <lastmod>2025-11-22</lastmod>
+    </url>
+    <url>
+         <loc>https://nicoudart.github.io/UVSQ_LSPH515_methodes_num/Chap3_Interpolation_polynomiale/</loc>
+         <lastmod>2025-11-22</lastmod>
+    </url>
+    <url>
+         <loc>https://nicoudart.github.io/UVSQ_LSPH515_methodes_num/Chap4_Integration_numerique/</loc>
+         <lastmod>2025-11-22</lastmod>
+    </url>
+    <url>
+         <loc>https://nicoudart.github.io/UVSQ_LSPH515_methodes_num/Chap5_Systemes_lineaires/</loc>
+         <lastmod>2025-11-22</lastmod>
+    </url>
+</urlset>
