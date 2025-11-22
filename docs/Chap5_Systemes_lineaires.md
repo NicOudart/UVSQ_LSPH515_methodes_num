@@ -2204,7 +2204,7 @@ $-F =
   0 & 0 & a_{2,3} & a_{2,4} & \cdots & a_{2,n-1} & a_{2,n}\\
   0 & 0 & 0 & a_{3,4} & \cdots & a_{3,n-1} & a_{3,n}\\
   \vdots  & \vdots  & \vdots & \vdots & \vdots & \vdots & \vdots\\
-  0 & 0 & 0 & 0 & \cdots & 0 & a_{n-2,n}\\
+  0 & 0 & 0 & 0 & \cdots & a_{n-2,n-1} & a_{n-2,n}\\
   0 & 0 & 0 & 0 & \cdots & 0 & a_{n-1,n}\\
   0 & 0 & 0 & 0 & \cdots & 0 & 0
  \end{pmatrix}$
@@ -2237,7 +2237,7 @@ $D^{-1} (E+F) =
   -a_{2,1}/a_{2,2} & 0 & -a_{2,3}/a_{2,2} & \cdots & -a_{2,n-1}/a_{2,2} & -a_{2,n}/a_{2,2}\\
   -a_{3,1}/a_{3,3} & -a_{3,2}/a_{3,3} & 0 & \cdots & -a_{3,n-1}/a_{3,3} & -a_{3,n}/a_{3,3}\\
   \vdots  & \vdots  & \vdots & \vdots & \vdots & \vdots\\
-  -a_{n-1,1}/a_{n-1,n-1} & -a_{n-1,2}/a_{n-1,n-1} & -a_{n-1,3}/a_{n-1,n-1} & \cdots & 0 & -a_{n-1,n}/a_{n-1,n-1}
+  -a_{n-1,1}/a_{n-1,n-1} & -a_{n-1,2}/a_{n-1,n-1} & -a_{n-1,3}/a_{n-1,n-1} & \cdots & 0 & -a_{n-1,n}/a_{n-1,n-1}\\
   -a_{n,1}/a_{n,n} & -a_{n,2}/a_{n,n} & -a_{n,3}/a_{n,n} & \cdots & -a_{n,n-1}/a_{n,n} & 0
  \end{pmatrix}$
  
