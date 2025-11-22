@@ -2179,34 +2179,34 @@ On décompose donc $A$ en $A = D-E-F$ avec $D$ **diagonale**, avec $E$ **triangu
 
 $D =
  \begin{pmatrix}
-  a_{1,1} & 0 & 0 & 0 & \cdots & 0 & 0 & 0\\
-  0 & a_{2,2} & 0 & 0 & \cdots & 0 & 0 & 0\\
-  0 & 0 & a_{3,3} & 0 & \cdots & 0 & 0 & 0\\
-  \vdots  & \vdots  & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots\\
-  0 & 0 & 0 & 0 & \cdots & 0 & a_{n-1,n-1} & 0\\
-  0 & 0 & 0 & 0 & \cdots & 0 & 0 & a_{n,n}
+  a_{1,1} & 0 & 0 & \cdots & 0 & 0\\
+  0 & a_{2,2} & 0 & \cdots & 0 & 0\\
+  0 & 0 & a_{3,3} & \cdots & 0 & 0\\
+  \vdots  & \vdots  & \vdots & \vdots & \vdots & \vdots\\
+  0 & 0 & 0 & \cdots & a_{n-1,n-1} & 0\\
+  0 & 0 & 0 & \cdots & 0 & a_{n,n}
  \end{pmatrix}$
  
 $-E =
  \begin{pmatrix}
-  0 & 0 & 0 & 0 & \cdots & 0 & 0 & 0\\
-  a_{2,1} & 0 & 0 & 0 & \cdots & 0 & 0 & 0\\
-  a_{3,1} & a_{3,2} & 0 & 0 & \cdots & 0 & 0 & 0\\
-  \vdots  & \vdots  & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots\\
-  a_{n-2,1} & a_{n-2,2} & a_{n-2,3} & a_{n-2,4} & \cdots & 0 & 0 & 0\\
-  a_{n-1,1} & a_{n-1,2} & a_{n-1,3} & a_{n-1,4} & \cdots & a_{n-1,n-2} & 0 & 0\\
-  a_{n,1} & a_{n,2} & a_{n,3} & a_{n,4} & \cdots & a_{n,n-2} & a_{n,n-1} & 0
+  0 & 0 & 0 & \cdots & 0 & 0 & 0\\
+  a_{2,1} & 0 & 0 & \cdots & 0 & 0 & 0\\
+  a_{3,1} & a_{3,2} & 0 & \cdots & 0 & 0 & 0\\
+  \vdots  & \vdots  & \vdots & \vdots & \vdots & \vdots & \vdots\\
+  a_{n-2,1} & a_{n-2,2} & a_{n-2,3} & \cdots & 0 & 0 & 0\\
+  a_{n-1,1} & a_{n-1,2} & a_{n-1,3} & \cdots & a_{n-1,n-2} & 0 & 0\\
+  a_{n,1} & a_{n,2} & a_{n,3} & \cdots & a_{n,n-2} & a_{n,n-1} & 0
  \end{pmatrix}$
  
 $-F =
  \begin{pmatrix}
-  0 & a_{1,2} & a_{1,3} & a_{1,4} & \cdots & a_{1,n-2} & a_{1,n-1} & a_{1,n}\\
-  0 & 0 & a_{2,3} & a_{2,4} & \cdots & a_{2,n-2} & a_{2,n-1} & a_{2,n}\\
-  0 & 0 & 0 & a_{3,4} & \cdots & a_{3,n-2} & a_{3,n-1} & a_{3,n}\\
-  \vdots  & \vdots  & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots\\
-  0 & 0 & 0 & 0 & \cdots & 0 & a_{n-2,n-1} & a_{n-2,n}\\
-  0 & 0 & 0 & 0 & \cdots & 0 & 0 & a_{n-1,n}\\
-  0 & 0 & 0 & 0 & \cdots & 0 & 0 & 0
+  0 & a_{1,2} & a_{1,3} & a_{1,4} & \cdots & a_{1,n-1} & a_{1,n}\\
+  0 & 0 & a_{2,3} & a_{2,4} & \cdots & a_{2,n-1} & a_{2,n}\\
+  0 & 0 & 0 & a_{3,4} & \cdots & a_{3,n-1} & a_{3,n}\\
+  \vdots  & \vdots  & \vdots & \vdots & \vdots & \vdots & \vdots\\
+  0 & 0 & 0 & 0 & \cdots & 0 & a_{n-2,n}\\
+  0 & 0 & 0 & 0 & \cdots & 0 & a_{n-1,n}\\
+  0 & 0 & 0 & 0 & \cdots & 0 & 0
  \end{pmatrix}$
 
 On appelle **matrice de Jacobi** :
@@ -2221,12 +2221,12 @@ On remarque que $D^{-1} (E+F) = D^{-1} (D-A) = I - D^{-1}A$
 
 $D^{-1} =
  \begin{pmatrix}
-  1/a_{1,1} & 0 & 0 & 0 & \cdots & 0 & 0 & 0\\
-  0 & 1/a_{2,2} & 0 & 0 & \cdots & 0 & 0 & 0\\
-  0 & 0 & 1/a_{3,3} & 0 & \cdots & 0 & 0 & 0\\
-  \vdots  & \vdots  & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots\\
-  0 & 0 & 0 & 0 & \cdots & 0 & 1/a_{n-1,n-1} & 0\\
-  0 & 0 & 0 & 0 & \cdots & 0 & 0 & 1/a_{n,n}
+  1/a_{1,1} & 0 & 0 & \cdots & 0 & 0\\
+  0 & 1/a_{2,2} & 0 & \cdots & 0 & 0\\
+  0 & 0 & 1/a_{3,3} & \cdots & 0 & 0\\
+  \vdots  & \vdots  & \vdots & \vdots & \vdots & \vdots\\
+  0 & 0 & 0 & \cdots & 1/a_{n-1,n-1} & 0\\
+  0 & 0 & 0 & \cdots & 0 & 1/a_{n,n}
  \end{pmatrix}$
  
 et
@@ -2235,7 +2235,9 @@ $D^{-1} (E+F) =
 \begin{pmatrix}
   0 & -a_{1,2}/a_{1,1} & -a_{1,3}/a_{1,1} & \cdots & -a_{1,n-1}/a_{1,1} & -a_{1,n}/a_{1,1}\\
   -a_{2,1}/a_{2,2} & 0 & -a_{2,3}/a_{2,2} & \cdots & -a_{2,n-1}/a_{2,2} & -a_{2,n}/a_{2,2}\\
+  -a_{3,1}/a_{3,3} & -a_{3,2}/a_{3,3} & 0 & \cdots & -a_{3,n-1}/a_{3,3} & -a_{3,n}/a_{3,3}\\
   \vdots  & \vdots  & \vdots & \vdots & \vdots & \vdots\\
+  -a_{n-1,1}/a_{n-1,n-1} & -a_{n-1,2}/a_{n-1,n-1} & -a_{n-1,3}/a_{n-1,n-1} & \cdots & 0 & -a_{n-1,n}/a_{n-1,n-1}
   -a_{n,1}/a_{n,n} & -a_{n,2}/a_{n,n} & -a_{n,3}/a_{n,n} & \cdots & -a_{n,n-1}/a_{n,n} & 0
  \end{pmatrix}$
  
@@ -2508,24 +2510,24 @@ On remarque que : $(D-E) x^{(k+1)} = F x^{(k)} + b$ avec
 
 $D-E =
 \begin{pmatrix}
-  a_{1,1} & 0 & 0 & \cdots & 0 & 0 & 0\\
-  a_{2,1} & a_{2,2} & 0 & \cdots & 0 & 0 & 0\\
-  a_{3,1} & a_{3,2} & a_{3,3} & \cdots & 0 & 0 & 0\\
-  \vdots  & \vdots  & \vdots & \vdots & \vdots & \vdots & \vdots\\
-  a_{n-1,1} & a_{n-1,2} & a_{n-1,3} & \cdots & a_{n-1,n-2} & a_{n-1,n-1} & 0\\
-  a_{n,1} & a_{n,2} & a_{n,3} & \cdots & a_{n,n-2} & a_{n,n-1} & a_{n,n}
+  a_{1,1} & 0 & 0 & \cdots & 0 & 0\\
+  a_{2,1} & a_{2,2} & 0 & \cdots & 0 & 0\\
+  a_{3,1} & a_{3,2} & a_{3,3} & \cdots & 0 & 0\\
+  \vdots  & \vdots  & \vdots & \vdots & \vdots & \vdots\\
+  a_{n-1,1} & a_{n-1,2} & a_{n-1,3} & \cdots & a_{n-1,n-1} & 0\\
+  a_{n,1} & a_{n,2} & a_{n,3} & \cdots & a_{n,n-1} & a_{n,n}
  \end{pmatrix}$
  
 et 
 
 $F =
  \begin{pmatrix}
-  0 & -a_{1,2} & -a_{1,3} & -a_{1,4} & \cdots & -a_{1,n-2} & -a_{1,n-1} & -a_{1,n}\\
-  0 & 0 & -a_{2,3} & -a_{2,4} & \cdots & -a_{2,n-2} & -a_{2,n-1} & -a_{2,n}\\
-  \vdots  & \vdots  & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots\\
-  0 & 0 & 0 & 0 & \cdots & 0 & -a_{n-2,n-1} & -a_{n-2,n}\\
-  0 & 0 & 0 & 0 & \cdots & 0 & 0 & -a_{n-1,n}\\
-  0 & 0 & 0 & 0 & \cdots & 0 & 0 & 0
+  0 & -a_{1,2} & -a_{1,3} & \cdots & -a_{1,n-1} & -a_{1,n}\\
+  0 & 0 & -a_{2,3} & \cdots & -a_{2,n-1} & -a_{2,n}\\
+  \vdots  & \vdots & \vdots & \vdots & \vdots & \vdots\\
+  0 & 0 & 0 & \cdots & -a_{n-2,n-1} & -a_{n-2,n}\\
+  0 & 0 & 0 & \cdots & 0 & -a_{n-1,n}\\
+  0 & 0 & 0 & \cdots & 0 & 0
  \end{pmatrix}$
 
 On peut facilement en déduire qu'à l'itération $k$, et pour chaque ligne $i$ :
