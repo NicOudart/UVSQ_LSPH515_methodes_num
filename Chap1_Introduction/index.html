@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Nicolas OUDART" /><link rel="canonical" href="https://nicoudart.github.io/UVSQ_LSPH515_methodes_num/Chap1_Introduction/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>I. Introduction - UVSQ_LSPH515_methodes_num</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "I. Introduction";
+        var mkdocs_page_input_path = "Chap1_Introduction.md";
+        var mkdocs_page_url = "/UVSQ_LSPH515_methodes_num/Chap1_Introduction/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> UVSQ_LSPH515_methodes_num
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Accueil</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">I. Introduction</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#le-probleme">Le problème</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#modelisation-du-probleme">Modélisation du problème</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#discretisation-du-probleme">Discrétisation du problème</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#la-solution-existe-t-elle-est-elle-unique">La solution existe-t-elle ? Est-elle unique ?</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#choix-dune-methode-numerique">Choix d'une méthode numérique</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#la-methode-est-elle-applicable">La méthode est-elle applicable ?</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#quelles-sont-les-sources-derreur-et-quelle-est-lerreur-attendue">Quelles sont les sources d'erreur, et quelle est l'erreur attendue ?</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#erreurs-de-modelisation-et-de-donnees">Erreurs de modélisation et de données</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#erreurs-de-troncature">Erreurs de troncature</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#erreurs-darrondi">Erreurs d'arrondi</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#erreurs-de-representation-des-nombres">Erreurs de représentation des nombres</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#les-bonnes-pratiques">Les bonnes pratiques :</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#la-methode-converge-t-elle-vers-la-solution-avec-quelle-vitesse">La méthode converge-t-elle vers la solution ? Avec quelle vitesse ?</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#la-solution-est-elle-stable">La solution est-elle stable ?</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#stabilite-du-probleme-physique">Stabilité du problème physique</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#stabilite-du-modele-mathematique">Stabilité du modèle mathématique</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#stabilite-de-la-methode-numerique">Stabilité de la méthode numérique</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#quelles-sont-les-demandes-de-ressources-informatique-de-la-methode-temps-de-calcul-et-memoire">Quelles sont les demandes de ressources informatique de la méthode : temps de calcul et mémoire ?</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#la-complexite-en-temps">La complexité en temps</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#la-complexite-en-espace">La complexité en espace</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#implementation-de-lalgorithme">Implémentation de l'algorithme</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#algorithmique">Algorithmique</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#programmation">Programmation</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#execution-et-analyse-du-resultat">Execution et analyse du résultat</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Chap2_Recherche_de_racines/">II. Recherche de racines</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Chap3_Interpolation_polynomiale/">III. Interpolation polynomiale</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Chap4_Integration_numerique/">IV. Intégration numérique</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Chap5_Systemes_lineaires/">V. Systèmes linéaires</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">UVSQ_LSPH515_methodes_num</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">I. Introduction</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="chapitre-i-introduction-aux-methodes-numeriques">Chapitre I : Introduction aux méthodes numériques</h1>
+<p>Ce chapitre est une introduction aux enjeux des méthodes numériques.</p>
+<p><img alt="En-tête chapitre I" src="../img/Chap1_header.png" /></p>
+<hr />
+<p>Dans le célèbre roman de science-fiction humoristique anglais "The Hitchhiker's Guide to the Galaxy", écrit en 1978 par Douglas Adams, des extra-terrestres construisent un superordinateur du nom de "Deep Thought" et lui posent le problème suivant :</p>
+<blockquote>
+<p><em>"O Deep Thought computer, [...] the task we have designed you to perform is this. We want you to tell us the Answer [...] to Life, the Universe and Everything".</em></p>
+<p><em>L'ordinateur leur répond alors :</em></p>
+<p><em>"I can do it [...] but I'll have to think about it. [...] Seven and half million years."</em></p>
+<p><em>7,5 millions d'années plus tard, les descendants des créateurs de Deep Thought viennent consulter l'ordinateur pour obtenir leur réponse.</em>
+<em>Deep Thought dit qu'il a bien la réponse, mais les prévient :</em></p>
+<p><em>"I don't think [...] that you're gonna like it".</em></p>
+<p><em>Les extra-terrestres insistent pour avoir la réponse. Deep Thought s'exécute :</em></p>
+<p><em>"The Answer to the Great Question [...] of Life, the Universe and Everything [...] is ... 42".</em></p>
+<p><em>Les extra-terrestres sont en colère face à cette réponse, et demandent à l'ordinateur s'il est bien sûr qu'il n'y a pas une erreur.</em>
+<em>Ce à quoi Deep Thought répond qu'il est certain que la réponse est correcte, et que s'ils ne l'aiment pas, c'est parce que leur problème était mal posé.</em></p>
+</blockquote>
+<p>Cette blague aujourd'hui passée à la postérité fait écho aux enjeux des méthodes numériques que nous allons voir dans ce chapitre...</p>
+<hr />
+<p>Nous allons détailler dans ce chapitre  les différentes étapes de résolution d'un problème en Physique, avec un exemple simple.</p>
+<h2 id="le-probleme">Le problème</h2>
+<blockquote>
+<p><em>Un groupe d'étudiants de l'UVSQ réalise un projet de ballon sonde pour mesurer la vitesse du vent dans la stratosphère au cours du temps</em>.
+<em>On considère qu'après une phase d'ascension, leur ballon a atteint une altitude stable dans la stratosphère, et que son déplacement est uniquement lié au vent</em>.
+<em>La nacelle de leur ballon contient une balise GPS, qui leur permet de mesurer le déplacement du ballon au cours du temps</em>.</p>
+</blockquote>
+<p>Le <strong>problème physique</strong> auquel les étudiants sont confrontés est le suivant : estimer la vitesse du vent dans la stratosphère au cours du temps à partir de leurs mesures.</p>
+<h2 id="modelisation-du-probleme">Modélisation du problème</h2>
+<p>La première étape est de <strong>traduire ce problème physique en un modèle</strong> par le biais d'équations mathématiques : </p>
+<blockquote>
+<p><em>Les étudiants font l'hypothèse que leur ballon stratosphérique se déplace à la vitesse du vent</em>.</p>
+</blockquote>
+<p>Notons <span class="arithmatex">\(p(t)\)</span> la fonction associant à chaque instant <span class="arithmatex">\(t\)</span> en [s] à partir du début de la mesure le déplacement du ballon en [m].</p>
+<p>La traduction mathématique du problème est donc que la vitesse du vent au cours du temps <span class="arithmatex">\(W(t)\)</span> est liée à <span class="arithmatex">\(p(t)\)</span> par l'équation :</p>
+<p><span class="arithmatex">\(W(t) = \frac{d}{dt} p(t)\)</span></p>
+<p>Comme la fonction <span class="arithmatex">\(p(t)\)</span> n'a pas d'expression analytique connue (il s'agit d'une mesure d'un capteur), les étudiants devront utiliser une méthode numérique pour estimer la dérivée de <span class="arithmatex">\(p(t)\)</span>, et donc la solution du problème.</p>
+<h2 id="discretisation-du-probleme">Discrétisation du problème</h2>
+<p>Un ordinateur ne pouvant gérer des objets continus, l'application d'une méthode numérique nécessite une <strong>discrétisation</strong>.</p>
+<p>Dans le cas des étudiants de l'UVSQ, la discrétisation est réalisée au moment de l'échantillonnage :</p>
+<blockquote>
+<p><em>Les étudiants décident d'enregistrer une mesure de déplacement toutes les <span class="arithmatex">\(h\)</span> secondes.</em></p>
+</blockquote>
+<p>Ils n'ont donc pas accès à toutes les valeurs possibles de <span class="arithmatex">\(p(t)\)</span>, mais à des valeurs discrètes régulièrement espacées <span class="arithmatex">\(p(t_i)\)</span> avec <span class="arithmatex">\(t_i = 0, h, 2 \times h, 3 \times h, ... (N-1) \times h\)</span> et <span class="arithmatex">\(N\)</span> le nombre d'échantillons.</p>
+<p>De même, ils n'estimeront pas toutes les valeurs de <span class="arithmatex">\(W(t)\)</span>, mais des valeurs discrètes <span class="arithmatex">\(W(t_i)\)</span>.</p>
+<p>On nomme <span class="arithmatex">\(h\)</span> le <strong>pas de discrétisation</strong> du problème.</p>
+<h2 id="la-solution-existe-t-elle-est-elle-unique">La solution existe-t-elle ? Est-elle <strong>unique</strong> ?</h2>
+<p>Il faut toujours se poser ces questions avant d'essayer de résoudre numériquement un problème. </p>
+<p>Pour notre exemple, nous partirons du principe que la trajectoire de la nacelle <span class="arithmatex">\(p(t)\)</span> est dérivable, et donc que l'<strong>existence</strong> et l'<strong>unicité</strong> de la solution est triviale. 
+<strong>Mais ce n'est pas toujours le cas</strong>.</p>
+<p>Par exemple, pour un problème impliquant la recherche de la racine d'une fonction sur un intervalle, nous verrons que l'existence et l'unicité ne sont pas évidentes et doivent être démontrées.</p>
+<h2 id="choix-dune-methode-numerique">Choix d'une méthode numérique</h2>
+<p>Nos étudiants de l'UVSQ on besoin ici d'une <strong>méthode numérique</strong> d'estimation de la dérivée d'une fonction.</p>
+<p>Pour approcher la dérivée ils décident d'employer une méthode de "<em>différences décentrées à droite</em>" :</p>
+<p><span class="arithmatex">\(W(t_i) = \frac{d}{dt} p(t_i) \approx \frac{p(t_{i+1})-p(t_i)}{h}\)</span> avec <span class="arithmatex">\(t_{i+1} = t_i + h\)</span> et <span class="arithmatex">\(i = 0, 1, ..., N-2\)</span></p>
+<p>Lorsque l'on choisi une méthode numérique pour répondre à un problème, il convient de se poser les questions suivantes.</p>
+<h3 id="la-methode-est-elle-applicable">La méthode est-elle <strong>applicable</strong> ?</h3>
+<p>Chaque méthode numérique a des conditions d'<strong>applicabilité</strong>, qui ne sont pas nécessairement les mêmes pour un type de problème donné.</p>
+<p>Dans notre exemple, il faut que la fonction <span class="arithmatex">\(p(t)\)</span> soit doublement dérivable sur chaque intervalle <span class="arithmatex">\([t_i,t_{i+1}]\)</span>.</p>
+<h3 id="quelles-sont-les-sources-derreur-et-quelle-est-lerreur-attendue">Quelles sont les sources d'erreur, et quelle est l'erreur attendue ?</h3>
+<p>La résolution numérique d'un problème physique est <strong>toujours entachée d'erreurs</strong>.</p>
+<p>On appelle <strong>précision</strong> d'une méthode numérique l'erreur entre la solution donnée par la méthode et la solution exacte du problème.</p>
+<p>Pour estimer cette précision, on introduit les notions <strong>d'erreur absolue</strong> et <strong>d'erreur relative</strong>.</p>
+<p>Soit <span class="arithmatex">\(\hat{x}\)</span> la solution approchée d'une valeure réelle exacte <span class="arithmatex">\(x\)</span> :</p>
+<ul>
+<li>
+<p>L'<strong>erreur absolue</strong> est définie par <span class="arithmatex">\(\mid x - \hat{x} \mid\)</span>.</p>
+</li>
+<li>
+<p>L'<strong>erreur relative</strong> est définie par <span class="arithmatex">\(\frac{\mid x - \hat{x} \mid}{\mid x \mid}\)</span>.</p>
+</li>
+</ul>
+<p>(Il est à noter que ces notions sont généralisables à des vecteurs ou des matrices en remplaçant la valeur absolue par une norme vectorielle / matricielle).</p>
+<p>En pratique, il est cependant <strong>difficile d'évaluer</strong> l'erreur absolue / relative, puisque la solution exacte est par définition l'inconnue que nous voulons approcher.</p>
+<p>Dans notre exemple, les étudiants de l'UVSQ ne connaissent pas la valeur exacte de la vitesse du vent.</p>
+<p>On peut toutefois <strong>essayer de borner l'erreur</strong>.</p>
+<p>Les erreurs lors de la résolution numérique d'un problème ont <strong>différentes sources</strong> qu'il convient d'identifier.
+<strong>Certaines sont liées à la méthode choisie, d'autres non</strong>.</p>
+<h4 id="erreurs-de-modelisation-et-de-donnees">Erreurs de modélisation et de données</h4>
+<p>Une partie de l'erreur sur la solution d'un problème physique provient toujours du modèle : </p>
+<ul>
+<li>
+<p>Pour commencer, tout modèle fait des hypothèses simplificatrices, négligeant certains phénomènes physiques.</p>
+</li>
+<li>
+<p>Ensuite, notre modèle peut aussi avoir un domaine de validité limité, qui ne soit pas respecté pendant une partie de l'étude.</p>
+</li>
+<li>
+<p>Et enfin, si notre modèle s'appuie sur des données mesurées, ou sur des paramètres physiques estimés, alors ces valeurs seront forcément inexactes.</p>
+</li>
+</ul>
+<p>Dans le cas du projet de ballon des étudiants de l'UVSQ, nous avons :</p>
+<ul>
+<li>
+<p>L'hypothèse simplificatrice que le mouvement du ballon n'est influencé que par le vent, et que la vitesse du ballon est directement égale à la vitesse du vent.</p>
+</li>
+<li>
+<p>Le validité de notre modèle se limitant probablement à des vents faibles aux variations lentes (pas des rafales).</p>
+</li>
+<li>
+<p>Les mesures du déplacement du ballon par GPS, qui seront entachées d'erreurs de mesures.</p>
+</li>
+</ul>
+<h4 id="erreurs-de-troncature">Erreurs de troncature</h4>
+<p>La <strong>discrétisation</strong> d'un problème physique par une méthode numérique induit nécessairement des erreurs.
+Par exemple, la troncature d'une série infinie convergeant vers la solution, ou l'arrêt au bout d'un nombre d'itérations finies d'une suite convergeant vers la solution, sont inévitables. En effet, un ordinateur ne peut effectuer qu'un <strong>nombre fini d'opérations</strong>.</p>
+<p>On parle alors d'<strong>erreurs de troncature</strong>.
+Il s'agit donc ici d'erreurs directement liées à la méthode choisie.</p>
+<p>La méthode choisie par nos étudiants de l'UVSQ est basée sur le développement de Taylor d'ordre 2 suivant :</p>
+<p><span class="arithmatex">\(\frac{d}{dt} p(t_i) = \frac{p(t_i+h)-p(t_i)}{h} - \frac{h}{2} \frac{d^2}{dt^2} p(\tau)\)</span> avec <span class="arithmatex">\(\tau \in [t_i,t_i+h]\)</span></p>
+<p>Dans ce cas, l'erreur de troncature est donc : <span class="arithmatex">\(\frac{h}{2} \mid \frac{d^2}{dt^2} p(\tau) \mid\)</span>.</p>
+<p>On note alors qu'il y a 2 moyens de réduire cette erreur :</p>
+<ul>
+<li>
+<p>Diminuer le pas de discrétisation <span class="arithmatex">\(h\)</span> (dans notre cas, augmenter la fréquence d'échantillonnage).</p>
+</li>
+<li>
+<p>Modifier la méthode en réalisant un développement de Taylor d'ordre supérieur.</p>
+</li>
+</ul>
+<h4 id="erreurs-darrondi">Erreurs d'arrondi</h4>
+<p>Un ordinateur ne peut manipuler que des nombres en <strong>précision finie</strong> : il y a un nombre fini de réels qui peuvent être représentés par la machine.
+Il y a donc un arrondi sur toutes les valeurs représentées par un ordinateur.</p>
+<p>On parle alors d'<strong>erreurs d'arrondi</strong>.
+Il s'agit donc ici d'erreurs directement liées à la précision de la machine.</p>
+<p>Ces erreurs se propagent à mesure que l'on applique des opérations lors de la résolution d'un problème numérique.</p>
+<p>Si nos étudiants de l'UVSQ choisissent une machine représentant les réels avec une précision <span class="arithmatex">\(\delta\)</span>, alors :</p>
+<ul>
+<li>
+<p>Pour chaque <span class="arithmatex">\(t_i\)</span> l'évaluation de <span class="arithmatex">\(p(t_i)\)</span> sera connue avec une précision <span class="arithmatex">\(\delta\)</span>.</p>
+</li>
+<li>
+<p>Donc l'évaluation de <span class="arithmatex">\(p(t_i+h)-p(t_i)\)</span> sera connue avec une précision <span class="arithmatex">\(2 \delta\)</span>.</p>
+</li>
+<li>
+<p>Et par conséquent l'évaluation de <span class="arithmatex">\(\frac{p(t_i+h)-p(t_i)}{h}\)</span> sera connue avec une précision <span class="arithmatex">\(\frac{2 \delta}{h}\)</span>.</p>
+</li>
+</ul>
+<p>On en déduit que l'erreur d'arrondi dans notre exemple est : <span class="arithmatex">\(2 \delta \frac{p(t_i)}{h}\)</span>.</p>
+<p>On remarque que l'erreur d'arrondi sur <span class="arithmatex">\(p(t_i)\)</span> a été propagée par les différentes opérations, avec en particulier un facteur 2 dû à l'opération de soustraction.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Nota Bene</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">On observe que l'erreur d'arrondi est inversement proportionnelle à <span class="arithmatex">\(h\)</span>, alors que l'erreur de troncature est proportionnelle à <span class="arithmatex">\(h\)</span>.</td>
+</tr>
+<tr>
+<td style="text-align: left;">Le choix du pas de discrétisation <span class="arithmatex">\(h\)</span> a donc des effets antagonistes sur ces 2 erreurs : un compromis est nécessaire.</td>
+</tr>
+<tr>
+<td style="text-align: left;">Dans le cas de notre exemple, on peut montrer que la valeur de <span class="arithmatex">\(h\)</span> minimisant la somme de ces 2 erreurs est :</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(h = 2 \sqrt{\delta \mid \frac{p(t_i)}{\frac{d^2}{dt^2} p(\tau)} \mid}\)</span> avec <span class="arithmatex">\(\tau \in [t_i,t_i+h]\)</span>.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="erreurs-de-representation-des-nombres">Erreurs de représentation des nombres</h4>
+<p>Afin de stocker et manipuler des nombres, une machine va généralement les représenter en <strong>binaire</strong> (dans la base de 2).</p>
+<p>Les nombres sont physiquement rangés en mémoire dans un nombre prédéfini de cellules-mémoires appelées <strong>bits</strong> ("binary digits").
+Un bit ne peut prendre que 2 valeurs : <strong>0 ou 1</strong>. Les nombres sont alors représentés par une combinaison binaire de 0 et de 1.</p>
+<p>Nous allons voir que cette représentation des nombres par la machine peut aussi être source d'erreurs en analyse numérique.</p>
+<ul>
+<li>Représentation des <strong>entiers</strong> :</li>
+</ul>
+<p>Un entier naturel <span class="arithmatex">\(n\)</span> est représenté en binaire par :</p>
+<p><span class="arithmatex">\(n = a_{p-1} 2^{p-1} + a_{p-2} 2^{p-2} + ... + a_1 2^1 + a_0 2^0\)</span> avec <span class="arithmatex">\(a_i\)</span> pour <span class="arithmatex">\(0 \leq i &lt; p\)</span> les <span class="arithmatex">\(p\)</span> bits, égaux à 0 ou 1.</p>
+<p><span class="arithmatex">\(p\)</span> bits permettent alors de représenter <strong>exactement</strong> les entiers naturels entre <strong><span class="arithmatex">\(0\)</span> et <span class="arithmatex">\(2^p-1\)</span></strong>.</p>
+<p>Des opérations élémentaires telles que l'addition peuvent être appliquées sur le binaires <strong>bit à bit</strong>.</p>
+<ul>
+<li>Représentation des <strong>entiers signés</strong> :</li>
+</ul>
+<p>Pour représenter les entiers signés, on veut : (1) pouvoir identifier le signe avec un bit dédié nommé <strong>bit de poids fort</strong>, (2) que les règles d'addition soient toujours valides.</p>
+<p>La représentation couramment utilisée est celle du <strong>complément à 2</strong> : on code un nombre <strong>négatif</strong> en binaire par <span class="arithmatex">\((2^p - |x|)_2\)</span>.</p>
+<p>Avec cette convention, un entier signé <span class="arithmatex">\(n\)</span> est représenté par :</p>
+<p><span class="arithmatex">\(n = -a_{p-1} 2^{p-1} + a_{p-2} 2^{p-2} + ... + a_1 2^1 + a_0 2^0\)</span> avec <span class="arithmatex">\(a_i\)</span> pour <span class="arithmatex">\(0 \leq i &lt; p\)</span> les <span class="arithmatex">\(p\)</span> bits, égaux à 0 ou 1.</p>
+<p><span class="arithmatex">\(p\)</span> bits permettent alors de représenter <strong>exactement</strong> les entiers signés entre <strong><span class="arithmatex">\(-2^{p-1}\)</span> et <span class="arithmatex">\(2^{p-1}-1\)</span></strong>.</p>
+<ul>
+<li><strong>Dépassement de capacité</strong> (overflow) :</li>
+</ul>
+<p>Soient 2 entiers signés <span class="arithmatex">\(n_1\)</span> et <span class="arithmatex">\(n_2\)</span> représentés en format complément à 2 sur <span class="arithmatex">\(p\)</span> bits :</p>
+<p>Si <span class="arithmatex">\(n_1 + n_2 \geq 2^{p-1}\)</span> alors il y a un <strong>dépassement de capacité positif</strong>.</p>
+<p>Si <span class="arithmatex">\(n_1 + n_2 &lt; -2^{p-1}\)</span> alors il y a un <strong>dépassement de capacité négatif</strong>.</p>
+<p>On parle en anglais de problème d'<strong>overflow</strong>.</p>
+<p>Les opérations arithmétiques sur des entiers s'effectuent donc exactement, mais <strong>à condition que le résultat soit représentable par la machine</strong>.
+Sinon, la valeur de sortie sera érronée.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Nota Bene</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">- Lorsque <span class="arithmatex">\(p=8\)</span> on parle d'<strong>octet</strong>.</td>
+</tr>
+<tr>
+<td style="text-align: left;">- Lorsque <span class="arithmatex">\(p=16\)</span> on parle de <strong>simple précision</strong>.</td>
+</tr>
+<tr>
+<td style="text-align: left;">- Lorsque <span class="arithmatex">\(p=32\)</span> on parle de <strong>double précision</strong>.</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Représentation des <strong>réels</strong> :</li>
+</ul>
+<p>Pour représenter des réels en machine, on a recourt à la convention de la <strong>virgule flottante</strong>.</p>
+<p>Avec cette convention, un réel <span class="arithmatex">\(r\)</span> sera représenté par :</p>
+<p><span class="arithmatex">\(r = (-1)^s M 2^e\)</span> avec <span class="arithmatex">\(s\)</span> le signe, <span class="arithmatex">\(M\)</span> la mantisse (un réel positif), et <span class="arithmatex">\(e\)</span> l'exposant (un entier signé).</p>
+<p>Suivant le réel à représenter, et le choix de la mantisse et de l'exposant, <strong>des problèmes d'arrondi apparaissent</strong>.</p>
+<p>Aussi, il n'y a pas unicité de la représentation d'un nombre avec cette convention. 
+C'est pourquoi on va fixer en plus des règles sur la mantisse et l'exposant.</p>
+<ul>
+<li><strong>Norme IEEE 754</strong> et erreurs :</li>
+</ul>
+<p>La norme IEEE 754 a été introduite en 1985 pour standardiser la représentation des réels en virgule flottante.</p>
+<p>En <strong>simple précision</strong>, un réel sera représenté sur 32 bits : 1 bit pour le <strong>signe</strong>, 8 bits pour l'<strong>exposant</strong>, et 23 bits pour la <strong>mantisse</strong>.
+On peut avec cette norme représenter les réels compris entre <span class="arithmatex">\(2^{-126}\)</span> et environ <span class="arithmatex">\(2^{128}\)</span>.</p>
+<p>En <strong>double précision</strong>, un réel sera représenté sur 64 bits : 1 bit pour le <strong>signe</strong>, 11 bits pour l'<strong>exposant</strong>, et 52 bits pour la <strong>mantisse</strong>.
+On peut avec cette norme représenter les réels compris entre <span class="arithmatex">\(2^{-1022}\)</span> et environ <span class="arithmatex">\(2^{1024}\)</span>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Définition : le epsilon machine</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">On appelle <strong>epsilon machine</strong> (ou "macheps") le nombre positif <span class="arithmatex">\(\epsilon\)</span> le plus petit tel que <span class="arithmatex">\(1 + \epsilon &gt; 1\)</span>.</td>
+</tr>
+<tr>
+<td style="text-align: left;">On peut montrer que <strong>l'erreur relative</strong> sur la représentation virgule flottante d'un nombre est <strong>majorée par <span class="arithmatex">\(\epsilon\)</span></strong>.</td>
+</tr>
+</tbody>
+</table>
+<p>Pour la norme IEEE 754 : en simple précision <span class="arithmatex">\(\epsilon = 2^{-23}\)</span>, en double précision <span class="arithmatex">\(\epsilon = 2^{-52}\)</span>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Nota Bene</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">En norme IEEE 754, les situation d'overflow ne provoquent pas d'arrêt des calculs.</td>
+</tr>
+<tr>
+<td style="text-align: left;">Il faut donc être vigilant, car des valeurs erronées seront alors obtenues.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="les-bonnes-pratiques">Les bonnes pratiques :</h4>
+<p>Lors de la résolution de leur problème, on recommande à nos étudiants de l'UVSQ de suivre les 3 conseils suivants : 
+(1) choisir une <strong>précision pertinente</strong> pour la représentation des entiers et des réels, 
+(2) <strong>arrondir</strong> les nombres au nombre de décimales requis par le calcul, 
+(3) <strong>normaliser</strong> les valeurs pour éviter les problèmes d'overflow.</p>
+<h3 id="la-methode-converge-t-elle-vers-la-solution-avec-quelle-vitesse">La méthode <strong>converge</strong>-t-elle vers la solution ? Avec quelle vitesse ?</h3>
+<p>Une méthode numérique est dites <strong>convergente</strong> si l'écart entre la solution approchée et la solution exacte tend vers 0 quand le pas de discrétisation <span class="arithmatex">\(h\)</span> tend vers 0.</p>
+<p>Si de plus, l'erreur absolue <span class="arithmatex">\(e\)</span> peut être majorée : </p>
+<p><span class="arithmatex">\(e \leq C h^p\)</span> avec <span class="arithmatex">\(h\)</span> le pas de discrétisation, <span class="arithmatex">\(p\)</span> un nombre positif et <span class="arithmatex">\(C\)</span> une constante</p>
+<p>alors la méthode est dite <strong>convergente d'ordre <span class="arithmatex">\(p\)</span></strong>.</p>
+<p>Si <span class="arithmatex">\(p = 2, 3\)</span> ou <span class="arithmatex">\(4\)</span>, on dit la convergence quadratique, cubique ou quartique.</p>
+<p>Dans notre exemple, on peut montrer que pour chaque <span class="arithmatex">\(W(t_i)\)</span>, l'erreur est majorée par <span class="arithmatex">\(\frac{h}{2} sup_{t \in [t_i,t_i+h]} \mid \frac{d^2}{dt^2} p(t)\mid\)</span>. 
+La méthode converge donc vers la solution lorsque que le pas de discrétisation <span class="arithmatex">\(h\)</span> diminue.
+Cette convergence est "d'ordre 1".</p>
+<h3 id="la-solution-est-elle-stable">La solution est-elle stable ?</h3>
+<p>Lors de la résolution numérique d'un problème, il convient de se poser la question de la <strong>stabilité</strong> de la solution.
+Cette notion de stabilité peut s'appliquer à 3 niveaux :</p>
+<h4 id="stabilite-du-probleme-physique">Stabilité du problème physique</h4>
+<p>Certains problèmes en Physique sont par nature <strong>chaotiques</strong> : une petite variation des conditions initiales entraine une variation tellement importante des résultats qu'elle rend toute approximation de la solution impossible.</p>
+<p>Ce n'est pas le cas du problème auquels nos étudiants de l'UVSQ sont confrontés, mais on peut citer des phénomènes chaotiques célèbres en Physique : le double-pendule, le problème à N corps, et la turbulence des fluides.</p>
+<p>Cette instabilité étant directement liée au problème, et donc indépendante de nos choix de modèle ou de méthode, nous n'avons aucun moyen d'y remédier.</p>
+<h4 id="stabilite-du-modele-mathematique">Stabilité du modèle mathématique</h4>
+<p>Il est possible qu'un modèle mathématique soit <strong>mal conditionné</strong> : une petite variation des entrées ou des paramètres du modèle entraine une grande variation du résultat.</p>
+<p>Pour mesurer cette sensibilité du modèle aux entrées / paramètres, on introduit souvent un indicateur numérique appellé <strong>conditionnement</strong> (noté <span class="arithmatex">\(\kappa\)</span>), qu'il convient d'évaluer.
+Nous verrons dans ce cours que cette notion est particulièrement utilisée pour la résolution de systèmes d'équations linéaires.</p>
+<p>Si le modèle mathématique proposé s'avère être mal conditionné, il vaut mieux essayer d'en trouver un autre, bien conditionné.</p>
+<h4 id="stabilite-de-la-methode-numerique">Stabilité de la méthode numérique</h4>
+<p>Pour une méthode numérique, on parle d'<strong>instabilité</strong> lorsque les erreurs de troncature et d'arrondi sont propagées et amplifiées par les différentes opérations de l'algorithme.
+Cette instabilité va dépendre du nombre et de la nature des opérations réalisées par une méthode donnée.</p>
+<p>Dans le cas de la méthode employée par nos étudiants de l'UVSQ, nous avons vu que l'erreur d'arrondi est propagée par l'opération de soustraction <span class="arithmatex">\(f(x_i+h)-f(x_i)\)</span>.</p>
+<p>Cette instabilité étant directement liée à la méthode numérique choisie, il convient de choisir la méthode la plus stable possible pour résoudre un problème donné.</p>
+<h3 id="quelles-sont-les-demandes-de-ressources-informatique-de-la-methode-temps-de-calcul-et-memoire">Quelles sont les demandes de ressources informatique de la méthode : temps de calcul et mémoire ?</h3>
+<p>L'analyse de la quantité de ressources informatique nécessaire pour faire tourner un algorithme est essentiel dans le choix d'une méthode d'analyse numérique.
+Il est en effet important de choisir une méthode qui peut tourner sur une machine donnée, et de savoir en combien de temps elle devra tourner pour donner un résultat.</p>
+<p>On parle d'"analyse de la <strong>complexité</strong>" d'un algorithme.</p>
+<p>Il y a 2 types de complexité :</p>
+<h4 id="la-complexite-en-temps">La <strong>complexité en temps</strong></h4>
+<p>Il s'agit de décompter le <strong>nombre d'opérations élémentaires</strong> réalisées par l'algorithme afin d'estimer le temps de calcul qu'il nécessite sur une machine donnée.</p>
+<p>Il est parfois difficile d'estimer le nombre exact d'opérations d'un algorithme dans tous les cas.
+On utilise donc souvent la notation <span class="arithmatex">\(O\)</span> de Landau pour donner une <strong>majoration du nombre d'opérations</strong> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Nom</th>
+<th style="text-align: center;">Complexité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Constant</td>
+<td style="text-align: center;"><span class="arithmatex">\(O(1)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Logarithmique</td>
+<td style="text-align: center;"><span class="arithmatex">\(O(log(n))\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Linéaire</td>
+<td style="text-align: center;"><span class="arithmatex">\(O(n)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Linéarithmique</td>
+<td style="text-align: center;"><span class="arithmatex">\(O(n log(n))\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Quadratique</td>
+<td style="text-align: center;"><span class="arithmatex">\(O(n^2)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Cubique</td>
+<td style="text-align: center;"><span class="arithmatex">\(O(n^3)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Exponentiel</td>
+<td style="text-align: center;"><span class="arithmatex">\(2^{O(n)}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Dans le cas de la méthode choisie par nos étudiants de l'UVSQ, on va réaliser <span class="arithmatex">\(N-1\)</span> soustractions, et <span class="arithmatex">\(N-1\)</span> divisions, soit <span class="arithmatex">\(2(N-1)\)</span> opérations arithmétiques au total.</p>
+<h4 id="la-complexite-en-espace">La <strong>complexité en espace</strong></h4>
+<p>Il s'agit de calculer la <strong>quantité maximale de mémoire</strong> utilisée au cours de l'algorithme pour stocker les variables nécessaire à son exécution.</p>
+<p>Comme nous l'avons vu, les variables sont stockées en binaire, on exprimer en général la complexité en espace d'un algorithme en <strong>octets</strong> (multiplet de 8 bits).</p>
+<p>Dans le cas des étudiants de l'UVSQ, on doit stocker les entrées, un vecteur de taille <span class="arithmatex">\(N-1\)</span> et un scalaire, et la sortie, un vecteur de taille <span class="arithmatex">\(N-1\)</span>.
+Au total, on doit donc stocker <span class="arithmatex">\(2N-1\)</span> valeurs. Si ces valeurs sont encodées sur 32 bits, un espace mémoire de maximum <span class="arithmatex">\(64N-32\)</span> bits sera alors nécessaire pour faire tourner l'algorithme, soit <span class="arithmatex">\(8N-4\)</span> octets.</p>
+<h2 id="implementation-de-lalgorithme">Implémentation de l'algorithme</h2>
+<h3 id="algorithmique">Algorithmique</h3>
+<p>On appelle <strong>algorithme</strong> l'énoncé d'une suite d'instructions / d'opérations élémentaires permettant de résoudre un problème mathématique.</p>
+<p>La notion d'algorithme remonte au moins au Moyen-Age, bien avant l'invention de l'ordinateur.
+Il n'y a pas unicité d'algorithme pour résoudre un problème donné.
+L'algorithme peut effectuer des tâches en les unes après les autres ou simultanément, on dira alors qu'il est respectivement <strong>séquentiel</strong> ou <strong>parallèle</strong>.</p>
+<p>Voici par exemple un algorithme en "pseudo-code" écrit par nos étudiants de l'UVSQ par estimer la dérivée d'une fonction :</p>
+<pre><code>FONCTION difference_decentree_droite(VECTEUR REELS f, REEL h)
+
+    ENTIER n &lt;- LONGUEUR(f)
+
+    VECTEUR REELS df
+
+    POUR i DE 0 JUSQUE n-1 FAIRE
+
+        df[i] &lt;- (f[i+1]-f[i])/h
+
+    FIN_POUR
+
+    RETOURNER df
+
+FIN_FONCTION
+</code></pre>
+<p>Le pseudo-code est une manière d'écrire un algorithme en langage naturel, mais sa syntaxe ne fait pas l'objet d'un consensus.</p>
+<p>Ecrire un algorithme en langage naturel avant implémentation sur ordinateur est souvent une bonne aide pour structurer ses idées.</p>
+<h3 id="programmation">Programmation</h3>
+<p>On appelle <strong>programme</strong> la traduction d'un algorithme dans un <strong>langage de programmation</strong>, dans le but d'être interprété puis executé par un ordinateur.</p>
+<p>La notion de programmation remonte au XIXème siècle, bien qu'elle ne soit formellement théorisée que dans les années 1930 par Alan Turing.
+Il existe aujourd'hui une grande variété de <strong>langages</strong> et de <strong>paradigmes</strong> de programmation suivant les applications. </p>
+<p>Les méthodes numériques présentées dans ce cours seront toutes implémentées sous forme de programmes en langage <strong>Python</strong>.</p>
+<p>Python est un langage interprété, multi-paradigmes, et multi-plateforme, inventé en 1991.
+Ce langage est un des plus populaires au monde, probablement parce que :</p>
+<ul>
+<li>
+<p>Il s'agit d'un langage de haut niveau (loin du langage machine), proposant des outils avancés.</p>
+</li>
+<li>
+<p>Sa syntaxe est plutôt simple, et son typage dynamique fort (le type des variables est assigné automatiquement).</p>
+</li>
+<li>
+<p>Sa licence est libre, et il dispose d'une grande communauté open-source, développant des bibliothèques pour de nombreuses applications.</p>
+</li>
+</ul>
+<p>Concernant les "<strong>bibliothèques</strong>", il s'agit d'un ensemble de fonctionnalités déjà programmées par d'autres que vous pouvez importer et utiliser dans votre propre programme.
+Nous utiliserons lors de ce cours les bibliothèques :</p>
+<ul>
+<li>
+<p>Numpy : pour la manipulation de vecteurs et de matrices.</p>
+</li>
+<li>
+<p>Matplotlib : pour l'affichage graphique de figures.</p>
+</li>
+<li>
+<p>Scipy : pour certaines méthodes numériques de référence.</p>
+</li>
+</ul>
+<p>Voici le programme Python écrit par les étudiants de l'UVSQ à partir de leur algorithme :</p>
+<pre><code>#Importer la librairie Numpy sous le nom &quot;np&quot; :
+import numpy as np
+
+#Définition de la méthode sous la forme d'une fonction :
+def difference_decentree_droite(f,h):
+
+    #On s'assure que f contient des réels encodés sur 64 bits :
+    f.astype(dtype=np.float64)
+
+    #On récupère le nombre d'éléments N de f :
+    N = len(f)
+
+    #On initialise un vecteur df de taille N-1 ne contenant que des zéros,
+    #qui contiendra les valeurs de la dérivée de f :
+    df = np.zeros(N-1,dtype=np.float64)
+
+    #On fait une boucle sur les différentes valeurs de dérivée à calculer :
+    for i in range(N-1):
+
+        #On approxime la dérivée en un point par la formule de la différence décentrée à droite :
+        df[i] = (f[i+1]-f[i])/h
+
+    #Renvoyer le vecteur des valeurs de la dérivée de f :
+    return df
+</code></pre>
+<p>Il s'agit d'une "fonction" Python prenant en entrée :</p>
+<ul>
+<li>
+<p><code>f</code> : un vecteur Numpy contenant les valeurs de la fonction mathématique à dériver, supposés régulièrement espacés.</p>
+</li>
+<li>
+<p><code>h</code> : un nombre réel <span class="arithmatex">\(h\)</span> correspondant au pas de discrétisation de <span class="arithmatex">\(f\)</span>.</p>
+</li>
+</ul>
+<p>Et retournant en sortie :</p>
+<ul>
+<li><code>df</code> : un vecteur Numpy correspondant aux valeurs de la dérivée de <span class="arithmatex">\(f\)</span>.</li>
+</ul>
+<p>Les étudiants pourront appeller cette fonction, avec en entrée : leurs points de mesures du déplacement dans <span class="arithmatex">\(f\)</span>, et leur pas de discrétisation dans <span class="arithmatex">\(h\)</span>.
+Ils obtiendront alors les valeurs estimées de la vitesse du vent en sortie. </p>
+<h2 id="execution-et-analyse-du-resultat">Execution et analyse du résultat</h2>
+<p>Il ne reste plus qu'à executer le programme et à analyser les résultats !</p>
+<p>Admentons que nos étudiants aient choisi de mesurer le déplacement de leur ballon dans la stratosphère toutes les 10 secondes (<span class="arithmatex">\(h = 10 s\)</span>), pendant 100 secondes (<span class="arithmatex">\(N = 10\)</span>).</p>
+<p>Voici l'application de la méthode des différences décentrées à droite aux données mesurées par le ballon, afin d'estimer la vitesse du vent dans la stratosphère :</p>
+<p><img alt="Exemple de dérivation numérique" src="../img/Chap1_exemple_derivation.gif" /></p>
+<p>(Les courbes théoriques du déplacement du ballon et de la vitesse du vent sont en pointillés. On part bien entendu du principe que les étudiants n'ont pas accès à ces informations).</p>
+<p>On voit que le résultat est entaché d'erreurs relativement importantes.
+Les axes d'amélioration possibles pour obtenir une solution plus proche de la réalité sont nombreux :</p>
+<ul>
+<li>
+<p>Réduire le pas de discrétisation <span class="arithmatex">\(h\)</span>.</p>
+</li>
+<li>
+<p>Tronquer plus loin le développement de Taylor de la méthode.</p>
+</li>
+<li>
+<p>Passer d'une méthode "décentrée" à une méthode "centrée".</p>
+</li>
+<li>
+<p>Etc.</p>
+</li>
+</ul>
+<hr />
+<p>Cet exemple était très simple, voire caricatural, car il n'avait pour but que de vous faire découvrir les problématiques liées aux méthodes numériques.
+Dans la suite de ce cours, nous verrons des méthodes numériques plus poussées, sur des exemples issus de la Physique plus complexes et réalistes.
+Nous irons aussi plus loin dans la description de certaines des notions introduites dans ce chapitre.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href=".." class="btn btn-neutral float-left" title="Accueil"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Chap2_Recherche_de_racines/" class="btn btn-neutral float-right" title="II. Recherche de racines">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../Chap2_Recherche_de_racines/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../javascripts/mathjax.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

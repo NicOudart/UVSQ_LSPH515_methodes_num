@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Nicolas OUDART" /><link rel="canonical" href="https://nicoudart.github.io/UVSQ_LSPH515_methodes_num/Chap4_Integration_numerique/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>IV. Intégration numérique - UVSQ_LSPH515_methodes_num</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "IV. Int\u00e9gration num\u00e9rique";
+        var mkdocs_page_input_path = "Chap4_Integration_numerique.md";
+        var mkdocs_page_url = "/UVSQ_LSPH515_methodes_num/Chap4_Integration_numerique/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> UVSQ_LSPH515_methodes_num
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Accueil</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Chap1_Introduction/">I. Introduction</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Chap2_Recherche_de_racines/">II. Recherche de racines</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Chap3_Interpolation_polynomiale/">III. Interpolation polynomiale</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">IV. Intégration numérique</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#position-du-probleme">Position du problème</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#motivation">Motivation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exemple-de-probleme">Exemple de problème</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#formules-de-quadrature">Formules de quadrature</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#principe">Principe</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#formules-de-type-interpolation">Formules de type interpolation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#degre-de-precision">Degré de précision</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#methodes-de-newton-cotes-simples">Méthodes de Newton-cotes simples</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#methode-des-rectangles-n0">Méthode des rectangles (n=0)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#methode-des-trapezes-n1">Méthode des trapèzes (n=1)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#methode-de-simpson-n2">Méthode de Simpson (n=2)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#methodes-de-newton-cotes-n0">Méthodes de Newton-Cotes (n&gt;0)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#algorithmes">Algorithmes</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exemple">Exemple</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#methode-de-newton-cotes-composites">Méthode de Newton-Cotes composites</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#formule-composite-des-rectangles">Formule composite des rectangles</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#formule-composite-des-trapezes">Formule composite des trapèzes</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#formule-composite-de-simpson">Formule composite de Simpson</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#algorithmes_1">Algorithmes</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exemples">Exemples</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#acceleration-de-romberg">Accélération de Romberg</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#methodes-de-gauss">Méthodes de Gauss</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#principe_1">Principe</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#methode-a-1-point-n0">Méthode à 1 point (n=0)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#methode-a-2-points-n1">Méthode à 2 points (n=1)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#generalisation-n-quelconque">Généralisation (n quelconque)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#algorithmes_2">Algorithmes</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exemples_1">Exemples</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#conclusions">Conclusions</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Chap5_Systemes_lineaires/">V. Systèmes linéaires</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">UVSQ_LSPH515_methodes_num</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">IV. Intégration numérique</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="chapitre-iv-integration-numerique">Chapitre IV : Intégration numérique</h1>
+<p>Ce chapitre porte sur les méthodes numériques pour l'approximation de l'intégrale d'une fonction.</p>
+<p><img alt="En-tête chapitre IV" src="../img/Chap4_header.png" /></p>
+<hr />
+<h2 id="position-du-probleme">Position du problème</h2>
+<h3 id="motivation">Motivation</h3>
+<p>Le but de l'intégration numérique est d'évaluer la valeur de l'<strong>intégrale</strong> <span class="arithmatex">\(I\)</span> d'une fonction <span class="arithmatex">\(f\)</span> continue sur un intervalle <span class="arithmatex">\([a,b]\)</span> avec <span class="arithmatex">\(a&lt;b\)</span> réels :</p>
+<p><span class="arithmatex">\(I = \int_{a}^{b} f(x) dx\)</span></p>
+<p>On rappelle que cette intégrale représente l'<strong>aire</strong> comprise entre la courbe de la fonction, l'axe des abscisses, et les droites <span class="arithmatex">\(x=a\)</span> et <span class="arithmatex">\(x=b\)</span>.</p>
+<p><span class="arithmatex">\(I\)</span> est une intégrale <strong>définie</strong> dont le résultat est un scalaire.
+La fonction <span class="arithmatex">\(f\)</span> peut être connue qu'en certains points, mais ne dispose pas de singularité sur <span class="arithmatex">\([a,b]\)</span>, qui est supposé <strong>fini et fermé</strong>.</p>
+<p>Dans certains cas limités, l'intégrale peut être calculée analytiquement, à partir de la <strong>primitive</strong> de <span class="arithmatex">\(f\)</span>, notée <span class="arithmatex">\(F\)</span> :</p>
+<p><span class="arithmatex">\(I = \int_{a}^{b} f(x) dx = F(b)-F(a)\)</span></p>
+<p>Cependant, ce calcul peut être long et compliqué, et beaucoup de fonctions ne disposent pas d'expression analytique pour leurs primitives.
+On préfèrera faire appel à des méthodes numérique pour calculer une valeur approchée de <span class="arithmatex">\(I\)</span>.</p>
+<p>L'approximation de <span class="arithmatex">\(I\)</span> s'effectue le plus souvent à l'aide de combinaisons linéaires des valeurs de <span class="arithmatex">\(f\)</span> : des <strong>formules de quadrature de type interpolation</strong>.</p>
+<p>L'intégrale <span class="arithmatex">\(I\)</span> est remplacée par une somme finie : <span class="arithmatex">\(I \approx \sum_{i=0}^{n} w_i f(x_i)\)</span>.</p>
+<h3 id="exemple-de-probleme">Exemple de problème</h3>
+<p>Au cours de ce chapitre, nous appliquerons les différentes méthodes d'intégration à un même exemple : <strong>La modélisation de la réfléctivité radar des gouttes de pluies</strong>.</p>
+<p>En 1948, Marshall et Palmer ont proposé un modèle du facteur de réflectivité des gouttes de pluies <span class="arithmatex">\(Z\)</span> (en <span class="arithmatex">\(mm^6 m^{-3}\)</span>) pour les radars météorologiques :</p>
+<p><span class="arithmatex">\(Z = \int_{D_{min}}^{D_{max}} N_0 e^{- \Lambda D} D^6 dD\)</span></p>
+<p>avec <span class="arithmatex">\(D\)</span> le diamètre des gouttes supposées sphériques.</p>
+<p>Les paramètres de ce modèle sont :</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(D_{min}\)</span> la plus petite taille de goutte, que nous fixerons à <span class="arithmatex">\(1 mm\)</span>.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(D_{max}\)</span> la plus grande taille de goutte, que nous fixerons à <span class="arithmatex">\(3 mm\)</span>.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\Lambda\)</span> une constante empirique en <span class="arithmatex">\(mm^{-1}\)</span>, pour laquelle Marshall et Palmer proposent <span class="arithmatex">\(4.1 R^{-0.21}\)</span>, avec <span class="arithmatex">\(R\)</span> le taux de pluie que nous fixerons à <span class="arithmatex">\(5 mm.h^{-1}\)</span>.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(N_0\)</span> une constante empirique en <span class="arithmatex">\(m^{-3} mm^{-1}\)</span> nommée "paramètre de forme", pour lequel Marshall et Palmer proposent <span class="arithmatex">\(N_0 = 8000\)</span>.</p>
+</li>
+</ul>
+<p>Ce modèle est encore aujourd'hui utilisé pour l'interprétation des mesures des radars météorologiques, dans le but d'estimer les précipitations aux sol à partir des réflectivités mesurées.</p>
+<p>Afin d'estimer la réflectivité <span class="arithmatex">\(Z\)</span> liée aux gouttes de pluie entre 1 et 3 cm, nous essayerons ici de calculer l'intégrale entre <span class="arithmatex">\(x=1\)</span> et <span class="arithmatex">\(x=3\)</span> de la fonction <span class="arithmatex">\(f(x) = N_0 e^{- \Lambda x} x^6\)</span>, dont la valeur est d'environ <span class="arithmatex">\(2337.49 mm^6/m^3\)</span>.</p>
+<p><img alt="Graphique de f" src="../img/Chap4_exemple_fonction.png" /></p>
+<p>Sous Python on utilisera la bibliothèque Numpy :</p>
+<pre><code>import numpy as np
+</code></pre>
+<p>Puis, on définira les variables globales suivantes :</p>
+<pre><code>N0 = 8000 #Paramètre de forme (m3/mm)
+R = 5 #Taux de pluie (mm/h)
+</code></pre>
+<p>La fonction <span class="arithmatex">\(f\)</span> sera définie comme :</p>
+<pre><code>def f(D):
+
+    return N0*np.exp(-(4.1*R**-0.21)*D)*D**6
+</code></pre>
+<h2 id="formules-de-quadrature">Formules de quadrature</h2>
+<h3 id="principe">Principe</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Idée</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Approcher la fonction <span class="arithmatex">\(f\)</span> par un polynôme <span class="arithmatex">\(p\)</span>.</td>
+</tr>
+<tr>
+<td style="text-align: left;">Si cette approximation est suffisamment bonne :</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(I = \int_{a}^{b} f(x) dx \approx \int_{a}^{b} p(x) dx\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Cette approche a 2 avantages :</p>
+<ul>
+<li>
+<p>Les polynômes sont faciles à intégrer.</p>
+</li>
+<li>
+<p>Cette méthode est utilisable même si on ne connait <span class="arithmatex">\(f\)</span> qu'en un nombre fini de points <span class="arithmatex">\((x_i,f(x_i))\)</span>.</p>
+</li>
+</ul>
+<p>Les méthodes de Newton-Cotes et de Gauss s'appuient sur cette idée en utilisant des <strong>formules de quadrature de type interpolation</strong>, qui s'expriment comme une <strong>combinaison linéaire de valeurs de la fonction en des points à définir</strong>.</p>
+<p>On cherche donc une valeur approchée de <span class="arithmatex">\(I\)</span> au moyen d'une somme finie :</p>
+<p><span class="arithmatex">\(I = \int_{a}^{b} f(x) dx \approx I_n = \sum_{i=0}^{n} w_i f(x_i)\)</span></p>
+<p>On dit que <span class="arithmatex">\(I_n\)</span> est une <strong>formule de quadrature de type interpolation à <span class="arithmatex">\(n+1\)</span> points</strong></p>
+<p>Les valeurs <span class="arithmatex">\(x_i\)</span> sont les "<strong>pivots</strong>" ou "points / noeuds de quadrature".</p>
+<p>Les coefficients <span class="arithmatex">\(w_i\)</span> sont les "<strong>poids</strong>" de la formule de quadrature.</p>
+<h3 id="formules-de-type-interpolation">Formules de type interpolation</h3>
+<p>Soient <span class="arithmatex">\((x_i,f(x_i))\)</span> avec <span class="arithmatex">\(i=0,1,...,n+1\)</span> points d'interpolation.
+Un choix naturel consiste à approximer la fonction <span class="arithmatex">\(f\)</span> par le <strong>polynôme de Lagrange de degré <span class="arithmatex">\(\leq n\)</span></strong> qui passe par ces <span class="arithmatex">\(n+1\)</span> points :</p>
+<p><span class="arithmatex">\(f(x) \approx p(x) = \sum_{i=0}^{n} f(x_i) L_i(x)\)</span></p>
+<p>Il en résulte la <strong>formule de quadrature de type interpolation à <span class="arithmatex">\(n+1\)</span> points</strong> :</p>
+<p><span class="arithmatex">\(I = \int_{a}^{b} f(x) dx \approx I_n = \int_{a}^{b} p(x) dx = \int_{a}^{b} \sum_{i=0}^{n} f(x_i) L_i(x) dx\)</span></p>
+<p>Par linéarité de l'intégrale, on obtient les coefficients de la formule de quadrature :</p>
+<p><span class="arithmatex">\(I_n = \sum_{i=0}^{n} f(x_i) \int_{a}^{b} L_i(x) dx\)</span></p>
+<p>D'où : <span class="arithmatex">\(w_i = \int_{a}^{b} L_i(x) dx\)</span></p>
+<p>Les poids <span class="arithmatex">\(w_i\)</span> s'obtiennent par <strong>intégration des polynômes de Lagrange</strong>.
+Ils sont donc indépendants de <span class="arithmatex">\(f\)</span> et ne dépendent que des points <span class="arithmatex">\(x_i\)</span>.</p>
+<h3 id="degre-de-precision">Degré de précision</h3>
+<p>On définit l'<strong>erreur de troncation</strong> pour l'intégration comme :</p>
+<p><span class="arithmatex">\(E(f) = I-I_n\)</span></p>
+<p>Une formule de quadrature est dite <strong>exacte</strong> pour <span class="arithmatex">\(f\)</span> si <span class="arithmatex">\(E(f)=0\)</span>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Degré de précision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Le degré de précision d'une formule de quadrature est l'entier positif <span class="arithmatex">\(n\)</span> tel que <span class="arithmatex">\(E(p_i)=0\)</span> pour tout polynôme de degré <span class="arithmatex">\(i \leq n\)</span> et <span class="arithmatex">\(E(p_{n+1}) \neq 0\)</span> pour un polynôme <span class="arithmatex">\(p_{n+1}\)</span> de degré <span class="arithmatex">\(n+1\)</span>.</td>
+</tr>
+</tbody>
+</table>
+<p>Donc une formule de quadrature exacte sur l'ensemble des polynômes de degré <span class="arithmatex">\(\leq n\)</span> est au moins de degré de précision <span class="arithmatex">\(n\)</span>.</p>
+<p>Autrement dit, une formule de quadrature de degré de précision <span class="arithmatex">\(n\)</span> vérifie :</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(I = \int_{a}^{b} p_k(x) dx = \int_{a}^{b} x^k dx = I_n = \sum_{i=0}^{n} w_i x_i^k\)</span> pour tout <span class="arithmatex">\(0 &lt; k \leq n\)</span></p>
+</li>
+<li>
+<p><span class="arithmatex">\(I = \int_{a}^{b} p_{n+1}(x) dx = \int_{a}^{b} x^{n+1} dx \neq I_n = \sum_{i=0}^{n} w_i x_i^{n+1}\)</span></p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Théorème</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Une formule de quadrature à <span class="arithmatex">\(n+1\)</span> points est exacte sur l'ensemble des polynômes de degré <span class="arithmatex">\(\leq n\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">si est seulement si c'est une formule de quadrature de type interpolation à <span class="arithmatex">\(n+1\)</span> points.</td>
+</tr>
+</tbody>
+</table>
+<p>Donc une formule de quadrature de type interpolation à <span class="arithmatex">\(n+1\)</span> points est au moins de degré de précision <span class="arithmatex">\(n\)</span>.</p>
+<h2 id="methodes-de-newton-cotes-simples">Méthodes de Newton-cotes simples</h2>
+<p>Les méthodes de Newton-Cotes s'appuient sur la formule de quadrature de type interpolation de Lagrange :</p>
+<p><span class="arithmatex">\(I = \int_{a}^{b} f(x) dx = I_n + E(f) = \sum_{i=0}^{n} f(x_i) \int_{a}^{b} L_i(x) dx + E(f)\)</span></p>
+<p>où <span class="arithmatex">\(E(f)\)</span> est l'erreur de troncature.</p>
+<p>Les pivots de quadrature sont <strong>régulièrement espacés</strong> :</p>
+<p><span class="arithmatex">\(x_i = x_0 + ih\)</span> avec <span class="arithmatex">\(i=0,1,...,n\)</span> et <span class="arithmatex">\(h = \frac{b-a}{n}\)</span></p>
+<p>Les pivots sont donc <strong>fixes</strong> (équidistants) alors que les poids sont <strong>ajustés</strong>.</p>
+<p>La régularité de la subdivision permet d'obtenir des formules qui sont très générales.</p>
+<p>Il y a <span class="arithmatex">\(n+1\)</span> pivots donc cette méthode est <strong>exacte pour les polynômes de degré <span class="arithmatex">\(\leq n\)</span> au moins</strong>.</p>
+<h3 id="methode-des-rectangles-n0">Méthode des rectangles (n=0)</h3>
+<p>Lorsque l'on ne dispose que d'un seul point <span class="arithmatex">\((x_0,f(x_0))\)</span>, on peut utiliser la <strong>formule des rectangles</strong> :</p>
+<p><span class="arithmatex">\(I = \int_{a}^{b} f(x) dx \approx I_0 = \int_{a}^{b} f(x_0) dx = (b-a) f(x_0)\)</span></p>
+<p>On donnera différents noms à la méthode suivant le choix de <span class="arithmatex">\(x_0\)</span> :</p>
+<ul>
+<li>
+<p>"A gauche" : si on choisit <span class="arithmatex">\(x_0 = a\)</span>.</p>
+</li>
+<li>
+<p>"A droite" : si on choisit <span class="arithmatex">\(x_0 = b\)</span>.</p>
+</li>
+<li>
+<p>"Au point milieu" : si on choisit <span class="arithmatex">\(x_0 = \frac{a+b}{2}\)</span></p>
+</li>
+</ul>
+<p>On remarque que <span class="arithmatex">\(I_0\)</span> est l'<strong>aire du rectangle</strong> de largeur <span class="arithmatex">\(b-a\)</span> et de longueur <span class="arithmatex">\(f(x_0)\)</span>.</p>
+<p>Voici pour illustration l'aire de ce rectangle dans le cas de notre exemple :</p>
+<p><img alt="Méthode des rectangles" src="../img/Chap4_exemple_rectangles.gif" /></p>
+<p>Les formules des rectangles <strong>à droite</strong> et <strong>à gauche</strong> sont exactes pour des polynômes de degré 0 uniquement : leur <strong>degré de précision est de 0</strong>.</p>
+<p>La formule au point milieu est aussi exacte pour les fonctions affines car elle exploite les symétries du problème : son <strong>degré de précision est de 1</strong>.</p>
+<p>Si <span class="arithmatex">\(f\)</span> est continue et 2 fois dérivable sur <span class="arithmatex">\([a,b]\)</span>, alors il existe <span class="arithmatex">\(\xi \in ]a,b[\)</span> tel que <span class="arithmatex">\(I = I_0 + E(f)\)</span> avec :</p>
+<p><span class="arithmatex">\(\begin{cases}
+E(f) = \frac{(b-a)^2}{2} f'(\xi) = \frac{h^2}{2} f'(\xi) \; si \; x_0 = a \; ou \; x_0 = b \\
+E(f) = \frac{(b-a)^3}{24} f"(\xi) = \frac{h^3}{24} f"(\xi) \; si \; x_0 = \frac{a+b}{2}
+\end{cases}\)</span></p>
+<p>On en déduit que :</p>
+<ul>
+<li>
+<p>Donc plus <span class="arithmatex">\([a,b]\)</span> est petit, plus l'erreur est faible.</p>
+</li>
+<li>
+<p>Pour les formules à droite et à gauche, l'erreur décroit en <span class="arithmatex">\(h^2\)</span>.</p>
+</li>
+<li>
+<p>Pour la formule au point milieu, l'erreur décroit en <span class="arithmatex">\(h^3\)</span>.</p>
+</li>
+<li>
+<p>Plus les variations de <span class="arithmatex">\(f\)</span> sont limitées (<span class="arithmatex">\(f'\)</span> faible), plus l'erreur est faible pour les méthodes à droite et à gauche.</p>
+</li>
+</ul>
+<h3 id="methode-des-trapezes-n1">Méthode des trapèzes (n=1)</h3>
+<p>Lorsque l'on dispose que de 2 points <span class="arithmatex">\((x_0,f(x_0))\)</span> et <span class="arithmatex">\((x_1,f(x_1))\)</span>, on peut utiliser la <strong>formule des trapèzes</strong> :</p>
+<p><span class="arithmatex">\(I = \int_{a}^{b} f(x) dx \approx I_1 = \frac{(b-a)}{2} (f(a)+f(b))\)</span></p>
+<p><span class="arithmatex">\(I_1\)</span> est une formule de quadrature de type interpolation à 2 points.</p>
+<p>On remarque qu'elle correspond à l'<strong>aire d'un trapèze</strong>.</p>
+<p>Voici pour illustration l'aire de ce trapèze dans le cas de notre exemple :</p>
+<p><img alt="Méthode des trapèzes" src="../img/Chap4_exemple_trapezes.png" /></p>
+<p>Si <span class="arithmatex">\(f\)</span> est continue et 2 fois dérivable sur <span class="arithmatex">\([a,b]\)</span>, alors il existe <span class="arithmatex">\(\xi \in ]a,b[\)</span> tel que <span class="arithmatex">\(I = I_1 + E(f)\)</span> avec :</p>
+<p><span class="arithmatex">\(E(f) = - \frac{h^3}{12} f"(\xi)\)</span></p>
+<p>La méthode des trapèzes est exacte sur l'espace des polynômes de degré <span class="arithmatex">\(\leq 1\)</span> donc de <strong>degré de précision 1</strong>.  </p>
+<p>Par contre, elle est 2X plus lente que la méthode des rectangles au point milieu pour le même degré de précision.</p>
+<h3 id="methode-de-simpson-n2">Méthode de Simpson (n=2)</h3>
+<p>Lorsque l'on dispose que de 3 points <span class="arithmatex">\((x_0,f(x_0))\)</span>, <span class="arithmatex">\((x_1,f(x_1))\)</span> et <span class="arithmatex">\((x_2,f(x_2))\)</span>, on peut utiliser la <strong>formule de Simpson</strong>.</p>
+<p>Si on choisit <span class="arithmatex">\(x_0 = a\)</span>, <span class="arithmatex">\(x_1 = \frac{a+b}{2}\)</span> et <span class="arithmatex">\(x_2 = b\)</span> :</p>
+<p><span class="arithmatex">\(I = \int_{a}^{b} f(x) dx \approx I_2 = \frac{(b-a)}{6} (f(a)+4 f(\frac{a+b}{2})+f(b))\)</span></p>
+<p><span class="arithmatex">\(I_2\)</span> est une formule de quadrature de type interpolation à 3 points.</p>
+<p>On remarque qu'elle correspond à l'<strong>aire sous un morceau de parabole</strong>.</p>
+<p>Voici pour illustration l'aire sous la parabole dans le cas de notre exemple :</p>
+<p><img alt="Méthode de Simpson" src="../img/Chap4_exemple_simpson.png" /></p>
+<p>Si <span class="arithmatex">\(f\)</span> est continue et 4 fois dérivable sur <span class="arithmatex">\([a,b]\)</span>, alors il existe <span class="arithmatex">\(\xi \in ]a,b[\)</span> tel que <span class="arithmatex">\(I = I_2 + E(f)\)</span> avec :</p>
+<p><span class="arithmatex">\(E(f) = - \frac{h^5}{90} f^{(4)}(\xi)\)</span></p>
+<p>La méthode de Simpson est exacte sur l'espace des polynômes de degré <span class="arithmatex">\(\leq 2\)</span>, et on peut même montrer qu'elle est de <strong>degré de précision 3</strong>.</p>
+<p>Elle nécessite l'évaluation de <span class="arithmatex">\(f\)</span> en 3 points, mais l'erreur diminue rapidement, en <span class="arithmatex">\(h^5\)</span>.</p>
+<h3 id="methodes-de-newton-cotes-n0">Méthodes de Newton-Cotes (n&gt;0)</h3>
+<p>On peut généraliser les formule de quadrature de type interpolation de Lagrange à tout degré <span class="arithmatex">\(n&gt;0\)</span>.
+On parle alors de <strong>méthodes de Newton-Cotes</strong> de manière générale.</p>
+<p>On distingue 2 formules suivant si <span class="arithmatex">\(n\)</span> est pair ou impair :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Cas de <span class="arithmatex">\(n\)</span> <strong>impair</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Si <span class="arithmatex">\(f\)</span> est dérivable <span class="arithmatex">\(n+1\)</span> fois sur <span class="arithmatex">\([a,b]\)</span>, alors il existe un réel <span class="arithmatex">\(K\)</span> et <span class="arithmatex">\(\xi \in ]a,b[\)</span> tel que</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(E(f) = \frac{K}{(n+1)!} (b-a)^{n+2} f^{(n+1)}(\xi)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Le degré de précision est <span class="arithmatex">\(n\)</span>.</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Cas de <span class="arithmatex">\(n\)</span> <strong>pair</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Si <span class="arithmatex">\(f\)</span> est dérivable <span class="arithmatex">\(n+2\)</span> fois sur <span class="arithmatex">\([a,b]\)</span>, alors il existe un réel <span class="arithmatex">\(K\)</span> et <span class="arithmatex">\(\xi \in ]a,b[\)</span> tel que</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(E(f) = \frac{K}{(n+2)!} (b-a)^{n+3} f^{(n+2)}(\xi)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Le degré de précision est <span class="arithmatex">\(n+1\)</span>.</td>
+</tr>
+</tbody>
+</table>
+<p>On peut en conclure qu'une <strong>formule centrée</strong> (<span class="arithmatex">\(n\)</span> pair, donc nombre de points impair) est préférable.</p>
+<p>Voici les formules des méthodes de Newton-Cotes jusqu'à <span class="arithmatex">\(n=6\)</span> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Degré <span class="arithmatex">\(n\)</span></th>
+<th style="text-align: left;">Nom</th>
+<th style="text-align: center;">Formule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">Méthode des trapèzes</td>
+<td style="text-align: center;"><span class="arithmatex">\(\frac{b-a}{2}(f(x_0)+f(x_1))\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">Méthode de Simpson 1/3</td>
+<td style="text-align: center;"><span class="arithmatex">\(\frac{b-a}{6}(f(x_0)+4f(x_1)+f(x_2))\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">Méthode de Simpson 3/8</td>
+<td style="text-align: center;"><span class="arithmatex">\(\frac{b-a}{8}(f(x_0)+3f(x_1)+3f(x_2)+f(x_3))\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">Méthode de Boole-Villarceau</td>
+<td style="text-align: center;"><span class="arithmatex">\(\frac{b-a}{90}(7f(x_0)+32f(x_1)+12f(x_2)+32f(x_3)+7f(x_4))\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">Méthode de Weddle-Hardy</td>
+<td style="text-align: center;"><span class="arithmatex">\(\frac{b-a}{840}(41f(x_0)+216f(x_1)+27f(x_2)+272f(x_3)+27f(x_4)+216f(x_5)+41f(x_6))\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>En pratique, les méthodes de Newton-Cotes ne sont <strong>presque jamais utilisées pour <span class="arithmatex">\(n&gt;6\)</span></strong>.</p>
+<h3 id="algorithmes">Algorithmes</h3>
+<p>Voici les différentes méthodes de Newton-Cotes présentées précédemment sous la forme de fonctions Python.</p>
+<p>Elles prennent toutes en entrée :</p>
+<ul>
+<li>
+<p><code>f</code> la fonction Python à intégrer.</p>
+</li>
+<li>
+<p><code>a</code> la borne inférieure de l'intervalle d'intégration.</p>
+</li>
+<li>
+<p><code>b</code> la borne supérieure de l'intervalle d'intégration.</p>
+</li>
+</ul>
+<p>La fonction pour la méthode des rectangles à gauche :</p>
+<pre><code>def rectangles_gauche(f,a,b):
+
+    return (b-a)*f(a)
+</code></pre>
+<p>La fonction pour la méthode des rectangles à droite :</p>
+<pre><code>def rectangles_droite(f,a,b):
+
+    return (b-a)*f(b)
+</code></pre>
+<p>La fonction pour la méthode des rectangles au point milieu :</p>
+<pre><code>def rectangles_milieu(f,a,b):
+
+    return (b-a)*f((a+b)/2)
+</code></pre>
+<p>La fonction pour la méthode des trapèzes :</p>
+<pre><code>def trapezes(f,a,b):
+
+    return (b-a)*(f(a)+f(b))/2
+</code></pre>
+<p>La fonction pour la méthode de Simpson :</p>
+<pre><code>def simpson(f,a,b):
+
+    return (b-a)*(f(a)+4*f((a+b)/2)+f(b))/6
+</code></pre>
+<h3 id="exemple">Exemple</h3>
+<p>En appliquant les algorithmes précédents à notre problème exemple, on trouve les valeurs suivantes :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Méthode</th>
+<th style="text-align: center;">Estimation de Z (<span class="arithmatex">\(mm^6 m^{-3}\)</span>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Rectangles à gauche</td>
+<td style="text-align: center;">859.36</td>
+</tr>
+<tr>
+<td style="text-align: left;">Rectangles à droite</td>
+<td style="text-align: center;">1807.24</td>
+</tr>
+<tr>
+<td style="text-align: left;">Rectangles au point milieu</td>
+<td style="text-align: center;">2954.01</td>
+</tr>
+<tr>
+<td style="text-align: left;">Trapèzes</td>
+<td style="text-align: center;">1333.30</td>
+</tr>
+<tr>
+<td style="text-align: left;">Simpson</td>
+<td style="text-align: center;">2413.78</td>
+</tr>
+</tbody>
+</table>
+<p>Ces estimations sont à comparer à la valeur théorique <span class="arithmatex">\(Z = 2337.49 mm^6/m^3\)</span>.</p>
+<p>Notre fonction à intégrer n'étant pas un polynôme de degré <span class="arithmatex">\(\leq n\)</span>, on ne s'attendait pas à avoir un résultat exact.
+On note toutefois que plus le degré de précision augmente, meilleure est l'estimation.</p>
+<p><strong>Exercice :</strong></p>
+<p>Déterminez la formule de Newton-Cotes pour <span class="arithmatex">\(n=4\)</span> (aussi appellée "méthode de Boole-Villarceau"), et implémentez-là sous la forme d'une fonction Python.
+Quelle estimation de <span class="arithmatex">\(Z\)</span> obtenez-vous ? Cette valeur est-elle plus proche du résultat attendu ? Ce résultat était-il attendu ?</p>
+<h2 id="methode-de-newton-cotes-composites">Méthode de Newton-Cotes composites</h2>
+<p>Pour améliorer la précision des méthode de Newton-Cotes, on pourrai augmenter le nombre de point d'intégration, et donc le degré du polynôme d'interpolation.
+Mais cela conduit à des formules de plus en plus complexes, et même potentiellement à un phénomène de Runge (voir le Chapitre 3).</p>
+<p>C'est pourquoi on utilise en général des méthodes composites avec des formules de Newton-Cotes de degré <span class="arithmatex">\(n&lt;6\)</span>.</p>
+<p>L'idée des formules composites est la suivante :</p>
+<ul>
+<li>
+<p>Découper l'intervalle <span class="arithmatex">\([a,b]\)</span> en <span class="arithmatex">\(M\)</span> sous-intervalles.</p>
+</li>
+<li>
+<p>Appliquer une formule de Newton-Cotes sur chaque sous-intervalle pour estimer l'aire sous la courbe.</p>
+</li>
+<li>
+<p>Additionner les aires estimées pour chaque sous-intervalle.</p>
+</li>
+</ul>
+<p>Ceci revient à l'expression suivante de l'intégrale :</p>
+<p><span class="arithmatex">\(I = \int_{a}^{b} f(x) dx = \displaystyle\sum_{j=0}^{M} \int_{x_{j-1}=a+(j-1)h}^{x_j=a+jh} f(x) dx\)</span></p>
+<p>Dans ce cas, les points de subdivision sont régulièrement espacés d'un pas <span class="arithmatex">\(h=\frac{b-a}{M}\)</span>.</p>
+<p>Une <strong>formule de quadrature de type interpolation composite</strong> s'écrit donc :</p>
+<p><span class="arithmatex">\(I_{n,M} = \displaystyle\sum_{j=1}^{M} \displaystyle\sum_{i=0}^{n} w_i^{(j)} f(x_i^{(j)})\)</span></p>
+<h3 id="formule-composite-des-rectangles">Formule composite des rectangles</h3>
+<p>Soit <span class="arithmatex">\(M+1\)</span> points de discrétisation <span class="arithmatex">\((x_j,f(x_j))\)</span> avec <span class="arithmatex">\(x_j=a+jh\)</span> et <span class="arithmatex">\(h=\frac{b-a}{M}\)</span>.</p>
+<p><strong>Rectangles à gauche :</strong></p>
+<p>Sur chaque sous-intervalle <span class="arithmatex">\([x_j,x_{j+1}]\)</span> :</p>
+<p><span class="arithmatex">\(\int_{x_{j+1}}^{x_j} f(x) dx \approx hf(x_{j})\)</span></p>
+<p>D'où la formule composite des rectangles à gauche :</p>
+<p><span class="arithmatex">\(\int_{a}^{b} f(x) dx \approx h(\displaystyle\sum_{j=0}^{M-1} f(x_{j}))\)</span></p>
+<p>Voici une illustration pour notre exemple, avec <span class="arithmatex">\(M=5\)</span> :</p>
+<p><img alt="Méthode des rectangles composite à gauche" src="../img/Chap4_exemple_rectangles_composite_gauche.png" /></p>
+<p><strong>Rectangles à droite :</strong></p>
+<p>Sur chaque sous-intervalle <span class="arithmatex">\([x_j,x_{j+1}]\)</span> :</p>
+<p><span class="arithmatex">\(\int_{x_{j+1}}^{x_j} f(x) dx \approx hf(x_{j+1})\)</span></p>
+<p>D'où la formule composite des rectangles à droite :</p>
+<p><span class="arithmatex">\(\int_{a}^{b} f(x) dx \approx h(\displaystyle\sum_{j=0}^{M-1} f(x_{j+1}))\)</span></p>
+<p>Voici une illustration pour notre exemple, avec <span class="arithmatex">\(M=5\)</span> :</p>
+<p><img alt="Méthode des rectangles composite à droite" src="../img/Chap4_exemple_rectangles_composite_droite.png" /></p>
+<p><strong>Rectangles au point milieu :</strong></p>
+<p>Sur chaque sous-intervalle <span class="arithmatex">\([x_j,x_{j+1}]\)</span> :</p>
+<p><span class="arithmatex">\(\int_{x_{j+1}}^{x_j} f(x) dx \approx hf(\frac{x_{j}+x_{j+1}}{2})\)</span></p>
+<p>D'où la formule composite des rectangles au point milieu :</p>
+<p><span class="arithmatex">\(\int_{a}^{b} f(x) dx \approx h(\displaystyle\sum_{j=0}^{M-1} f(\frac{x_{j}+x_{j+1}}{2}))\)</span></p>
+<p>Voici une illustration pour notre exemple, avec <span class="arithmatex">\(M=5\)</span> :</p>
+<p><img alt="Méthode des rectangles composite au point milieu" src="../img/Chap4_exemple_rectangles_composite_point_milieu.png" /></p>
+<p>Ces formules nécessitent <span class="arithmatex">\(M\)</span> évaluations de <span class="arithmatex">\(f\)</span>.</p>
+<p>On peut alors montrer que dans le cas du point milieu, l'erreur est majorée ainsi :</p>
+<p><span class="arithmatex">\(\mid E(f) \mid \leq \frac{b-a}{24} h^2 max_{x \in [a,b]} \mid f"(x) \mid\)</span></p>
+<p>On observe que <span class="arithmatex">\(\lim\limits_{M \rightarrow \infty} E(f) = \lim\limits_{h \rightarrow 0} E(f) = 0\)</span>.</p>
+<p>On en déduit que la méthode converge bien vers la valeur exacte de l'intégrale.</p>
+<p>L'ordre de convergence est de 2 : <strong>l'erreur est divisée par 4 lorsque h est divisé par 2</strong>.</p>
+<h3 id="formule-composite-des-trapezes">Formule composite des trapèzes</h3>
+<p>Sur chaque sous-intervalle <span class="arithmatex">\([x_j,x_{j+1}]\)</span> :</p>
+<p><span class="arithmatex">\(\int_{x_{j+1}}^{x_j} f(x) dx \approx \frac{h}{2} (f(x_{j})+f(x_{j+1}))\)</span></p>
+<p>D'où la formule composite des trapèzes :</p>
+<p><span class="arithmatex">\(\int_{a}^{b} f(x) dx \approx h (\frac{1}{2} f(a) + \displaystyle\sum_{j=1}^{M-1} f(x_j) + \frac{1}{2} f(b))\)</span></p>
+<p>Voici une illustration pour notre exemple, avec <span class="arithmatex">\(M=5\)</span> :</p>
+<p><img alt="Méthode des trapèzes composite" src="../img/Chap4_trapezes_composite.png" /></p>
+<p>Cette formule nécessite <span class="arithmatex">\(M+1\)</span> évaluations de <span class="arithmatex">\(f\)</span>.</p>
+<p>On peut montrer que l'erreur est majorée ainsi :</p>
+<p><span class="arithmatex">\(\mid E(f) \mid \leq \frac{b-a}{12} h^2 max_{x \in [a,b]} \mid f"(x) \mid\)</span></p>
+<p>On observe que <span class="arithmatex">\(\lim\limits_{M \rightarrow \infty} E(f) = \lim\limits_{h \rightarrow 0} E(f) = 0\)</span>.</p>
+<p>On en déduit que la méthode converge bien vers la valeur exacte de l'intégrale.</p>
+<p>L'ordre de convergence est de 2 : <strong>l'erreur est divisée par 4 lorsque h est divisé par 2</strong>.</p>
+<h3 id="formule-composite-de-simpson">Formule composite de Simpson</h3>
+<p>Pour faciliter l'écriture, on définira pour la méthode de Simpson composite <span class="arithmatex">\(h = \frac{b-a}{2M}\)</span> pour un nombre de sous-intervalles <span class="arithmatex">\(M\)</span>.</p>
+<p>Sur chaque sous-intervalle <span class="arithmatex">\([x_j,x_{j+2}]\)</span> :</p>
+<p><span class="arithmatex">\(\int_{x_j}^{x_{j+2}} f(x) dx \approx \frac{h}{3} (f(x_{j})+4f(x_{j+1})+f(x_{j+2}))\)</span></p>
+<p>D'où la formule composite de Simpson :</p>
+<p><span class="arithmatex">\(\int_{a}^{b} f(x) dx \approx \frac{h}{3} (f(a) + 2 \displaystyle\sum_{j=1}^{M-1} f(x_{2j}) + 4 \displaystyle\sum_{j=0}^{M-1} f(x_{2j+1}) + f(b))\)</span></p>
+<p>Voici une illustration pour notre exemple, avec <span class="arithmatex">\(M=5\)</span> :</p>
+<p><img alt="Méthode de Simpson composite" src="../img/Chap4_simpson_composite.png" /></p>
+<p>Cette formule nécessite <span class="arithmatex">\(2M+1\)</span> évaluations de <span class="arithmatex">\(f\)</span>.</p>
+<p>On peut montrer que l'erreur est majorée ainsi :</p>
+<p><span class="arithmatex">\(\mid E(f) \mid \leq \frac{b-a}{90} h^4 max_{x \in [a,b]} \mid f^{(4)}(x) \mid\)</span></p>
+<p>On observe que <span class="arithmatex">\(\lim\limits_{M \rightarrow \infty} E(f) = \lim\limits_{h \rightarrow 0} E(f) = 0\)</span>.</p>
+<p>On en déduit que la méthode converge bien vers la valeur exacte de l'intégrale.</p>
+<p>L'ordre de convergence est de 4 : <strong>l'erreur est divisée par 16 lorsque h est divisé par 2</strong>.</p>
+<h3 id="algorithmes_1">Algorithmes</h3>
+<p>Voici une fonction Python pour calculer une intégrale à partir des méthodes simples programmées précédemment.</p>
+<p>Elle prend en entrée :</p>
+<ul>
+<li>
+<p><code>f</code> la fonction Python à intégrer.</p>
+</li>
+<li>
+<p><code>a</code> la borne inférieure de l'intervalle d'intégration.</p>
+</li>
+<li>
+<p><code>b</code> la borne supérieure de l'intervalle d'intégration.</p>
+</li>
+<li>
+<p><code>methode</code> la méthode d'intégration (rectangles, trapèzes ou Simpson) sous la forme d'une fonction Python.</p>
+</li>
+<li>
+<p><code>M</code> le nombre de sous-intervalles d'intégration.</p>
+</li>
+</ul>
+<pre><code>def methode_composite(f,a,b,methode,M):
+
+    #Découpage de l'intervalle [a,b] en M sous-intervalles avec un pas de 
+    #(b-a)/M :
+    x_i = [a+i*(b-a)/M for i in range(M+1)]
+
+    #Initialisation de la somme des aires sous la courbe des différents 
+    #sous-intervalles :
+    aire = 0 
+
+    #Boucle sur les sous-intervalles :
+    for i in range(M):
+
+        #Addition au compteur de l'aire sous la courbe pour ce sous-intervalle :
+        aire += methode(f,x_i[i],x_i[i+1])
+
+    #Renvoyer l'estimation de l'aire sous la courbe pour l'intervalle [a,b] :
+    return aire
+</code></pre>
+<p>On peut appliquer la méthode de Simpson composite <span class="arithmatex">\(M=5\)</span> à notre exemple avec la commande Python :</p>
+<pre><code>I_simpson_composite = methode_composite(f,1,3,simpson,5)
+</code></pre>
+<p>Si cette fonction est élégante, car elle est utilisable pour toutes les méthodes programmées précédemment, il est à noter qu'elle n'est pas optimisée pour la méthode des trapèzes et la méthode de Simpson.
+En effet, avec cette implémentation, on évalue plusieurs fois la fonction aux mêmes points.</p>
+<p>Pour une implémentation plus optimisée, il vaut mieux programmer une fonction pour chaque méthode composite, en se basant sur les formules données précédemment.</p>
+<p>Toutes les fonctions suivantes prennent toutes en entrée :</p>
+<ul>
+<li>
+<p><code>f</code> la fonction Python à intégrer.</p>
+</li>
+<li>
+<p><code>a</code> la borne inférieure de l'intervalle d'intégration.</p>
+</li>
+<li>
+<p><code>b</code> la borne supérieure de l'intervalle d'intégration.</p>
+</li>
+<li>
+<p><code>M</code> le nombre de sous-intervalles d'intégration.</p>
+</li>
+</ul>
+<p>Voici la fonction pour la méthode composite des rectangles à gauche :</p>
+<pre><code>def rectangles_gauche_composite(f,a,b,M):
+
+    #Déterminer la largeur h de chaque sous-intervalle :
+    h = (b-a)/M
+
+    #Découpage de l'intervalle [a,b] en M sous-intervalles avec un pas de h :
+    x_i = [a+i*h for i in range(M+1)]
+
+    #Initialiser la somme des évaluations de f pour chaque sous-intervalle:
+    somme = 0 
+
+    #Boucle sur les sous-intervalles :
+    for i in range(M):
+
+        #Sommer la valeur de f &quot;à gauche&quot; du sous-intervalle :
+        somme += f(x_i[i])
+
+    #Calcul de la somme des aires des sous-intervalles :
+    aire = somme*h
+
+    return aire
+</code></pre>
+<p>Voici la fonction pour la méthode composite des rectangles à droite :</p>
+<pre><code>def rectangles_droite_composite(f,a,b,M):
+
+    #Déterminer la largeur h de chaque sous-intervalle :
+    h = (b-a)/M
+
+    #Découpage de l'intervalle [a,b] en M sous-intervalles avec un pas de h :
+    x_i = [a+i*h for i in range(M+1)]
+
+    #Initialiser la somme des évaluations de f pour chaque sous-intervalle:
+    somme = 0 
+
+    #Boucle sur les sous-intervalles :
+    for i in range(M):
+
+        #Sommer la valeur de f &quot;à droite&quot; du sous-intervalle :
+        somme += f(x_i[i+1])
+
+    #Calcul de la somme des aires des sous-intervalles :
+    aire = somme*h
+
+    return aire
+</code></pre>
+<p>Voici la fonction pour la méthode composite des rectangles au point milieu :</p>
+<pre><code>def rectangles_milieu_composite(f,a,b,M):
+
+    #Déterminer la largeur h de chaque sous-intervalle :
+    h = (b-a)/M
+
+    #Découpage de l'intervalle [a,b] en M sous-intervalles avec un pas de h :
+    x_i = [a+i*h for i in range(M+1)]
+
+    #Initialiser la somme des évaluations de f pour chaque sous-intervalle:
+    somme = 0 
+
+    #Boucle sur les sous-intervalles :
+    for i in range(M):
+
+        #Sommer la valeur de f &quot;au milieu&quot; du sous-intervalle :
+        somme += f((x_i[i]+x_i[i+1])/2)
+
+    #Calcul de la somme des aires des sous-intervalles :
+    aire = somme*h
+
+    return aire
+</code></pre>
+<p>Voici la fonction pour la méthode composite des trapèzes :</p>
+<pre><code>def trapezes_composite(f,a,b,M):
+
+    #Déterminer la largeur h de chaque sous-intervalle :
+    h = (b-a)/M
+
+    #Découpage de l'intervalle [a,b] en M sous-intervalles avec un pas de h :
+    x_i = [a+i*h for i in range(M+1)]
+
+    #Initialiser la somme des évaluations de f pour chaque sous-intervalle avec
+    #f(a) et f(b):
+    somme = (f(x_i[0])+f(x_i[-1]))/2
+
+    #Boucle sur les sous-intervalles :
+    for i in range(1,M):
+
+        #Sommer la valeur de f à gauche du sous-intervalle :
+        somme += f(x_i[i])
+
+    #Calcul de la somme des aires des sous-intervalles :
+    aire = somme*h
+
+    return aire
+</code></pre>
+<p>Voici la fonction pour la méthode composite de Simpson :</p>
+<pre><code>def simpson_composite(f,a,b,M):
+
+    #Déterminer la largeur h de chaque sous-intervalle :
+    h = (b-a)/(2*M)
+
+    #Découpage de l'intervalle [a,b] en M sous-intervalles avec un pas de h :
+    x_i = [a+i*h for i in range(2*M+1)]
+
+    #Initialiser la somme des évaluations de f pour les éléments pairs et 
+    #impairs de l'intervalle :
+    somme_pair = 0
+    somme_impair = 0
+
+    #1ère boucle sur les éléments pairs des sous-intervalles :
+    for i in range(1,M):
+
+        #Sommer la valeur de f du sous-intervalle :
+        somme_pair += f(x_i[2*i])
+
+    #2nde boucle sur les éléments impairs des sous-intervalles :
+    for i in range(M):
+        somme_impair += f(x_i[2*i+1])
+
+    #Additionner les valeurs de f :
+    somme = f(x_i[0])+f(x_i[-1])+2*somme_pair+4*somme_impair
+
+    #Calcul de la somme des aires des sous-intervalles :
+    aire = somme*h/3
+
+    return aire
+</code></pre>
+<h3 id="exemples">Exemples</h3>
+<p>En appliquant les algorithmes précédents à notre problème exemple, avec un nombre de sous-intervalles <span class="arithmatex">\(M = 5\)</span> on trouve les valeurs suivantes :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Méthode composite (M=5)</th>
+<th style="text-align: center;">Estimation de Z (<span class="arithmatex">\(mm^6 m^{-3}\)</span>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Rectangles à gauche</td>
+<td style="text-align: center;">2213.67</td>
+</tr>
+<tr>
+<td style="text-align: left;">Rectangles à droite</td>
+<td style="text-align: center;">2403.25</td>
+</tr>
+<tr>
+<td style="text-align: left;">Rectangles au point milieu</td>
+<td style="text-align: center;">2352.11</td>
+</tr>
+<tr>
+<td style="text-align: left;">Trapèzes</td>
+<td style="text-align: center;">2308.46</td>
+</tr>
+<tr>
+<td style="text-align: left;">Simpson</td>
+<td style="text-align: center;">2337.56</td>
+</tr>
+</tbody>
+</table>
+<p>Ces estimations sont à comparer à la valeur théorique <span class="arithmatex">\(Z = 2337.49 mm^6/m^3\)</span>.</p>
+<p><strong>Exercice :</strong></p>
+<p>Utilisez les fonctions Python précédentes pour calculer l'erreur absolue commise par les méthodes composite des trapèzes et de Simpson.
+Calculez l'erreur pour M = 1, 2, 4, 8 et 16. Qu'observez-vous ?</p>
+<h3 id="acceleration-de-romberg">Accélération de Romberg</h3>
+<p>Concernant les méthodes composites, il reste la question suivante : 
+<strong>Comment choisir un pas d'intégration <span class="arithmatex">\(h\)</span> pour obtenir la précision souhaitée <span class="arithmatex">\(\epsilon\)</span> ?</strong></p>
+<p>L'<strong>accélération de Romberg</strong> est une méthode itérative qui permet d'améliorer l'ordre de convergence de la méthode des trapèzes ou de Simpson.</p>
+<p>Elle tire partie du fait que :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Pour la méthode des trapèzes :</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(I = I_h + E_h(f) = I_{2h} + E_{2h}(f)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">avec <span class="arithmatex">\(E_{2h}(f) = 4 E_h(f)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">d'où <span class="arithmatex">\(\mid I_{2h} - I_h \mid = 3 E_h(f)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">et donc : <span class="arithmatex">\(E_h(f) = \frac{\mid I_{2h} - I_h \mid}{3}\)</span></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Pour la méthode de Simpson :</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(I = I_h + E_h(f) = I_{2h} + E_{2h}(f)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">avec <span class="arithmatex">\(E_{2h}(f) = 16 E_h(f)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">d'où <span class="arithmatex">\(\mid I_{2h} - I_h \mid = 15 E_h(f)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">et donc : <span class="arithmatex">\(E_h(f) = \frac{\mid I_{2h} - I_h \mid}{15}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>On détermine alors le pas d'intégration <span class="arithmatex">\(h\)</span> permettant d'obtenir <span class="arithmatex">\(\epsilon\)</span> avec l'algorithme suivant :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Algorithme d'accélération de Romberg</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">On se donne un découpage initial <span class="arithmatex">\(2h\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">On calcule <span class="arithmatex">\(I_{2h}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">On double le nombre d'intervalles : on prend un pas de <span class="arithmatex">\(h\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">On calcule <span class="arithmatex">\(I_h\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Pour la méthode des trapèzes : tant que <span class="arithmatex">\(\mid I_{2h} - I_h \mid &gt; 3 \epsilon\)</span> on répète les opérations précédentes</td>
+</tr>
+<tr>
+<td style="text-align: left;">Pour la méthode de Simpson : tant que <span class="arithmatex">\(\mid I_{2h} - I_h \mid &gt; 15 \epsilon\)</span> on répète les opérations précédentes</td>
+</tr>
+</tbody>
+</table>
+<p>Voici une fonction Python implémentant l'accélération de Romberg pour la méthode des trapèzes composite.</p>
+<p>Elle prend en entrée :</p>
+<ul>
+<li>
+<p><code>f</code> la fonction Python à intégrer.</p>
+</li>
+<li>
+<p><code>a</code> la borne inférieure de l'intervalle d'intégration.</p>
+</li>
+<li>
+<p><code>b</code> la borne supérieure de l'intervalle d'intégration.</p>
+</li>
+<li>
+<p><code>epsilon</code> la précision souhaitée sur la valeur de l'intégrale.</p>
+</li>
+</ul>
+<pre><code>def romberg_trapezes(f,a,b,epsilon):
+
+    #Initialiser le nombre de sous-intervalles d'intégration M :
+    M = 1
+
+    #Initialiser les aires estimées pour M et 2M sous-intervalles d'intégration :
+    aire_M = trapezes_composite(f,a,b,M)
+    aire_2M = trapezes_composite(f,a,b,2*M)
+
+    #Boucler tant que la condition sur l'erreur d'intégration n'est pas atteinte :
+    while abs(aire_M-aire_2M)&gt;(3*epsilon):
+
+        #Multiplier le nombre de sous-intervalles d'intégration par 2 :
+        M *= 2
+
+        #Estimer l'aire pour M et 2M sous-intervalles d'intégration :
+        aire_M = trapezes_composite(f,a,b,M)
+        aire_2M = trapezes_composite(f,a,b,2*M)
+
+    return aire_2M
+</code></pre>
+<p>Voici une application de l'accélération de Romberg à notre problème, avec la méthode des trapèzes composite, en demandant une précision de <span class="arithmatex">\(1 mm^6/m^3\)</span> :</p>
+<p><img alt="Méthode de Romberg pour les trapèzes composite" src="../img/Chap4_exemple_trapezes_composite_romberg.gif" /></p>
+<p>Pour obtenir une précision de <span class="arithmatex">\(10^{-3}\)</span> sur la valeur de <span class="arithmatex">\(Z = 2337.49 mm^6/m^3\)</span> avec la méthode des trapèzes composite, on trouve par la méthode de Romberg qu'il faut <span class="arithmatex">\(M=1024\)</span>.</p>
+<h2 id="methodes-de-gauss">Méthodes de Gauss</h2>
+<h3 id="principe_1">Principe</h3>
+<p>Les méthodes de Newton-Cotes fixent les pivots de quadrature et utilisent des poids assurant un degré de précision de <span class="arithmatex">\(n\)</span> ou <span class="arithmatex">\(n+1\)</span>.</p>
+<p>L'idée des <strong>méthodes de Gauss</strong> est de <strong>choisir les pivots</strong> pour que le degré de précision de la formule soit le plus élevé possible.</p>
+<p>Soit la formule de quadrature à <span class="arithmatex">\((n+1)\)</span> points :</p>
+<p><span class="arithmatex">\(I = \int_{a}^{b} f(x) dx \approx I_n = \displaystyle\sum_{i=0}^{n} w_i f(x_i)\)</span></p>
+<p>Les <span class="arithmatex">\((n+1)\)</span> pivots et les <span class="arithmatex">\((n+1)\)</span> poids, donc les <span class="arithmatex">\(2(n+1)\)</span> paramètres, sont ajustés pour optimiser la précision de la méthode.</p>
+<p>Pour que la méthode soit exacte pour les polynômes de degré <span class="arithmatex">\(\leq 2n+1\)</span> on cherche donc les <span class="arithmatex">\(2(n+1)\)</span> paramètres tels que :</p>
+<p><span class="arithmatex">\(\int_{a}^{b} x^k dx = \displaystyle\sum_{i=0}^{n} w_i x_i^k\)</span> avec <span class="arithmatex">\(k=0,1,...,2n+1\)</span></p>
+<h3 id="methode-a-1-point-n0">Méthode à 1 point (n=0)</h3>
+<p>A l'ordre 1 (<span class="arithmatex">\(n=0\)</span>), on a 2 inconnues à ajuster : le point <span class="arithmatex">\(x_0\)</span> et le coefficient <span class="arithmatex">\(w_0\)</span>.</p>
+<p>Soit <span class="arithmatex">\(I_0 = w_0 f(x_0)\)</span></p>
+<p>On va ajuster ces paramètres pour que la méthode soit exacte dans l'ensemble des polynômes de degré <span class="arithmatex">\(\leq 1\)</span>.</p>
+<p>On résout donc le système de 2 équations à 2 inconnues :</p>
+<p><span class="arithmatex">\(\begin{cases}
+\int_{a}^{b} 1 dx = w_0\\
+\int_{a}^{b} x dx = w_0 x_0\\
+\end{cases}\)</span></p>
+<p>On obtient la <strong>formule optimale de Gauss</strong> :</p>
+<p><span class="arithmatex">\(I_0 = (b-a) f(\frac{a+b}{2})\)</span></p>
+<p>On retrouve alors la <strong>méthode du point milieu</strong> de Newton-Cotes.</p>
+<h3 id="methode-a-2-points-n1">Méthode à 2 points (n=1)</h3>
+<p>A l'ordre 2 (<span class="arithmatex">\(n=1\)</span>), on a 4 inconnues à ajuster : les 2 points <span class="arithmatex">\(x_0\)</span> et <span class="arithmatex">\(x_1\)</span>, et les 2 coefficients <span class="arithmatex">\(w_0\)</span> et <span class="arithmatex">\(w_1\)</span>.</p>
+<p>Soit <span class="arithmatex">\(I_1 = w_0 f(x_0) + w_1 f(x_1)\)</span></p>
+<p>On va ajuster ces paramètres pour que la méthode soit exacte dans l'ensemble des polynômes de degré <span class="arithmatex">\(\leq 3\)</span> (à comparer au degré <span class="arithmatex">\(\leq 1\)</span> de la méthode des trapèzes).</p>
+<p>On résout donc le système de 4 équations à 4 inconnues :</p>
+<p><span class="arithmatex">\(\begin{cases}
+\int_{a}^{b} 1 dx = w_0 + w_1\\
+\int_{a}^{b} x dx = w_0 x_0 + w_1 x_1\\
+\int_{a}^{b} x^2 dx = w_0 x_0^2 + w_1 x_1^2\\
+\int_{a}^{b} x^3 dx = w_0 x_0^3 + w_1 x_1^3
+\end{cases}\)</span></p>
+<p>On obtient la <strong>formule optimale de Gauss</strong> :</p>
+<p><span class="arithmatex">\(I_1 = \frac{b-a}{2} (f(\frac{-1}{\sqrt{3}} \frac{b-a}{2} + \frac{a+b}{2})+f(\frac{1}{\sqrt{3}} \frac{b-a}{2} + \frac{a+b}{2}))\)</span></p>
+<h3 id="generalisation-n-quelconque">Généralisation (n quelconque)</h3>
+<p>On peut généraliser les formules trouvées précédemment pour un nombre de points quelconque.</p>
+<p>Les points et les poids sont déterminés pour l'intégrale d'un polynôme entre -1 et 1, puis par un changement de variable <span class="arithmatex">\(x_i = \frac{b-a}{2} y_i + \frac{a+b}{2}\)</span> et <span class="arithmatex">\(w_i = \frac{b-a}{2} v_i\)</span> on obtient la formule générale suivante :</p>
+<p><span class="arithmatex">\(I_n = \frac{b-a}{2} \displaystyle\sum_{i=1}^{n} v_i f(\frac{b-a}{2} y_i + \frac{a+b}{2})\)</span></p>
+<p>Voici les points et les poids <span class="arithmatex">\(y_i\)</span> déterminés pour des ordres de 0 à 3 :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Ordre <span class="arithmatex">\(n\)</span></th>
+<th style="text-align: center;">Nombre de points</th>
+<th style="text-align: center;">Points <span class="arithmatex">\(y_i\)</span></th>
+<th style="text-align: center;">Poids <span class="arithmatex">\(v_i\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;"><span class="arithmatex">\(-\sqrt{\frac{1}{3}}\)</span> et <span class="arithmatex">\(\sqrt{\frac{1}{3}}\)</span></td>
+<td style="text-align: center;">1 et 1</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">0, <span class="arithmatex">\(-\sqrt{\frac{3}{5}}\)</span> et <span class="arithmatex">\(\sqrt{\frac{3}{5}}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(\frac{8}{9}\)</span>, <span class="arithmatex">\(\frac{5}{9}\)</span> et <span class="arithmatex">\(\frac{5}{9}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;"><span class="arithmatex">\(\sqrt{\frac{3}{7}-\frac{2}{7}\sqrt{\frac{6}{5}}}\)</span>, <span class="arithmatex">\(-\sqrt{\frac{3}{7}-\frac{2}{7}\sqrt{\frac{6}{5}}}\)</span>, <span class="arithmatex">\(\sqrt{\frac{3}{7}+\frac{2}{7}\sqrt{\frac{6}{5}}}\)</span> et <span class="arithmatex">\(-\sqrt{\frac{3}{7}+\frac{2}{7}\sqrt{\frac{6}{5}}}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(\frac{18+\sqrt{30}}{36}\)</span>, <span class="arithmatex">\(\frac{18+\sqrt{30}}{36}\)</span>, <span class="arithmatex">\(\frac{18-\sqrt{30}}{36}\)</span> et <span class="arithmatex">\(\frac{18-\sqrt{30}}{36}\)</span></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">NB :</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Pour les curieux, les points <span class="arithmatex">\(y_i\)</span> et les poids <span class="arithmatex">\(v_i\)</span> sont déterminés grâce à ce qu'on appelle les "polynômes de Legendre".</td>
+</tr>
+</tbody>
+</table>
+<p>Les méthodes de Gauss sont <strong>plus performantes</strong> que les méthodes de Newton-Cotes en termes de précision pour un même temps de calcul : l'erreur <strong>décroit exponentiellement</strong> avec <span class="arithmatex">\(n\)</span>. 
+Toutefois, la théorie derrière ces méthodes est <strong>plus difficile</strong>, et leur programmation est plus lourde si l'on doit déterminer les points / poids soi-même.</p>
+<h3 id="algorithmes_2">Algorithmes</h3>
+<p>Voici une fonction Python implémentant la méthode de Gauss pour des points / poids donnés.</p>
+<p>Elle prend en entrée :</p>
+<ul>
+<li>
+<p><code>f</code> la fonction Python à intégrer.</p>
+</li>
+<li>
+<p><code>a</code> la borne inférieure de l'intervalle d'intégration.</p>
+</li>
+<li>
+<p><code>b</code> la borne supérieure de l'intervalle d'intégration.</p>
+</li>
+<li>
+<p><code>y_i</code> la liste des points déterminés pour l'ordre de la méthode choisie.</p>
+</li>
+<li>
+<p><code>v_i</code> la liste des poids déterminés pour l'ordre de la méthode choisie.</p>
+</li>
+</ul>
+<pre><code>def gauss(f,a,b,y_i,v_i):
+
+    #Initialiser la somme de la formule de quadrature :
+    somme = 0
+
+    #Boucles sur les points / poids :
+    for i in range(len(y_i)):
+
+        #Sommer l'évaluation de f au point choisi, pondérée par le poids choisi :
+        somme += v_i[i]*f(y_i[i]*(b-a)/2+((a+b)/2))
+
+    #Calculer l'estimation de l'aire sous la courbe :
+    aire = somme*(b-a)/2
+
+    return aire
+</code></pre>
+<p>On peut appliquer la méthode de Gauss d'ordre 2 à notre exemple avec la commande Python :</p>
+<pre><code>I_gauss_ord2 = gauss(f,1,3,[0,-(3/5)**0.5,(3/5)**0.5],[8/9,5/9,5/9])
+</code></pre>
+<h3 id="exemples_1">Exemples</h3>
+<p>En appliquant l'algorithme précédent pour différents ordres à notre problème exemple, on trouve les valeurs suivantes :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Méthode de Gauss d'ordre</th>
+<th style="text-align: center;">Estimation de Z (<span class="arithmatex">\(mm^6 m^{-3}\)</span>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(n=0\)</span></td>
+<td style="text-align: center;">2954.01</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(n=1\)</span></td>
+<td style="text-align: center;">2285.50</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(n=2\)</span></td>
+<td style="text-align: center;">2338.36</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(n=3\)</span></td>
+<td style="text-align: center;">2337.64</td>
+</tr>
+</tbody>
+</table>
+<p>Ces estimations sont à comparer à la valeur théorique <span class="arithmatex">\(Z = 2337.49 mm^6/m^3\)</span>.</p>
+<p>Notre fonction à intégrer n'étant pas un polynôme de degré <span class="arithmatex">\(\leq 2n+1\)</span>, on ne s'attendait pas à avoir un résultat exact.
+Néanmoins, on peut observer comme attendu que le résultat converge beaucoup plus rapidement avec <span class="arithmatex">\(n\)</span> que les méthodes de Newton-Cotes.</p>
+<p><strong>Exercice :</strong></p>
+<p>Avec la fonction Python précédente, calculez l'erreur absolue commise par les méthodes de Gauss pour <span class="arithmatex">\(n\)</span> allant de 0 à 3. 
+Tracez ces point sur un graphique. Comment l'erreur semble diminuer avec <span class="arithmatex">\(n\)</span> ? Ce résultat est-il attendu ?</p>
+<h2 id="conclusions">Conclusions</h2>
+<ul>
+<li>
+<p>On appelle <strong>formule de quadrature</strong> une formule permettant d'approcher l'intégrale d'une fonction <span class="arithmatex">\(f\)</span> sur un intervalle. De <strong>type interpolation</strong>, elle s'exprime comme une combinaison linéaire de valeurs de <span class="arithmatex">\(f\)</span> (pivots) et de poids.</p>
+</li>
+<li>
+<p>Le <strong>degré de précision</strong> d'une formule de quadrature est le degré maximal des polynômes pouvant être intégrés exactement.</p>
+</li>
+<li>
+<p>Les <strong>méthodes de Newton-Cotes</strong> s'appuient sur des formules de quadrature de type <strong>interpolation de Lagrange</strong>. Les plus connues sont les méthodes du <strong>point milieu</strong>, des <strong>trapèzes</strong> et de <strong>Simpson</strong>. Les pivots sont équidistants et les poids ajustés. Elles sont exactes pour les polynômes de degré <span class="arithmatex">\(\leq n+1\)</span>.</p>
+</li>
+<li>
+<p>Les formules de Newton-Cotes ne sont pas utilisées au-delà de l'ordre 6. On utilise leur version <strong>composite</strong>. La précision dépend alors de la taille des sous-intervalles.</p>
+</li>
+<li>
+<p>Les <strong>méthodes de Gauss</strong> ajustent les pivots et les poids. Elles sont exactes pour les polynômes de degré <span class="arithmatex">\(\leq 2n+1\)</span>, et on les dit donc <strong>optimales</strong>. Leur théorie / programmation est cependant plus lourde.</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">NB :</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Pour les curieux, il existe aussi des méthodes d'intégration numérique qui ne s'appuient pas sur des formules de quadrature. Par exemple, la méthode de Monte-Carlo.</td>
+</tr>
+</tbody>
+</table>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../Chap3_Interpolation_polynomiale/" class="btn btn-neutral float-left" title="III. Interpolation polynomiale"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Chap5_Systemes_lineaires/" class="btn btn-neutral float-right" title="V. Systèmes linéaires">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../Chap3_Interpolation_polynomiale/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../Chap5_Systemes_lineaires/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../javascripts/mathjax.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

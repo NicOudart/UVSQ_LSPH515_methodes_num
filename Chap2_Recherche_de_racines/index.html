@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Nicolas OUDART" /><link rel="canonical" href="https://nicoudart.github.io/UVSQ_LSPH515_methodes_num/Chap2_Recherche_de_racines/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>II. Recherche de racines - UVSQ_LSPH515_methodes_num</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "II. Recherche de racines";
+        var mkdocs_page_input_path = "Chap2_Recherche_de_racines.md";
+        var mkdocs_page_url = "/UVSQ_LSPH515_methodes_num/Chap2_Recherche_de_racines/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> UVSQ_LSPH515_methodes_num
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Accueil</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Chap1_Introduction/">I. Introduction</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">II. Recherche de racines</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#position-du-probleme">Position du problème</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#motivation">Motivation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#existence-et-localisation-des-racines">Existence et localisation des racines</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#methodes-numeriques-et-convergence">Méthodes numériques et convergence</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exemple-de-probleme">Exemple de problème</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#methode-de-la-dichotomie">Méthode de la dichotomie</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#algorithme">Algorithme</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#convergence">Convergence</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#precision">Précision</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exemple">Exemple</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#avant-propos-les-methodes-linearisees">Avant-propos : les méthodes linéarisées</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#methode-de-la-secante">Méthode de la sécante</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#algorithme_1">Algorithme</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#convergence_1">Convergence</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exemple_1">Exemple</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#methode-de-la-fausse-position">Méthode de la fausse position</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#algorithme_2">Algorithme</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#convergence_2">Convergence</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exemple_2">Exemple</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#methode-de-newton">Méthode de Newton</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#algorithme_3">Algorithme</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#convergence_3">Convergence</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exemple_3">Exemple</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#methode-du-point-fixe">Méthode du point fixe</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#definitions">Définitions</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#algorithme_4">Algorithme</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#convergence_4">Convergence</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exemple_4">Exemple</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#vitesse-de-convergence-des-methodes">Vitesse de convergence des méthodes</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#methode-de-la-dichotomie_1">Méthode de la dichotomie</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#methodes-de-point-fixe">Méthodes de point fixe</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#methode-de-la-secante_1">Méthode de la sécante</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#methode-de-newton_1">Méthode de Newton</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#conclusions">Conclusions</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Chap3_Interpolation_polynomiale/">III. Interpolation polynomiale</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Chap4_Integration_numerique/">IV. Intégration numérique</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Chap5_Systemes_lineaires/">V. Systèmes linéaires</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">UVSQ_LSPH515_methodes_num</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">II. Recherche de racines</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="chapitre-ii-recherche-de-racines">Chapitre II : Recherche de racines</h1>
+<p>Ce chapitre porte sur les méthodes numériques pour la recherche de racines d'une fonction.</p>
+<p><img alt="En-tête chapitre II" src="../img/Chap2_header.png" /></p>
+<hr />
+<h2 id="position-du-probleme">Position du problème</h2>
+<h3 id="motivation">Motivation</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Définition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Soit f une fonction définie et continue de <span class="arithmatex">\(\mathbb{R}\)</span> dans <span class="arithmatex">\(\mathbb{R}\)</span>.</td>
+</tr>
+<tr>
+<td style="text-align: left;">Les <strong>racines</strong> ou <strong>zéros</strong> de cette fonction sont les valeurs <span class="arithmatex">\(x\)</span> qui vérifient l'équation <span class="arithmatex">\(f(x)=0\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Le principal intérêt des méthodes de recherche de racines est de pouvoir <strong>résoudre des équations</strong>.
+En effet, trouver <span class="arithmatex">\(x \in \mathbb{R}\)</span> tel que <span class="arithmatex">\(f(x)=c\)</span> revient à chercher les racines de la fonction <span class="arithmatex">\(f(x)-c\)</span>.</p>
+<p>Dans certains cas, on peut trouver analytiquement les racines d'une fonction.  </p>
+<p>Toute équation polynomiale de degré <span class="arithmatex">\(n\)</span> a exactement <span class="arithmatex">\(n\)</span> solutions dans <span class="arithmatex">\(\mathbb{C}\)</span> et au plus <span class="arithmatex">\(n\)</span> solutions dans <span class="arithmatex">\(\mathbb{R}\)</span>.
+Mais d'après la théorie d'Evariste Galois, <strong>à partir du degré 5 il n'existe plus de formule générale de résolution</strong>.</p>
+<p>Si l'équation n'est pas polynomiale, sa résolution analytique est encore moins probable.</p>
+<p>D'où l'intérêt d'utiliser des <strong>méthodes de résolution numériques</strong>, afin d'approcher les valeurs des racines.</p>
+<p>Le principe est le suivant :</p>
+<ul>
+<li>
+<p>Localiser grossièrement les racines en procédant à des évaluations graphiques.</p>
+</li>
+<li>
+<p>Construire une suite qui converge vers chaque racine.</p>
+</li>
+</ul>
+<p><strong>Ce chapitre présentera un panel de méthodes numériques de recherche de racines</strong>, que nous appliquerons à un même exemple pour illustration.</p>
+<h3 id="existence-et-localisation-des-racines">Existence et localisation des racines</h3>
+<p>Que l'approche soit analytique ou numérique, la 1ère étape consiste généralement à localiser les solutions de l'équation.</p>
+<p>Pour ce faire, on détermine les intervalles <span class="arithmatex">\([a,b]\)</span> contenant une unique <strong>racine</strong>.
+C'est ce que l'on appelle la <strong>séparation des racines</strong>.</p>
+<p>Cette détermination se fait graphiquement et/ou analytiquement de la manière suivante :</p>
+<ul>
+<li>
+<p>Etude des variations de la fonction <span class="arithmatex">\(f\)</span>.</p>
+</li>
+<li>
+<p>Trouver les intervalles ne contenant qu'une seule racine en s'appuyant sur les théorèmes suivant.</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Théorème des valeurs intermédiaires</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Soit <span class="arithmatex">\(f\)</span> une fonction continue sur un intervalle <span class="arithmatex">\(I=[a,b]\)</span> de <span class="arithmatex">\(\mathbb{R}\)</span>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(f\)</span> atteint toutes les valeurs intermédiaires entre <span class="arithmatex">\(f(a)\)</span> et <span class="arithmatex">\(f(b)\)</span>. Autrement dit :</td>
+</tr>
+<tr>
+<td style="text-align: left;">- Si <span class="arithmatex">\(f(a) \leq f(b)\)</span> alors pour tout <span class="arithmatex">\(d \in [f(a),f(b)]\)</span> il existe un <span class="arithmatex">\(c \in [a,b]\)</span> tel que <span class="arithmatex">\(f(c)=d\)</span>.</td>
+</tr>
+<tr>
+<td style="text-align: left;">- Si <span class="arithmatex">\(f(a) \geq f(b)\)</span> alors pour tout <span class="arithmatex">\(d \in [f(b),f(a)]\)</span> il existe un <span class="arithmatex">\(c \in [a,b]\)</span> tel que <span class="arithmatex">\(f(c)=d\)</span>.</td>
+</tr>
+</tbody>
+</table>
+<p>D'où le corollaire :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Théorème de Bolzano</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Soit une fonction continue <span class="arithmatex">\(f:[a,b] \longrightarrow \mathbb{R}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Si <span class="arithmatex">\(f(a)f(b)&lt;0\)</span> alors il existe au moins un <span class="arithmatex">\(c \in ]a,b[\)</span> tel que <span class="arithmatex">\(f(c)=0\)</span>.</td>
+</tr>
+</tbody>
+</table>
+<p>Le théorème de Bolzano garantit l'existence d'au moins une racine <strong>mais pas son unicité</strong> dans <span class="arithmatex">\([a,b]\)</span>.</p>
+<p>Pour assurer l'unicité d'une racine dans <span class="arithmatex">\([a,b]\)</span>, on essaiera d'appliquer le <strong>théorème de la bijection</strong> avec le <strong>théorème des valeurs intermédiaires</strong>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Théorème de la bijection + Théorème des valeurs intermédiaires</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Soit <span class="arithmatex">\(f\)</span> une fonction continue et <strong>strictement monotone</strong> sur <span class="arithmatex">\(I=[a,b]\)</span> de <span class="arithmatex">\(\mathbb{R}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">alors <span class="arithmatex">\(f\)</span> induit une bijection de <span class="arithmatex">\(I\)</span> dans <span class="arithmatex">\(f(I)\)</span>.</td>
+</tr>
+<tr>
+<td style="text-align: left;">Si de plus <span class="arithmatex">\(f(a)f(b)&lt;0\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">alors il existe un <strong>unique</strong> <span class="arithmatex">\(c \in ]a,b[\)</span> tel que <span class="arithmatex">\(f(c)=0\)</span>.</td>
+</tr>
+<tr>
+<td style="text-align: left;">Autrement dit, la fonction <span class="arithmatex">\(f\)</span> s'annule une seule fois dans <span class="arithmatex">\(]a,b[\)</span>.</td>
+</tr>
+</tbody>
+</table>
+<p>L'étude préalable de la fonction doit donc avoir pour but de séparer les racines en isolant des intervalles sur lesquels la fonction est <strong>strictement monotone</strong> et <strong>change de signe</strong>.</p>
+<h3 id="methodes-numeriques-et-convergence">Méthodes numériques et convergence</h3>
+<p>Comme évoqué précédemment, l'idée est d'approximer la racine d'une fonction lorsque l'on est incapables de trouver la solution analytiquement.</p>
+<p>Les méthodes numériques de recherche de racines sont en général des méthodes <strong>itératives</strong>.</p>
+<p>Il s'agit de construire une suite <span class="arithmatex">\(x_{n+1} = g(x_n)\)</span> telle que <span class="arithmatex">\(\lim\limits_{n \to \infty} x_n = c\)</span> où <span class="arithmatex">\(c\)</span> est la racine à approcher.</p>
+<p>La performance de ces méthodes est évaluée par leur <strong>vitesse de convergence</strong> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Définition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Soit <span class="arithmatex">\(c\)</span> la racine recherchée. Posons <span class="arithmatex">\(e_n = x_n - c\)</span> l'<strong>erreur absolue</strong> à l'itération <span class="arithmatex">\(n\)</span>.</td>
+</tr>
+<tr>
+<td style="text-align: left;">La suite est dite <strong>convergente d'ordre <span class="arithmatex">\(p \geq 1\)</span></strong> si</td>
+</tr>
+<tr>
+<td style="text-align: left;">il existe une constante <span class="arithmatex">\(K&gt;0\)</span> tel que :</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(\lim\limits_{n \to \infty} \frac{\mid e_{n+1} \mid}{\mid e_n \mid^p} \leq K\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>La convergence est d'autant plus rapide que la valeur de <span class="arithmatex">\(p\)</span> est grande.
+<span class="arithmatex">\(K\)</span> est le <strong>facteur de convergence</strong> de la suite.</p>
+<p>Voici comment on qualifie la convergence en fonction de <span class="arithmatex">\(p\)</span> et <span class="arithmatex">\(K\)</span> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Valeur de <span class="arithmatex">\(p\)</span></th>
+<th style="text-align: center;">Valeur de <span class="arithmatex">\(K\)</span></th>
+<th style="text-align: right;">Convergence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(1\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(0\)</span></td>
+<td style="text-align: right;">Super-linéaire</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(1\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(]0,1[\)</span></td>
+<td style="text-align: right;">Linéaire</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(1\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(1\)</span></td>
+<td style="text-align: right;">Logarithmique</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(1\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(&gt;1\)</span></td>
+<td style="text-align: right;">Sous-linéaire (non-convergence)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(2\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: right;">Quadratique</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(3\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: right;">Cubique</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(4\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: right;">Quartique</td>
+</tr>
+</tbody>
+</table>
+<p>Dans la pratique, la racine étant inconnue, <strong>nous ne pouvons pas calculer l'erreur</strong> <span class="arithmatex">\(e_n\)</span>.</p>
+<p>C'est pourquoi, à chaque itération, on calcule plutôt le <strong>résidu</strong> <span class="arithmatex">\(r_n = f(x_n)\)</span>.</p>
+<p>On considère que la suite est suffisamment proche de la racine si <span class="arithmatex">\(r_n &lt; \varepsilon\)</span> avec <span class="arithmatex">\(\varepsilon\)</span> la précision choisie.</p>
+<p>La convergence des méthodes itératives de recherche de racines dépend en général du choix de la donnée initiale <span class="arithmatex">\(x_0\)</span> :</p>
+<ul>
+<li>
+<p>Une méthode qui converge quelque soit <span class="arithmatex">\(x_0\)</span> est dite <strong>globalement convergente</strong>.</p>
+</li>
+<li>
+<p>Une méthode qui converge seulement lorque <span class="arithmatex">\(x_0\)</span> est au voisinage de la racine est dite <strong>localement convergente</strong>.</p>
+</li>
+</ul>
+<p>De manière générale, les méthodes localement convergentes on un ordre de convergence plus grand que les méthodes globalement convergentes.</p>
+<h3 id="exemple-de-probleme">Exemple de problème</h3>
+<p>Au cours de ce chapitre, nous appliquerons les différentes méthodes numériques de recherche de racines à un même exemple : <strong>l'estimation de <span class="arithmatex">\(\sqrt{2}\)</span></strong>.</p>
+<p><span class="arithmatex">\(\sqrt{2}\)</span> est un nombre irrationel, dont l'approximation est un problème depuis l'antiquité, notamment parce qu'il correspond à l'hypothénuse d'un carré de côté 1.
+En Physique, <span class="arithmatex">\(\sqrt{2}\)</span> est impliqué dans de nombreuses formules. Par exemple, le calcul de la valeur efficace d'une tension sinusoïdale.
+Une valeur approchée de <span class="arithmatex">\(\sqrt{2}\)</span> à <span class="arithmatex">\(10^{-9}\)</span> près est : 1.414213562.</p>
+<p>Par définition, <span class="arithmatex">\(\sqrt{2}\)</span> et <span class="arithmatex">\(-\sqrt{2}\)</span> sont les solutions de l'équation <span class="arithmatex">\(x^2 = 2\)</span>.</p>
+<p>Résoudre cette équation revient à résoudre <span class="arithmatex">\(x^2 - 2 = 0\)</span>.</p>
+<p>Pour calculer une approximation de <span class="arithmatex">\(\sqrt{2}\)</span>, on peut donc chercher les racines de la fonction <strong><span class="arithmatex">\(f(x) = x^2 - 2\)</span></strong> de <span class="arithmatex">\(\mathbb{R}\)</span> dans <span class="arithmatex">\(\mathbb{R}\)</span>.</p>
+<p><img alt="Graphique de f" src="../img/Chap2_exemple_fonction.png" /></p>
+<p>La voici sous la forme d'une fonction Python :</p>
+<pre><code>def f(x):
+
+    return (x**2)-2
+</code></pre>
+<p>Cette fonction est continue et dérivable sur <span class="arithmatex">\(\mathbb{R}\)</span>, et sa dérivée est <span class="arithmatex">\(f'(x) = 2x\)</span>. On peut en déduire ses variations :</p>
+<p><img alt="Tableau de variations de f" src="../img/Chap2_exemple_tab_var.png" /></p>
+<ul>
+<li>
+<p>Théorème des valeurs intermédiaires : <span class="arithmatex">\(f(1)=-1\)</span> et <span class="arithmatex">\(f(2)=2\)</span>, d'où <span class="arithmatex">\(f(1)f(2)&lt;0\)</span>.</p>
+</li>
+<li>
+<p>Théorème de la bijection : <span class="arithmatex">\(f\)</span> est continue et strictement monotone sur <span class="arithmatex">\(I=[1,2]\)</span>, donc <span class="arithmatex">\(f\)</span> induit une bijection de <span class="arithmatex">\(I\)</span> dans <span class="arithmatex">\(f(I)\)</span>.</p>
+</li>
+</ul>
+<p>Donc, il existe une seule racine de <span class="arithmatex">\(f\)</span> dans <span class="arithmatex">\(]1,2[\)</span>, et nous savons que cette racine est <span class="arithmatex">\(\sqrt{2}\)</span>.</p>
+<p>C'est pourquoi dans la suite de ce chapitre, sauf indication contraire, nous chercherons la racine de <span class="arithmatex">\(f\)</span> se trouvant sur l'intervalle <span class="arithmatex">\(]1,2[\)</span>.</p>
+<hr />
+<h2 id="methode-de-la-dichotomie">Méthode de la dichotomie</h2>
+<h3 id="algorithme">Algorithme</h3>
+<p>La méthode de la <strong>dichotomie</strong> est inspirée du théorème des valeurs intermédiaires.
+Elle est aussi connue sous le nom de <strong>"méthode de la bissection"</strong>.</p>
+<p>Soit <span class="arithmatex">\(f\)</span> une fonction continue de <span class="arithmatex">\([a,b]\)</span> dans <span class="arithmatex">\(\mathbb{R}\)</span>.
+On suppose que <span class="arithmatex">\(f\)</span> admet une unique racine dans <span class="arithmatex">\(]a,b[\)</span> et que <span class="arithmatex">\(f(a)f(b)&lt;0\)</span>.</p>
+<p>L'idée va être de découper l'intervalle en 2, de chercher dans quelle moitié la racine se trouve, puis de définir le nouvel intervalle comme étant cette moitié.
+Et ainsi de suite pour converger vers la racine.</p>
+<p>On appelle <span class="arithmatex">\([a_n,b_n]\)</span> l'intervalle de centre <span class="arithmatex">\(x_n\)</span> à l'itération <span class="arithmatex">\(n\)</span> :</p>
+<ul>
+<li>
+<p>Si <span class="arithmatex">\(f(a_n)f(x_n)&lt;0\)</span> alors la racine se trouve dans <span class="arithmatex">\(]a_n,x_n[\)</span>.</p>
+</li>
+<li>
+<p>Si <span class="arithmatex">\(f(x_n)f(b_n)&lt;0\)</span> alors la racine se trouve dans <span class="arithmatex">\(]x_n,b_n[\)</span>.</p>
+</li>
+</ul>
+<p>On récupère <span class="arithmatex">\(x_n\)</span> à la fin de l'algorithme.</p>
+<p>Voici l'algorithme sous la forme d'une fonction Python.</p>
+<p>Elle prend en entrée :</p>
+<ul>
+<li>
+<p><code>f</code> la fonction dont on cherche les racines.</p>
+</li>
+<li>
+<p><code>a</code> et <code>b</code> les bornes de l'intervalle de recherche.</p>
+</li>
+<li>
+<p><code>n_max</code> le nombre maximum d'itérations.</p>
+</li>
+<li>
+<p><code>e</code> la précision désirée.</p>
+</li>
+</ul>
+<p>On notera les variables à l'itération <code>n</code> : </p>
+<ul>
+<li>
+<p><code>x_n</code> l'estimation de la racine.</p>
+</li>
+<li>
+<p><code>a_n</code> et <code>b_n</code> les bornes de l'intervalle de recherche.</p>
+</li>
+<li>
+<p><code>r_n</code> le résidu.</p>
+</li>
+</ul>
+<pre><code>def dichotomie(f,a,b,n_max,e):
+
+    #Initialisation des variables :
+    n = 0 #Nombre d'itérations
+    x_n = (a+b)/2 #Estimation de la racine
+    a_n = a #Borne inférieure de l'intervalle de recherche
+    b_n = b #Borne supérieure de l'intervalle de recherche
+    r_n = f(x_n) #Résidu
+
+    #Itérations de l'algorithme de dichotomie
+    #tant qu'une des conditions d'arrêt n'est pas atteinte :
+    while (n&lt;n_max)and(abs(a_n-b_n)&gt;e)and(abs(r_n)&gt;e):
+
+        #Si la racine est dans ]a_n,x_n[ alors on remplace b_n par x_n:
+        if (f(a_n)*f(x_n))&lt;0:
+            b_n = x_n
+
+        #Si la racine est dans ]x_n,b_n[ alors on remplace a_n par x_n:
+        if (f(x_n)*f(b_n))&lt;0:
+            a_n = x_n
+
+        #Incrémenter le nombre d'itérations :
+        n+=1
+
+        #Mettre à jour l'estimation de la racine et le résidu :
+        x_n = (a_n+b_n)/2 
+        r_n = f(x_n)
+
+    #Renvoyer l'estimation de la racine et le résidu :
+    return x_n,r_n
+</code></pre>
+<h3 id="convergence">Convergence</h3>
+<p>La longueur de l'intervalle de recherche est divisée par 2 à chaque itération :</p>
+<p><span class="arithmatex">\(I_n = \mid b_n-a_n \mid = \frac{\mid b-a \mid}{2^n}\)</span></p>
+<p>Donc, l'erreur absolue à l'itération <span class="arithmatex">\(n \geq 0\)</span>, <span class="arithmatex">\(e_n=x_n-c\)</span></p>
+<p><span class="arithmatex">\(\mid e_n \mid \leq \frac{I_n}{2} = \frac{\mid b-a \mid}{2^{n+1}}\)</span></p>
+<p>Ce qui entraine : <span class="arithmatex">\(\lim\limits_{n \to \infty} \mid e_n \mid = 0\)</span>
+et <span class="arithmatex">\(\frac{\mid e_{n+1} \mid}{\mid e_n \mid} \leq \frac{1}{2}\)</span></p>
+<p>La méthode de la dichotomie est donc <strong>globalement convergente</strong> : elle converge quelque soit le point de départ.
+(Si la <span class="arithmatex">\(f\)</span> a plusieurs racines dans <span class="arithmatex">\([a,b]\)</span>, la racine trouvée dépendra de l'intervalle).</p>
+<p>Sa convergence est <strong>linéaire</strong>, donc elle est relativement <strong>lente</strong>.
+C'est pourquoi on utilise souvent cette méthode juste pour initialiser une méthode plus rapide.</p>
+<h3 id="precision">Précision</h3>
+<p>En fonction de la précision souhaitée <span class="arithmatex">\(\varepsilon\)</span>, on peut calculer le nombre d'itérations <span class="arithmatex">\(m\)</span> pour approcher la racine.</p>
+<p>On cherche <span class="arithmatex">\(m \in \mathbb{N}\)</span> tel que :
+<span class="arithmatex">\(\mid e_{m-1} \mid \leq \frac{\mid b-a \mid}{2^m} \leq \varepsilon\)</span></p>
+<p>Donc tel que :
+<span class="arithmatex">\(2^m \geq \frac{\mid b-a \mid}{\varepsilon}\)</span></p>
+<p>Soit : 
+<span class="arithmatex">\(m \geq log_2{\frac{\mid b-a \mid}{\varepsilon}} = \frac{ln{\frac{\mid b-a \mid}{\varepsilon}}}{ln(2)} \approx 1.4427 ln{\frac{\mid b-a \mid}{\varepsilon}}\)</span></p>
+<h3 id="exemple">Exemple</h3>
+<p>Voici les 4 premières itérations de la méthode de la dichotomie appliquée à notre problème exemple, pour un intervalle initial <span class="arithmatex">\([1,2]\)</span> :</p>
+<p><img alt="Exemple d'application de la dichotomie" src="../img/Chap2_exemple_dichotomie.gif" /></p>
+<p><strong>Exercice :</strong></p>
+<p>En adaptant la fonction Python donnée précédemment pour la méthode de la dichotomie, avec un intervalle initial <span class="arithmatex">\([1,2]\)</span>, estimez la valeur de <span class="arithmatex">\(\sqrt{2}\)</span> avec une précision de <span class="arithmatex">\(10^{-6}\)</span>.
+Combien d'itérations sont nécessaires pour obtenir cette précision ? Retrouvez-vous bien le nombre d'itérations théorique ?</p>
+<hr />
+<h2 id="avant-propos-les-methodes-linearisees">Avant-propos : les méthodes linéarisées</h2>
+<p>Les méthodes qui seront présentées dans la suite de ce chapitre sont des <strong>méthodes linéarisées</strong>.
+Ce type de méthodes s'appuit sur le développement de Taylor de <span class="arithmatex">\(f\)</span> autour de sa racine <span class="arithmatex">\(c\)</span> :</p>
+<p><span class="arithmatex">\(f(c) = 0 = f(x') + (c-x')f'(\xi)\)</span> où <span class="arithmatex">\(\xi \in [x',c]\)</span> et <span class="arithmatex">\(f(x') \neq 0\)</span></p>
+<p>D'où <span class="arithmatex">\(c = x' - \frac{f(x')}{f'(\xi)}\)</span></p>
+<p>Donc, si on connait <span class="arithmatex">\(\xi\)</span>, on peut déterminer <span class="arithmatex">\(c\)</span> à partir de <span class="arithmatex">\(x'\)</span>.</p>
+<p>D'un point de vue géométrique, la racine <span class="arithmatex">\(c\)</span> est à l'intersection entre la droite passant par le point <span class="arithmatex">\((x',f'(x'))\)</span> et de pente <span class="arithmatex">\(f'(\xi)\)</span> et donc d'équation :</p>
+<p><span class="arithmatex">\(y = f'(\xi) x + f(x') - f'(\xi) x'\)</span></p>
+<p>et l'axe <span class="arithmatex">\((Ox)\)</span> donc d'équation <span class="arithmatex">\(y = 0\)</span>.</p>
+<p><img alt="Illustration des méthodes linéarisées" src="../img/Chap2_methodes_linearisees.png" width="350" /></p>
+<p>D'où la méthode itérative suivante :</p>
+<p><span class="arithmatex">\(f(x_n) + (x_{n+1} - x_n) q_n = 0\)</span></p>
+<p>ou encore l'<strong>équation de récurrence</strong> :</p>
+<p><span class="arithmatex">\(x_{n+1} = x_n - \frac{f(x_n)}{q_n}\)</span></p>
+<p>où <span class="arithmatex">\(q_n\)</span> est une approximation de <span class="arithmatex">\(f'(\xi)\)</span>.</p>
+<p>L'idée des méthodes linéarisées est donc :</p>
+<ul>
+<li>
+<p>D'approcher à chaque itération la fonction par une droite de pente <span class="arithmatex">\(q_n\)</span> passant par le point <span class="arithmatex">\((x_n,f(x_n))\)</span>.</p>
+</li>
+<li>
+<p>Déterminer à chaque itération <span class="arithmatex">\(x_{n+1}\)</span> comme l'intersection entre l'axe <span class="arithmatex">\((Ox)\)</span> et cette droite.</p>
+</li>
+</ul>
+<p>Les méthodes linéarisées (méthode de la sécante, méthode de la fausse position, méthode de Newton, etc.) se différentient par <strong>le choix de <span class="arithmatex">\(q_n\)</span></strong>.</p>
+<hr />
+<h2 id="methode-de-la-secante">Méthode de la sécante</h2>
+<h3 id="algorithme_1">Algorithme</h3>
+<p>La <strong>méthode de la sécante</strong> est une méthode linéarisée pour laquelle :</p>
+<p><span class="arithmatex">\(q_n = \frac{f(x_n)-f(x_{n-1})}{x_n-x_{n-1}}\)</span></p>
+<p>Cette suite correspond à la droite passant par les points <span class="arithmatex">\((x_n,f(x_n))\)</span> et <span class="arithmatex">\((x_{n-1},f(x_{n-1}))\)</span>.</p>
+<p>Soit <span class="arithmatex">\(f\)</span> une fonction continue de <span class="arithmatex">\([a,b]\)</span> dans <span class="arithmatex">\(\mathbb{R}\)</span>.
+On suppose que <span class="arithmatex">\(f\)</span> admet une unique racine dans <span class="arithmatex">\(]a,b[\)</span> et que <span class="arithmatex">\(f(a)f(b)&lt;0\)</span>.</p>
+<p>Voici l'algorithme sous la forme d'une fonction Python.</p>
+<p>Elle prend en entrée :</p>
+<ul>
+<li>
+<p><code>f</code> la fonction dont on cherche les racines.</p>
+</li>
+<li>
+<p><code>a</code> et <code>b</code> les bornes de l'intervalle de recherche.</p>
+</li>
+<li>
+<p><code>n_max</code> le nombre maximum d'itérations.</p>
+</li>
+<li>
+<p><code>e</code> la précision désirée.</p>
+</li>
+</ul>
+<p>On notera les variables à l'itération <code>n</code> : </p>
+<ul>
+<li>
+<p><code>x_n</code> l'estimation de la racine à l'itération n.</p>
+</li>
+<li>
+<p><code>x_n_old</code> l'estimation de la racine à l'itération n-1.</p>
+</li>
+<li>
+<p><code>r_n</code> le résidu.</p>
+</li>
+</ul>
+<pre><code>def secante(f,a,b,n_max,e):
+
+    #Initialisation des variables :
+    n = 1 #Nombre d'itérations
+    x_n = a #Estimation de la racine à l'itération n
+    x_n_old = b #Estimation de la racine à l'itération n-1
+    r_n = f(x_n) #Résidu
+
+    #Itérations de l'algorithme de la sécante
+    #tant qu'une des conditions d'arrêt n'est pas atteinte :
+    while (n&lt;n_max)and(abs(x_n-x_n_old)&gt;e)and(abs(r_n)&gt;e):
+
+        #Calculer la pente de la droite : 
+        q_n = (f(x_n)-f(x_n_old))/(x_n-x_n_old)
+
+        #Mettre à jour l'estimation de la racine :
+        x_n_old = x_n #Iteration n
+        x_n = x_n - f(x_n)/q_n #Iteration n+1
+
+        #Incrémenter le nombre d'itérations :
+        n+=1
+
+        #Mettre à jour le résidu :
+        r_n = f(x_n)
+
+    #Renvoyer l'estimation de la racine et le résidu :
+    return x_n,r_n
+</code></pre>
+<h3 id="convergence_1">Convergence</h3>
+<p>La méthode de la sécante est <strong>convergente localement</strong>.</p>
+<p>Si <span class="arithmatex">\(f'(c) \neq 0\)</span>, alors on peut démontrer qu'elle converge avec un ordre <span class="arithmatex">\(p = \frac{1+\sqrt(5)}{2}\)</span>.
+Cette valeur est connue sous le nom de "nombre d'or".
+On en déduit que sous ces conditions, la convergence de la méthode est <strong>linéaire</strong>.</p>
+<h3 id="exemple_1">Exemple</h3>
+<p>Voici les 5 premières itérations de la méthode de la sécante appliquée à notre problème exemple.
+L'intervalle initial est ici de [0,2] pour des raisons de lisibilité :</p>
+<p><img alt="Exemple d'application de la sécante" src="../img/Chap2_exemple_secante.gif" /></p>
+<p><strong>Exercice :</strong></p>
+<p>En adaptant la fonction Python donnée précédemment pour la méthode de la sécante, avec un intervalle initial <span class="arithmatex">\([1,2]\)</span>, estimez la valeur de <span class="arithmatex">\(\sqrt{2}\)</span> avec une précision de <span class="arithmatex">\(10^{-6}\)</span>.
+Combien d'itérations sont nécessaires pour obtenir cette précision ? Comparez cette valeur à celle obtenue pour la méthode de la dichotomie.</p>
+<hr />
+<h2 id="methode-de-la-fausse-position">Méthode de la fausse position</h2>
+<h3 id="algorithme_2">Algorithme</h3>
+<p>La <strong>méthode de la fausse position</strong> est une méthode linéarisée pour laquelle :</p>
+<p><span class="arithmatex">\(q_n = \frac{f(x_n)-f(x_m)}{x_n-x_m}\)</span></p>
+<p>Cette suite correspond à la droite passant par les points <span class="arithmatex">\((x_n,f(x_n))\)</span> et <span class="arithmatex">\((x_m,f(x_m))\)</span>, où <span class="arithmatex">\(m\)</span> est le plus grand indice inférieur à <span class="arithmatex">\(n\)</span> tel que <span class="arithmatex">\(f(x_n)f(x_m)&lt;0\)</span>.</p>
+<p>Il s'agit d'un mélange entre la méthode de la dichotomie et la méthode de la sécante.
+On l'appelle aussi <strong>méthode de regula falsi</strong> ou <strong>méthode de Lagrange</strong>.</p>
+<p>Soit <span class="arithmatex">\(f\)</span> une fonction continue de <span class="arithmatex">\([a,b]\)</span> dans <span class="arithmatex">\(\mathbb{R}\)</span>.
+On suppose que <span class="arithmatex">\(f\)</span> admet une unique racine dans <span class="arithmatex">\(]a,b[\)</span> et que <span class="arithmatex">\(f(a)f(b)&lt;0\)</span>.</p>
+<p>Voici l'algorithme sous la forme d'une fonction Python.</p>
+<p>Elle prend en entrée :</p>
+<ul>
+<li>
+<p><code>f</code> la fonction dont on cherche les racines.</p>
+</li>
+<li>
+<p><code>a</code> et <code>b</code> les bornes de l'intervalle de recherche.</p>
+</li>
+<li>
+<p><code>n_max</code> le nombre maximum d'itérations.</p>
+</li>
+<li>
+<p><code>e</code> la précision désirée.</p>
+</li>
+</ul>
+<p>On notera les variables à l'itération <code>n</code> : </p>
+<ul>
+<li>
+<p><code>x_n</code> l'estimation de la racine.</p>
+</li>
+<li>
+<p><code>a_n</code> et <code>b_n</code> les bornes de l'intervalle de recherche.</p>
+</li>
+<li>
+<p><code>r_n</code> le résidu.</p>
+</li>
+</ul>
+<pre><code>def fausse_position(f,a,b,n_max,e):
+
+    #Initialisation des variables :
+    n = 0 #Nombre d'itérations
+    a_n = a #Borne inférieure de l'intervalle de recherche
+    b_n = b #Borne supérieure de l'intervalle de recherche
+    q_n = (f(b_n)-f(a_n))/(b_n-a_n) #Initialiser la pente de la droite
+    x_n = a_n-f(a_n)/q_n #Estimation de la racine
+    r_n = f(x_n) #Résidu
+
+    #Itérations de l'algorithme de la fausse-position
+    #tant qu'une des conditions d'arrêt n'est pas atteinte :
+    while (n&lt;n_max)and(abs(a_n-b_n)&gt;e)and(abs(r_n)&gt;e):
+
+        #Si la racine est dans ]a_n,x_n[ alors on remplace b_n par x_n:
+        if (f(a_n)*f(x_n))&lt;0:
+            b_n = x_n
+
+        #Si la racine est dans ]x_n,b_n[ alors on remplace a_n par x_n:
+        if (f(x_n)*f(b_n))&lt;0:
+            a_n = x_n
+
+        #Incrémenter le nombre d'itérations :
+        n+=1
+
+        #Calcul de la nouvelle pente de la droite :
+        q_n = (f(b_n)-f(a_n))/(b_n-a_n)
+
+        #Mettre à jour l'estimation de la racine et le résidu :
+        x_n = x_n-f(x_n)/q_n
+        r_n = f(x_n)
+
+    #Renvoyer l'estimation de la racine et le résidu :
+    return x_n,r_n
+</code></pre>
+<h3 id="convergence_2">Convergence</h3>
+<p>La méthode de la fausse position est <strong>globalement convergente</strong> :</p>
+<ul>
+<li>
+<p>Si <span class="arithmatex">\(f\)</span> est à concavité constante avec <span class="arithmatex">\(f"&lt;0\)</span> (concave), la suite converge vers la racine avec <span class="arithmatex">\(f(x_n)\)</span> croissant.</p>
+</li>
+<li>
+<p>Si <span class="arithmatex">\(f\)</span> est à concavité constante avec <span class="arithmatex">\(f"&gt;0\)</span> (convexe), la suite converge vers la racine avec <span class="arithmatex">\(f(x_n)\)</span> décroissant.</p>
+</li>
+</ul>
+<p>Elle converge avec un ordre <span class="arithmatex">\(p\)</span> d'au moins 1 de façon <strong>super-linéaire</strong>.</p>
+<h3 id="exemple_2">Exemple</h3>
+<p>Voici les 5 premières itérations de la méthode de la fausse position appliquée à notre problème exemple.
+L'intervalle initial est ici de [0,2] pour des raisons de lisibilité :</p>
+<p><img alt="Exemple d'application de la fausse position" src="../img/Chap2_exemple_fausse_position.gif" /></p>
+<p><strong>Exercice :</strong></p>
+<p>En adaptant la fonction Python donnée précédemment pour la méthode de la fausse position, avec un intervalle initial <span class="arithmatex">\([1,2]\)</span>, estimez la valeur de <span class="arithmatex">\(\sqrt{2}\)</span> avec une précision de <span class="arithmatex">\(10^{-6}\)</span>.
+Combien d'itérations sont nécessaires pour obtenir cette précision ? Comparez cette valeur à celle obtenue pour la méthode de la sécante.</p>
+<hr />
+<h2 id="methode-de-newton">Méthode de Newton</h2>
+<h3 id="algorithme_3">Algorithme</h3>
+<p>La <strong>méthode de Newton</strong> est une méthode linéarisée pour laquelle :</p>
+<p><span class="arithmatex">\(q_n = f'(x_n)\)</span></p>
+<p>Cette suite correspond à la pente de la tangente à la fonction <span class="arithmatex">\(f\)</span> en <span class="arithmatex">\(x_n\)</span>.</p>
+<p>On l'appelle aussi la <strong>méthode de Newton-Raphson</strong>.
+Cette méthode nécessite l'évaluation de <span class="arithmatex">\(f\)</span> et de sa dérivée <span class="arithmatex">\(f'\)</span>.
+Dans le cas de notre problème exemple, on définira :</p>
+<pre><code>def f_derivee(x):
+
+    return 2*x
+</code></pre>
+<p>Soit <span class="arithmatex">\(f\)</span> une fonction continue de <span class="arithmatex">\([a,b]\)</span> dans <span class="arithmatex">\(\mathbb{R}\)</span>.
+On suppose que <span class="arithmatex">\(f\)</span> admet une unique racine dans <span class="arithmatex">\(]a,b[\)</span> et que <span class="arithmatex">\(f(a)f(b)&lt;0\)</span>.
+On choisi d'initialiser la méthode avec <span class="arithmatex">\(x_0 \in [a,b]\)</span>.</p>
+<p>Voici l'algorithme sous la forme d'une fonction Python.</p>
+<p>Elle prend en entrée :</p>
+<ul>
+<li>
+<p><code>f</code> la fonction dont on cherche les racines.</p>
+</li>
+<li>
+<p><code>f_derivee</code> la dérivée de la fonction dont on cherche les racines.</p>
+</li>
+<li>
+<p><code>x_0</code> point de départ de la recherche.</p>
+</li>
+<li>
+<p><code>n_max</code> le nombre maximum d'itérations.</p>
+</li>
+<li>
+<p><code>e</code> la précision désirée.</p>
+</li>
+</ul>
+<p>On notera les variables à l'itération <code>n</code> : </p>
+<ul>
+<li>
+<p><code>x_n</code> l'estimation de la racine à l'itération n.</p>
+</li>
+<li>
+<p><code>x_n_old</code> l'estimation de la racine à l'itération n-1.</p>
+</li>
+<li>
+<p><code>r_n</code> le résidu.</p>
+</li>
+</ul>
+<pre><code>def newton(f,f_derivee,x_0,n_max,e):
+
+    #Vérifier que le point de départ de la recherche est possible :
+    if f_derivee(x_0)==0:
+        raise ValueError(&quot;Mauvaise initialisation, f'(x_0) = 0&quot;)
+
+    #Initialisation des variables :
+    n = 0 #Nombre d'itérations
+    x_n_old = x_0 #Estimation de la racine à l'itération n-1
+    x_n = x_n_old-f(x_n_old)/f_derivee(x_n_old) #Estimation de la racine à l'itération n
+    r_n = f(x_n) #Résidu
+
+    #Itérations de l'algorithme de Newton
+    #tant qu'une des conditions d'arrêt n'est pas atteinte :
+    while (n&lt;n_max)and(abs(x_n-x_n_old)&gt;e)and(abs(r_n)&gt;e):
+
+        #Mettre à jour l'estimation de la racine :
+        x_n_old = x_n #Itération n
+        x_n = x_n-f(x_n)/f_derivee(x_n) #Iteration n+1
+
+        #Incrémenter le nombre d'itérations :
+        n+=1
+
+        #Mettre à jour le résidu :
+        r_n = f(x_n)
+
+    #Renvoyer l'estimation de la racine et le résidu :
+    return x_n,r_n
+</code></pre>
+<h3 id="convergence_3">Convergence</h3>
+<p>La méthode de Newton est <strong>convergente localement</strong>.</p>
+<p>Si <span class="arithmatex">\(x_0\)</span> est assez proche de la racine <span class="arithmatex">\(c\)</span>, et <span class="arithmatex">\(f'(c) \neq 0\)</span>, on peut montrer que la méthode converge avec un ordre <span class="arithmatex">\(p=2\)</span>.
+La convergence est donc <strong>quadratique</strong>.</p>
+<p>En pratique, on utilise souvent la méthode de la dichotomie pour trouver un point de départ <span class="arithmatex">\(x_0\)</span> suffisamment proche de <span class="arithmatex">\(c\)</span> avant d'utiliser la méthode de Newton.</p>
+<p>Reste un incovénient, la méthode de Newton nécessite le calcul de dérivées, et est donc plus coûteuse en calcul.</p>
+<p>La méthode de Newton est <strong>sûrement convergente</strong> dans le cas d'une fonction <span class="arithmatex">\(f\)</span> strictement monotone et ne présentant pas de points d'inflexion dans l'intervalle <span class="arithmatex">\([a,b]\)</span> (i.e. <span class="arithmatex">\(f"(x)\)</span> ne change pas de signe donc <span class="arithmatex">\(f\)</span> a une concavité constante) si le point de départ <span class="arithmatex">\(x_0\)</span> est tel que :</p>
+<p><strong><span class="arithmatex">\(f(x_0)f"(x_0)&gt;0\)</span></strong></p>
+<p>Pour choisir un point de départ <span class="arithmatex">\(x_0\)</span> qui ne risque pas de faire diverger la méthode de Newton, il faut donc s'assurer de respecter cette condition.</p>
+<p><img alt="Illustration de la convergence de Newton" src="../img/Chap2_newton_convergence.png" /></p>
+<h3 id="exemple_3">Exemple</h3>
+<p>Voici les 4 premières itérations de la méthode de Newton appliquée à notre problème exemple.
+Le point de départ de la recherche choisi est de 2.5 pour des raisons de lisibilité :</p>
+<p><img alt="Exemple d'application de Newton" src="../img/Chap2_exemple_newton.gif" /></p>
+<p>On note que le choix de point de départ est correct, car <span class="arithmatex">\(f\)</span> est à concavité constante positive (<span class="arithmatex">\(f"(x)=2&gt;0\)</span>) et <span class="arithmatex">\(f(x_0)=4.25&gt;0\)</span>, ce qui signifie que <span class="arithmatex">\(f(x_0)f"(x_0)&gt;0\)</span> est bien respectée.</p>
+<p><strong>Exercice :</strong></p>
+<p>En adaptant la fonction Python donnée précédemment pour la méthode de Newton, avec un point de départ de votre choix, estimez la valeur de <span class="arithmatex">\(\sqrt{2}\)</span> avec une précision de <span class="arithmatex">\(10^{-6}\)</span>.
+Combien d'itérations sont nécessaires pour obtenir cette précision ? Comparez cette valeur à celle obtenue pour les méthodes précédentes. Quelle est la méthode linéarisée la plus rapide ?</p>
+<p>NB: La méthode de Newton appliquée au cas de l'estimation de <span class="arithmatex">\(\sqrt{2}\)</span> est un cas particulier de la célèbre méthode d'Héron d'Alexandrie.</p>
+<hr />
+<h2 id="methode-du-point-fixe">Méthode du point fixe</h2>
+<h3 id="definitions">Définitions</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Idée</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Transformer l'équation <span class="arithmatex">\(f(x)=0\)</span> en une équation équivalente <span class="arithmatex">\(g(x)=x\)</span> où <span class="arithmatex">\(g\)</span> est une fonction auxiliaire bien choisie.</td>
+</tr>
+<tr>
+<td style="text-align: left;">La racine <span class="arithmatex">\(c\)</span> est alors un <strong>point fixe</strong> de <span class="arithmatex">\(g\)</span> et approcher les zéros de <span class="arithmatex">\(f\)</span> revient à approcher les points fixes de <span class="arithmatex">\(g\)</span>.</td>
+</tr>
+</tbody>
+</table>
+<p>Cette transformation est <strong>toujours possible</strong> mais <strong>pas unique</strong>.</p>
+<p><img alt="Illustration du point fixe" src="../img/Chap2_point_fixe.png" /></p>
+<p>Dans la pratique, la méthode du point fixe consiste à transformer le problème <span class="arithmatex">\(f(x)=0\)</span> où <span class="arithmatex">\(f:[a,b] \rightarrow \mathbb{R}\)</span> en un problème équivalent <span class="arithmatex">\(x=g(x)\)</span>, en passant par un <strong>schéma itératif</strong> <span class="arithmatex">\(x_{n+1}=g(x_n)\)</span> où <span class="arithmatex">\(g\)</span> est une fonction bien choisie.
+L'itération est dite <strong>de point fixe</strong>, et la fonction <span class="arithmatex">\(g\)</span> est la <strong>fonction d'itération</strong> associée.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Théorème du point fixe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Soit <span class="arithmatex">\(g\)</span> une fonction continue et <span class="arithmatex">\((x_n)\)</span> une suite générée par l'itération de point fixe <span class="arithmatex">\(x_{n+1}=g(x_n)\)</span>.</td>
+</tr>
+<tr>
+<td style="text-align: left;">Si <span class="arithmatex">\(\lim\limits_{n \to \infty} x_n = c\)</span> alors par continuité de <span class="arithmatex">\(g\)</span> :</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(\lim\limits_{n \to \infty} g(x_n) = g(c) = c\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Donc <span class="arithmatex">\(c\)</span> est un point fixe de <span class="arithmatex">\(g\)</span>.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Les méthodes linéarisées sont des méthodes de point fixe</strong> : on obtient <span class="arithmatex">\(x_{n+1}\)</span> à partir de <span class="arithmatex">\(x_n\)</span> en évaluant toujours la même expression <span class="arithmatex">\(x_{n+1}=g(x_n)\)</span>.</p>
+<p>Par exemple, dans notre problème de l'approximation de <span class="arithmatex">\(\sqrt{2}\)</span>, résoudre <span class="arithmatex">\(x^2-2=0\)</span> revient à trouver le point fixe de <span class="arithmatex">\(g(x)=x-\frac{f(x)}{f'(x)}=\frac{x+\frac{2}{x}}{2}\)</span>.</p>
+<h3 id="algorithme_4">Algorithme</h3>
+<p>Soit <span class="arithmatex">\(f\)</span> une fonction continue de <span class="arithmatex">\([a,b]\)</span> dans <span class="arithmatex">\(\mathbb{R}\)</span>.
+On suppose que <span class="arithmatex">\(f\)</span> admet une unique racine dans <span class="arithmatex">\(]a,b[\)</span> et que <span class="arithmatex">\(f(a)f(b)&lt;0\)</span>.
+On choisi d'initialiser la méthode avec <span class="arithmatex">\(x_0 \in [a,b]\)</span>.</p>
+<p>Cette méthode nécessite la sélection d'une fonction d'itération de point fixe <span class="arithmatex">\(g\)</span>.
+Dans le cas de notre problème exemple, on pourra choisir :</p>
+<pre><code>def g(x):
+
+    return x/2+1/x
+</code></pre>
+<p>Voici l'algorithme sous la forme d'une fonction Python.</p>
+<p>Elle prend en entrée :</p>
+<ul>
+<li>
+<p><code>f</code> la fonction dont on cherche les racines.</p>
+</li>
+<li>
+<p><code>g</code> la fonction d'itération choisie.</p>
+</li>
+<li>
+<p><code>x_0</code> point de départ de la recherche.</p>
+</li>
+<li>
+<p><code>n_max</code> le nombre maximum d'itérations.</p>
+</li>
+<li>
+<p><code>e</code> la précision désirée.</p>
+</li>
+</ul>
+<p>On notera les variables à l'itération <code>n</code> : </p>
+<ul>
+<li>
+<p><code>x_n</code> l'estimation de la racine à l'itération n.</p>
+</li>
+<li>
+<p><code>x_n_old</code> l'estimation de la racine à l'itération n-1.</p>
+</li>
+<li>
+<p><code>r_n</code> le résidu.</p>
+</li>
+</ul>
+<pre><code>def point_fixe(f,g,x_0,n_max,e):
+
+    #Initialisation des variables :
+    n = 0 #Nombre d'itérations
+    x_n_old = x_0 #Estimation de la racine à l'itération n-1
+    x_n = g(x_n_old) #Estimation de la racine à l'itération n
+    r_n = f(x_n) #Résidu
+
+    #Itérations de l'algorithme du point fixe
+    #tant qu'une des conditions d'arrêt n'est pas atteinte :
+    while (n&lt;n_max)and(abs(x_n-x_n_old)&gt;e)and(abs(r_n)&gt;e):
+
+        #Mettre à jour l'estimation de la racine :
+        x_n_old = x_n #Itération n
+        x_n = g(x_n) #Iteration n+1
+
+        #Incrémenter le nombre d'itérations :
+        n+=1
+
+        #Mettre à jour le résidu :
+        r_n = f(x_n)
+
+    #Renvoyer l'estimation de la racine et le résidu :
+    return x_n,r_n
+</code></pre>
+<h3 id="convergence_4">Convergence</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Théorème de la convergence globale des itérations de point fixe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Soit <span class="arithmatex">\(g\)</span> une fonction continue de <span class="arithmatex">\([a,b]\)</span> dans <span class="arithmatex">\(\mathbb{R}\)</span>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>1. Hypothèse d'inclusion (ou de stabilité) :</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">Si <span class="arithmatex">\(\forall x \in [a,b]\)</span>, <span class="arithmatex">\(g(x) \in [a,b]\)</span> alors <span class="arithmatex">\(g\)</span> admet un point fixe dans <span class="arithmatex">\([a,b]\)</span>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2. Hypothèse de contraction stricte :</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">Si de plus, <span class="arithmatex">\(\exists K \in ]0,1[\)</span> tel que <span class="arithmatex">\(\mid g(x)-g(y) \mid \leq K \mid x-y \mid \forall x,y \in [a,b]\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">(on dit que <span class="arithmatex">\(g\)</span> est <strong>strictement contractante</strong>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">alors <span class="arithmatex">\(g\)</span> admet un point fixe <strong>unique</strong> noté <span class="arithmatex">\(c\)</span> dans <span class="arithmatex">\([a,b]\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">et la suite <span class="arithmatex">\(x_{n+1}=g(x_n)\)</span> converge vers <span class="arithmatex">\(c\)</span> <strong>pour toute valeur de départ <span class="arithmatex">\(x_0\)</span> dans <span class="arithmatex">\([a,b]\)</span></strong>.</td>
+</tr>
+<tr>
+<td style="text-align: left;">On appelle alors <span class="arithmatex">\(c\)</span> un <strong>point attracteur</strong>.</td>
+</tr>
+</tbody>
+</table>
+<p>2 règles pratiques pour vérifier <strong>l'hypothèse de contraction</strong> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Théorème</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Soit <span class="arithmatex">\(g\)</span> une fonction continue et dérivable de <span class="arithmatex">\([a,b]\)</span> dans <span class="arithmatex">\(\mathbb{R}\)</span>.</td>
+</tr>
+<tr>
+<td style="text-align: left;">Si <span class="arithmatex">\(\forall x\in [a,b]\)</span>, <span class="arithmatex">\(\mid g'(x) \mid &lt;1\)</span> alors <span class="arithmatex">\(g\)</span> est strictement contractante sur <span class="arithmatex">\([a,b]\)</span>.</td>
+</tr>
+<tr>
+<td style="text-align: left;">Si <span class="arithmatex">\(\forall x\in [a,b]\)</span>, <span class="arithmatex">\(\mid g'(x) \mid &gt;1\)</span> alors la suite <strong>diverge</strong> si <span class="arithmatex">\(x_0 \neq c\)</span>. On parle alors de <strong>point répulsif</strong></td>
+</tr>
+</tbody>
+</table>
+<p>En pratique, il est souvent difficile de montrer la convergence globale.
+D'où l'utilité d'une étude de convergence locale :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Théorème de la convergence locale des itérations de point fixe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Soit <span class="arithmatex">\(c\)</span> un point fixe d'une fonction <span class="arithmatex">\(g\)</span> dérivable au voisinage de <span class="arithmatex">\(c\)</span>.</td>
+</tr>
+<tr>
+<td style="text-align: left;">Si <span class="arithmatex">\(\mid g'(c) \mid &lt; 1\)</span> alors il existe <span class="arithmatex">\(\delta &gt;0\)</span> tel que la suite <span class="arithmatex">\(x_{n+1}=g(x_n)\)</span> converge vers <span class="arithmatex">\(c\)</span> pour tout <span class="arithmatex">\(x_0\)</span> tel que <span class="arithmatex">\(\mid x_0-c \mid &lt; \delta\)</span>.</td>
+</tr>
+<tr>
+<td style="text-align: left;">Si <span class="arithmatex">\(\mid g'(c) \mid &gt; 1\)</span> la convergence est impossible.</td>
+</tr>
+<tr>
+<td style="text-align: left;">Si <span class="arithmatex">\(\mid g'(c) \mid = 1\)</span> on peut avoir convergence ou divergence.</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="Illustration de la convergence du point fixe" src="../img/Chap2_point_fixe_convergence.png" /></p>
+<h3 id="exemple_4">Exemple</h3>
+<p>Considérons à nouveau notre problème d'approximation de <span class="arithmatex">\(\sqrt{2}\)</span> par la recherche des racines de <span class="arithmatex">\(f(x)=x^2-2\)</span>.</p>
+<p>Nous proposons d'essayer les fonctions d'itération suivantes :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><span class="arithmatex">\(g_1(x)=\frac{2}{x}\)</span></th>
+<th style="text-align: center;"><span class="arithmatex">\(g_2(x)=2x-\frac{2}{x}\)</span></th>
+<th style="text-align: right;"><span class="arithmatex">\(g_3(x)=\frac{x}{2}+\frac{1}{x}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(g_1'(x)=-\frac{2}{x^2}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(g_2'(x)=2+\frac{2}{x^2}\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(g_3'(x)=\frac{1}{2}-\frac{1}{x^2}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(g_1'(c)=-1\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(g_2'(c)=3\)</span></td>
+<td style="text-align: right;"><span class="arithmatex">\(g_3'(c)=0\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>On s'attend donc à ce que <span class="arithmatex">\(g_1\)</span> et <span class="arithmatex">\(g_2\)</span> divergent, et à ce que <span class="arithmatex">\(g_3\)</span> converge. 
+Vérifions avec un point de départ de 2 pour les 3 fonctions.</p>
+<p>Voici les 4 premières itérations pour <span class="arithmatex">\(g_1(x)=\frac{2}{x}\)</span> :</p>
+<p><img alt="Exemple d'application du point fixe à g1" src="../img/Chap2_exemple_point_fixe_1.gif" /></p>
+<p>La valeur de <span class="arithmatex">\(x_n\)</span> oscille entre 1 et 2 sans jamais s'arrêter. La suite ne converge donc pas.</p>
+<p>Voici les 4 premières itérations pour <span class="arithmatex">\(g_2(x)=2x-\frac{2}{x}\)</span>  :</p>
+<p><img alt="Exemple d'application du point fixe à g2" src="../img/Chap2_exemple_point_fixe_2.gif" /></p>
+<p>On observe que <span class="arithmatex">\(x_n\)</span> diverge en escalier.</p>
+<p>Voici les 4 premières itérations pour <span class="arithmatex">\(g_3(x)=\frac{x}{2}+\frac{1}{x}\)</span>  :</p>
+<p><img alt="Exemple d'application du point fixe à g3" src="../img/Chap2_exemple_point_fixe_3.gif" /></p>
+<p>Cette fois-ci, <span class="arithmatex">\(x_n\)</span> converge rapidement vers <span class="arithmatex">\(\sqrt{2}\)</span>.</p>
+<p>On retrouve donc bien les résultats attendus.</p>
+<p><strong>Exercice :</strong></p>
+<p>En adaptant la fonction Python donnée précédemment pour la méthode du point fixe, avec le même point de départ que vous avez choisi pour la méthode de Newton, estimez la valeur de <span class="arithmatex">\(\sqrt{2}\)</span> avec une précision de <span class="arithmatex">\(10^{-6}\)</span>.
+Combien d'itérations sont nécessaires pour obtenir cette précision ? Comparez cette valeur à celle obtenue pour la méthode de Newton.
+Expliquez pourquoi ces résultats sont identiques.</p>
+<hr />
+<h2 id="vitesse-de-convergence-des-methodes">Vitesse de convergence des méthodes</h2>
+<h3 id="methode-de-la-dichotomie_1">Méthode de la dichotomie</h3>
+<p>On rappelle que la méthode de la dichotomie converge de manière <strong>linéaire</strong>.</p>
+<h3 id="methodes-de-point-fixe">Méthodes de point fixe</h3>
+<p>Supposons que <span class="arithmatex">\(g\)</span> est dérivable <span class="arithmatex">\(p \geq 1\)</span> fois dans <span class="arithmatex">\([a,b]\)</span> contenant le point fixe <span class="arithmatex">\(c\)</span>.</p>
+<p>La formule de Taylor au voisinage de <span class="arithmatex">\(c\)</span>, à l'itération <span class="arithmatex">\(n\)</span> est :</p>
+<p><span class="arithmatex">\(g(x_n) = g(c) + g'(c)(x_n-c) + g"(c)\frac{(x_n-c)^2}{2!} + ... + g^{(p)}(c)\frac{(x_n-c)^p}{p!}\)</span></p>
+<p>D'où l'erreur absolue à l'itération <span class="arithmatex">\(n+1\)</span> :</p>
+<p><span class="arithmatex">\(e_{n+1} = x_{n+1}-c = g(x_n)-g(c) = g'(c)e_n + g"(c)\frac{e_n^2}{2!} + ... + g^{(p)}(c)\frac{e_n^p}{p!}\)</span></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Théorème</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">La méthode du point fixe est d'ordre <span class="arithmatex">\(p&gt;1\)</span> si et seulement si :</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(g^{(i)}(c)=0\)</span> <span class="arithmatex">\(\forall 1 \leq i \leq p-1\)</span> et <span class="arithmatex">\(g^{(p)}(c) \neq 0\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>La méthode est convergente du 1er ordre (i.e. <strong>linéaire</strong>) si <span class="arithmatex">\(g'(c) \neq 0\)</span> et <span class="arithmatex">\(\lim\limits_{n \to \infty} \frac{\mid e_{n+1} \mid}{\mid e_n \mid} = \mid g'(c) \mid &lt; 1\)</span>.
+(C'est ce que l'on appelle le "facteur de réduction" de l'erreur).</p>
+<p>La méthode est convergente d'ordre 2 (i.e. <strong>quadratique</strong>) si <span class="arithmatex">\(g'(c)=0\)</span> et <span class="arithmatex">\(g"(c) \neq 0\)</span> et <span class="arithmatex">\(\lim\limits_{n \to \infty} \frac{\mid e_{n+1} \mid}{\mid e_n \mid^2} = \frac{1}{2} \mid g"(c) \mid\)</span>.</p>
+<h3 id="methode-de-la-secante_1">Méthode de la sécante</h3>
+<p>On rappelle que dans le cas de la méthode de la sécante :</p>
+<p><span class="arithmatex">\(g(x) = x_0-f(x_0)\frac{x-x_0}{f(x)-f(x_0)}\)</span></p>
+<p>Donc <span class="arithmatex">\(g'(x) = -f(x_0) \frac{f(x)-f(x_0)-(x-x_0)f'(x)}{(f(x)-f(x_0))^2}\)</span></p>
+<p>D'où <span class="arithmatex">\(g'(c) = \frac{f(x_0)+f'(c)(c-x_0)}{f(x_0)}\)</span></p>
+<p>D'après la formule de Taylor, il existe au moins un <span class="arithmatex">\(c \in ]a,x_0[\)</span> tel que :</p>
+<p><span class="arithmatex">\(f(x_0)+f'(c)(c-x_0) = f"(c)\frac{(c-x_0)^2}{2!}\)</span></p>
+<p>Donc s'il n'y a pas de point d'inflexion, <span class="arithmatex">\(g'(c) \neq 0\)</span> et la méthode <strong>converge linéairement</strong>.</p>
+<h3 id="methode-de-newton_1">Méthode de Newton</h3>
+<p>On rappelle que dans le cas de la méthode de Newton :</p>
+<p><span class="arithmatex">\(g(x) = x-\frac{f(x)}{f'(x)}\)</span></p>
+<p>Donc <span class="arithmatex">\(g'(x) = 1 - \frac{f'(x)f'(x)-f(x)f"(x)}{f'(x)^2} = \frac{f(x)f"(x)}{f'(x)^2}\)</span></p>
+<p>D'où <span class="arithmatex">\(g'(c) = \frac{f(c)f"(c)}{f'(c)^2} = 0\)</span></p>
+<p>De plus, <span class="arithmatex">\(g"(x) = \frac{(f'(x)f"(x)+f(x)f"'(x))f'(x)^2-f(x)f"(x)(2f"(x)f'(x))}{f'(x)^4}\)</span></p>
+<p>D'où <span class="arithmatex">\(g"(c)=\frac{f"(c)}{f'(c)}\)</span></p>
+<p>Par conséquent, si <span class="arithmatex">\(c\)</span> est un zéro <strong>simple</strong> de la fonction <span class="arithmatex">\(f\)</span> (i.e. <span class="arithmatex">\(f"(c) \neq 0\)</span>) alors la méthode <strong>converge quadratiquement</strong>.</p>
+<p>Si <span class="arithmatex">\(f"(c) = 0\)</span>, la convergence est <strong>d'ordre supérieur à 2</strong>.</p>
+<hr />
+<h2 id="conclusions">Conclusions</h2>
+<ul>
+<li>
+<p>La méthode de la <strong>dichotomie</strong> est <strong>simple mais lente</strong> car elle ne prend pas en compte le comportement de <span class="arithmatex">\(f\)</span>. Elle est néanmoins utile pour <strong>initialiser des méthodes plus rapides</strong>.</p>
+</li>
+<li>
+<p>La méthode de <strong>Newton</strong> est <strong>convergente d'ordre au moins 2</strong> mais nécessite le <strong>calcul de dérivées</strong> et un <strong>bon choix d'initialisation</strong>.</p>
+</li>
+<li>
+<p>Les méthodes <strong>d'itérations de point fixe</strong> convergent sous des conditions portant sur la <strong>fonction d'itération</strong> <span class="arithmatex">\(g\)</span> et sa dérivée <span class="arithmatex">\(g'\)</span>. Leur convergence est généralement <strong>linéaire</strong>, mais devient <strong>quadratique</strong> quand <span class="arithmatex">\(g'(c)=0\)</span>.</p>
+</li>
+</ul>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../Chap1_Introduction/" class="btn btn-neutral float-left" title="I. Introduction"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Chap3_Interpolation_polynomiale/" class="btn btn-neutral float-right" title="III. Interpolation polynomiale">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../Chap1_Introduction/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../Chap3_Interpolation_polynomiale/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../javascripts/mathjax.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
