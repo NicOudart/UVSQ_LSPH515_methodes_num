@@ -505,7 +505,7 @@ L'inconvénient de l'interpolation affine est que l'approximation de la fonction
 
 Dans le cadre de l'interpolation par splines cubiques, on va choisir une fonction vérifiant les critères suivants :
 
-- Sur chaque sous-intervalle $[x_i,x_{i+1}]$ avec $i=0,1,...,n$, la fonction est un polynôme de degré $\leq 3$ qui interpole les points $(x_i,f(x_i))$ et $(x_{i+1},f(x_{i+1}))$ : $g_i(x) = a_i x^3 + b_i x^2 + c_i x + d_i$
+- Sur chaque sous-intervalle $[x_i,x_{i+1}]$ avec $i=0,1,...,n$, la fonction est un polynôme de degré 3 qui interpole les points $(x_i,f(x_i))$ et $(x_{i+1},f(x_{i+1}))$ : $g_i(x) = a_i x^3 + b_i x^2 + c_i x + d_i$
 
 - $g$ est 2 fois continument dérivable aux points intérieurs $x_i$ avec $i=0,1,...,n$.
 
